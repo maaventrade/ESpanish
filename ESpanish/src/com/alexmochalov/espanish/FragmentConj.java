@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +37,7 @@ public class FragmentConj extends Fragment {
 	private TextView mTranslation;
 	
 	private ConjAdapter conjAdapter;
+	private ListView listView;
 	
 	private View rootView;
 	private Button button_test;
@@ -81,7 +83,7 @@ public class FragmentConj extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
         
 		conjAdapter = new ConjAdapter(MainActivity.mContext, text);
-	    ListView listView = (ListView)rootView.findViewById(R.id.conjugations);
+	    listView = (ListView)rootView.findViewById(R.id.conjugations);
 	    listView.setAdapter(conjAdapter);			
 
     	next();
@@ -103,6 +105,20 @@ public class FragmentConj extends Fragment {
 					// Button Проверить is pressed
 					
 					button_test.setText(MainActivity.mContext.getResources().getString(R.string.button_next));
+					
+					EditText EditTextTranslation;
+					
+					for (int i = 0; i < Dictionary.getPronouns().size()-1; i++){
+						View view = conjAdapter.getView(i, null, listView);
+					    EditTextTranslation = ((EditText) view.findViewById(R.id.EditTextTranslation));
+						
+			        	String translation = EditTextTranslation.getText().toString();
+			        	Log.d("", "pos "+i+" EditTextTranslation "+translation);
+			        	
+			        	//if (translation.toLowerCase().equals(pronoun.mPronoun.conj(mVerb).toLowerCase() ))
+					}
+					
+					
 					conjAdapter.setAnswer(true);
 					conjAdapter.notifyDataSetChanged();
 //					EditText editText = (EditText)rootView.findViewById(R.id.editText_phrase_transl);

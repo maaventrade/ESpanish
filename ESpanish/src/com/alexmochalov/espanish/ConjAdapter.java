@@ -7,6 +7,9 @@ import com.alexmochalov.espanish.Dictionary.Pronoun;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +20,20 @@ import android.widget.TextView;
 public class ConjAdapter extends BaseAdapter {
 	Context mContext;
 	LayoutInflater layoutInflater;
-	/*
-	Class PronounMarked {
-		Pronoun pronoun;
+	
+	static class PronounChecked {
+		public PronounChecked(Pronoun pronoun) {
+			mPronoun = pronoun;
+			checked = false;
+		}
+		Pronoun mPronoun;
 		Boolean checked;
 	};
 	
-	ArrayList<PronounMarked> objects;
-	*/
+	ArrayList<PronounChecked> objects = new ArrayList<PronounChecked>();
+	
 	String mVerb = "";
-	
-	
+		
 	private boolean mAnswer = false;
 	  
 	public ConjAdapter(Context context, String verb) {
@@ -35,7 +41,7 @@ public class ConjAdapter extends BaseAdapter {
 	    mVerb = verb;
 	    
 	    for (Pronoun p: Dictionary.getPronouns()){
-			
+	    	objects.add(new PronounChecked(p));
 		}
 	    
 	    layoutInflater = (LayoutInflater) mContext
@@ -44,6 +50,12 @@ public class ConjAdapter extends BaseAdapter {
 	
 	public void setAnswer(boolean answer){
 		mAnswer = answer;
+		if (answer){
+			
+		}
+		else 
+			for (PronounChecked p: objects)
+				p.checked = false;
 	}
 	
 	public void setVerb(String verb){
@@ -52,12 +64,12 @@ public class ConjAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return Dictionary.getPronouns().size();
+		return objects.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return Dictionary.getPronouns().get(position);
+		return objects.get(position);
 	}
 
 	@Override
@@ -72,22 +84,47 @@ public class ConjAdapter extends BaseAdapter {
 	      view = layoutInflater.inflate(R.layout.fragment_conj_item, parent, false);
 	    }
 	 
-	    Pronoun p = (Pronoun)getItem(position);
+	    PronounChecked pronoun = (PronounChecked)getItem(position);
 	 
-	    ((TextView) view.findViewById(R.id.text)).setText(p.mText);
-	    ((TextView) view.findViewById(R.id.translation)).setText(p.translation);
+	    ((TextView) view.findViewById(R.id.text)).setText(pronoun.mPronoun.mText);
+	    ((TextView) view.findViewById(R.id.translation)).setText(pronoun.mPronoun.translation);
 	    
 		EditText EditTextTranslation;
 	    EditTextTranslation = ((EditText) view.findViewById(R.id.EditTextTranslation));
+	    
+	    EditTextTranslation.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				Log.d("", "S "+s);
+			}
+	    	
+	    });
+
 
 	    if (mAnswer){
-	    	String translation = EditTextTranslation.getText().toString();
-	    	if (translation.toLowerCase().equals(p.conj(mVerb).toLowerCase() ))
-		    	EditTextTranslation.setTextColor(Color.GREEN);
-	    	else
-		    	EditTextTranslation.setTextColor(Color.RED);
-	    	
-	    	EditTextTranslation.setText( p.conj(mVerb));
+	    	if (pronoun.checked);
+	    	else {
+	        	String translation = EditTextTranslation.getText().toString();
+	        	Log.d("", "position "+position+" EditTextTranslation "+translation);
+	        	
+	        	if (translation.toLowerCase().equals(pronoun.mPronoun.conj(mVerb).toLowerCase() ))
+	        		EditTextTranslation.setTextColor(Color.GREEN);
+	        	else 
+	        		EditTextTranslation.setTextColor(Color.RED);
+	        	pronoun.checked = true;
+	    	}
+	    	EditTextTranslation.setText( pronoun.mPronoun.conj(mVerb));
 	    } else {
 	    	EditTextTranslation.setTextColor(Color.BLACK);
 	    	EditTextTranslation.setText( "" );

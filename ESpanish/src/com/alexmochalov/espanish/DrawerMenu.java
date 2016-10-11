@@ -123,6 +123,8 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 			xpp.setInput(sw); 	
 	}
 
+	groupData.clear();
+		
 	while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 		switch (xpp.getEventType()) { // начало документа 
 		case XmlPullParser.START_DOCUMENT: 
