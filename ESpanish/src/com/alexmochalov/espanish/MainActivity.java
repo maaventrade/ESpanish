@@ -37,7 +37,7 @@ import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnInitListener {
-	private Context mContext;
+	public static Context mContext;
 	
 	private SharedPreferences prefs;
 	private DrawerLayout mDrawerLayout;
@@ -79,6 +79,10 @@ public class MainActivity extends Activity implements OnInitListener {
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+		
+		//if (savedInstanceState != null) {
+        //    fragment = (Fragment) getFragmentManager().findFragmentByTag("your_fragment_tag");
+       // }		
 
 	}
 
@@ -148,7 +152,7 @@ public class MainActivity extends Activity implements OnInitListener {
 		if (type.equals("Выражения"))
 			fragment = new FragmentPhrase(this);
 		else if (type.equals("Спряжения"))
-			fragment = new FragmentConj(this);
+			fragment = new FragmentConj();
 
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
@@ -203,6 +207,11 @@ public class MainActivity extends Activity implements OnInitListener {
 	@Override
 	public void onPause() {
 		super.onPause();
+		
+		//if (fragment != null){
+		//	fragment = null;
+		//}
+		
 		Log.d("", "PPPPPAUSEEE");
 
 		Editor editor = prefs.edit();

@@ -91,6 +91,7 @@ public class Dictionary {
 
 	public static void load(Context context) 
 	{
+		entries.clear();
 		String mode = "";
 		
 		try { XmlPullParser xpp = context.getResources().getXml(R.xml.dictionary);

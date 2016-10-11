@@ -31,7 +31,7 @@ public class ConjAdapter extends BaseAdapter {
 	private boolean mAnswer = false;
 	  
 	public ConjAdapter(Context context, String verb) {
-	    mContext = context;
+	    mContext = MainActivity.mContext;
 	    mVerb = verb;
 	    
 	    for (Pronoun p: Dictionary.getPronouns()){

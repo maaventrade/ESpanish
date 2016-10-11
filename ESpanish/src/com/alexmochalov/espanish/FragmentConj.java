@@ -39,12 +39,26 @@ public class FragmentConj extends Fragment {
 	
 	private View rootView;
 	private Button button_test;
-	private Context mContext;
+	//private Context mContext;
 	
+	/*
+	public static final FragmentConj newInstance(int title, String message)
+	{
+		FragmentConj f = new FragmentConj();
+	    Bundle bdl = new Bundle(2);
+	    //bdl.putInt(EXTRA_TITLE, title);
+	    //bdl.putString(EXTRA_MESSAGE, message);
+	    //f.setArguments(bdl);
+	    return f;
+	}	
+	*/
+	
+/*	
     public FragmentConj(Context context) {
     	mContext = context;
     	thisFragment = this;
     }
+ */
  
     private void next() {
     	index = DrawerMenu.next();
@@ -66,7 +80,7 @@ public class FragmentConj extends Fragment {
  
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
         
-		conjAdapter = new ConjAdapter(mContext, text);
+		conjAdapter = new ConjAdapter(MainActivity.mContext, text);
 	    ListView listView = (ListView)rootView.findViewById(R.id.conjugations);
 	    listView.setAdapter(conjAdapter);			
 
@@ -79,16 +93,16 @@ public class FragmentConj extends Fragment {
 			public void onClick(View v) {
 
 				// Button Next is pressed
-				if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next))){
+				if (button_test.getText().equals(MainActivity.mContext.getResources().getString(R.string.button_next))){
 					next();
-					button_test.setText(mContext.getResources().getString(R.string.button_test));
+					button_test.setText(MainActivity.mContext.getResources().getString(R.string.button_test));
 					conjAdapter.setAnswer(false);
 					conjAdapter.notifyDataSetChanged();
 				}	
 				else {
 					// Button Проверить is pressed
 					
-					button_test.setText(mContext.getResources().getString(R.string.button_next));
+					button_test.setText(MainActivity.mContext.getResources().getString(R.string.button_next));
 					conjAdapter.setAnswer(true);
 					conjAdapter.notifyDataSetChanged();
 //					EditText editText = (EditText)rootView.findViewById(R.id.editText_phrase_transl);
