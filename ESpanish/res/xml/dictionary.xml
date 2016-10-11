@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<dictionary>
+	    <entry text = "Hola" transl = "Привет!" note = "1">
+    	    
+	    </entry>
+	   	<entry text = "Buenos dias" transl = "Добрый день!">
+    	    
+	    </entry>
+	   	<entry text = "Buenas tardes" transl = "Добрый вечер!">
+    	    
+	    </entry>
+	   	<entry text = "Buenas noches" transl = "Доброй ночи!">
+    	    
+	    </entry>
+	   	<entry text = "Adiós" transl = "До свидания!">
+    	    
+	    </entry>
+	   	<entry text = "Hasta la vista" transl = "До свидания!">
+    	    
+	    </entry>
+	   	<entry text = "Gracias" transl = "Спасибо!">
+    	    
+	    </entry>
+	   	<entry text = "Por favor" transl = "Пожалуйста">
+    	    
+	    </entry>
+	   	<entry text = "De nada" transl = "Не за что">
+    	    
+	    </entry>
+	   	<entry text = "Cómo te llamos" transl = "Как тебя зовут?">
+    	    
+	    </entry>
+	   	<entry text = "Me llamo..." transl = "Меня зовут...">
+    	    
+	    </entry>
+	   	<entry text = "Mucho gusto" transl = "Очень приятно">
+    	    
+	    </entry>
+	   	<entry text = "Encantado" transl = "Я восхищен">
+    	    
+	    </entry>
+	    
+	   	<entry text = "tomar" ending = "ar" transl = "брать">
+	    </entry>
+	   	<entry text = "hablar" ending = "ar" transl = "говорить, разговаривать">
+	    </entry>
+	   	<entry text = "trabajar" ending = "ar" transl = "работать">
+	    </entry>
+	   	<entry text = "descansar" ending = "ar" transl = "отдыхать">
+	    </entry>
+	   	<entry text = "cantar" ending = "ar" transl = "петь">
+	    </entry>
+	   	<entry text = "bailar" ending = "ar" transl = "танцевать">
+	    </entry>
+	   	<entry text = "ayudar" ending = "ar" transl = "помогать">
+	    </entry>
+	   	<entry text = "llamar" ending = "ar" transl = "называть, звать, звонить по телефону">
+	    </entry>
+	   	<entry text = "estudiar" ending = "ar" transl = "учиться">
+	    </entry>
+	   		   		   		    
+	   		   		   		   		   	
+	</dictionary>
+	<pronoun>
+	   	<entry text = "Yo" transl = "я" verb_ending = "o">
+	    </entry>
+	   	<entry text = "Tú" transl = "ты" verb_ending = "as">
+	    </entry>
+	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "a">
+	    </entry>
+	   	<entry text = "Él" transl = "он" verb_ending = "a">
+	    </entry>
+	   	<entry text = "Ella" transl = "она" verb_ending = "a">
+	    </entry>
+	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "amos">
+	    </entry>
+	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "áis">
+	    </entry>
+	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "an">
+	    </entry>
+	   	<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "an">
+	    </entry>
+	 </pronoun>
+		<notes>
+	    <note number = "1">
+	        Буква Н никогда не читается.
+	    </note>
+	    <note number = "2">
+	        Окончание существительного -s это множественное число.
+	    </note>
+	    <note number = "3">
+	        Окончание глагола -os это мужской род, -as это женский род.
+	    </note>
+	    </notes>
+</data>

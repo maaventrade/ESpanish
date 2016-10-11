@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="planets_array">
+        <item>car_01</item>
+        <item>balloon_random_02</item>
+        <item>dog_03</item>
+    </string-array>
+</resources>

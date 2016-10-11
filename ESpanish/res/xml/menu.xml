@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data version = "1">
+    <level0 title = "Урок 1">
+    	<level1 title = "Приветствия" type = "Выражения">
+    	    <entry text = "¡Hola!" marked = "false"></entry>
+    	    <entry text = "¡Buenos dias!" marked = "false"></entry>
+    	    <entry text = "¡Buenas tardes!" marked = "false"></entry>
+    	    <entry text = "¡Buenas noches!" marked = "false"></entry>
+    	    <entry text = "¡Adiós!" marked = "false"></entry>
+    	    <entry text = "¡Hasta la vista!" marked = "false"></entry>
+    	    <entry text = "¡Gracias!" marked = "false"></entry>
+    	    <entry text = "Por favor" marked = "false"></entry>
+    	    <entry text = "De nada" marked = "false"></entry>
+    	    <entry text = "¿Cómo te llamos?" marked = "false"></entry>
+    	    <entry text = "Me llamo..." marked = "false"></entry>
+    	    <entry text = "Mucho gusto" marked = "false"></entry>
+    	    <entry text = "Encantado" marked = "false"></entry>
+    	</level1>
+    	<level1 title = "Глаголы" type = "Спряжения">
+    	   <entry text = "tomar" marked = "false"></entry>
+    	   <entry text = "hablar" marked = "false"></entry>
+    	   <entry text = "trabajar" marked = "false"></entry>
+    	   <entry text = "descansar" marked = "false"></entry>
+    	   <entry text = "cantar" marked = "false"></entry>
+    	   <entry text = "bailar" marked = "false"></entry>
+    	   <entry text = "ayudar" marked = "false"></entry>
+    	   <entry text = "llamar" marked = "false"></entry>
+    	   <entry text = "estudiar" marked = "false"></entry>
+    	</level1>
+	</level0>
+	<level0 title = "Урок 2">
+	</level0>
+</data>
