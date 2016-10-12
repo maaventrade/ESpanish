@@ -1,5 +1,5 @@
 <resources>
-	<dimen name="text_size_large">30dp</dimen>
-	<dimen name="text_size_medium">20dp</dimen>
-	<dimen name="text_size_small">18dp</dimen>
+	<dimen name="text_size_large">35dp</dimen>
+	<dimen name="text_size_medium">30dp</dimen>
+	<dimen name="text_size_small">25dp</dimen>
 </resources>
