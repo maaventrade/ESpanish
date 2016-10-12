@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.espanish.Dictionary.Pronoun;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,20 +30,43 @@ public class FragmentConj extends Fragment
 	private SharedPreferences prefs;
 	private Fragment thisFragment;
 
-	private String text;
+	private String mText;
 	// Current translation
 	private String translation;
 
 	private int index = 0;
 
-	private TextView mText;
+	private TextView mTextViewText;
 	private TextView mTranslation;
-
-	private ConjAdapter conjAdapter;
-	private ListView listView;
 
 	private View rootView;
 	private Button button_test;
+	
+	
+	static class PronounEdited
+	{
+		public PronounEdited(Pronoun pronoun, View layout)
+		{
+			mPronoun = pronoun;
+			mLayout = layout;
+		}
+		Pronoun mPronoun = null;
+		View mLayout = null;
+
+		public void put(PronounEdited from)
+		{
+			mPronoun = from.mPronoun;
+			//mLayout = from.mLayout;
+		}
+
+		public PronounEdited getCopy()
+		{
+			return new PronounEdited(mPronoun, mLayout);
+		}
+	};
+
+	ArrayList<PronounEdited> objects = new ArrayList<PronounEdited>();
+	
 	//private Context mContext;
 
 	/*
@@ -67,30 +92,58 @@ public class FragmentConj extends Fragment
 	{
     	index = DrawerMenu.next();
 
-        mText = (TextView)rootView.findViewById(R.id.text);
+    	// Заполняем заголовок
+    	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
 
-		text = DrawerMenu.getText(index);
+        mText = DrawerMenu.getText(index);
 
-		mText.setText(text);
-		mTranslation.setText(Dictionary.getTranslation(text));
+		mTextViewText.setText(mText);
+		mTranslation.setText(Dictionary.getTranslation(mText));
 
-		conjAdapter.setVerb(text);
-		//conjAdapter.notifyDataSetChanged();
+		randomize();
+		
+		setVerb(mText);
 	}
 
-    @Override
+    private void randomize() {
+		for (int i = 1; i <= objects.size(); i++){
+			int j = (int)(Math.random() * objects.size());
+			int k = (int)(Math.random() * objects.size());
+			
+			PronounEdited p = objects.get(j).getCopy();
+			objects.get(j).put(objects.get(k));
+			objects.get(k).put(p);
+		}
+	}
+    
+    private void setVerb(String text) {
+    	
+    	for (PronounEdited p: objects){
+    	    ((TextView)p.mLayout.findViewById(R.id.text)).setText(p.mPronoun.mText);
+    	    ((TextView)p.mLayout.findViewById(R.id.translation)).setText(p.mPronoun.translation);
+    	}
+    	
+		
+	}
+
+	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
-
-		conjAdapter = new ConjAdapter(MainActivity.mContext, text);
-	    listView = (ListView)rootView.findViewById(R.id.conjugations);
-	    listView.setAdapter(conjAdapter);			
-
+        ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
+        
+	    for (Pronoun p: Dictionary.getPronouns())
+		{
+            View layout2 = LayoutInflater.from(MainActivity.mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
+            mLinearLayout.addView(layout2);
+            
+	    	objects.add(new PronounEdited(p, layout2));
+		}
+        
     	next();
-
+    	
 	    button_test = (Button)rootView.findViewById(R.id.button_conj_test);
 	    button_test.setOnClickListener(new OnClickListener(){
 
@@ -103,34 +156,45 @@ public class FragmentConj extends Fragment
 					{
 						next();
 						button_test.setText(MainActivity.mContext.getResources().getString(R.string.button_test));
-						conjAdapter.setAnswer(false);
-						conjAdapter.notifyDataSetChanged();
+				    	for (PronounEdited p: objects){
+				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation); 
+			    			editText.setTextColor(Color.BLACK);
+				            editText.setText("");
+				    	}
 					}	
 					else
 					{
 						// Button Проверить is pressed
-
 						button_test.setText(MainActivity.mContext.getResources().getString(R.string.button_next));
 
-						EditText EditTextTranslation;
+						boolean allChecked = true;
+						
+				    	for (PronounEdited p: objects){
+				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation);
+				            String text = editText.getText().toString();
+				            
+				    		if ( text.
+				    				replaceAll("á", "a").
+				    				replaceAll("ó", "o").
+				    				replaceAll("ú", "u").
+				    				replaceAll("á", "a").
+				    				toLowerCase().
+				    				equals(p.mPronoun.conj(mText).
+				    					   replaceAll("á", "a").
+				    					   replaceAll("ó", "o").
+				    					   replaceAll("ú", "u").
+				    					   replaceAll("á", "a").
+				    					   toLowerCase())){
+				    			editText.setTextColor(Color.GREEN);
+				    		} else {
+				    			editText.setTextColor(Color.RED);
+								allChecked = false;
+				    		}
 
-						for (int i = 0; i <= Dictionary.getPronouns().size() - 1; i++)
-						{
-							View view = listView.getChildAt(i);
-							EditTextTranslation = ((EditText) view.findViewById(R.id.EditTextTranslation));
-
-							String translation = EditTextTranslation.getText().toString();
-							
-
-							conjAdapter.test(translation, i);
-
-						}
-
-
-						conjAdapter.setAnswer(true);
-						conjAdapter.notifyDataSetChanged();
-
-						if (conjAdapter.allChecked())
+				            editText.setText(p.mPronoun.conj(mText));
+				    	}
+						
+						if (allChecked)
 						{
 							DrawerMenu.setStepCompleted(index, 3);
 							TextView textView = ((TextView) rootView.findViewById(R.id.TextViewConjInfo));
@@ -143,11 +207,11 @@ public class FragmentConj extends Fragment
 								getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
 							}
 						}
-					
 
 				}	
 
 			}});
+	    
 		TextView textView = ((TextView) rootView.findViewById(R.id.TextViewConjInfo));
 		textView.setText(DrawerMenu.getCountStr());
 	return rootView;

@@ -52,10 +52,10 @@ public final class R {
         public static final int action_settings=0x7f0b0011;
         public static final int button_conj_test=0x7f0b0007;
         public static final int button_phrase_test=0x7f0b000c;
-        public static final int conjugations=0x7f0b0005;
         public static final int content_frame=0x7f0b0001;
         public static final int drawer_layout=0x7f0b0000;
         public static final int editText_phrase_transl=0x7f0b000a;
+        public static final int fc_linearLayout=0x7f0b0005;
         public static final int item_speak=0x7f0b0012;
         public static final int left_drawer_exp=0x7f0b0002;
         public static final int text=0x7f0b0003;

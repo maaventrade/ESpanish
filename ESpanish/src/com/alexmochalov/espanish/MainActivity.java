@@ -84,6 +84,17 @@ public class MainActivity extends Activity implements OnInitListener {
         //    fragment = (Fragment) getFragmentManager().findFragmentByTag("your_fragment_tag");
        // }		
 
+		Log.d("", "CREATE");
+		
+		int menuGroupPosition = prefs.getInt(MENU_GROUP_POSITION, -1);
+		int menuChildPosition = prefs.getInt(MENU_CHILD_POSITION, -1);
+		
+		DrawerMenu.setPositions(menuGroupPosition, menuChildPosition);
+
+		if (menuChildPosition >= 0 &&  DrawerMenu.getDataSize() > 0) {
+			selectItem(DrawerMenu.getType());
+		}
+		
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -193,15 +204,8 @@ public class MainActivity extends Activity implements OnInitListener {
 	public void onResume() {
 		super.onResume();
 		
-		int menuGroupPosition = prefs.getInt(MENU_GROUP_POSITION, -1);
-		int menuChildPosition = prefs.getInt(MENU_CHILD_POSITION, -1);
+		Log.d("", "RESUME");
 		
-		DrawerMenu.setPositions(menuGroupPosition, menuChildPosition);
-
-		if (menuChildPosition >= 0 &&  DrawerMenu.getDataSize() > 0) {
-			selectItem(DrawerMenu.getType());
-		}
-
 	}
 
 	@Override
