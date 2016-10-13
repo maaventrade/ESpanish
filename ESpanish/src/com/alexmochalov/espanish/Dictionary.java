@@ -8,7 +8,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.alex_mochalov.navdraw.R;
-import com.alexmochalov.espanish.DrawerMenu.MenuGroup;
 
 import android.content.Context;
 import android.util.Log;

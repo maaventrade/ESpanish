@@ -1,29 +1,22 @@
 package com.alexmochalov.espanish;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.alex_mochalov.navdraw.R;
-import com.alexmochalov.espanish.Dictionary.Pronoun;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.espanish.Dictionary.Pronoun;
 
 public class FragmentConj extends Fragment
 {

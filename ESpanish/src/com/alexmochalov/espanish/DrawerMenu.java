@@ -213,6 +213,10 @@ public static String getType() {
 	return menuData.get(menuGroupPosition).mChilren.get(menuChildPosition).type;
 }
 
+public static String getType(int i, int j) {
+	return menuData.get(i).mChilren.get(j).type;
+}
+
 
 public static String getCountStr(int i, int j) {
 	int size = textData.get(i).get(j).size();
@@ -317,6 +321,21 @@ public static int getTypeOfTheStep(int index) {
 	else if (Math.random() > 0.5) return 1;
 		else return 2;
 		
+}
+
+
+public static void load(Context context) {
+	mContext = context;
+	
+	menuData = new ArrayList<MenuGroup>();
+
+	SharedPreferences prefs;
+	prefs = PreferenceManager.getDefaultSharedPreferences(context);
+	
+	String dataString = prefs.getString("efrwer", "");
+//	ArrayList<String> dataArray = new ArrayList<String>(Arrays.asList(listString.split("\n")));
+	
+	loadData(menuData, dataString);
 }
 
 

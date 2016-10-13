@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.espanish.FragmentMenu.OnMenuItemSelectedListener;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -13,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,12 +38,10 @@ import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnInitListener {
+public class MainActivity extends Activity implements OnInitListener, OnMenuItemSelectedListener{
 	public static Context mContext;
 	
 	private SharedPreferences prefs;
-	private DrawerLayout mDrawerLayout;
-	private ExpandableListView mDrawerTree;
 
 	private final String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
 	private final String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
@@ -63,19 +63,22 @@ public class MainActivity extends Activity implements OnInitListener {
 
 		mContext = this;
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getActionBar().setHomeButtonEnabled(true);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerTree = (ExpandableListView) findViewById(R.id.left_drawer_exp);
+//		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//		mDrawerTree = (ExpandableListView) findViewById(R.id.left_drawer_exp);
 
 		Dictionary.load(this);
+		DrawerMenu.load(this);
 		
-		DrawerMenu.fillMenu(this, mDrawerTree);
-		mDrawerTree.setOnChildClickListener(new DrawerChildClickListener());
-
+		// 
+		FragmentMenu fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
+		fragmentMenu.setMenu(this);
+		fragmentMenu.mCallback = this;
+		
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
@@ -89,11 +92,11 @@ public class MainActivity extends Activity implements OnInitListener {
 		int menuGroupPosition = prefs.getInt(MENU_GROUP_POSITION, -1);
 		int menuChildPosition = prefs.getInt(MENU_CHILD_POSITION, -1);
 		
-		DrawerMenu.setPositions(menuGroupPosition, menuChildPosition);
+//		DrawerMenu.setPositions(menuGroupPosition, menuChildPosition);
 
-		if (menuChildPosition >= 0 &&  DrawerMenu.getDataSize() > 0) {
-			selectItem(DrawerMenu.getType());
-		}
+		//if (menuChildPosition >= 0 &&  DrawerMenu.getDataSize() > 0) {
+		//	selectItem(DrawerMenu.getType());
+		//}
 		
 	}
 
@@ -117,30 +120,6 @@ public class MainActivity extends Activity implements OnInitListener {
 		super.onDestroy(); 
 	}
 	
-	private class DrawerChildClickListener implements
-			ExpandableListView.OnChildClickListener {
-
-		@Override
-		public boolean onChildClick(ExpandableListView parent, View v,
-				int groupPosition, int childPosition, long id) {
-
-			DrawerMenu.setPositions(groupPosition, childPosition);
-			
-	    	// Test if this mission is completed 
-			if (DrawerMenu.getDataSize() == 0){
-				
-				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-				builder.setMessage(
-						mContext.getResources().getString(R.string.startover)).
-						setPositiveButton(mContext.getResources().getString(R.string.yes), dialogClickListener)
-						.setNegativeButton(mContext.getResources().getString(R.string.no), dialogClickListener).show();			
-			} else
-				selectItem(DrawerMenu.getType());
-
-			return false;
-		}
-	}
-
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -167,17 +146,16 @@ public class MainActivity extends Activity implements OnInitListener {
 
 		if (fragment != null) {
 			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.content_frame, fragment).commit();
-
-			//mDrawerTree.setItemChecked(position, true);
-			//mDrawerTree.setSelection(position);
-			// getActionBar().setTitle(mNavigationDrawerItemTitles[position]);
-			mDrawerLayout.closeDrawer(mDrawerTree);
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			
+			transaction.replace(R.id.fragment_container, fragment);
+			transaction.addToBackStack(null);
+			transaction.commit();
 
 		} else {
 			Log.e("MainActivity", "Error in creating fragment");
 		}
+
 	}
 
 	@Override
@@ -187,18 +165,6 @@ public class MainActivity extends Activity implements OnInitListener {
 		return true;
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent e) {
-		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			// your action...
-
-			if (!mDrawerLayout.isDrawerOpen(mDrawerTree)) {
-				mDrawerLayout.openDrawer(mDrawerTree);
-			}
-			return true;
-		}
-		return super.onKeyDown(keyCode, e);
-	}
 
 	@Override
 	public void onResume() {
@@ -260,11 +226,6 @@ public class MainActivity extends Activity implements OnInitListener {
 			return true;
 		}
 		case android.R.id.home:
-			if (!mDrawerLayout.isDrawerOpen(mDrawerTree)) {
-				mDrawerLayout.openDrawer(mDrawerTree);
-			} else
-				mDrawerLayout.closeDrawer(mDrawerTree);
-
 			return true;
 		}
 
@@ -322,5 +283,10 @@ public class MainActivity extends Activity implements OnInitListener {
 	      	else if (status == TextToSpeech.ERROR) {
 	            Toast.makeText(this, "Error occurred while initializing Text-To-Speech engine", Toast.LENGTH_LONG).show();
 	      }
+	}
+
+	@Override
+	public void onMenuItemSelected(String type) {
+		selectItem(type);
 	}      
 }
