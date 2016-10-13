@@ -19,7 +19,6 @@ import android.text.*;
 
 public class DrawerMenu {
 	static Context mContext;
-	static ExpListAdapter adapter;
 	static String LOG_TAG = "";
 	
 	private static int menuGroupPosition;
@@ -80,29 +79,6 @@ public class DrawerMenu {
 		}
     }
     
-public static void fillMenu(Context context, ExpandableListView mDrawerTree){
-	mContext = context;
-	
-	menuData = new ArrayList<MenuGroup>();
-
-	SharedPreferences prefs;
-	prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-	
-	
-	String dataString = prefs.getString("efrwer", "");
-//	ArrayList<String> dataArray = new ArrayList<String>(Arrays.asList(listString.split("\n")));
-	
-	loadData(menuData, dataString);
-	
-    adapter = new ExpListAdapter(context, menuData);
-    
-    mDrawerTree.setAdapter(adapter);
-    
-	Log.d(LOG_TAG, "adapter "+adapter);
-
-}
-
-
 private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 {
 	
@@ -277,7 +253,7 @@ public static void setStepCompleted(int index, int typeOfstep) {
 	
 	if (textData.get(menuGroupPosition).get(menuChildPosition).get(index).flag == 3){
 		textData.get(menuGroupPosition).get(menuChildPosition).get(index).mMarked = true;
-		adapter.notifyDataSetChanged();
+		//adapter.notifyDataSetChanged();
 	}
 }
 
@@ -297,7 +273,6 @@ public static int next() {
 			index++;
 	}
 	
-
 	return index;
 }
 
@@ -307,7 +282,6 @@ public static void resetDataFlag() {
 		m.flag = 0;
 		m.mMarked = false;
 	}
-	adapter.notifyDataSetChanged();
 }
 
 

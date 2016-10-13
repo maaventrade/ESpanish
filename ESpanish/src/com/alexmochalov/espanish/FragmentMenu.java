@@ -3,6 +3,7 @@ package com.alexmochalov.espanish;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,20 @@ public class FragmentMenu extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
 		rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
 		mDrawerTree = (ExpandableListView) rootView
 				.findViewById(R.id.fm_listView);
 
 		return rootView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (adapter != null)
+			adapter.notifyDataSetChanged();
 	}
 
 	public void setMenu(Context context) {

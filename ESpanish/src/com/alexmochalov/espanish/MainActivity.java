@@ -6,6 +6,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.espanish.DrawerMenu.MarkedString;
+import com.alexmochalov.espanish.DrawerMenu.MenuChild;
+import com.alexmochalov.espanish.DrawerMenu.MenuGroup;
 import com.alexmochalov.espanish.FragmentMenu.OnMenuItemSelectedListener;
 
 import android.annotation.SuppressLint;
@@ -140,7 +143,7 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 		fragment = null;
 
 		if (type.equals("Выражения"))
-			fragment = new FragmentPhrase(this);
+			fragment = new FragmentPhrase();
 		else if (type.equals("Спряжения"))
 			fragment = new FragmentConj();
 
@@ -188,8 +191,28 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 		editor.putInt(MENU_GROUP_POSITION, DrawerMenu.getGroupPosition());
 		editor.putInt(MENU_CHILD_POSITION, DrawerMenu.getChildPosition());
 
-		// Toast.makeText(this,"save "+viewFlick.getFix(),
-		// Toast.LENGTH_LONG).show();
+		String listString = "";
+
+		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+		listString = listString + "<data version = \"1\">\n";
+		
+		for (MenuGroup m: DrawerMenu.menuData){
+			listString = listString + "<level0 title = \""+ m.title +"\">\n";
+			for (MenuChild c: m.mChilren){
+				listString = listString + "<level1 title = \""+ c.title +"\" type = \""+c.type+"\">\n";
+
+				for (MarkedString s: DrawerMenu.textData.get( 
+				
+				DrawerMenu.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
+					listString = listString + "<entry text = \""+ s.mText +"\" proc = \"" + s.mMarked + "\"></entry>\n"; 
+				}
+				
+			}
+		}
+		listString = listString + "</data>";
+		
+		editor.putString("efrwer", listString);
+		
 		editor.apply();
 	}
 

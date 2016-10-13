@@ -26,7 +26,6 @@ import com.alexmochalov.espanish.DrawerMenu.MenuChild;
 import com.alexmochalov.espanish.DrawerMenu.MenuGroup;
 
 public class FragmentPhrase extends Fragment {
-	private SharedPreferences prefs;
 	private Fragment thisFragment;
 	
 	// Index of the current Phrase
@@ -42,16 +41,8 @@ public class FragmentPhrase extends Fragment {
 	
 	View rootView;
 	Button button_test;
-	//private TextView mText;
-	//private TextView mTranslation;
 	private Context mContext;
 	
-    public FragmentPhrase(Context context) {
-		//Log.d("", "NEW");
-    	mContext = context;
-    	thisFragment = this;
-    }
-    
     /**
      * Prepare next step of the task
      */
@@ -78,23 +69,23 @@ public class FragmentPhrase extends Fragment {
 		mTranslation.setText(translation);
 		
 		mTranslation.setVisibility(View.INVISIBLE);    	
-		
-		TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewPhraseInfo);
-		TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
-		
 	}
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.d("", "CREATE VIEW");
-		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-
+		
+		thisFragment = this;
+		mContext = this.getActivity();
+		
     	getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     	
         rootView = inflater.inflate(R.layout.fragment_phrase, container, false);
 
     	next();
         
+		TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewPhraseInfo);
+		TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
+    	
 	    button_test = (Button)rootView.findViewById(R.id.button_phrase_test);
 	    button_test.setOnClickListener(new OnClickListener(){
 
@@ -118,16 +109,22 @@ public class FragmentPhrase extends Fragment {
 					
 					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(), direction);
 					
-					// result = true;
+					result = true;
 					mTranslation.setVisibility(View.VISIBLE);
+					
 					if (result){
 						mTranslation.setTextColor(getColor(mContext, R.color.green1));
 						DrawerMenu.setStepCompleted(index, typeOfstep);
+						
+						TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewPhraseInfo);
+						TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
+						
 						if (DrawerMenu.getDataSize() == 0){
 							Toast.makeText(mContext, "THAT IS ALL", Toast.LENGTH_LONG).show();
 							// Close Fragment
 							getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
 						}
+						
 					}
 					else 
 						mTranslation.setTextColor(Color.RED);
@@ -163,42 +160,15 @@ public class FragmentPhrase extends Fragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-
-		//Log.d("", "PAUSE");
-		Editor editor = prefs.edit();
-
-		String listString = "";
-
-		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		listString = listString + "<data version = \"1\">\n";
-		
-		for (MenuGroup m: DrawerMenu.menuData){
-			listString = listString + "<level0 title = \""+ m.title +"\">\n";
-			for (MenuChild c: m.mChilren){
-				listString = listString + "<level1 title = \""+ c.title +"\" type = \""+c.type+"\">\n";
-
-				for (MarkedString s: DrawerMenu.textData.get( 
-				
-				DrawerMenu.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
-					listString = listString + "<entry text = \""+ s.mText +"\" proc = \"" + s.mMarked + "\"></entry>\n"; 
-				}
-				
-			}
-		}
-		listString = listString + "</data>";
-		
-		Log.d("", "->"+listString);
-		
-		editor.putString("efrwer", listString);
-		
-//		editor.commit();		
-		
-		editor.apply();
 	}
 	
 	public String getTextR() {
-		return "ertwerter";
+		if (direction == 0)
+			return text;
+		else 
+			return translation;
 	}	
+	
 	
 }
 

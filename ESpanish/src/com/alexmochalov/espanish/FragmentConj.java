@@ -3,6 +3,7 @@ package com.alexmochalov.espanish;
 import java.util.ArrayList;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,8 +21,9 @@ import com.alexmochalov.espanish.Dictionary.Pronoun;
 
 public class FragmentConj extends Fragment
 {
-	private SharedPreferences prefs;
 	private Fragment thisFragment;
+	
+	private Context mContext;
 
 	private String mText;
 	// Current translation
@@ -60,27 +62,6 @@ public class FragmentConj extends Fragment
 
 	ArrayList<PronounEdited> objects = new ArrayList<PronounEdited>();
 	
-	//private Context mContext;
-
-	/*
-	 public static final FragmentConj newInstance(int title, String message)
-	 {
-	 FragmentConj f = new FragmentConj();
-	 Bundle bdl = new Bundle(2);
-	 //bdl.putInt(EXTRA_TITLE, title);
-	 //bdl.putString(EXTRA_MESSAGE, message);
-	 //f.setArguments(bdl);
-	 return f;
-	 }	
-	 */
-
-	/*	
-	 public FragmentConj(Context context) {
-	 mContext = context;
-	 thisFragment = this;
-	 }
-	 */
-
     private void next()
 	{
     	index = DrawerMenu.next();
@@ -124,12 +105,18 @@ public class FragmentConj extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 
+		thisFragment = this;
+		mContext = this.getActivity();
+		
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
         ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
         
+		TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewConjInfo);
+		TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
+        
 	    for (Pronoun p: Dictionary.getPronouns())
 		{
-            View layout2 = LayoutInflater.from(MainActivity.mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
+            View layout2 = LayoutInflater.from(mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
             mLinearLayout.addView(layout2);
             
 	    	objects.add(new PronounEdited(p, layout2));
@@ -145,10 +132,10 @@ public class FragmentConj extends Fragment
 				{
 
 					// Button Next is pressed
-					if (button_test.getText().equals(MainActivity.mContext.getResources().getString(R.string.button_next)))
+					if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next)))
 					{
 						next();
-						button_test.setText(MainActivity.mContext.getResources().getString(R.string.button_test));
+						button_test.setText(mContext.getResources().getString(R.string.button_test));
 				    	for (PronounEdited p: objects){
 				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation); 
 			    			editText.setTextColor(Color.BLACK);
@@ -187,11 +174,16 @@ public class FragmentConj extends Fragment
 				            editText.setText(p.mPronoun.conj(mText));
 				    	}
 						
+				    	allChecked = true;
+				    	
 						if (allChecked)
 						{
 							DrawerMenu.setStepCompleted(index, 3);
 							TextView textView = ((TextView) rootView.findViewById(R.id.TextViewConjInfo));
 							textView.setText(DrawerMenu.getCountStr());
+							
+							TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewConjInfo);
+							TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
 							
 							if (DrawerMenu.getDataSize() == 0)
 							{
@@ -210,5 +202,8 @@ public class FragmentConj extends Fragment
 	return rootView;
     }
 
+	public void setParams(Context context) {
+		mContext = context;
+	}	
 
 }

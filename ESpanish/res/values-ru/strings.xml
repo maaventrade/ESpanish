@@ -9,7 +9,8 @@
 	<string name="button_prev">Prev</string>
 	<string name="button_speak">Speak</string>
 	<string name="button_test">Проверить</string>
-		
+	<string name="randomize">Перемешивать</string>
+			
 	<string name="error_lang_not_supported">error_lang_not_supported</string>
 	<string name="error_lang_not_found">error_lang_not_found</string>
     <string name="error_lang">Используем основной язык.</string>
