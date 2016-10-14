@@ -41,7 +41,12 @@ import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnInitListener, OnMenuItemSelectedListener{
+public class MainActivity extends Activity implements OnInitListener, 
+OnMenuItemSelectedListener, FragmentM.OnTestedListener
+{
+
+	
+		
 	public static Context mContext;
 	
 	private SharedPreferences prefs;
@@ -49,7 +54,8 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 	private final String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
 	private final String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
 
-	Fragment fragment;
+	FragmentM fragment;
+	FragmentMenu fragmentMenu;
 
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
@@ -58,6 +64,8 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 	TextToSpeech tts;
 	Locale locale;
 
+	int mGroupPosition;
+	int mChildPosition;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +86,7 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 		DrawerMenu.load(this);
 		
 		// 
-		FragmentMenu fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
+		fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
 		fragmentMenu.setMenu(this);
 		fragmentMenu.mCallback = this;
 		
@@ -122,7 +130,7 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 		tts.shutdown(); 
 		super.onDestroy(); 
 	}
-	
+	/*
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -137,7 +145,7 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 			}
 		}
 	};
-
+*/
 	private void selectItem(String type) {
 
 		fragment = null;
@@ -148,6 +156,7 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 			fragment = new FragmentConj();
 
 		if (fragment != null) {
+			fragment.setParams(this, mGroupPosition, mChildPosition);
 			FragmentManager fragmentManager = getFragmentManager();
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			
@@ -188,8 +197,8 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 		Log.d("", "PPPPPAUSEEE");
 
 		Editor editor = prefs.edit();
-		editor.putInt(MENU_GROUP_POSITION, DrawerMenu.getGroupPosition());
-		editor.putInt(MENU_CHILD_POSITION, DrawerMenu.getChildPosition());
+		editor.putInt(MENU_GROUP_POSITION, mGroupPosition);
+		editor.putInt(MENU_CHILD_POSITION, mChildPosition);
 
 		String listString = "";
 
@@ -309,7 +318,16 @@ public class MainActivity extends Activity implements OnInitListener, OnMenuItem
 	}
 
 	@Override
-	public void onMenuItemSelected(String type) {
+	public void onMenuItemSelected(int groupPosition, int childPosition, String type) {
+		mGroupPosition = groupPosition;
+		mChildPosition = childPosition;
 		selectItem(type);
 	}      
+	
+	@Override
+	public void onTested(int groupPosition, int childPosition)
+	{
+		fragmentMenu.refresh();
+	}
+	
 }

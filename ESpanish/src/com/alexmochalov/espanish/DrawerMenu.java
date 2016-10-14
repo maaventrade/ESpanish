@@ -21,8 +21,8 @@ public class DrawerMenu {
 	static Context mContext;
 	static String LOG_TAG = "";
 	
-	private static int menuGroupPosition;
-	private static int menuChildPosition;
+	//private static int menuGroupPosition;
+	//private static int menuChildPosition;
 	
     //  меню
     static ArrayList<MenuGroup> menuData;
@@ -184,11 +184,11 @@ private static XmlPullParser prepareParser(){
 	return mContext.getResources().getXml(R.xml.menu);
 }
 
-
+/*
 public static String getType() {
 	return menuData.get(menuGroupPosition).mChilren.get(menuChildPosition).type;
 }
-
+*/
 public static String getType(int i, int j) {
 	return menuData.get(i).mChilren.get(j).type;
 }
@@ -198,7 +198,7 @@ public static String getCountStr(int i, int j) {
 	int size = textData.get(i).get(j).size();
 	return ""+getDataSize(i, j)+"/"+size;
 }
-
+/*
 public static String getCountStr() {
 	int size = textData.get(menuGroupPosition).get(menuChildPosition).size();
 	return ""+getDataSize(menuGroupPosition, menuChildPosition)+"/"+size;
@@ -217,7 +217,7 @@ public static int getGroupPosition() {
 public static int getChildPosition() {
 	return menuChildPosition;
 }
-
+*/
 
 public static int getDataSize(int i, int j) {
 	int result = 0;
@@ -230,45 +230,35 @@ public static int getDataSize(int i, int j) {
 }
 
 
-public static int getDataSize() {
-	int result = 0;
-	for (MarkedString m: textData.get(menuGroupPosition).get(menuChildPosition)){
-		if (!m.mMarked)
-			result++;
-	}
-		
-	return result;
+
+public static String getText(int i, int j, int index) {
+	return textData.get(i).get(j).get(index).mText;
 }
 
 
-public static String getText(int index) {
-	return textData.get(menuGroupPosition).get(menuChildPosition).get(index).mText;
-}
-
-
-public static void setStepCompleted(int index, int typeOfstep) {
+	public static void setStepCompleted(int i, int j,int index, int typeOfstep) {
 	
-	textData.get(menuGroupPosition).get(menuChildPosition).get(index).flag = 
-			textData.get(menuGroupPosition).get(menuChildPosition).get(index).flag | typeOfstep;
+	textData.get(i).get(j).get(index).flag = 
+			textData.get(i).get(j).get(index).flag | typeOfstep;
 	
-	if (textData.get(menuGroupPosition).get(menuChildPosition).get(index).flag == 3){
-		textData.get(menuGroupPosition).get(menuChildPosition).get(index).mMarked = true;
+	if (textData.get(i).get(j).get(index).flag == 3){
+		textData.get(i).get(j).get(index).mMarked = true;
 		//adapter.notifyDataSetChanged();
 	}
 }
 
 
-public static int next() {
-	int size = textData.get(menuGroupPosition).get(menuChildPosition).size();
+public static int next(int i, int j) {
+	int size = textData.get(i).get(j).size();
 	
 	int index = (int)(Math.random() * size);
-	while (index < size && textData.get(menuGroupPosition).get(menuChildPosition).get(index).mMarked 
+	while (index < size && textData.get(i).get(j).get(index).mMarked 
 			)
 		index++;
 	
 	if (index == size){
 		index = 0;
-		while (index < size && textData.get(menuGroupPosition).get(menuChildPosition).get(index).mMarked  
+		while (index < size && textData.get(i).get(j).get(index).mMarked  
 				)
 			index++;
 	}
@@ -277,16 +267,16 @@ public static int next() {
 }
 
 
-public static void resetDataFlag() {
-	for (MarkedString m: textData.get(menuGroupPosition).get(menuChildPosition)){
+public static void resetDataFlag(int i, int j) {
+	for (MarkedString m: textData.get(i).get(j)){
 		m.flag = 0;
 		m.mMarked = false;
 	}
 }
 
 
-public static int getTypeOfTheStep(int index) {
-	MarkedString data = textData.get(menuGroupPosition).get(menuChildPosition).get(index);
+public static int getTypeOfTheStep(int i, int j, int index) {
+	MarkedString data = textData.get(i).get(j).get(index);
 	
 	if (data.flag == 1)
 		return 2; // span->rus

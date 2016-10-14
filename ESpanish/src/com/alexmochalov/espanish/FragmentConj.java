@@ -19,23 +19,24 @@ import android.widget.Toast;
 import com.alex_mochalov.navdraw.R;
 import com.alexmochalov.espanish.Dictionary.Pronoun;
 
-public class FragmentConj extends Fragment
+public class FragmentConj extends FragmentM
 {
-	private Fragment thisFragment;
+
 	
-	private Context mContext;
+	
 
 	private String mText;
 	// Current translation
 	private String translation;
 
-	private int index = 0;
+	
 
 	private TextView mTextViewText;
 	private TextView mTranslation;
 
-	private View rootView;
+	
 	private Button button_test;
+
 	
 	
 	static class PronounEdited
@@ -62,15 +63,16 @@ public class FragmentConj extends Fragment
 
 	ArrayList<PronounEdited> objects = new ArrayList<PronounEdited>();
 	
-    private void next()
+    private boolean next()
 	{
-    	index = DrawerMenu.next();
+    	index = DrawerMenu.next(mGroupPosition, mChildPosition);
+		if (index == -1) return false;
 
     	// Заполняем заголовок
     	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
 
-        mText = DrawerMenu.getText(index);
+        mText = DrawerMenu.getText(mGroupPosition, mChildPosition, index);
 
 		mTextViewText.setText(mText);
 		mTranslation.setText(Dictionary.getTranslation(mText));
@@ -78,6 +80,8 @@ public class FragmentConj extends Fragment
 		randomize();
 		
 		setVerb(mText);
+		
+		return true;
 	}
 
     private void randomize() {
@@ -111,8 +115,8 @@ public class FragmentConj extends Fragment
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
         ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
         
-		TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewConjInfo);
-		TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
+		//TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewConjInfo);
+		//TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
         
 	    for (Pronoun p: Dictionary.getPronouns())
 		{
@@ -135,6 +139,12 @@ public class FragmentConj extends Fragment
 					if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next)))
 					{
 						next();
+						
+						
+						if (!next()){
+							getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();;
+						}
+						
 						button_test.setText(mContext.getResources().getString(R.string.button_test));
 				    	for (PronounEdited p: objects){
 				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation); 
@@ -178,32 +188,17 @@ public class FragmentConj extends Fragment
 				    	
 						if (allChecked)
 						{
-							DrawerMenu.setStepCompleted(index, 3);
-							TextView textView = ((TextView) rootView.findViewById(R.id.TextViewConjInfo));
-							textView.setText(DrawerMenu.getCountStr());
 							
-							TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewConjInfo);
-							TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
+							setTested(3);
 							
-							if (DrawerMenu.getDataSize() == 0)
-							{
-								Toast.makeText(MainActivity.mContext, "THAT IS ALL", Toast.LENGTH_LONG).show();
-								// Close Fragment
-								getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
-							}
 						}
 
 				}	
 
 			}});
 	    
-		TextView textView = ((TextView) rootView.findViewById(R.id.TextViewConjInfo));
-		textView.setText(DrawerMenu.getCountStr());
-	return rootView;
+			return rootView;
     }
 
-	public void setParams(Context context) {
-		mContext = context;
-	}	
 
 }

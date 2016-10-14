@@ -19,8 +19,13 @@ public class FragmentMenu extends Fragment {
 
 	OnMenuItemSelectedListener mCallback;
 
+	public void refresh()
+	{
+		adapter.notifyDataSetChanged();
+	}
+
 	public interface OnMenuItemSelectedListener {
-		public void onMenuItemSelected(String type);
+		public void onMenuItemSelected(int groupPosition, int childPosition,String type);
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class FragmentMenu extends Fragment {
 					int groupPosition, int childPosition, long id) {
 				
 				if (mCallback != null)
-					mCallback.onMenuItemSelected(DrawerMenu.getType(groupPosition, childPosition));
+mCallback.onMenuItemSelected(groupPosition, childPosition,DrawerMenu.getType(groupPosition, childPosition));
 				
 				return false;
 			}

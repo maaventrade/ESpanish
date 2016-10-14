@@ -25,11 +25,10 @@ import com.alexmochalov.espanish.DrawerMenu.MarkedString;
 import com.alexmochalov.espanish.DrawerMenu.MenuChild;
 import com.alexmochalov.espanish.DrawerMenu.MenuGroup;
 
-public class FragmentPhrase extends Fragment {
-	private Fragment thisFragment;
+public class FragmentPhrase extends FragmentM {
 	
-	// Index of the current Phrase
-	private int index;
+	
+	
 	// Type of the current step
 	private int typeOfstep;
 	// Current text
@@ -39,36 +38,37 @@ public class FragmentPhrase extends Fragment {
 	
 	private int direction;
 	
-	View rootView;
 	Button button_test;
-	private Context mContext;
 	
     /**
      * Prepare next step of the task
      */
-    private void next() {
-    	index = DrawerMenu.next();
+    private boolean next() {
+    	index = DrawerMenu.next(mGroupPosition, mChildPosition);
+		if (index == -1) return false;
     	
     	// 001 spa->ru completed  
     	// 010 ru->spa completed  
-    	typeOfstep = DrawerMenu.getTypeOfTheStep(index); 
+    	typeOfstep = DrawerMenu.getTypeOfTheStep(mGroupPosition, mChildPosition, index); 
     	
         TextView mText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
         TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
         
         if (typeOfstep == 1){
-    		text = DrawerMenu.getText(index);
+    		text = DrawerMenu.getText(mGroupPosition, mChildPosition, index);
     		translation = Dictionary.getTranslation(text);
     		direction = 0;
         } else {
-    		translation = DrawerMenu.getText(index);
+    		translation = DrawerMenu.getText(mGroupPosition, mChildPosition, index);
     		text = Dictionary.getTranslation(translation);
     		direction = 1;
         }
 		mText.setText(text);
 		mTranslation.setText(translation);
 		
-		mTranslation.setVisibility(View.INVISIBLE);    	
+		mTranslation.setVisibility(View.INVISIBLE);   
+		
+		return true;
 	}
 
 	@Override
@@ -81,10 +81,12 @@ public class FragmentPhrase extends Fragment {
     	
         rootView = inflater.inflate(R.layout.fragment_phrase, container, false);
 
-    	next();
-        
-		TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewPhraseInfo);
-		TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
+    	if (!next()){
+			getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();;
+        }
+		
+		TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewInfo);
+		TextViewPhraseInfo.setText(DrawerMenu.getCountStr(mGroupPosition, mChildPosition));
     	
 	    button_test = (Button)rootView.findViewById(R.id.button_phrase_test);
 	    button_test.setOnClickListener(new OnClickListener(){
@@ -114,16 +116,8 @@ public class FragmentPhrase extends Fragment {
 					
 					if (result){
 						mTranslation.setTextColor(getColor(mContext, R.color.green1));
-						DrawerMenu.setStepCompleted(index, typeOfstep);
 						
-						TextView TextViewPhraseInfo =  (TextView)rootView.findViewById(R.id.TextViewPhraseInfo);
-						TextViewPhraseInfo.setText(DrawerMenu.getCountStr());
-						
-						if (DrawerMenu.getDataSize() == 0){
-							Toast.makeText(mContext, "THAT IS ALL", Toast.LENGTH_LONG).show();
-							// Close Fragment
-							getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
-						}
+						setTested(typeOfstep);
 						
 					}
 					else 
@@ -169,6 +163,7 @@ public class FragmentPhrase extends Fragment {
 			return translation;
 	}	
 	
+
 	
 }
 
