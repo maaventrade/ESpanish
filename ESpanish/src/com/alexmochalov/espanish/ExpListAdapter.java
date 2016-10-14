@@ -3,7 +3,7 @@ package com.alexmochalov.espanish;
 import java.util.ArrayList;
 
 import com.alex_mochalov.navdraw.R;
-import com.alexmochalov.espanish.DrawerMenu.MenuGroup;
+import com.alexmochalov.espanish.MenuData.MenuGroup;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -96,7 +96,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 		
 		TextView textChildCount = (TextView) convertView
 				.findViewById(R.id.textChildCount);
-		textChildCount.setText(DrawerMenu.getCountStr(groupPosition, childPosition));
+		textChildCount.setText(MenuData.getCountStr(groupPosition, childPosition));
 
 		/*
 		Button button = (Button) convertView.findViewById(R.id.buttonChild);

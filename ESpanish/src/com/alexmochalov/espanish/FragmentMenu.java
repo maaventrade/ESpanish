@@ -49,7 +49,7 @@ public class FragmentMenu extends Fragment {
 
 	public void setMenu(Context context) {
 		
-		adapter = new ExpListAdapter(context, DrawerMenu.menuData);
+		adapter = new ExpListAdapter(context, MenuData.menuData);
 		mDrawerTree.setAdapter(adapter);
 		mDrawerTree.setOnChildClickListener(new OnChildClickListener() {
 			@Override
@@ -57,7 +57,7 @@ public class FragmentMenu extends Fragment {
 					int groupPosition, int childPosition, long id) {
 				
 				if (mCallback != null)
-mCallback.onMenuItemSelected(groupPosition, childPosition,DrawerMenu.getType(groupPosition, childPosition));
+mCallback.onMenuItemSelected(groupPosition, childPosition,MenuData.getType(groupPosition, childPosition));
 				
 				return false;
 			}

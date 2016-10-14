@@ -37,11 +37,12 @@ public final class R {
         public static final int text_size_small=0x7f070004;
     }
     public static final class drawable {
-        public static final int ic_action_copy=0x7f020000;
-        public static final int ic_action_refresh=0x7f020001;
-        public static final int ic_action_share=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int speaker=0x7f020004;
+        public static final int completed=0x7f020000;
+        public static final int ic_action_copy=0x7f020001;
+        public static final int ic_action_refresh=0x7f020002;
+        public static final int ic_action_share=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int speaker=0x7f020005;
     }
     public static final class id {
         public static final int EditTextTranslation=0x7f0b0008;
@@ -50,28 +51,29 @@ public final class R {
         public static final int TextViewPhraseTranslation=0x7f0b000c;
         public static final int action_settings=0x7f0b0011;
         public static final int am_fragmentMenu=0x7f0b0001;
-        public static final int button_conj_test=0x7f0b0006;
-        public static final int button_phrase_test=0x7f0b000d;
+        public static final int button_test=0x7f0b0006;
         public static final int checkBoxRandom=0x7f0b0007;
         public static final int editText_phrase_transl=0x7f0b000b;
         public static final int fc_linearLayout=0x7f0b0004;
         public static final int fm_listView=0x7f0b0009;
         public static final int fragment_container=0x7f0b0000;
+        public static final int imageView1=0x7f0b000f;
         public static final int item_speak=0x7f0b0012;
         public static final int text=0x7f0b0002;
-        public static final int textChild=0x7f0b000e;
-        public static final int textChildCount=0x7f0b000f;
+        public static final int textChild=0x7f0b000d;
+        public static final int textChildCount=0x7f0b000e;
         public static final int textGroup=0x7f0b0010;
         public static final int translation=0x7f0b0003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int fragment_conj=0x7f030001;
-        public static final int fragment_conj_item=0x7f030002;
-        public static final int fragment_menu=0x7f030003;
-        public static final int fragment_phrase=0x7f030004;
-        public static final int menu_child_view=0x7f030005;
-        public static final int menu_group_view=0x7f030006;
+        public static final int activity_main0=0x7f030001;
+        public static final int fragment_conj=0x7f030002;
+        public static final int fragment_conj_item=0x7f030003;
+        public static final int fragment_menu=0x7f030004;
+        public static final int fragment_phrase=0x7f030005;
+        public static final int menu_child_view=0x7f030006;
+        public static final int menu_group_view=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

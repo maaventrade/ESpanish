@@ -21,13 +21,21 @@ public class Dictionary {
 
 	private static ArrayList<Entry> entries = new ArrayList<Entry>();
 
-	static class Pronoun {
+	public static class Pronoun {
 		String mText;
 		String translation;
 		String verb_ending;
 
-		String conj(String verb) {
+		public String conj(String verb) {
 			return verb.substring(0, verb.length() - 2) + verb_ending;
+		}
+
+		public CharSequence getText() {
+			return mText;
+		}
+
+		public CharSequence getTranslation() {
+			return translation;
 		}
 	}
 

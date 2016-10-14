@@ -6,10 +6,13 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.alex_mochalov.navdraw.R;
-import com.alexmochalov.espanish.DrawerMenu.MarkedString;
-import com.alexmochalov.espanish.DrawerMenu.MenuChild;
-import com.alexmochalov.espanish.DrawerMenu.MenuGroup;
+import com.alexmochalov.espanish.MenuData.MarkedString;
+import com.alexmochalov.espanish.MenuData.MenuChild;
+import com.alexmochalov.espanish.MenuData.MenuGroup;
 import com.alexmochalov.espanish.FragmentMenu.OnMenuItemSelectedListener;
+import com.alexmochalov.espanish.fragments.FragmentConj;
+import com.alexmochalov.espanish.fragments.FragmentM;
+import com.alexmochalov.espanish.fragments.FragmentPhrase;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -44,9 +47,6 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnInitListener, 
 OnMenuItemSelectedListener, FragmentM.OnTestedListener
 {
-
-	
-		
 	public static Context mContext;
 	
 	private SharedPreferences prefs;
@@ -66,6 +66,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	int mGroupPosition;
 	int mChildPosition;
+	String mType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 //		mDrawerTree = (ExpandableListView) findViewById(R.id.left_drawer_exp);
 
 		Dictionary.load(this);
-		DrawerMenu.load(this);
+		MenuData.load(this);
 		
 		// 
 		fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
@@ -126,18 +127,19 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	@Override protected void onDestroy() {
-		tts.shutdown(); 
+	@Override 
+	protected void onDestroy() {
+		if (tts != null) tts.shutdown(); 
 		super.onDestroy(); 
 	}
-	/*
+	
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
             case DialogInterface.BUTTON_POSITIVE:
-				DrawerMenu.resetDataFlag();
-				selectItem(DrawerMenu.getType());
+				MenuData.resetDataFlag(mGroupPosition, mChildPosition);
+				selectItem(mType);
 				
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
@@ -145,10 +147,19 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			}
 		}
 	};
-*/
+
 	private void selectItem(String type) {
 
-		fragment = null;
+		FragmentManager fragmentManager = getFragmentManager();
+		
+		if (fragment != null){
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.detach(fragment);
+			transaction.commit();
+			fragment = null;
+			
+			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		}
 
 		if (type.equals("Выражения"))
 			fragment = new FragmentPhrase();
@@ -156,13 +167,15 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragment = new FragmentConj();
 
 		if (fragment != null) {
-			fragment.setParams(this, mGroupPosition, mChildPosition);
-			FragmentManager fragmentManager = getFragmentManager();
-			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			
+			fragment.setParams(this, mGroupPosition, mChildPosition);
+
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			transaction.replace(R.id.fragment_container, fragment);
 			transaction.addToBackStack(null);
 			transaction.commit();
+			
+			fragment.mCallback = this;
 
 		} else {
 			Log.e("MainActivity", "Error in creating fragment");
@@ -181,21 +194,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	@Override
 	public void onResume() {
 		super.onResume();
-		
-		Log.d("", "RESUME");
-		
 	}
 
 	@Override
 	public void onPause() {
-		super.onPause();
-		
-		//if (fragment != null){
-		//	fragment = null;
-		//}
-		
-		Log.d("", "PPPPPAUSEEE");
-
 		Editor editor = prefs.edit();
 		editor.putInt(MENU_GROUP_POSITION, mGroupPosition);
 		editor.putInt(MENU_CHILD_POSITION, mChildPosition);
@@ -205,24 +207,27 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 		listString = listString + "<data version = \"1\">\n";
 		
-		for (MenuGroup m: DrawerMenu.menuData){
+		for (MenuGroup m: MenuData.menuData){
 			listString = listString + "<level0 title = \""+ m.title +"\">\n";
 			for (MenuChild c: m.mChilren){
 				listString = listString + "<level1 title = \""+ c.title +"\" type = \""+c.type+"\">\n";
 
-				for (MarkedString s: DrawerMenu.textData.get( 
-				
-				DrawerMenu.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
+				for (MarkedString s: MenuData.textData.get( 
+						MenuData.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
 					listString = listString + "<entry text = \""+ s.mText +"\" proc = \"" + s.mMarked + "\"></entry>\n"; 
 				}
-				
+				listString = listString + "</level1>\n";
 			}
+			listString = listString + "</level0>\n";
 		}
 		listString = listString + "</data>";
-		
+		Log.d("", "SAVE");
+		Log.d("", "listString "+listString);
 		editor.putString("efrwer", listString);
 		
-		editor.apply();
+		editor.commit();
+		
+		super.onPause();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -321,13 +326,34 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	public void onMenuItemSelected(int groupPosition, int childPosition, String type) {
 		mGroupPosition = groupPosition;
 		mChildPosition = childPosition;
-		selectItem(type);
+		mType = type;
+		
+		if (MenuData.getDataSize(mGroupPosition, mChildPosition) == 0){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(this.getResources().getString(R.string.startover)).setPositiveButton(
+					this.getResources().getString(R.string.yes), dialogClickListener)
+			    .setNegativeButton(this.getResources().getString(R.string.no), dialogClickListener).show();
+		} else
+			selectItem(type);
 	}      
 	
 	@Override
 	public void onTested(int groupPosition, int childPosition)
 	{
 		fragmentMenu.refresh();
+	}
+
+	@Override
+	public void onFinished(Fragment thisFragment) {
+		FragmentManager fragmentManager = getFragmentManager();
+		if (thisFragment != null){
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.detach(thisFragment);
+			transaction.commit();
+			fragment = null;
+			
+			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		}
 	}
 	
 }
