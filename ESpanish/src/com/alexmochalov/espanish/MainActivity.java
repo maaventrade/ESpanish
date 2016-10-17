@@ -139,6 +139,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
             switch (which){
             case DialogInterface.BUTTON_POSITIVE:
 				MenuData.resetDataFlag(mGroupPosition, mChildPosition);
+				
+				fragmentMenu.refresh();
 				selectItem(mType);
 				
 				break;
@@ -214,7 +216,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 				for (MarkedString s: MenuData.textData.get( 
 						MenuData.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
-					listString = listString + "<entry text = \""+ s.mText +"\" proc = \"" + s.mMarked + "\"></entry>\n"; 
+					listString = listString + "<entry text = \""+ s.mText +"\" flag = \"" + s.flag + "\"></entry>\n"; 
 				}
 				listString = listString + "</level1>\n";
 			}
@@ -328,7 +330,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		mChildPosition = childPosition;
 		mType = type;
 		
-		if (MenuData.getDataSize(mGroupPosition, mChildPosition) == 0){
+		if (MenuData.getRestCount(mGroupPosition, mChildPosition) == 0){
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(this.getResources().getString(R.string.startover)).setPositiveButton(
 					this.getResources().getString(R.string.yes), dialogClickListener)
@@ -344,7 +346,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	}
 
 	@Override
-	public void onFinished(Fragment thisFragment) {
+	public void onFinished(Fragment thisFragment) {/*
 		FragmentManager fragmentManager = getFragmentManager();
 		if (thisFragment != null){
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -353,7 +355,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragment = null;
 			
 			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		}
+		}*/
+		fragmentMenu.refresh();
 	}
 	
 }

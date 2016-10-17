@@ -42,7 +42,7 @@ public class FragmentM extends Fragment
 		if (mCallback != null)
 			mCallback.onTested(mGroupPosition, mChildPosition);
 
-		if (MenuData.getDataSize(mGroupPosition, mChildPosition) == 0){
+		if (MenuData.getRestCount(mGroupPosition, mChildPosition) == 0){
 			Button button_test = (Button)rootView.findViewById(R.id.button_test);
 			button_test.setEnabled(false);
 			

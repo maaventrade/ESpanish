@@ -2,30 +2,30 @@
 <data version = "1">
     <level0 title = "Урок 1">
     	<level1 title = "Приветствия" type = "Выражения">
-    	    <entry text = "¡Hola!" marked = "false"></entry>
-    	    <entry text = "¡Buenos dias!" marked = "false"></entry>
-    	    <entry text = "¡Buenas tardes!" marked = "false"></entry>
-    	    <entry text = "¡Buenas noches!" marked = "false"></entry>
-    	    <entry text = "¡Adiós!" marked = "false"></entry>
-    	    <entry text = "¡Hasta la vista!" marked = "false"></entry>
-    	    <entry text = "¡Gracias!" marked = "false"></entry>
-    	    <entry text = "Por favor" marked = "false"></entry>
-    	    <entry text = "De nada" marked = "false"></entry>
-    	    <entry text = "¿Cómo te llamos?" marked = "false"></entry>
-    	    <entry text = "Me llamo..." marked = "false"></entry>
-    	    <entry text = "Mucho gusto" marked = "false"></entry>
-    	    <entry text = "Encantado" marked = "false"></entry>
+    	    <entry text = "¡Hola!" flag = "0"></entry>
+    	    <entry text = "¡Buenos dias!" flag = "0"></entry>
+    	    <entry text = "¡Buenas tardes!" flag = "0"></entry>
+    	    <entry text = "¡Buenas noches!" flag = "0"></entry>
+    	    <entry text = "¡Adiós!" flag = "0"></entry>
+    	    <entry text = "¡Hasta la vista!" flag = "0"></entry>
+    	    <entry text = "¡Gracias!" flag = "0"></entry>
+    	    <entry text = "Por favor" flag = "0"></entry>
+    	    <entry text = "De nada" flag = "0"></entry>
+    	    <entry text = "¿Cómo te llamos?" flag = "0"></entry>
+    	    <entry text = "Me llamo..." flag = "0"></entry>
+    	    <entry text = "Mucho gusto" flag = "0"></entry>
+    	    <entry text = "Encantado" flag = "0"></entry>
     	</level1>
     	<level1 title = "Глаголы" type = "Спряжения">
-    	   <entry text = "tomar" marked = "false"></entry>
-    	   <entry text = "hablar" marked = "false"></entry>
-    	   <entry text = "trabajar" marked = "false"></entry>
-    	   <entry text = "descansar" marked = "false"></entry>
-    	   <entry text = "cantar" marked = "false"></entry>
-    	   <entry text = "bailar" marked = "false"></entry>
-    	   <entry text = "ayudar" marked = "false"></entry>
-    	   <entry text = "llamar" marked = "false"></entry>
-    	   <entry text = "estudiar" marked = "false"></entry>
+    	   <entry text = "tomar" flag = "0"></entry>
+    	   <entry text = "hablar" flag = "0"></entry>
+    	   <entry text = "trabajar" flag = "0"></entry>
+    	   <entry text = "descansar" flag = "0"></entry>
+    	   <entry text = "cantar" flag = "0"></entry>
+    	   <entry text = "bailar" flag = "0"></entry>
+    	   <entry text = "ayudar" flag = "0"></entry>
+    	   <entry text = "llamar" flag = "0"></entry>
+    	   <entry text = "estudiar" flag = "0"></entry>
     	</level1>
 	</level0>
 	<level0 title = "Урок 2">

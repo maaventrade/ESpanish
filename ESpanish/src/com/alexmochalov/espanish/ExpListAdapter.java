@@ -1,16 +1,11 @@
 package com.alexmochalov.espanish;
 
-import java.util.ArrayList;
-
-import com.alex_mochalov.navdraw.R;
-import com.alexmochalov.espanish.MenuData.MenuGroup;
-
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.TextView;
+import android.content.*;
+import android.view.*;
+import android.widget.*;
+import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.espanish.MenuData.*;
+import java.util.*;
 
 public class ExpListAdapter extends BaseExpandableListAdapter {
 
@@ -98,6 +93,18 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.textChildCount);
 		textChildCount.setText(MenuData.getCountStr(groupPosition, childPosition));
 
+		ImageView imageView = (ImageView) convertView
+				.findViewById(R.id.imageView1);
+		
+		if (MenuData.isFinished(groupPosition, childPosition)){
+			imageView.setVisibility(View.VISIBLE);
+			textChildCount.setVisibility(View.INVISIBLE);
+		} else {
+			imageView.setVisibility(View.INVISIBLE);
+			textChildCount.setVisibility(View.VISIBLE);
+		}
+		
+		
 		/*
 		Button button = (Button) convertView.findViewById(R.id.buttonChild);
 		button.setOnClickListener(new View.OnClickListener() {

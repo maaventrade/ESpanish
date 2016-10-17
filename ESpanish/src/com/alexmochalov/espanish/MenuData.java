@@ -27,24 +27,24 @@ public class MenuData {
     //  меню
     static ArrayList<MenuGroup> menuData;
     static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
+
+	
      
 
     static class MarkedString{
     	public MarkedString(String text) {
     		mText = text;
-    		mMarked = false;
     		flag = 0;
 		}
     	String mText;
-    	Boolean mMarked;
+    	
     	int flag; 
     	// 001 spa->ru completed  
     	// 010 ru->spa completed  
     	// 100 audio completed ?????????  
     	
 		public void setMarked(String marked) {
-			mMarked = Boolean.parseBoolean(marked); 
-			if (mMarked) 
+			if (Boolean.parseBoolean(marked)) 
 				flag = 3; 
 		}
     }
@@ -95,7 +95,7 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 	{ 
 		XmlPullParser xpp = null;
 		
-		if (dataString.equals("")){
+		if (!dataString.equals("")){
 			xpp = mContext.getResources().getXml(R.xml.menu);
 			Log.d("","LOAD R");
 		}else {
@@ -157,7 +157,7 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 								textData.get(textData.size()-1).size()-1
 									).add(new MarkedString(xpp.getAttributeValue(i)));
 					} else
-					if (xpp.getAttributeName(i).equals("proc")){
+					if (xpp.getAttributeName(i).equals("flag")){
 						textData.get(textData.size()-1).get(
 								textData.get(textData.size()-1).size()-1
 									).get(textData.get(textData.size()-1).get(
@@ -203,13 +203,20 @@ public static String getType(int i, int j) {
 
 public static String getCountStr(int i, int j) {
 	int size = textData.get(i).get(j).size();
-	return ""+(size-getDataSize(i, j))+"/"+size;
+	return ""+(size-getRestCount(i, j))+"/"+size;
 }
 
-public static int getDataSize(int i, int j) {
+	public static boolean isFinished(int i, int j)
+	{
+
+		return getRestCount(i, j) == 0;
+	}
+
+
+public static int getRestCount(int i, int j) {
 	int result = 0;
 	for (MarkedString m: textData.get(i).get(j)){
-		if (!m.mMarked)
+		if (m.flag != 3)
 			result++;
 	}
 		
@@ -227,10 +234,7 @@ public static void setStepCompleted(int i, int j,int index, int typeOfstep) {
 	textData.get(i).get(j).get(index).flag = 
 			textData.get(i).get(j).get(index).flag | typeOfstep;
 	
-	if (textData.get(i).get(j).get(index).flag == 3){
-		textData.get(i).get(j).get(index).mMarked = true;
-		//adapter.notifyDataSetChanged();
-	}
+	
 }
 
 
@@ -238,13 +242,13 @@ public static int next(int i, int j) {
 	int size = textData.get(i).get(j).size();
 	
 	int index = (int)(Math.random() * size);
-	while (index < size && textData.get(i).get(j).get(index).mMarked 
+	while (index < size && textData.get(i).get(j).get(index).flag == 3
 			)
 		index++;
 	
 	if (index == size){
 		index = 0;
-		while (index < size && textData.get(i).get(j).get(index).mMarked  
+		while (index < size && textData.get(i).get(j).get(index).flag == 3
 				)
 			index++;
 	}
@@ -260,7 +264,6 @@ public static int next(int i, int j) {
 public static void resetDataFlag(int i, int j) {
 	for (MarkedString m: textData.get(i).get(j)){
 		m.flag = 0;
-		m.mMarked = false;
 	}
 }
 
