@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
 <TextView
-     android:id="@+id/textChild"
-     android:layout_width="wrap_content"
-     android:layout_height="40dp"
-     android:layout_marginLeft="20dp"
-     android:layout_marginTop="20dp"
-	android:textSize="@dimen/text_size_medium"
-     />
+    android:id="@+id/textChild"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:textColor="@color/orange1"
+    android:textSize="@dimen/text_size_medium" />
 
 <FrameLayout
     android:layout_width="wrap_content"
@@ -20,10 +20,10 @@
         android:id="@+id/textChildCount"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp" 
-		android:textSize="@dimen/text_size_medium"/>
+        android:layout_marginTop="20dp"
+        android:textColor="@color/orange1"
+        android:textSize="@dimen/text_size_medium" />
 
     <ImageView
         android:id="@+id/imageView1"
