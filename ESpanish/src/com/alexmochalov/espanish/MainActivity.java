@@ -3,7 +3,7 @@ package com.alexmochalov.espanish;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Map;   
 
 import com.alex_mochalov.navdraw.R;
 import com.alexmochalov.espanish.MenuData.MarkedString;
