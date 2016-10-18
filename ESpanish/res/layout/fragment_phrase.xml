@@ -1,56 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/orange1"
-    android:orientation="vertical" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/orange1"
+	android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/TextViewPhrase"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+	<TextView
+		android:id="@+id/TextViewPhrase"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_horizontal"
+		android:text="Text"
+		android:textSize="@dimen/text_size_medium"/>
 
 	<EditText
-	    android:id="@+id/editText_phrase_transl"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:ems="10"
-	    android:inputType="textNoSuggestions" >
+		android:id="@+id/editText_phrase_transl"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:inputType="textNoSuggestions"
+		android:textSize="@dimen/text_size_medium"
+		android:textAlignment="center"
+		android:gravity="center">
 
-	    <requestFocus />
+		<requestFocus/>
+
 	</EditText>
 
 	<TextView
-	    android:id="@+id/TextViewPhraseTranslation"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center_horizontal"
-	    android:text="Text"
-	    android:textAppearance="?android:attr/textAppearanceLarge" />
+		android:id="@+id/TextViewPhraseTranslation"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_horizontal"
+		android:text="Text"
+		android:textSize="@dimen/text_size_medium"/>
 
 	<FrameLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="fill_parent"
-	    android:gravity="bottom"
-	    android:orientation="horizontal" >
+		android:layout_width="match_parent"
+		android:layout_height="fill_parent"
+		android:gravity="bottom"
+		android:orientation="horizontal">
 
 		<TextView
-		    android:id="@+id/TextViewInfo"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="bottom|right"
-		    android:text="TextView" />
+			android:id="@+id/TextViewInfo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|right"
+			android:text="TextView"
+			android:textSize="@dimen/text_size_medium"/>
 
 		<Button
-		    android:id="@+id/button_test"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="bottom|center"
-		    android:text="@string/button_test" />
+			android:id="@+id/button_test"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom|center"
+			android:text="@string/button_test"
+			android:textSize="@dimen/text_size_medium"/>
 
 	</FrameLayout>
 
 </LinearLayout>
+

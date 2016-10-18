@@ -216,7 +216,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 				for (MarkedString s: MenuData.textData.get( 
 						MenuData.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
-					listString = listString + "<entry text = \""+ s.mText +"\" flag = \"" + s.flag + "\"></entry>\n"; 
+					listString = listString + "<entry text = \""+ s.mText +"\" flag = \"" + s.mFlag + "\"></entry>\n"; 
 				}
 				listString = listString + "</level1>\n";
 			}

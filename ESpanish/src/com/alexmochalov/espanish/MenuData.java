@@ -34,18 +34,17 @@ public class MenuData {
     static class MarkedString{
     	public MarkedString(String text) {
     		mText = text;
-    		flag = 0;
+    		mFlag = 0;
 		}
     	String mText;
     	
-    	int flag; 
+    	int mFlag; 
     	// 001 spa->ru completed  
     	// 010 ru->spa completed  
     	// 100 audio completed ?????????  
     	
-		public void setMarked(String marked) {
-			if (Boolean.parseBoolean(marked)) 
-				flag = 3; 
+		public void setFlag(String flag) {
+			mFlag = Integer.parseInt(flag); 
 		}
     }
     
@@ -95,7 +94,7 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 	{ 
 		XmlPullParser xpp = null;
 		
-		if (!dataString.equals("")){
+		if (dataString.equals("")){
 			xpp = mContext.getResources().getXml(R.xml.menu);
 			Log.d("","LOAD R");
 		}else {
@@ -158,11 +157,12 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 									).add(new MarkedString(xpp.getAttributeValue(i)));
 					} else
 					if (xpp.getAttributeName(i).equals("flag")){
+					
 						textData.get(textData.size()-1).get(
 								textData.get(textData.size()-1).size()-1
 									).get(textData.get(textData.size()-1).get(
 											textData.get(textData.size()-1).size()-1
-											).size()-1).setMarked(xpp.getAttributeValue(i));
+											).size()-1).setFlag(xpp.getAttributeValue(i));
 					}
 				}
 
@@ -216,7 +216,7 @@ public static String getCountStr(int i, int j) {
 public static int getRestCount(int i, int j) {
 	int result = 0;
 	for (MarkedString m: textData.get(i).get(j)){
-		if (m.flag != 3)
+		if (m.mFlag != 3)
 			result++;
 	}
 		
@@ -231,8 +231,8 @@ public static String getText(int i, int j, int index) {
 
 public static void setStepCompleted(int i, int j,int index, int typeOfstep) {
 	
-	textData.get(i).get(j).get(index).flag = 
-			textData.get(i).get(j).get(index).flag | typeOfstep;
+	textData.get(i).get(j).get(index).mFlag = 
+			textData.get(i).get(j).get(index).mFlag | typeOfstep;
 	
 	
 }
@@ -242,13 +242,13 @@ public static int next(int i, int j) {
 	int size = textData.get(i).get(j).size();
 	
 	int index = (int)(Math.random() * size);
-	while (index < size && textData.get(i).get(j).get(index).flag == 3
+	while (index < size && textData.get(i).get(j).get(index).mFlag == 3
 			)
 		index++;
 	
 	if (index == size){
 		index = 0;
-		while (index < size && textData.get(i).get(j).get(index).flag == 3
+		while (index < size && textData.get(i).get(j).get(index).mFlag == 3
 				)
 			index++;
 	}
@@ -263,16 +263,16 @@ public static int next(int i, int j) {
 
 public static void resetDataFlag(int i, int j) {
 	for (MarkedString m: textData.get(i).get(j)){
-		m.flag = 0;
+		m.mFlag = 0;
 	}
 }
 
 public static int getTypeOfTheStep(int i, int j, int index) {
 	MarkedString data = textData.get(i).get(j).get(index);
 	
-	if (data.flag == 1)
+	if (data.mFlag == 1)
 		return 2; // span->rus
-	else if (data.flag == 2)
+	else if (data.mFlag == 2)
 		return 1; // rus->span
 	else if (Math.random() > 0.5) return 1;
 		else return 2;

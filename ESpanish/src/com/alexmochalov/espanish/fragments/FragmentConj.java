@@ -1,27 +1,16 @@
 package com.alexmochalov.espanish.fragments;
 
-import java.util.ArrayList;
+import android.graphics.*;
+import android.os.*;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.espanish.*;
+import com.alexmochalov.espanish.Dictionary.*;
+import java.util.*;
 
-import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.alex_mochalov.navdraw.R;
 import com.alexmochalov.espanish.Dictionary;
-import com.alexmochalov.espanish.MenuData;
-import com.alexmochalov.espanish.MainActivity;
-import com.alexmochalov.espanish.Dictionary.Pronoun;
 
 public class FragmentConj extends FragmentM
 {
@@ -70,7 +59,10 @@ public class FragmentConj extends FragmentM
 		mTextViewText.setText(mText);
 		mTranslation.setText(Dictionary.getTranslation(mText));
 
-		randomize();
+		
+		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
+		if (checkBox.isChecked())
+			randomize();
 		
 		setVerb(mText);
 		
