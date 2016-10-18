@@ -13,21 +13,21 @@
 		android:orientation="vertical">
 
 		<TextView
-			android:id="@+id/text"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center_horizontal"
-			android:text="Text"
-			android:textAppearance="?android:attr/textAppearanceLarge"/>
+		    android:id="@+id/text"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center_horizontal"
+		    android:text="Text"
+		    android:textSize="@dimen/text_size_large" />
 
 		<TextView
-			android:id="@+id/translation"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center_horizontal"
-			android:text="Text"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:textColor="@color/drkgray"/>
+		    android:id="@+id/translation"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center_horizontal"
+		    android:text="Text"
+		    android:textColor="@color/gray"
+		    android:textSize="@dimen/text_size_small" />
 
 	</LinearLayout>
 

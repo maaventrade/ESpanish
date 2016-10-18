@@ -55,6 +55,7 @@ public class MenuData {
 		}
 		String title;
 		String type;
+		String note;
     }
 
     static class MenuGroup{
@@ -81,6 +82,10 @@ public class MenuData {
 		public void setChildType(String type) {
 			mChilren.get(mChilren.size()-1).type = type;
 			
+		}
+
+		public void setChildNote(String note) {
+			mChilren.get(mChilren.size()-1).note = note;
 		}
     }
     
@@ -142,6 +147,9 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 							mode = "Спряжения";
 							menuGroup.setChildType(mode);
 						}	
+					} else
+					if (xpp.getAttributeName(i).equals("note")){
+							menuGroup.setChildNote(xpp.getAttributeValue(i));
 					}
 				}
 				// Level1
@@ -253,10 +261,10 @@ public static int next(int i, int j) {
 			index++;
 	}
 	
+	Log.d("", "index "+index);
 	if (index < textData.get(i).get(j).size())
 		return index;
 	else {
-		Log.d("", "index "+index+" textData.size() "+textData.get(i).get(j).size());
 		return -1;
 	}
 }
@@ -280,19 +288,19 @@ public static int getTypeOfTheStep(int i, int j, int index) {
 }
 
 
-public static void load(Context context) {
+public static void load(Context context, boolean reread) {
 	mContext = context;
 	
 	menuData = new ArrayList<MenuGroup>();
 
-	SharedPreferences prefs;
-	prefs = PreferenceManager.getDefaultSharedPreferences(context);
-	
-	String dataString = prefs.getString("efrwer", "");
-//	ArrayList<String> dataArray = new ArrayList<String>(Arrays.asList(listString.split("\n")));
-	
-	Log.d("", "LOAD");
-	Log.d("", dataString);
+	String dataString = "";
+	if (!reread){
+		SharedPreferences prefs;
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		dataString = prefs.getString("efrwer", "");
+		Log.d("", "LOAD");
+		Log.d("", dataString);
+	}
 	
 	loadData(menuData, dataString);
 }

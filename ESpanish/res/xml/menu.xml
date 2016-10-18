@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data version = "1">
     <level0 title = "Урок 1">
-    	<level1 title = "Приветствия" type = "Выражения">
+    	<level1 title = "Приветствия" type = "Выражения" note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
     	    <entry text = "¡Hola!" flag = "0"></entry>
     	    <entry text = "¡Buenos dias!" flag = "0"></entry>
     	    <entry text = "¡Buenas tardes!" flag = "0"></entry>
@@ -16,7 +16,7 @@
     	    <entry text = "Mucho gusto" flag = "0"></entry>
     	    <entry text = "Encantado" flag = "0"></entry>
     	</level1>
-    	<level1 title = "Глаголы" type = "Спряжения">
+    	<level1 title = "Глаголы" type = "Спряжения" note = "Спрягаем глаголы по формам лица и числа.">
     	   <entry text = "tomar" flag = "0"></entry>
     	   <entry text = "hablar" flag = "0"></entry>
     	   <entry text = "trabajar" flag = "0"></entry>

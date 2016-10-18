@@ -93,6 +93,10 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.textChildCount);
 		textChildCount.setText(MenuData.getCountStr(groupPosition, childPosition));
 
+		TextView textChildNote = (TextView) convertView
+				.findViewById(R.id.textNote);
+		textChildNote.setText(mGroups.get(groupPosition).mChilren.get(childPosition).note);
+		
 		ImageView imageView = (ImageView) convertView
 				.findViewById(R.id.imageView1);
 		

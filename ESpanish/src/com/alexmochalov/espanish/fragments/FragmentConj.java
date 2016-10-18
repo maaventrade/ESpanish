@@ -170,7 +170,7 @@ public class FragmentConj extends FragmentM
 				            editText.setText(p.mPronoun.conj(mText));
 				    	}
 						
-				    	allChecked = true;
+				    	//allChecked = true;
 				    	
 						if (allChecked)
 						{

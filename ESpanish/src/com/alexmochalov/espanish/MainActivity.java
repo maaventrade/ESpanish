@@ -84,7 +84,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 //		mDrawerTree = (ExpandableListView) findViewById(R.id.left_drawer_exp);
 
 		Dictionary.load(this);
-		MenuData.load(this);
+		MenuData.load(this, false);
 		
 		// 
 		fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
@@ -212,7 +212,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		for (MenuGroup m: MenuData.menuData){
 			listString = listString + "<level0 title = \""+ m.title +"\">\n";
 			for (MenuChild c: m.mChilren){
-				listString = listString + "<level1 title = \""+ c.title +"\" type = \""+c.type+"\">\n";
+				listString = listString + "<level1 title = \""+ c.title +"\" type = \""+c.type+"\" note = \""+ c.note +"\">\n";
 
 				for (MarkedString s: MenuData.textData.get( 
 						MenuData.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
@@ -254,6 +254,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		int id = item.getItemId();
 
 		switch (item.getItemId()) {
+
+		case R.id.action_reread: {
+			MenuData.load(this, true);
+			return true;
+		}
 		case R.id.item_speak: {
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -270,11 +275,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 		if (id == R.id.action_settings) {
 			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		} else
+
+			return super.onOptionsItemSelected(item);
 	}
 
-    private void loadLangueges(){
+	private void loadLangueges(){
     	Locale locale[] = Locale.getAvailableLocales();
         //Spinner spinnerLanguages = ((Spinner)findViewById(R.id.spinnerLanguages));
     	/*

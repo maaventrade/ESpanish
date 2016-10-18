@@ -52,7 +52,8 @@ public final class R {
         public static final int TextViewInfo=0x7f0b0005;
         public static final int TextViewPhrase=0x7f0b000a;
         public static final int TextViewPhraseTranslation=0x7f0b000c;
-        public static final int action_settings=0x7f0b0011;
+        public static final int action_reread=0x7f0b0012;
+        public static final int action_settings=0x7f0b0013;
         public static final int am_fragmentMenu=0x7f0b0001;
         public static final int button_test=0x7f0b0006;
         public static final int checkBoxRandom=0x7f0b0007;
@@ -61,11 +62,12 @@ public final class R {
         public static final int fm_listView=0x7f0b0009;
         public static final int fragment_container=0x7f0b0000;
         public static final int imageView1=0x7f0b000f;
-        public static final int item_speak=0x7f0b0012;
+        public static final int item_speak=0x7f0b0014;
         public static final int text=0x7f0b0002;
         public static final int textChild=0x7f0b000d;
         public static final int textChildCount=0x7f0b000e;
-        public static final int textGroup=0x7f0b0010;
+        public static final int textGroup=0x7f0b0011;
+        public static final int textNote=0x7f0b0010;
         public static final int translation=0x7f0b0003;
     }
     public static final class layout {
@@ -82,23 +84,24 @@ public final class R {
         public static final int main=0x7f0a0000;
     }
     public static final class string {
+        public static final int action_reread=0x7f080003;
         public static final int action_settings=0x7f080002;
         public static final int app_name=0x7f080000;
-        public static final int blue=0x7f08000c;
-        public static final int button_next=0x7f080003;
-        public static final int button_prev=0x7f080004;
-        public static final int button_speak=0x7f080005;
-        public static final int button_test=0x7f080006;
-        public static final int error_lang=0x7f08000a;
-        public static final int error_lang_not_found=0x7f080009;
-        public static final int error_lang_not_supported=0x7f080008;
+        public static final int blue=0x7f08000d;
+        public static final int button_next=0x7f080004;
+        public static final int button_prev=0x7f080005;
+        public static final int button_speak=0x7f080006;
+        public static final int button_test=0x7f080007;
+        public static final int error_lang=0x7f08000b;
+        public static final int error_lang_not_found=0x7f08000a;
+        public static final int error_lang_not_supported=0x7f080009;
         public static final int hello_world=0x7f080001;
-        public static final int no=0x7f080010;
-        public static final int orange=0x7f08000d;
-        public static final int randomize=0x7f080007;
-        public static final int red=0x7f08000b;
-        public static final int startover=0x7f08000e;
-        public static final int yes=0x7f08000f;
+        public static final int no=0x7f080011;
+        public static final int orange=0x7f08000e;
+        public static final int randomize=0x7f080008;
+        public static final int red=0x7f08000c;
+        public static final int startover=0x7f08000f;
+        public static final int yes=0x7f080010;
     }
     public static final class style {
         /** 
