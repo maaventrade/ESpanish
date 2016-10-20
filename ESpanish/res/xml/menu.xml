@@ -40,5 +40,30 @@
 			<entry text = "beber" flag = "0"></entry>
 			<entry text = "vivir" flag = "0"></entry>
     	</level1>
-	</level0>
+		<level1 title = "Глагол Ser(быть)" type = "Спряжения"
+			note = "Спрягаем глагол по формам лица и числа. Добавлено слово Esto(это) ">
+			<entry text = "ser" flag = "0"></entry>
+    	</level1>
+		<level1 title = "Вопросительные слова" type = "Выражения"
+			note = "Переводим слова с испанского языка на русский и с русского на испанский.">
+			<entry text = "¿Qué?" flag = "0"></entry>
+			<entry text = "¿Quién?" flag = "0"></entry>
+			<entry text = "¿Dónde?" flag = "0"></entry>
+			<entry text = "¿Cuándo?" flag = "0"></entry>
+			<entry text = "¿Por qué?" flag = "0"></entry>
+			<entry text = "¿Cómo?" flag = "0"></entry>
+			<entry text = "¿Cuánto?" flag = "0"></entry>
+		</level1>
+		
+		<level1 title = "Вопросы" type = "Комбинации"
+			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
+			<entry text = "Qué" sub = "2" neg = "false" verbs = "tomar, cantar, comer, beber"></entry>
+			<entry text = "Quién" sub = "3" neg = "false" verbs = "comer, beber, trabajar, estudiar"></entry>
+			<entry text = "Dónde" sub = "2" neg = "false" verbs = "trabajar, estudiar, vivir, descansar"></entry>
+			<entry text = "Cuándo" sub = "2" neg = "false" verbs = "trabajar, estudiar, ayudar, preguntar"></entry>
+			<entry text = "Por qué" sub = "2" neg = "true" verbs = "descansar, trabajar, estudiar, ayudar, preguntar"></entry>
+			<entry text = "Cómo" sub = "2" neg = "false" verbs = "llamar"></entry>
+			<entry text = "Cuánto" sub = "2" neg = "false" verbs = "descansar, trabajar, estudiar, ayudar, contestar"></entry>
+		</level1>
+		</level0>
 </data>

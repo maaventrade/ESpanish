@@ -62,7 +62,9 @@ public class FragmentPhrase extends FragmentM {
     		text = Dictionary.getTranslation(translation);
     		direction = 1;
         }
-		mText.setText(text);
+		
+        mText.setText(text);
+		
 		mTranslation.setText(translation);
 		
 		mTranslation.setVisibility(View.INVISIBLE);   

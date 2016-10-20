@@ -43,7 +43,7 @@
 	    
 	   	<entry text = "tomar" ending = "ar" transl = "брать">
 	    </entry>
-	   	<entry text = "hablar" ending = "ar" transl = "говорить, разговаривать">
+	   	<entry text = "hablar" ending = "ar" transl = "говорить" transl1 = "разговаривать">
 	    </entry>
 	   	<entry text = "trabajar" ending = "ar" transl = "работать">
 	    </entry>
@@ -69,34 +69,52 @@
 	    </entry>
 		<entry text = "vivir" ending = "ir" transl = "жить">
 	    </entry>
-	   		   		   		   		   	
+		<entry text = "ser" ending = "ser" transl = "быть">
+	    </entry>
+		<entry text = "qué" transl = "что" transl1 = "какой">
+	    </entry>
+		<entry text = "quién" transl = "кто">
+	    </entry>
+		<entry text = "dónde" transl = "где">
+	    </entry>
+		<entry text = "cuándo" transl = "когда">
+	    </entry>
+		<entry text = "por qué" transl = "зачем" transl1 = "почему">
+	    </entry>
+		<entry text = "cómo" transl = "как">
+	    </entry>
+		<entry text = "cuánto" transl = "сколько">
+	    </entry>
+									    
+		
+											   		   		   		   		   	
 	</dictionary>
 	<pronoun>
-	   	<entry text = "Yo" transl = "я" verb_ending = "ar:o,er:o,ir:o">
+	   	<entry text = "Yo" transl = "я" verb_ending = "ar:o,er:o,ir:o,ser:soy">
 	    </entry>
-	   	<entry text = "Tú" transl = "ты" verb_ending = "ar:as,er:es,ir:es">
+	   	<entry text = "Tú" transl = "ты" verb_ending = "ar:as,er:es,ir:es,ser:eres">
 	    </entry>
-	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "ar:a,er:e,ir:e">
+	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "ar:a,er:e,ir:e,ser:es">
 	    </entry>
-	   	<entry text = "Él" transl = "он" verb_ending = "ar:a,er:e,ir:e">
+	   	<entry text = "Él" transl = "он" verb_ending = "ar:a,er:e,ir:e,ser:es">
 	    </entry>
-	   	<entry text = "Ella" transl = "она" verb_ending = "ar:a,er:e,ir:e">
+	   	<entry text = "Ella" transl = "она" verb_ending = "ar:a,er:e,ir:e,ser:es">
 	    </entry>
-	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "ar:amos,er:emos,ir:imos">
+	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "ar:amos,er:emos,ir:imos,ser:somos">
 	    </entry>
-	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "ar:áis,er:éis,ir:ís">
+	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "ar:áis,er:éis,ir:ís,ser:sois">
 	    </entry>
-	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "ar:an,er:en,ir:en">
+	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
 	    </entry>
-	   	<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en">
-	    </entry>
-	 </pronoun>
-		<notes>
-	    <note number = "1">
-	        Буква Н никогда не читается.
-	    </note>
-	    <note number = "2">
-	        Окончание существительного -s это множественное число.
+		   	<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
+		    </entry>
+		   		 </pronoun>
+			<notes>
+		    <note number = "1">
+		        Буква Н никогда не читается.
+		    </note>
+		    <note number = "2">
+		        Окончание существительного -s это множественное число.
 	    </note>
 	    <note number = "3">
 	        Окончание глагола -os это мужской род, -as это женский род.

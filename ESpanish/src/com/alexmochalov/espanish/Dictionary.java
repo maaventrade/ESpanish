@@ -27,12 +27,23 @@ public class Dictionary {
 		String verb_ending;
 
 		public String conj(String verb) {
+
+			// split "verb_ending" to pairs: type and ending  
 			String[] sep1 = verb_ending.split(",");
 			for (int i = 0; i < sep1.length; i++){
+				
+				// split pairs: first is type, second is ending
 				String[] sep2 = sep1[i].split(":");
-				Log.d("",verb.substring(verb.length() - 2)+ "  "+sep2[0]);
-				if (verb.substring(verb.length() - 2).equals(sep2[0]))
-					return verb.substring(0, verb.length() - 2) + sep2[1];
+				//Log.d("",verb.substring(verb.length() - 2)+ "  "+sep2[0]);
+				
+				if (verb.equals("ser")){
+					if (verb.equals(sep2[0]))
+						return sep2[1];
+				} else {
+					if (verb.substring(verb.length() - 2).equals(sep2[0]))
+						return verb.substring(0, verb.length() - 2) + sep2[1];
+					
+				}
 			}
 			return "";
 		}
@@ -61,6 +72,12 @@ public class Dictionary {
 	public static String getTranslation(String searchString) {
 		searchString = searchString.replaceAll("[^a-zA-Z]", "").toLowerCase();
 
+		for (Entry e : entries) {
+			if (e.mText.replaceAll("[^a-zA-Z]", "").toLowerCase()
+					.equals(searchString)) {
+				return e.translation;
+			}
+		}
 		for (Entry e : entries) {
 			if (e.mText.replaceAll("[^a-zA-Z]", "").toLowerCase()
 					.contains(searchString)) {
@@ -94,23 +111,30 @@ public class Dictionary {
 
 		if (direction == 1) {
 			translation = translation.toLowerCase()
+					.replaceAll("á", "a")
+					.replaceAll("ó", "o")
+					.replaceAll("ú", "u").
+					replaceAll("é", "e").
+					replaceAll("á", "a").replaceAll("[^a-zA-Z]", "");
+			
+			String text1 = text.toLowerCase()
 					.replaceAll("á", "a").replaceAll("ó", "o")
-				.replaceAll("ú", "u").replaceAll("á", "a").replaceAll("[^a-zA-Z]", "");
-					
-			Log.d("",translation+"  "+
-				  text.toLowerCase()
-				  .replaceAll("á", "a").replaceAll("ó", "o")
-				  .replaceAll("ú", "u").replaceAll("á", "a").
-				  replaceAll("[^a-zA-Z]", ""));
-				  
-			return translation.equals(text.toLowerCase()
-					.replaceAll("á", "a").replaceAll("ó", "o")
-					.replaceAll("ú", "u").replaceAll("á", "a").
-									  replaceAll("[^a-zA-Z]", ""));
+					.replaceAll("ú", "u").replaceAll("é", "e").
+					replaceAll("á", "a").
+									  replaceAll("[^a-zA-Z]", "");
+
+			if ( translation.equals(text1)) return true;
+			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
+			else return false;	
+			
 		} else {
 			translation = translation.replaceAll("[^а-яА-Я]", "").toLowerCase();
-			return translation.equals(text.replaceAll("[^а-яА-Я]", "")
-					.toLowerCase());
+			
+			String text1 = text.toLowerCase();
+			
+			if ( translation.equals(text1.replaceAll("[^а-яА-Я]", ""))) return true;
+			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
+			else return false;	
 		}
 
 	}
