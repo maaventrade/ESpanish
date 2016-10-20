@@ -99,7 +99,7 @@ private static void loadData(ArrayList<MenuGroup> groupData, String dataString)
 	{ 
 		XmlPullParser xpp = null;
 		
-		if (dataString.equals("")){
+		if (!dataString.equals("")){
 			xpp = mContext.getResources().getXml(R.xml.menu);
 			Log.d("","LOAD R");
 		}else {

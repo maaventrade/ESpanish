@@ -59,27 +59,36 @@
 	    </entry>
 	   	<entry text = "estudiar" ending = "ar" transl = "учиться">
 	    </entry>
-	   		   		   		    
+	   	<entry text = "comer" ending = "er" transl = "есть">
+	    </entry>  		
+		<entry text = "preguntar" ending = "ar" transl = "спрашивать">
+	    </entry>  		   		    
+		<entry text = "contestar" ending = "ar" transl = "отвечать">
+	    </entry>
+		<entry text = "beber" ending = "er" transl = "пить">
+	    </entry>
+		<entry text = "vivir" ending = "ir" transl = "жить">
+	    </entry>
 	   		   		   		   		   	
 	</dictionary>
 	<pronoun>
-	   	<entry text = "Yo" transl = "я" verb_ending = "o">
+	   	<entry text = "Yo" transl = "я" verb_ending = "ar:o,er:o,ir:o">
 	    </entry>
-	   	<entry text = "Tú" transl = "ты" verb_ending = "as">
+	   	<entry text = "Tú" transl = "ты" verb_ending = "ar:as,er:es,ir:es">
 	    </entry>
-	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "a">
+	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "ar:a,er:e,ir:e">
 	    </entry>
-	   	<entry text = "Él" transl = "он" verb_ending = "a">
+	   	<entry text = "Él" transl = "он" verb_ending = "ar:a,er:e,ir:e">
 	    </entry>
-	   	<entry text = "Ella" transl = "она" verb_ending = "a">
+	   	<entry text = "Ella" transl = "она" verb_ending = "ar:a,er:e,ir:e">
 	    </entry>
-	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "amos">
+	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "ar:amos,er:emos,ir:imos">
 	    </entry>
-	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "áis">
+	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "ar:áis,er:éis,ir:ís">
 	    </entry>
-	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "an">
+	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "ar:an,er:en,ir:en">
 	    </entry>
-	   	<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "an">
+	   	<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en">
 	    </entry>
 	 </pronoun>
 		<notes>

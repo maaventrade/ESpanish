@@ -21,6 +21,12 @@ public class FragmentM extends Fragment
 	 
 	public OnTestedListener mCallback;
 
+	public String getTextR()
+	{
+		// TODO: Implement this method
+		return null;
+	}
+
 	public interface OnTestedListener {
 		public void onTested(int groupPosition, int childPosition);
 		public void onFinished(Fragment thisFragment);

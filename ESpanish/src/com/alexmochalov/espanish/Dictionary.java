@@ -27,7 +27,14 @@ public class Dictionary {
 		String verb_ending;
 
 		public String conj(String verb) {
-			return verb.substring(0, verb.length() - 2) + verb_ending;
+			String[] sep1 = verb_ending.split(",");
+			for (int i = 0; i < sep1.length; i++){
+				String[] sep2 = sep1[i].split(":");
+				Log.d("",verb.substring(verb.length() - 2)+ "  "+sep2[0]);
+				if (verb.substring(verb.length() - 2).equals(sep2[0]))
+					return verb.substring(0, verb.length() - 2) + sep2[1];
+			}
+			return "";
 		}
 
 		public CharSequence getText() {
@@ -86,12 +93,20 @@ public class Dictionary {
 		Log.d("", "" + translation + "  " + text);
 
 		if (direction == 1) {
-			translation = translation.replaceAll("[^a-zA-Z]", "")
+			translation = translation.toLowerCase()
 					.replaceAll("á", "a").replaceAll("ó", "o")
-					.replaceAll("ú", "u").replaceAll("á", "a").toLowerCase();
-			return translation.equals(text.replaceAll("[^a-zA-Z]", "")
+				.replaceAll("ú", "u").replaceAll("á", "a").replaceAll("[^a-zA-Z]", "");
+					
+			Log.d("",translation+"  "+
+				  text.toLowerCase()
+				  .replaceAll("á", "a").replaceAll("ó", "o")
+				  .replaceAll("ú", "u").replaceAll("á", "a").
+				  replaceAll("[^a-zA-Z]", ""));
+				  
+			return translation.equals(text.toLowerCase()
 					.replaceAll("á", "a").replaceAll("ó", "o")
-					.replaceAll("ú", "u").replaceAll("á", "a").toLowerCase());
+					.replaceAll("ú", "u").replaceAll("á", "a").
+									  replaceAll("[^a-zA-Z]", ""));
 		} else {
 			translation = translation.replaceAll("[^а-яА-Я]", "").toLowerCase();
 			return translation.equals(text.replaceAll("[^а-яА-Я]", "")

@@ -149,19 +149,18 @@ public class FragmentConj extends FragmentM
 				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation);
 				            String text = editText.getText().toString();
 				            
-				    		if ( text.
+				    		if ( text.toLowerCase().
 				    				replaceAll("á", "a").
 				    				replaceAll("ó", "o").
 				    				replaceAll("ú", "u").
 				    				replaceAll("á", "a").
-				    				toLowerCase().
-				    				equals(p.mPronoun.conj(mText).
+				    				
+								equals(p.mPronoun.conj(mText).toLowerCase().
 				    					   replaceAll("á", "a").
 				    					   replaceAll("ó", "o").
 				    					   replaceAll("ú", "u").
-				    					   replaceAll("á", "a").
-				    					   toLowerCase())){
-				    			editText.setTextColor(Color.GREEN);
+				    					   replaceAll("á", "a"))){
+				    			editText.setTextColor(mContext.getResources().getColor(R.color.green2));
 				    		} else {
 				    			editText.setTextColor(Color.RED);
 								allChecked = false;
@@ -186,5 +185,14 @@ public class FragmentConj extends FragmentM
 			return rootView;
     }
 
-
+	public String getTextR() {
+		String text = "";
+		
+		for (PronounEdited p: objects){
+    	   	text = text + p.mPronoun.getText()+" ";
+    	    text = text +p.mPronoun.conj(mText) + ". ";
+    	}
+		
+		return text;
+	}	
 }

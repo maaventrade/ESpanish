@@ -1,6 +1,7 @@
 package com.alexmochalov.espanish;
 
 import android.content.*;
+import android.text.*;
 import android.view.*;
 import android.widget.*;
 import com.alex_mochalov.navdraw.*;
@@ -95,7 +96,8 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 		TextView textChildNote = (TextView) convertView
 				.findViewById(R.id.textNote);
-		textChildNote.setText(mGroups.get(groupPosition).mChilren.get(childPosition).note);
+		textChildNote.setText(Html.fromHtml(
+			mGroups.get(groupPosition).mChilren.get(childPosition).note));
 		
 		ImageView imageView = (ImageView) convertView
 				.findViewById(R.id.imageView1);

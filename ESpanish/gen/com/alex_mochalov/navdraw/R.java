@@ -19,6 +19,7 @@ public final class R {
         public static final int drkgray=0x7f060002;
         public static final int gray=0x7f060001;
         public static final int green1=0x7f060005;
+        public static final int green2=0x7f060007;
         public static final int ltblue=0x7f060006;
         public static final int orange1=0x7f060003;
         public static final int orange2=0x7f060004;

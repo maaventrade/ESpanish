@@ -257,14 +257,15 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 		case R.id.action_reread: {
 			MenuData.load(this, true);
+			fragmentMenu.refresh();
 			return true;
 		}
 		case R.id.item_speak: {
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				ttsGreater21(((FragmentPhrase) fragment).getTextR());
+				ttsGreater21(fragment.getTextR());
 			} else {
-				ttsUnder20(((FragmentPhrase) fragment).getTextR());
+				ttsUnder20(fragment.getTextR());
 			}
 
 			return true;
