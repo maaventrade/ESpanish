@@ -41,33 +41,33 @@
     	    
 	    </entry>
 	    
-	   	<entry text = "tomar" ending = "ar" transl = "брать">
+	   	<entry text = "tomar" ending = "ar" transl = "брать" root = "бер" fit_type = "1">
 	    </entry>
-	   	<entry text = "hablar" ending = "ar" transl = "говорить" transl1 = "разговаривать">
+	   	<entry text = "hablar" ending = "ar" transl = "говорить" transl1 = "разговаривать" root = "разговарива" fit_type = "2">
 	    </entry>
-	   	<entry text = "trabajar" ending = "ar" transl = "работать">
+	   	<entry text = "trabajar" ending = "ar" transl = "работать" root = "работа" fit_type = "2">
 	    </entry>
-	   	<entry text = "descansar" ending = "ar" transl = "отдыхать">
+	   	<entry text = "descansar" ending = "ar" transl = "отдыхать" root = "отдыха" fit_type = "2">
 	    </entry>
-	   	<entry text = "cantar" ending = "ar" transl = "петь">
+	   	<entry text = "cantar" ending = "ar" transl = "петь" root = "по" fit_type = "3">
 	    </entry>
-	   	<entry text = "bailar" ending = "ar" transl = "танцевать">
+	   	<entry text = "bailar" ending = "ar" transl = "танцевать" root = "танцу" fit_type = "2">
 	    </entry>
-	   	<entry text = "ayudar" ending = "ar" transl = "помогать">
+	   	<entry text = "ayudar" ending = "ar" transl = "помогать" root = "помога" fit_type = "2">
 	    </entry>
-	   	<entry text = "llamar" ending = "ar" transl = "называть, звать, звонить по телефону">
+	   	<entry text = "llamar" ending = "ar" transl = "звать" transl1 = "называть, звонить по телефону" root = "зов" fit_type = "4">
 	    </entry>
-	   	<entry text = "estudiar" ending = "ar" transl = "учиться">
+	   	<entry text = "estudiar" ending = "ar" transl = "учиться" root = "уч" fit_type = "5">
 	    </entry>
-	   	<entry text = "comer" ending = "er" transl = "есть">
+	   	<entry text = "comer" ending = "er" transl = "есть" root = "е" fit_type = "6">
 	    </entry>  		
-		<entry text = "preguntar" ending = "ar" transl = "спрашивать">
+		<entry text = "preguntar" ending = "ar" transl = "спрашивать" root = "спрашива" fit_type = "2">
 	    </entry>  		   		    
-		<entry text = "contestar" ending = "ar" transl = "отвечать">
+		<entry text = "contestar" ending = "ar" transl = "отвечать" root = "отвеча" fit_type = "2">
 	    </entry>
-		<entry text = "beber" ending = "er" transl = "пить">
+		<entry text = "beber" ending = "er" transl = "пить" root = "пь" fit_type = "3">
 	    </entry>
-		<entry text = "vivir" ending = "ir" transl = "жить">
+		<entry text = "vivir" ending = "ir" transl = "жить" root = "жив" fit_type = "1">
 	    </entry>
 		<entry text = "ser" ending = "ser" transl = "быть">
 	    </entry>
@@ -85,7 +85,9 @@
 	    </entry>
 		<entry text = "cuánto" transl = "сколько">
 	    </entry>
-									    
+	   	<entry text = "tú" transl = "ты">
+	    </entry>
+											    
 		
 											   		   		   		   		   	
 	</dictionary>
@@ -106,8 +108,9 @@
 	    </entry>
 	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
 	    </entry>
-		   	<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
-		    </entry>
+		<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
+		</entry>
+		
 		   		 </pronoun>
 			<notes>
 		    <note number = "1">
@@ -120,4 +123,13 @@
 	        Окончание глагола -os это мужской род, -as это женский род.
 	    </note>
 	    </notes>
+	    
+	<fits>
+	   	<entry type = "1" obj = "у:ёшь:ёт"></entry>
+	   	<entry type = "2" obj = "ю:ешь:ет"></entry>
+	   	<entry type = "3" obj = "ю:ёш:ёт"></entry>
+	   	<entry type = "4" obj = "у:ёш:ет"></entry>
+	   	<entry type = "5" obj = "усь:ишся:ится"></entry>
+	   	<entry type = "6" obj = "м:шь:ст"></entry>
+	</fits>				
 </data>

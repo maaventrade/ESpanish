@@ -163,7 +163,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 
-		if (type.equals("Выражения"))
+		if (type.equals("Выражения") || type.equals("Комбинации"))
 			fragment = new FragmentPhrase();
 		else if (type.equals("Спряжения"))
 			fragment = new FragmentConj();
@@ -209,23 +209,23 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 		listString = listString + "<data version = \"1\">\n";
 		
-		for (MenuGroup m: MenuData.menuData){
-			listString = listString + "<level0 title = \""+ m.title +"\">\n";
-			for (MenuChild c: m.mChilren){
-				listString = listString + "<level1 title = \""+ c.title +"\" type = \""+c.type+"\" note = \""+ c.note +"\">\n";
+		for (int i = 0; i < MenuData.menuData.size(); i++){
+			for (int j = 0; j < MenuData.menuData.get(i).mChilren.size(); j++){
 
-				for (MarkedString s: MenuData.textData.get( 
-						MenuData.menuData.indexOf(m)).get(m.mChilren.indexOf(c))){
-					listString = listString + "<entry text = \""+ s.mText +"\" flag = \"" + s.mFlag + "\"></entry>\n"; 
+				for (MarkedString s: MenuData.textData.get(i).get(j)){
+						listString = listString + "<mark group = \""+ i 
+								+"\" child = \"" + j 
+								+"\" index = \"" + MenuData.textData.get(i).get(j).indexOf(s) 
+								+ "\" value = \"" + s.mFlag  
+								+ "\"></mark>\n"; 
 				}
-				listString = listString + "</level1>\n";
 			}
-			listString = listString + "</level0>\n";
 		}
+		
 		listString = listString + "</data>";
 		Log.d("", "SAVE");
 		Log.d("", "listString "+listString);
-		editor.putString("efrwer", listString);
+		editor.putString("MARKS", listString);
 		
 		editor.commit();
 		

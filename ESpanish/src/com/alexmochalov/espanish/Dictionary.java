@@ -14,12 +14,21 @@ import android.util.Log;
 
 public class Dictionary {
 
-	private static class Entry {
-		String mText;
-		String translation;
+	private static class Fit {
+		static int fitType;
+		static String obj[];
+		
+		public Fit(String attributeValue) {
+			fitType = Integer.parseInt(attributeValue);
+		}
+		
+		public void setObj(String attributeValue) {
+			obj = attributeValue.split(":");
+		}
 	}
-
+	
 	private static ArrayList<Entry> entries = new ArrayList<Entry>();
+	private static ArrayList<Fit> fits = new ArrayList<Fit>();
 
 	public static class Pronoun {
 		String mText;
@@ -65,28 +74,50 @@ public class Dictionary {
 		entries.add(e);
 	}
 
-	public static void setTranslation(String text) {
-		entries.get(entries.size() - 1).translation = text;
-	}
-
+	/*
 	public static String getTranslation(String searchString) {
-		searchString = searchString.replaceAll("[^a-zA-Z]", "").toLowerCase();
+		if (searchString.trim().length() == 0)
+			return "";
+		
+		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "").toLowerCase();
 
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Z]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
 					.equals(searchString)) {
 				return e.translation;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Z]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
 					.contains(searchString)) {
 				return e.translation;
 			}
 		}
 		return "";
 	}
+	*/
 
+	public static Entry getTranslation(String searchString) {
+		if (searchString.trim().length() == 0)
+			return null;
+		
+		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "").toLowerCase();
+
+		for (Entry e : entries) {
+			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
+					.equals(searchString)) {
+				return e;
+			}
+		}
+		for (Entry e : entries) {
+			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
+					.contains(searchString)) {
+				return e;
+			}
+		}
+		return null;
+	}
+	
 	public static void addPronoun(String text) {
 		Pronoun e = new Pronoun();
 		e.mText = text;
@@ -136,12 +167,12 @@ public class Dictionary {
 			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
 			else return false;	
 		}
-
 	}
 
 	public static void load(Context context) {
 		entries.clear();
 		pronouns.clear();
+		fits.clear();
 
 		String mode = "";
 
@@ -164,11 +195,30 @@ public class Dictionary {
 							if (xpp.getAttributeName(i).equals("text")) {
 								addEntry(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("transl")) {
-								setTranslation(xpp.getAttributeValue(i));
+								entries.get(entries.size() - 1).
+									setTranslation(xpp.getAttributeValue(i));
+							} else if (xpp.getAttributeName(i).equals("root")) {
+								entries.get(entries.size() - 1).
+									setRoot(xpp.getAttributeValue(i));
+							} else if (xpp.getAttributeName(i).equals("fit_type")) {
+								entries.get(entries.size() - 1).
+									setFitType(xpp.getAttributeValue(i));
+							}
+						}
+					} else if (xpp.getName().equals("entry")
+							&& mode.equals("fits")) {
+						for (int i = 0; i < xpp.getAttributeCount(); i++) {
+							if (xpp.getAttributeName(i).equals("text")) {
+								fits.add(new Fit(xpp.getAttributeValue(i)));
+							} else if (xpp.getAttributeName(i).equals("transl")) {
+								fits.get(fits.size() - 1).
+									setObj(xpp.getAttributeValue(i));
 							}
 						}
 					} else if (xpp.getName().equals("pronoun")) {
 						mode = "pronoun";
+					} else if (xpp.getName().equals("fits")) {
+						mode = "fits";
 					} else if (xpp.getName().equals("entry")
 							&& mode.equals("pronoun")) {
 						for (int i = 0; i < xpp.getAttributeCount(); i++) {
@@ -212,6 +262,15 @@ public class Dictionary {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static String conj(int i, String verb) {
+		return pronouns.get(i).conj(verb);
+	}
+
+	public static String fit(String pronoun, int sub, String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

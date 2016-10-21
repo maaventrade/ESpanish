@@ -3,56 +3,56 @@
     <level0 title = "Урок 1">
     	<level1 title = "Приветствия" type = "Выражения" 
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-    	    <entry text = "¡Hola!" flag = "0"></entry>
-    	    <entry text = "¡Buenos dias!" flag = "0"></entry>
-    	    <entry text = "¡Buenas tardes!" flag = "0"></entry>
-    	    <entry text = "¡Buenas noches!" flag = "0"></entry>
-    	    <entry text = "¡Adiós!" flag = "0"></entry>
-    	    <entry text = "¡Hasta la vista!" flag = "0"></entry>
-    	    <entry text = "¡Gracias!" flag = "0"></entry>
-    	    <entry text = "Por favor" flag = "0"></entry>
-    	    <entry text = "De nada" flag = "0"></entry>
-    	    <entry text = "¿Cómo te llamos?" flag = "0"></entry>
-    	    <entry text = "Me llamo..." flag = "0"></entry>
-    	    <entry text = "Mucho gusto" flag = "0"></entry>
-    	    <entry text = "Encantado" flag = "0"></entry>
+    	    <entry text = "¡Hola!"></entry>
+    	    <entry text = "¡Buenos dias!"></entry>
+    	    <entry text = "¡Buenas tardes!"></entry>
+    	    <entry text = "¡Buenas noches!"></entry>
+    	    <entry text = "¡Adiós!"></entry>
+    	    <entry text = "¡Hasta la vista!"></entry>
+    	    <entry text = "¡Gracias!"></entry>
+    	    <entry text = "Por favor"></entry>
+    	    <entry text = "De nada"></entry>
+    	    <entry text = "¿Cómo te llamos?"></entry>
+    	    <entry text = "Me llamo..."></entry>
+    	    <entry text = "Mucho gusto"></entry>
+    	    <entry text = "Encantado"></entry>
     	</level1>
     	<level1 title = "Глаголы" type = "Спряжения"
 			note = "Спрягаем глаголы по формам лица и числа. Глаголы на &lt;b&gt; &lt;font color=0xffff00&gt; -ar &lt;/font&gt; &lt;/b&gt;">
-    	   <entry text = "tomar" flag = "0"></entry>
-    	   <entry text = "hablar" flag = "0"></entry>
-    	   <entry text = "trabajar" flag = "0"></entry>
-    	   <entry text = "descansar" flag = "0"></entry>
-    	   <entry text = "cantar" flag = "0"></entry>
-    	   <entry text = "bailar" flag = "0"></entry>
-    	   <entry text = "ayudar" flag = "0"></entry>
-    	   <entry text = "llamar" flag = "0"></entry>
-    	   <entry text = "estudiar" flag = "0"></entry>
+    	   <entry text = "tomar"></entry>
+    	   <entry text = "hablar"></entry>
+    	   <entry text = "trabajar"></entry>
+    	   <entry text = "descansar"></entry>
+    	   <entry text = "cantar"></entry>
+    	   <entry text = "bailar"></entry>
+    	   <entry text = "ayudar"></entry>
+    	   <entry text = "llamar"></entry>
+    	   <entry text = "estudiar"></entry>
     	</level1>
 	</level0>
 	<level0 title = "Урок 2">
 		<level1 title = "Глаголы" type = "Спряжения"
 			note = "Спрягаем глаголы по формам лица и числа. Глаголы 
 			на &lt;b&gt; &lt;font color=0xffff00&gt; -ar, -er, -ir &lt;/font&gt; &lt;/b&gt;">
-			<entry text = "preguntar" flag = "0"></entry>
-			<entry text = "contestar" flag = "0"></entry>
-			<entry text = "comer" flag = "0"></entry>
-			<entry text = "beber" flag = "0"></entry>
-			<entry text = "vivir" flag = "0"></entry>
+			<entry text = "preguntar"></entry>
+			<entry text = "contestar"></entry>
+			<entry text = "comer"></entry>
+			<entry text = "beber"></entry>
+			<entry text = "vivir"></entry>
     	</level1>
 		<level1 title = "Глагол Ser(быть)" type = "Спряжения"
 			note = "Спрягаем глагол по формам лица и числа. Добавлено слово Esto(это) ">
-			<entry text = "ser" flag = "0"></entry>
+			<entry text = "ser"></entry>
     	</level1>
 		<level1 title = "Вопросительные слова" type = "Выражения"
 			note = "Переводим слова с испанского языка на русский и с русского на испанский.">
-			<entry text = "¿Qué?" flag = "0"></entry>
-			<entry text = "¿Quién?" flag = "0"></entry>
-			<entry text = "¿Dónde?" flag = "0"></entry>
-			<entry text = "¿Cuándo?" flag = "0"></entry>
-			<entry text = "¿Por qué?" flag = "0"></entry>
-			<entry text = "¿Cómo?" flag = "0"></entry>
-			<entry text = "¿Cuánto?" flag = "0"></entry>
+			<entry text = "¿Qué?"></entry>
+			<entry text = "¿Quién?"></entry>
+			<entry text = "¿Dónde?"></entry>
+			<entry text = "¿Cuándo?"></entry>
+			<entry text = "¿Por qué?"></entry>
+			<entry text = "¿Cómo?"></entry>
+			<entry text = "¿Cuánto?"></entry>
 		</level1>
 		
 		<level1 title = "Вопросы" type = "Комбинации"
@@ -63,7 +63,7 @@
 			<entry text = "Cuándo" sub = "2" neg = "false" verbs = "trabajar, estudiar, ayudar, preguntar"></entry>
 			<entry text = "Por qué" sub = "2" neg = "true" verbs = "descansar, trabajar, estudiar, ayudar, preguntar"></entry>
 			<entry text = "Cómo" sub = "2" neg = "false" verbs = "llamar"></entry>
-			<entry text = "Cuánto" sub = "2" neg = "false" verbs = "descansar, trabajar, estudiar, ayudar, contestar"></entry>
+			<entry text = "Cuánto" sub = "2" neg = "false" verbs = "descansar, trabajar, estudiar"></entry>
 		</level1>
 		</level0>
 </data>

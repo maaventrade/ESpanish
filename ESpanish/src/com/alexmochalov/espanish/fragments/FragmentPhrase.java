@@ -55,11 +55,11 @@ public class FragmentPhrase extends FragmentM {
         
         if (typeOfstep == 1){
     		text = MenuData.getText(mGroupPosition, mChildPosition, index);
-    		translation = Dictionary.getTranslation(text);
+    		translation = MenuData.getTranslation(text, mGroupPosition, mChildPosition, index);
     		direction = 0;
         } else {
     		translation = MenuData.getText(mGroupPosition, mChildPosition, index);
-    		text = Dictionary.getTranslation(translation);
+    		text = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, index);
     		direction = 1;
         }
 		
@@ -103,7 +103,7 @@ public class FragmentPhrase extends FragmentM {
 					
 					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(), direction);
 					
-					//result = true;
+					result = true;
 					mTranslation.setVisibility(View.VISIBLE);
 					
 					if (result){

@@ -57,7 +57,7 @@ public class FragmentConj extends FragmentM
         mText = MenuData.getText(mGroupPosition, mChildPosition, index);
 
 		mTextViewText.setText(mText);
-		mTranslation.setText(Dictionary.getTranslation(mText));
+		mTranslation.setText(Dictionary.getTranslation(mText).translation);
 
 		
 		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
