@@ -38,7 +38,7 @@ public class MenuData {
 			
 			String negStr = " ";
 			String pronoun = "";
-			
+		
 			if (neg)
 				if (Math.random() > 0.5)
 					negStr = " no ";
@@ -50,22 +50,39 @@ public class MenuData {
 				mText = "¿"+text+" tú"+ negStr +Dictionary.conj(1, verb)+"?";
 			}	
 			
-			negStr = Dictionary.getTranslation(negStr).translation;
-			if (negStr.length() > 0)
-				negStr = negStr + " ";
+			if (mText.contains("Cómo tú llamas")){
+				mRusText = "Как тебя зовут?";
+				mText = "¿Cómo té llamas?";
+			} else {
 			
-			Entry e = Dictionary.getTranslation(pronoun);
-				/*	
+			
+			
+			//Log.d("",negStr);
+			Entry e = Dictionary.getTranslation(negStr);
+			if ( e != null)
+				negStr = e.translation;
+				
+			if (negStr.length() > 1)
+				negStr = negStr + " ";
+			else negStr = "";
+			
+			e = Dictionary.getTranslation(pronoun);
+			if ( e != null)
+				pronoun = e.translation.trim();
+			
 			if (pronoun.length() > 0)
 				pronoun = pronoun + " ";
-			verb = Dictionary.getTranslation(verb);
-			verb = Dictionary.fit(e, sub, "present");
+				
+			e = Dictionary.getTranslation(verb);
+			verb = Dictionary.fit(e, sub, "present").trim();
 			
-			mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text))+" "
+			//Log.d("", text);
+			//Log.d("", Dictionary.getTranslation(text).translation);
+			mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text).translation)+" "
 					+ pronoun
 					+ negStr
 					+ verb + "?";
-			*/
+				}	
 			mFlag = 0;
 		}
 		
@@ -260,7 +277,11 @@ public class MenuData {
 											textData.size() - 1).size() - 1);
 						
 						String verbs[] = rec.verbs.split(",");
+						//Log.d("","textDataItem "+textDataItem.toString());
+						//Log.d("",""+verbs.toString());
 						for (String verb : verbs){
+							//Log.d("",rec.toString());
+							//Log.d("",verb);
 							textDataItem.add(new MarkedString(rec.text, rec.sub, rec.neg, verb.trim()));
 						}
 						
@@ -288,7 +309,7 @@ public class MenuData {
 	}
 
 	public static String firstLetterToUpperCase(String translation) {
-		Log.d("", "translation " + translation);
+		//Log.d("", "translation " + translation);
 		return translation.substring(0,1).toUpperCase() + translation.substring(1);
 	}
 
@@ -397,7 +418,7 @@ public class MenuData {
 				index++;
 		}
 
-		Log.d("", "index " + index);
+		//Log.d("", "index " + index);
 		if (index < textData.get(i).get(j).size())
 			return index;
 		else {
@@ -438,8 +459,8 @@ public class MenuData {
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		marksString = prefs.getString("MARKS", "");
 
-		Log.d("", "LOAD");
-		Log.d("", marksString);
+	//	Log.d("", "LOAD");
+		//Log.d("", marksString);
 
 		if (marksString.length() > 0) {
 			ArrayList<Mark> marks = new ArrayList<Mark>();

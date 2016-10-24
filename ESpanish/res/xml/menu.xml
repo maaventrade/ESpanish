@@ -41,7 +41,7 @@
 			<entry text = "vivir"></entry>
     	</level1>
 		<level1 title = "Глагол Ser(быть)" type = "Спряжения"
-			note = "Спрягаем глагол по формам лица и числа. Добавлено слово Esto(это) ">
+			note = "Спрягаем глагол по формам лица и числа. Добавлено слово &lt;b&gt; &lt;font color=0xffff00&gt;Esto(это)&lt;/font&gt; &lt;/b&gt; ">
 			<entry text = "ser"></entry>
     	</level1>
 		<level1 title = "Вопросительные слова" type = "Выражения"

@@ -11,6 +11,7 @@ import com.alexmochalov.espanish.Dictionary.*;
 import java.util.*;
 
 import com.alexmochalov.espanish.Dictionary;
+import android.util.*;
 
 public class FragmentConj extends FragmentM
 {
@@ -56,8 +57,8 @@ public class FragmentConj extends FragmentM
 
         mText = MenuData.getText(mGroupPosition, mChildPosition, index);
 
-		mTextViewText.setText(mText);
-		mTranslation.setText(Dictionary.getTranslation(mText).translation);
+		mTextViewText.setText(firstLetterToUpperCase(mText));
+		mTranslation.setText(Dictionary.getTranslation(mText).getTranslation());
 
 		
 		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
@@ -69,6 +70,13 @@ public class FragmentConj extends FragmentM
 		return true;
 	}
 
+
+	public static String firstLetterToUpperCase(String translation) {
+		//Log.d("", "translation " + translation);
+		return translation.substring(0,1).toUpperCase() + translation.substring(1);
+	}
+	
+	
     private void randomize() {
 		for (int i = 1; i <= objects.size(); i++){
 			int j = (int)(Math.random() * objects.size());
@@ -108,15 +116,27 @@ public class FragmentConj extends FragmentM
         init();
     	next();
 
-        ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
+		ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
+		
+		//Log.d("",""+mGroupPosition);
+		//Log.d("",""+mChildPosition);
+		
 	    for (Pronoun p: Dictionary.getPronouns())
 		{
-            View layout2 = LayoutInflater.from(mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
-            mLinearLayout.addView(layout2);
-            
-	    	objects.add(new PronounEdited(p, layout2));
+			//Log.d("",""+Dictionary.isLast(p));
+			
+			if (mGroupPosition == 1 && mChildPosition == 1
+				|| !Dictionary.isLast(p)){
+					
+				//Log.d("",""+p.getText());
+
+				View layout2 = LayoutInflater.from(mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
+				mLinearLayout.addView(layout2);
+	    		objects.add(new PronounEdited(p, layout2));
+			}
 		}
     	
+		
 	    button_test = (Button)rootView.findViewById(R.id.button_test);
 	    button_test.setOnClickListener(new OnClickListener(){
 

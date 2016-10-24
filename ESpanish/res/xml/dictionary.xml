@@ -55,11 +55,11 @@
 	    </entry>
 	   	<entry text = "ayudar" ending = "ar" transl = "помогать" root = "помога" fit_type = "2">
 	    </entry>
-	   	<entry text = "llamar" ending = "ar" transl = "звать" transl1 = "называть, звонить по телефону" root = "зов" fit_type = "4">
+	   	<entry text = "llamar" ending = "ar" transl = "звать" transl1 = "называть, звонить по телефону" root = "зов" fit_type = "1">
 	    </entry>
-	   	<entry text = "estudiar" ending = "ar" transl = "учиться" root = "уч" fit_type = "5">
+	   	<entry text = "estudiar" ending = "ar" transl = "учиться" root = "уч" fit_type = "4">
 	    </entry>
-	   	<entry text = "comer" ending = "er" transl = "есть" root = "е" fit_type = "6">
+	   	<entry text = "comer" ending = "er" transl = "есть" root = "е" fit_type = "5">
 	    </entry>  		
 		<entry text = "preguntar" ending = "ar" transl = "спрашивать" root = "спрашива" fit_type = "2">
 	    </entry>  		   		    
@@ -87,7 +87,8 @@
 	    </entry>
 	   	<entry text = "tú" transl = "ты">
 	    </entry>
-											    
+		<entry text = "no" transl = "не">
+	    </entry>								    
 		
 											   		   		   		   		   	
 	</dictionary>
@@ -110,6 +111,8 @@
 	    </entry>
 		<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
 		</entry>
+		<entry text = "Esto" transl = "это" verb_ending = "ar:a,er:e,ir:e,ser:es">
+		</entry>
 		
 		   		 </pronoun>
 			<notes>
@@ -127,9 +130,8 @@
 	<fits>
 	   	<entry type = "1" obj = "у:ёшь:ёт"></entry>
 	   	<entry type = "2" obj = "ю:ешь:ет"></entry>
-	   	<entry type = "3" obj = "ю:ёш:ёт"></entry>
-	   	<entry type = "4" obj = "у:ёш:ет"></entry>
-	   	<entry type = "5" obj = "усь:ишся:ится"></entry>
-	   	<entry type = "6" obj = "м:шь:ст"></entry>
+	   	<entry type = "3" obj = "ю:ёшь:ёт"></entry>
+	   	<entry type = "4" obj = "усь:ишся:ится"></entry>
+	   	<entry type = "5" obj = "м:шь:ст"></entry>
 	</fits>				
 </data>

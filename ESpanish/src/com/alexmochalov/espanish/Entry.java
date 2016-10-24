@@ -1,10 +1,10 @@
 package com.alexmochalov.espanish;
 
 public class Entry {
-	static String mText;
-	public static String translation;
-	static String root;
-	static int fit_type;
+	String mText;
+	String translation;
+	String root;
+	int fit_type;
 	
 	public void setTranslation(String text) {
 		translation = text;
@@ -16,5 +16,9 @@ public class Entry {
 
 	public void setFitType(String attributeValue) {
 		fit_type = Integer.parseInt(attributeValue);
+	}
+	
+	public String getTranslation(){
+		return translation;
 	}
 }

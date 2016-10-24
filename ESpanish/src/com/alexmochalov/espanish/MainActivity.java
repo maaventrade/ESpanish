@@ -99,7 +99,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
         //    fragment = (Fragment) getFragmentManager().findFragmentByTag("your_fragment_tag");
        // }		
 
-		Log.d("", "CREATE");
+		//Log.d("", "CREATE");
 		
 		int menuGroupPosition = prefs.getInt(MENU_GROUP_POSITION, -1);
 		int menuChildPosition = prefs.getInt(MENU_CHILD_POSITION, -1);
@@ -223,8 +223,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		}
 		
 		listString = listString + "</data>";
-		Log.d("", "SAVE");
-		Log.d("", "listString "+listString);
+		//Log.d("", "SAVE");
+		//Log.d("", "listString "+listString);
 		editor.putString("MARKS", listString);
 		
 		editor.commit();

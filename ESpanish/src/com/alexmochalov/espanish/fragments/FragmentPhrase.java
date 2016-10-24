@@ -103,7 +103,7 @@ public class FragmentPhrase extends FragmentM {
 					
 					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(), direction);
 					
-					result = true;
+					//result = true;
 					mTranslation.setVisibility(View.VISIBLE);
 					
 					if (result){
