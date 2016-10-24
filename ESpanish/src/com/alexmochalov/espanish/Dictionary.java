@@ -162,7 +162,7 @@ public class Dictionary
 
 	//Log.d("", "" + translation + "  " + text);
 
-		if (direction == 1) {
+		if (direction == 0) {
 			translation = translation.toLowerCase()
 					.replaceAll("á", "a")
 					.replaceAll("ó", "o")

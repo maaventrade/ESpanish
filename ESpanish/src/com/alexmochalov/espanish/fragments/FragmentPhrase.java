@@ -25,45 +25,28 @@ import com.alexmochalov.espanish.Dictionary;
 import com.alexmochalov.espanish.MenuData;
 
 public class FragmentPhrase extends FragmentM {
-	
-	
-	
-	// Type of the current step
-	private int typeOfstep;
-	// Current text
-	private String text;
-	// Current translation
-	private String translation;
-	
-	private int direction;
-	
 	Button button_test;
 	
     /**
      * Prepare next step of the task
      */
     private boolean next() {
-    	index = MenuData.next(mGroupPosition, mChildPosition);
-		if (index == -1) return false;
-    	
     	// 001 spa->ru completed  
     	// 010 ru->spa completed  
-    	typeOfstep = MenuData.getTypeOfTheStep(mGroupPosition, mChildPosition, index); 
+		direction = MenuData.getTypeOfTheStep(mGroupPosition, mChildPosition, mIndex); 
     	
-        TextView mText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
-        TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
+        mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
+        mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
         
-        if (typeOfstep == 1){
-    		text = MenuData.getText(mGroupPosition, mChildPosition, index);
-    		translation = MenuData.getTranslation(text, mGroupPosition, mChildPosition, index);
-    		direction = 0;
+        if (direction == 0){
+    		mText = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
+    		translation = MenuData.getTranslation(mText, mGroupPosition, mChildPosition, mIndex);
         } else {
-    		translation = MenuData.getText(mGroupPosition, mChildPosition, index);
-    		text = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, index);
-    		direction = 1;
+    		translation = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
+    		mText = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, mIndex);
         }
 		
-        mText.setText(text);
+        mTextViewText.setText(mText);
 		
 		mTranslation.setText(translation);
 		
@@ -72,6 +55,20 @@ public class FragmentPhrase extends FragmentM {
 		return true;
 	}
 
+
+	@Override
+    public void onPause()
+	{
+		saveParams(mContext);
+		super.onPause();
+	}
+	
+	@Override
+    public void onResume()
+	{
+		super.onResume();
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -88,11 +85,17 @@ public class FragmentPhrase extends FragmentM {
 
 				// Button Next is pressed
 				if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next))){
-					next();
-					EditText editText = (EditText)rootView.findViewById(R.id.editText_phrase_transl);
-					editText.setText("");
-					
-					button_test.setText(mContext.getResources().getString(R.string.button_test));
+			    	mIndex = MenuData.next(mGroupPosition, mChildPosition);
+					if (mIndex == -1){
+						getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
+					} else {
+						next();
+						
+						EditText editText = (EditText)rootView.findViewById(R.id.editText_phrase_transl);
+						editText.setText("");
+						
+						button_test.setText(mContext.getResources().getString(R.string.button_test));
+					}
 				}	
 				else {
 					// Button Проверить is pressed
@@ -109,7 +112,7 @@ public class FragmentPhrase extends FragmentM {
 					if (result){
 						mTranslation.setTextColor(getColor(mContext, R.color.green1));
 						
-						setTested(typeOfstep);
+						setTested(direction);
 						
 					}
 					else 
@@ -143,14 +146,9 @@ public class FragmentPhrase extends FragmentM {
 	}
 */
 
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-	
 	public String getTextR() {
 		if (direction == 0)
-			return text;
+			return mText;
 		else 
 			return translation;
 	}	

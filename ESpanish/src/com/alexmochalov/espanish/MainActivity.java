@@ -51,9 +51,9 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private SharedPreferences prefs;
 
-	private final String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
-	private final String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
-
+	//private final String FRAGMENT_PHRASE = "FRAGMENT_PHRASE";
+	//private final String FRAGMENT_CONJ = "FRAGMENT_CONJ";
+	
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
 
@@ -64,9 +64,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	TextToSpeech tts;
 	Locale locale;
 
-	int mGroupPosition;
-	int mChildPosition;
 	String mType;
+	
+	private int mGroupPosition;
+	private int mChildPosition;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +101,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
        // }		
 
 		//Log.d("", "CREATE");
-		
-		int menuGroupPosition = prefs.getInt(MENU_GROUP_POSITION, -1);
-		int menuChildPosition = prefs.getInt(MENU_CHILD_POSITION, -1);
 		
 //		DrawerMenu.setPositions(menuGroupPosition, menuChildPosition);
 
@@ -152,6 +150,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	private void selectItem(String type) {
 
+		//String phragment_tag = "";
+		
 		FragmentManager fragmentManager = getFragmentManager();
 		
 		if (fragment != null){
@@ -163,14 +163,15 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		}
 
-		if (type.equals("Выражения") || type.equals("Комбинации"))
+		if (type.equals("Выражения") || type.equals("Комбинации")){
 			fragment = new FragmentPhrase();
-		else if (type.equals("Спряжения"))
+		} else if (type.equals("Спряжения")){
 			fragment = new FragmentConj();
-
+		}
+		
 		if (fragment != null) {
-			
-			fragment.setParams(this, mGroupPosition, mChildPosition);
+			fragment.setParams(this, mGroupPosition, mChildPosition, 0);
+			fragment.saveParams(this);
 
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			transaction.replace(R.id.fragment_container, fragment);
@@ -178,7 +179,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			transaction.commit();
 			
 			fragment.mCallback = this;
-
 		} else {
 			Log.e("MainActivity", "Error in creating fragment");
 		}
@@ -200,9 +200,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override
 	public void onPause() {
+		//if (fragment != null)
+		//	fragment.saveParams(this);
+		
 		Editor editor = prefs.edit();
-		editor.putInt(MENU_GROUP_POSITION, mGroupPosition);
-		editor.putInt(MENU_CHILD_POSITION, mChildPosition);
 
 		String listString = "";
 
@@ -213,6 +214,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			for (int j = 0; j < MenuData.menuData.get(i).mChilren.size(); j++){
 
 				for (MarkedString s: MenuData.textData.get(i).get(j)){
+					
 						listString = listString + "<mark group = \""+ i 
 								+"\" child = \"" + j 
 								+"\" index = \"" + MenuData.textData.get(i).get(j).indexOf(s) 
@@ -333,11 +335,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override
 	public void onMenuItemSelected(int groupPosition, int childPosition, String type) {
-		mGroupPosition = groupPosition;
-		mChildPosition = childPosition;
 		mType = type;
 		
-		if (MenuData.getRestCount(mGroupPosition, mChildPosition) == 0){
+		mGroupPosition = groupPosition;
+		mChildPosition = childPosition;
+		
+		if (MenuData.getRestCount(groupPosition, childPosition) == 0){
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(this.getResources().getString(R.string.startover)).setPositiveButton(
 					this.getResources().getString(R.string.yes), dialogClickListener)
@@ -353,16 +356,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	}
 
 	@Override
-	public void onFinished(Fragment thisFragment) {/*
-		FragmentManager fragmentManager = getFragmentManager();
-		if (thisFragment != null){
-			FragmentTransaction transaction = fragmentManager.beginTransaction();
-			transaction.detach(thisFragment);
-			transaction.commit();
-			fragment = null;
-			
-			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		}*/
+	public void onFinished(Fragment thisFragment) {
 		fragmentMenu.refresh();
 	}
 	

@@ -73,8 +73,7 @@ public class MenuData {
 			if (pronoun.length() > 0)
 				pronoun = pronoun + " ";
 				
-			e = Dictionary.getTranslation(verb);
-			verb = Dictionary.fit(e, sub, "present").trim();
+			e = Dictionary.getTranslation(verb);			verb = Dictionary.fit(e, sub, "present").trim();
 			
 			//Log.d("", text);
 			//Log.d("", Dictionary.getTranslation(text).translation);
@@ -405,6 +404,18 @@ public class MenuData {
 
 	}
 
+	public static int findIndex(int i, int j,
+			String text) {
+		
+		for (MarkedString m: textData.get(i).get(j))
+			if (m.mText.equals(text) && m.mFlag < 3){
+				
+				return textData.get(i).get(j).indexOf(m);
+			}	
+		
+		return 0;
+	}
+	
 	public static int next(int i, int j) {
 		int size = textData.get(i).get(j).size();
 
@@ -418,7 +429,6 @@ public class MenuData {
 				index++;
 		}
 
-		//Log.d("", "index " + index);
 		if (index < textData.get(i).get(j).size())
 			return index;
 		else {
@@ -436,13 +446,13 @@ public class MenuData {
 		MarkedString data = textData.get(i).get(j).get(index);
 
 		if (data.mFlag == 1)
-			return 2; // span->rus
+			return 1; // span->rus
 		else if (data.mFlag == 2)
-			return 1; // rus->span
+			return 0; // rus->span
 		else if (Math.random() > 0.5)
-			return 1;
+			return 0;
 		else
-			return 2;
+			return 1;
 
 	}
 
@@ -484,5 +494,14 @@ public class MenuData {
 			Dictionary.getTranslation(text).translation;
 		
 	}
+
+	public static int nextTestIndex(int i, int j, int index) {
+		int size = textData.get(i).get(j).size();
+		if (index < size && index >= 0 &&
+				textData.get(i).get(j).get(index).mFlag < 3
+				) return index;
+		return next(i, j);
+	}
+
 
 }

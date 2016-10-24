@@ -15,11 +15,6 @@ import android.util.*;
 
 public class FragmentConj extends FragmentM
 {
-	private String mText;
-
-	private TextView mTextViewText;
-	private TextView mTranslation;
-	
 	private Button button_test;
 	
 	static class PronounEdited
@@ -48,14 +43,11 @@ public class FragmentConj extends FragmentM
 	
     private boolean next()
 	{
-    	index = MenuData.next(mGroupPosition, mChildPosition);
-		if (index == -1) return false;
-		
     	// Заполняем заголовок
     	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
 
-        mText = MenuData.getText(mGroupPosition, mChildPosition, index);
+        mText = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
 
 		mTextViewText.setText(firstLetterToUpperCase(mText));
 		mTranslation.setText(Dictionary.getTranslation(mText).getTranslation());
@@ -101,12 +93,25 @@ public class FragmentConj extends FragmentM
 	@Override
     public void onStart()
 	{
-        mText = MenuData.getText(mGroupPosition, mChildPosition, index);
+        mText = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
 		setVerb(mText);
 		
 		super.onStart();
 	}
-    
+
+	@Override
+    public void onPause()
+	{
+		saveParams(mContext);
+		super.onPause();
+	}
+
+	@Override
+    public void onResume()
+	{
+		super.onResume();
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -147,15 +152,18 @@ public class FragmentConj extends FragmentM
 					// Button Next is pressed
 					if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next)))
 					{
-						if (!next()){
+				    	mIndex = MenuData.next(mGroupPosition, mChildPosition);
+						if (mIndex == -1){
 							getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();;
+						} else {
+							next();
+							button_test.setText(mContext.getResources().getString(R.string.button_test));
+					    	for (PronounEdited p: objects){
+					            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation); 
+				    			editText.setTextColor(Color.BLACK);
+					            editText.setText("");
 						}
 						
-						button_test.setText(mContext.getResources().getString(R.string.button_test));
-				    	for (PronounEdited p: objects){
-				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation); 
-			    			editText.setTextColor(Color.BLACK);
-				            editText.setText("");
 				    	}
 					}	
 					else
