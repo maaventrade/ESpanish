@@ -59,7 +59,6 @@ public class FragmentPhrase extends FragmentM {
 	@Override
     public void onPause()
 	{
-		saveParams(mContext);
 		super.onPause();
 	}
 	

@@ -51,12 +51,21 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private SharedPreferences prefs;
 
-	//private final String FRAGMENT_PHRASE = "FRAGMENT_PHRASE";
-	//private final String FRAGMENT_CONJ = "FRAGMENT_CONJ";
+	private final String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
+	private final String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
+	private final String DIRECTION = "DIRECTION";
+	private final String MTEXT = "TEXT";
+	private final String RANDOMIZE = "RANDOMIZE";
+	private final String MENU_INDEX = "MENU_INDEX";
 	
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
 
+	String mText;
+	int direction;
+	
+	boolean randomize = false;
+	
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
 	private String language = "spa";
@@ -66,8 +75,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	String mType;
 	
-	private int mGroupPosition;
-	private int mChildPosition;
+	//private int randomize;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +144,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
             case DialogInterface.BUTTON_POSITIVE:
-				MenuData.resetDataFlag(mGroupPosition, mChildPosition);
+				MenuData.resetDataFlag();
 				
 				fragmentMenu.refresh();
 				selectItem(mType);
@@ -170,8 +178,9 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		}
 		
 		if (fragment != null) {
-			fragment.setParams(this, mGroupPosition, mChildPosition, 0);
-			fragment.saveParams(this);
+			//fragment.setParams(this, mGroupPosition, mChildPosition, 0);
+	    	//mIndex = MenuData.nextTestIndex(mGroupPosition, mChildPosition, mIndex);
+			//fragment.saveParams(this);
 
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			transaction.replace(R.id.fragment_container, fragment);
@@ -200,9 +209,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override
 	public void onPause() {
-		//if (fragment != null)
-		//	fragment.saveParams(this);
-		
+		super.onPause();
+	}
+
+	private void saveParameters() {
 		Editor editor = prefs.edit();
 
 		String listString = "";
@@ -229,11 +239,33 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		//Log.d("", "listString "+listString);
 		editor.putString("MARKS", listString);
 		
-		editor.commit();
+		editor.putInt(MENU_GROUP_POSITION, MenuData.mGroupPosition);
+		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
+		editor.putString(MTEXT, mText);
+		editor.putInt(DIRECTION, direction);
+		editor.putBoolean(RANDOMIZE, randomize);
 		
-		super.onPause();
-	}
+		editor.putInt(MENU_INDEX, MenuData.mIndex);
 
+		editor.commit();
+	}
+	
+	private void loadParameters() {
+		MenuData.mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
+		MenuData.mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
+		
+		randomize = prefs.getBoolean(RANDOMIZE, false);
+		
+		direction = prefs.getInt(DIRECTION, 0);
+		String text = prefs.getString(MTEXT, "");
+		
+		if (text.length() > 0){
+			MenuData.mIndex = MenuData.findIndex(text);
+		} else {
+	    	MenuData.nextTestIndex();
+		}
+	}
+	
 	@SuppressWarnings("deprecation")
 	private void ttsUnder20(String text) {
 		HashMap<String, String> map = new HashMap<>();
@@ -337,8 +369,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	public void onMenuItemSelected(int groupPosition, int childPosition, String type) {
 		mType = type;
 		
-		mGroupPosition = groupPosition;
-		mChildPosition = childPosition;
+		MenuData.mGroupPosition = groupPosition;
+		MenuData.mChildPosition = childPosition;
 		
 		if (MenuData.getRestCount(groupPosition, childPosition) == 0){
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -350,7 +382,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	}      
 	
 	@Override
-	public void onTested(int groupPosition, int childPosition)
+	public void onTested()
 	{
 		fragmentMenu.refresh();
 	}

@@ -21,8 +21,9 @@ public class MenuData {
 	static Context mContext;
 	static String LOG_TAG = "";
 
-	// private static int menuGroupPosition;
-	// private static int menuChildPosition;
+	public static int mGroupPosition;
+	public static int mChildPosition;
+	public static int mIndex = 0;
 
 	// меню
 	static ArrayList<MenuGroup> menuData;
@@ -372,9 +373,14 @@ public class MenuData {
 		return menuData.get(i).mChilren.get(j).type;
 	}
 
-	public static String getCountStr(int i, int j) {
-		int size = textData.get(i).get(j).size();
-		return "" + (size - getRestCount(i, j)) + "/" + size;
+	public static String getCountStr() {
+		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+		return "" + (size - getRestCount(mGroupPosition, mChildPosition)) + "/" + size;
+	}
+
+	public static String getCountStr(int mGroupPosition, int mChildPosition) {
+		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+		return "" + (size - getRestCount(mGroupPosition, mChildPosition)) + "/" + size;
 	}
 
 	public static boolean isFinished(int i, int j) {
@@ -382,9 +388,19 @@ public class MenuData {
 		return getRestCount(i, j) == 0;
 	}
 
-	public static int getRestCount(int i, int j) {
+	public static int getRestCount(int mGroupPosition, int mChildPosition) {
 		int result = 0;
-		for (MarkedString m : textData.get(i).get(j)) {
+		for (MarkedString m : textData.get(mGroupPosition).get(mChildPosition)) {
+			if (m.mFlag != 3)
+				result++;
+		}
+
+		return result;
+	}
+
+	public static int getRestCount() {
+		int result = 0;
+		for (MarkedString m : textData.get(mGroupPosition).get(mChildPosition)) {
 			if (m.mFlag != 3)
 				result++;
 		}
@@ -396,21 +412,20 @@ public class MenuData {
 		return textData.get(i).get(j).get(index).mText;
 	}
 
-	public static void setStepCompleted(int i, int j, int index, int typeOfstep) {
+	public static void setStepCompleted(int typeOfstep) {
 
-		textData.get(i).get(j).get(index).mFlag = textData.get(i).get(j)
-				.get(index).mFlag
+		textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag = textData.get(mGroupPosition).get(mChildPosition)
+				.get(mIndex).mFlag
 				| typeOfstep;
 
 	}
 
-	public static int findIndex(int i, int j,
-			String text) {
+	public static int findIndex(String text) {
 		
-		for (MarkedString m: textData.get(i).get(j))
+		for (MarkedString m: textData.get(mGroupPosition).get(mChildPosition))
 			if (m.mText.equals(text) && m.mFlag < 3){
 				
-				return textData.get(i).get(j).indexOf(m);
+				return textData.get(mGroupPosition).get(mChildPosition).indexOf(m);
 			}	
 		
 		return 0;
@@ -436,8 +451,8 @@ public class MenuData {
 		}
 	}
 
-	public static void resetDataFlag(int i, int j) {
-		for (MarkedString m : textData.get(i).get(j)) {
+	public static void resetDataFlag() {
+		for (MarkedString m : textData.get(mGroupPosition).get(mChildPosition)) {
 			m.mFlag = 0;
 		}
 	}
@@ -495,12 +510,13 @@ public class MenuData {
 		
 	}
 
-	public static int nextTestIndex(int i, int j, int index) {
-		int size = textData.get(i).get(j).size();
-		if (index < size && index >= 0 &&
-				textData.get(i).get(j).get(index).mFlag < 3
-				) return index;
-		return next(i, j);
+	public static void nextTestIndex() {
+		mIndex = 0;
+		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+		if (mIndex < size && mIndex >= 0 &&
+				textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag < 3
+				) ;
+		else mIndex = next(mGroupPosition, mChildPosition);
 	}
 
 

@@ -5,12 +5,16 @@ import android.os.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+
 import com.alex_mochalov.navdraw.*;
 import com.alexmochalov.espanish.*;
 import com.alexmochalov.espanish.Dictionary.*;
+
 import java.util.*;
 
 import com.alexmochalov.espanish.Dictionary;
+
 import android.util.*;
 
 public class FragmentConj extends FragmentM
@@ -47,14 +51,12 @@ public class FragmentConj extends FragmentM
     	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
 
-        mText = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
+        mText = MenuData.getText(MainActivity.mGroupPosition, MainActivity.mChildPosition, mIndex);
 
 		mTextViewText.setText(firstLetterToUpperCase(mText));
 		mTranslation.setText(Dictionary.getTranslation(mText).getTranslation());
 
-		
-		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
-		if (checkBox.isChecked())
+		if (randomize)
 			randomize();
 		
 		setVerb(mText);
@@ -93,7 +95,7 @@ public class FragmentConj extends FragmentM
 	@Override
     public void onStart()
 	{
-        mText = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
+        mText = MenuData.getText(MainActivity.mGroupPosition, MainActivity.mChildPosition, mIndex);
 		setVerb(mText);
 		
 		super.onStart();
@@ -102,7 +104,6 @@ public class FragmentConj extends FragmentM
 	@Override
     public void onPause()
 	{
-		saveParams(mContext);
 		super.onPause();
 	}
 
@@ -112,6 +113,7 @@ public class FragmentConj extends FragmentM
 		super.onResume();
 	}
 	
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -119,6 +121,15 @@ public class FragmentConj extends FragmentM
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
 
         init();
+		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
+		checkBox.setChecked(randomize);
+		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				randomize = isChecked;
+			}});
+		
     	next();
 
 		ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
@@ -152,7 +163,7 @@ public class FragmentConj extends FragmentM
 					// Button Next is pressed
 					if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next)))
 					{
-				    	mIndex = MenuData.next(mGroupPosition, mChildPosition);
+				    	mIndex = MenuData.next(MainActivity.mGroupPosition, MainActivity.mChildPosition);
 						if (mIndex == -1){
 							getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();;
 						} else {
