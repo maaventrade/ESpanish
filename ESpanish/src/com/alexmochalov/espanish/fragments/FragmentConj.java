@@ -181,13 +181,13 @@ public class FragmentConj extends FragmentM
 				    				replaceAll("á", "a").
 				    				replaceAll("ó", "o").
 				    				replaceAll("ú", "u").
-				    				replaceAll("á", "a").
+				    				replaceAll("é", "e").
 				    				
 								equals(p.mPronoun.conj(mText).toLowerCase().
 				    					   replaceAll("á", "a").
 				    					   replaceAll("ó", "o").
 				    					   replaceAll("ú", "u").
-				    					   replaceAll("á", "a"))){
+				    					   replaceAll("é", "e"))){
 				    			editText.setTextColor(mContext.getResources().getColor(R.color.green2));
 				    		} else {
 				    			editText.setTextColor(Color.RED);
