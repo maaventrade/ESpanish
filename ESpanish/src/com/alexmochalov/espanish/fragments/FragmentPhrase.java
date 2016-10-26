@@ -37,14 +37,10 @@ public class FragmentPhrase extends FragmentM {
 		mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
         mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
 
-		
-		
 		MenuData.getTypeOfTheStep(mTextViewText, mTranslation);
 		
         mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
         mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
-        
-      
         
 		mTranslation.setVisibility(View.INVISIBLE);   
 		
@@ -68,6 +64,7 @@ public class FragmentPhrase extends FragmentM {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
         rootView = inflater.inflate(R.layout.fragment_phrase, container, false);
+        MenuData.nextTestIndex();
 
         init();
     	next();
@@ -99,7 +96,7 @@ public class FragmentPhrase extends FragmentM {
 
 					TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
 					
-					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData. direction);
+					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData.getDirection());
 					
 					//result = true;
 					mTranslation.setVisibility(View.VISIBLE);
@@ -107,7 +104,7 @@ public class FragmentPhrase extends FragmentM {
 					if (result){
 						mTranslation.setTextColor(getColor(mContext, R.color.green1));
 						
-						setTested(MenuData. direction);
+						setTested(MenuData.getDirection());
 						
 					}
 					else 

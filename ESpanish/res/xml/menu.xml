@@ -40,10 +40,11 @@
 			<entry text = "beber"></entry>
 			<entry text = "vivir"></entry>
     	</level1>
-		<level1 title = "Глагол Ser(быть)" type = "Спряжения"
+		<level1 title = "Глаголы &lt;font color=0xffff00&gt;Ser(быть, являться)&lt;/font&gt; и &lt;font color=0xffff00&gt;Estar(быть, находиться)&lt;/font&gt;" type = "Спряжения"
 			note = "Спрягаем глагол по формам лица и числа. Добавлено слово &lt;b&gt; &lt;font color=0xffff00&gt;Esto(это)&lt;/font&gt; &lt;/b&gt; ">
 			<entry text = "ser"></entry>
-    	</level1>
+			<entry text = "estar"></entry>
+		</level1>
 		<level1 title = "Вопросительные слова" type = "Выражения"
 			note = "Переводим слова с испанского языка на русский и с русского на испанский.">
 			<entry text = "¿Qué?"></entry>

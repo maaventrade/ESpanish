@@ -88,7 +88,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 		TextView textChild = (TextView) convertView
 				.findViewById(R.id.textChild);
-		textChild.setText(mGroups.get(groupPosition).mChilren.get(childPosition).title);
+		textChild.setText(Html.fromHtml(mGroups.get(groupPosition).mChilren.get(childPosition).title));
 		
 		TextView textChildCount = (TextView) convertView
 				.findViewById(R.id.textChildCount);

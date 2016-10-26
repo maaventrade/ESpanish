@@ -21,4 +21,11 @@
        
     </item>
 
+	<item
+        android:id="@+id/search"
+        android:title="Dictionary"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:actionLayout="@layout/search_layout"
+    />
+    
 </menu>

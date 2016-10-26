@@ -51,23 +51,20 @@ public class FragmentConj extends FragmentM
     	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
 
-        MenuData.getText();
-
-		mTextViewText.setText(firstLetterToUpperCase(MenuData.mText));
-		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
+        MenuData.setText(mTextViewText, mTranslation);
 
 		if (MainActivity.randomize)
 			randomize();
 		
-		setVerb(MenuData.mText);
+		setVerb(MenuData.getText());
 		
 		return true;
 	}
 
 
 	public static String firstLetterToUpperCase(String t) {
-		Log.d("my", "translation " + translation);
-		return translation.substring(0,1).toUpperCase() + translation.substring(1);
+		Log.d("my", "translation " + t);
+		return t.substring(0,1).toUpperCase() + t.substring(1);
 	}
 	
 	
@@ -96,7 +93,7 @@ public class FragmentConj extends FragmentM
     public void onStart()
 	{
       //  mText = MenuData.getText(MainActivity.mGroupPosition, MainActivity.mChildPosition, mIndex);
-		setVerb(MenuData.mText);
+		setVerb(MenuData.getText());
 		
 		super.onStart();
 	}
@@ -119,6 +116,7 @@ public class FragmentConj extends FragmentM
 	{
 
         rootView = inflater.inflate(R.layout.fragment_conj, container, false);
+        MenuData.nextTestIndex();
 
         init();
 		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
@@ -141,7 +139,7 @@ public class FragmentConj extends FragmentM
 		{
 			//Log.d("",""+Dictionary.isLast(p));
 			
-			if (MenuData.mGroupPosition == 1 && MenuData.mChildPosition == 1
+			if (MenuData.getGroupPosition() == 1 && MenuData.getChildPosition() == 1
 				|| !Dictionary.isLast(p)){
 					
 				//Log.d("",""+p.getText());
@@ -194,7 +192,7 @@ public class FragmentConj extends FragmentM
 				    				replaceAll("ú", "u").
 				    				replaceAll("é", "e").
 				    				
-								equals(p.mPronoun.conj(MenuData.mText).toLowerCase().
+								equals(p.mPronoun.conj(MenuData.getText()).toLowerCase().
 				    					   replaceAll("á", "a").
 				    					   replaceAll("ó", "o").
 				    					   replaceAll("ú", "u").
@@ -205,7 +203,7 @@ public class FragmentConj extends FragmentM
 								allChecked = false;
 				    		}
 
-				            editText.setText(p.mPronoun.conj(MenuData.mText));
+				            editText.setText(p.mPronoun.conj(MenuData.getText()));
 				    	}
 						
 				    	//allChecked = true;
@@ -224,14 +222,4 @@ public class FragmentConj extends FragmentM
 			return rootView;
     }
 
-	public String getTextR() {
-		String text = "";
-		
-		for (PronounEdited p: objects){
-    	   	text = text + p.mPronoun.getText()+" ";
-    	    text = text +p.mPronoun.conj(MenuData.mText) + ". ";
-    	}
-		
-		return text;
-	}	
 }

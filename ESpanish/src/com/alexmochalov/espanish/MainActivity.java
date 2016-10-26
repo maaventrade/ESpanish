@@ -51,18 +51,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private SharedPreferences prefs;
 
-	private final String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
-	private final String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
-	private final String DIRECTION = "DIRECTION";
-	private final String MTEXT = "TEXT";
 	private final String RANDOMIZE = "RANDOMIZE";
-	private final String MENU_INDEX = "MENU_INDEX";
 	
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
-
-	
-	
 	
 	public static boolean randomize = false;
 	
@@ -89,11 +81,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-//		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//		mDrawerTree = (ExpandableListView) findViewById(R.id.left_drawer_exp);
-
 		Dictionary.load(this);
 		MenuData.load(this, false);
+
+		loadParameters();
 		
 		// 
 		fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
@@ -135,7 +126,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override 
 	protected void onDestroy() {
-		if (tts != null) tts.shutdown(); 
+		if (tts != null) tts.shutdown();
+		saveParameters();
 		super.onDestroy(); 
 	}
 	
@@ -215,55 +207,17 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	private void saveParameters() {
 		Editor editor = prefs.edit();
 
-		String listString = "";
-
-		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		listString = listString + "<data version = \"1\">\n";
-		
-		for (int i = 0; i < MenuData.menuData.size(); i++){
-			for (int j = 0; j < MenuData.menuData.get(i).mChilren.size(); j++){
-
-				for (MarkedString s: MenuData.textData.get(i).get(j)){
-					
-						listString = listString + "<mark group = \""+ i 
-								+"\" child = \"" + j 
-								+"\" index = \"" + MenuData.textData.get(i).get(j).indexOf(s) 
-								+ "\" value = \"" + s.mFlag  
-								+ "\"></mark>\n"; 
-				}
-			}
-		}
-		
-		listString = listString + "</data>";
-		//Log.d("", "SAVE");
-		//Log.d("", "listString "+listString);
-		editor.putString("MARKS", listString);
-		
-		editor.putInt(MENU_GROUP_POSITION, MenuData.mGroupPosition);
-		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
-		editor.putString(MTEXT, MenuData.mText);
-		editor.putInt(DIRECTION, MenuData.direction);
 		editor.putBoolean(RANDOMIZE, randomize);
 		
-		editor.putInt(MENU_INDEX, MenuData.mIndex);
-
+		MenuData.saveParameters(editor);
+		
 		editor.commit();
 	}
 	
 	private void loadParameters() {
-		MenuData.mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
-		MenuData.mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
-		
+		MenuData.loadParameters(prefs);
+
 		randomize = prefs.getBoolean(RANDOMIZE, false);
-		
-		MenuData.direction = prefs.getInt(DIRECTION, 0);
-		String text = prefs.getString(MTEXT, "");
-		
-		if (text.length() > 0){
-			MenuData.mIndex = MenuData.findIndex(text);
-		} else {
-	    	MenuData.nextTestIndex();
-		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -369,8 +323,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	public void onMenuItemSelected(int groupPosition, int childPosition, String type) {
 		mType = type;
 		
-		MenuData.mGroupPosition = groupPosition;
-		MenuData.mChildPosition = childPosition;
+		MenuData.setPosition(groupPosition, childPosition);
 		
 		if (MenuData.getRestCount(groupPosition, childPosition) == 0){
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);

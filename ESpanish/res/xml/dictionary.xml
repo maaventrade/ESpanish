@@ -69,7 +69,9 @@
 	    </entry>
 		<entry text = "vivir" ending = "ir" transl = "жить" root = "жив" fit_type = "1">
 	    </entry>
-		<entry text = "ser" ending = "ser" transl = "быть">
+		<entry text = "ser" ending = "ser" transl = "быть, являться">
+	    </entry>
+		<entry text = "estar" ending = "estar" transl = "быть, находиться">
 	    </entry>
 		<entry text = "qué" transl = "что" transl1 = "какой">
 	    </entry>
@@ -93,25 +95,25 @@
 											   		   		   		   		   	
 	</dictionary>
 	<pronoun>
-	   	<entry text = "Yo" transl = "я" verb_ending = "ar:o,er:o,ir:o,ser:soy">
+	   	<entry text = "Yo" transl = "я" verb_ending = "ar:o,er:o,ir:o,ser:soy,estar:estoy">
 	    </entry>
-	   	<entry text = "Tú" transl = "ты" verb_ending = "ar:as,er:es,ir:es,ser:eres">
+	   	<entry text = "Tú" transl = "ты" verb_ending = "ar:as,er:es,ir:es,ser:eres,estar:estás">
 	    </entry>
-	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "ar:a,er:e,ir:e,ser:es">
+	   	<entry text = "Usted" transl = "Вы(вежл.)" verb_ending = "ar:a,er:e,ir:e,ser:es,estar:está">
 	    </entry>
-	   	<entry text = "Él" transl = "он" verb_ending = "ar:a,er:e,ir:e,ser:es">
+	   	<entry text = "Él" transl = "он" verb_ending = "ar:a,er:e,ir:e,ser:es,estar:está">
 	    </entry>
-	   	<entry text = "Ella" transl = "она" verb_ending = "ar:a,er:e,ir:e,ser:es">
+	   	<entry text = "Ella" transl = "она" verb_ending = "ar:a,er:e,ir:e,ser:es,estar:está">
 	    </entry>
-	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "ar:amos,er:emos,ir:imos,ser:somos">
+	   	<entry text = "Nosotros/Nosotras" transl = "мы (мужск./женск.)" verb_ending = "ar:amos,er:emos,ir:imos,ser:somos,estar:estamos">
 	    </entry>
-	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "ar:áis,er:éis,ir:ís,ser:sois">
+	   	<entry text = "Vosotros/Vosotrаs" transl = "вы (мужск./женск.)" verb_ending = "ar:áis,er:éis,ir:ís,ser:sois,estar:estais">
 	    </entry>
-	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
+	   	<entry text = "Ellos/Ellas" transl = "они (мужск./женск.)" verb_ending = "ar:an,er:en,ir:en,ser:son,estar:están">
 	    </entry>
-		<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en,ser:son">
+		<entry text = "Ustedes" transl = "Они(вежл.)" verb_ending = "ar:an,er:en,ir:en,ser:son,estar:están">
 		</entry>
-		<entry text = "Esto" transl = "это" verb_ending = "ar:a,er:e,ir:e,ser:es">
+		<entry text = "Esto" transl = "это" verb_ending = "ar:a,er:e,ir:e,ser:es,estar:está">
 		</entry>
 		
 		   		 </pronoun>

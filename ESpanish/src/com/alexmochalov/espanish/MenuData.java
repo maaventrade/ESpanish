@@ -21,12 +21,18 @@ public class MenuData {
 	static Context mContext;
 	static String LOG_TAG = "";
 
-	public static int mGroupPosition;
-	public static int mChildPosition;
-	public static int mIndex = 0;
-	public static String mText;
-	public static int direction;
-	static String translation;
+	private final static String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
+	private final static String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
+	private final static String DIRECTION = "DIRECTION";
+	private final static String MTEXT = "TEXT";
+	private final static String MENU_INDEX = "MENU_INDEX";
+	
+	private static int mGroupPosition;
+	private static int mChildPosition;
+	private static int mIndex = 0;
+	private static String mText;
+	private static int direction;
+	private static String translation;
 	
 	// меню
 	static ArrayList<MenuGroup> menuData;
@@ -412,9 +418,8 @@ public class MenuData {
 	}
 
 	public static String getText() {
-		Log.d("my",""+mGroupPosition+" "+mChildPosition+" "+mIndex);
-		Log.d("my",""+textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText);
-		return textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText;
+		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
+		return mText;
 	}
 
 	public static void setStepCompleted(int typeOfstep) {
@@ -537,6 +542,76 @@ Log.d("","mi"+mIndex);
 				textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag < 3
 				) ;
 		else mIndex = next();
+	}
+
+	public static void setText(TextView mTextViewText, TextView mTranslation) {
+		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
+		
+		mTextViewText.setText(firstLetterToUpperCase(MenuData.mText));
+		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
+	}
+
+	public static int getGroupPosition() {
+		return mGroupPosition;
+	}
+
+	public static int getChildPosition() {
+		return mChildPosition;
+	}
+
+	public static int getDirection() {
+		return direction;
+	}
+
+	public static void saveParameters(Editor editor) {
+		editor.putInt(MENU_GROUP_POSITION, MenuData.mGroupPosition);
+		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
+		editor.putString(MTEXT, MenuData.mText);
+		editor.putInt(DIRECTION, MenuData.direction);
+		editor.putInt(MENU_INDEX, MenuData.mIndex);
+		
+		String listString = "";
+
+		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+		listString = listString + "<data version = \"1\">\n";
+		
+		for (int i = 0; i < menuData.size(); i++){
+			for (int j = 0; j < menuData.get(i).mChilren.size(); j++){
+
+				for (MarkedString s: textData.get(i).get(j)){
+					
+						listString = listString + "<mark group = \""+ i 
+								+"\" child = \"" + j 
+								+"\" index = \"" + textData.get(i).get(j).indexOf(s) 
+								+ "\" value = \"" + s.mFlag  
+								+ "\"></mark>\n"; 
+				}
+			}
+		}
+		
+		listString = listString + "</data>";
+		editor.putString("MARKS", listString);
+		
+	}
+
+	public static void loadParameters(SharedPreferences prefs) {
+		mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
+		mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
+		
+		direction = prefs.getInt(DIRECTION, 0);
+		String text = prefs.getString(MTEXT, "");
+		
+		if (text.length() > 0){
+			mIndex = MenuData.findIndex(text);
+		} else {
+	    	MenuData.nextTestIndex();
+		}
+		
+	}
+
+	public static void setPosition(int groupPosition, int childPosition) {
+		mGroupPosition = groupPosition;
+		mChildPosition = childPosition;
 	}
 
 

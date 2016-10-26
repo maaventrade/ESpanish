@@ -65,7 +65,12 @@ public class Dictionary
 				if (verb.equals("ser")){
 					if (verb.equals(sep2[0]))
 						return sep2[1];
-				} else {
+				} else 
+					if (verb.equals("estar")){
+						if (verb.equals(sep2[0]))
+							return sep2[1];
+					} else 
+				{
 					if (verb.substring(verb.length() - 2).equals(sep2[0]))
 						return verb.substring(0, verb.length() - 2) + sep2[1];
 					
