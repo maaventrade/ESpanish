@@ -13,7 +13,7 @@ import com.alexmochalov.espanish.MenuData;
 public class FragmentM extends Fragment
 {
 	
-	String translation;
+	
 	
 	TextView mTextViewText;
 	TextView mTranslation;

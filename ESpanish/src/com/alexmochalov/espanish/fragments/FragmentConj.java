@@ -51,22 +51,22 @@ public class FragmentConj extends FragmentM
     	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
 
-        mText = MenuData.getText(MainActivity.mGroupPosition, MainActivity.mChildPosition, mIndex);
+        MenuData.getText();
 
-		mTextViewText.setText(firstLetterToUpperCase(mText));
-		mTranslation.setText(Dictionary.getTranslation(mText).getTranslation());
+		mTextViewText.setText(firstLetterToUpperCase(MenuData.mText));
+		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
 
-		if (randomize)
+		if (MainActivity.randomize)
 			randomize();
 		
-		setVerb(mText);
+		setVerb(MenuData.mText);
 		
 		return true;
 	}
 
 
-	public static String firstLetterToUpperCase(String translation) {
-		//Log.d("", "translation " + translation);
+	public static String firstLetterToUpperCase(String t) {
+		Log.d("my", "translation " + translation);
 		return translation.substring(0,1).toUpperCase() + translation.substring(1);
 	}
 	
@@ -95,8 +95,8 @@ public class FragmentConj extends FragmentM
 	@Override
     public void onStart()
 	{
-        mText = MenuData.getText(MainActivity.mGroupPosition, MainActivity.mChildPosition, mIndex);
-		setVerb(mText);
+      //  mText = MenuData.getText(MainActivity.mGroupPosition, MainActivity.mChildPosition, mIndex);
+		setVerb(MenuData.mText);
 		
 		super.onStart();
 	}
@@ -122,12 +122,12 @@ public class FragmentConj extends FragmentM
 
         init();
 		CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkBoxRandom);
-		checkBox.setChecked(randomize);
+		checkBox.setChecked(MainActivity.randomize);
 		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				randomize = isChecked;
+				MainActivity.randomize = isChecked;
 			}});
 		
     	next();
@@ -141,7 +141,7 @@ public class FragmentConj extends FragmentM
 		{
 			//Log.d("",""+Dictionary.isLast(p));
 			
-			if (mGroupPosition == 1 && mChildPosition == 1
+			if (MenuData.mGroupPosition == 1 && MenuData.mChildPosition == 1
 				|| !Dictionary.isLast(p)){
 					
 				//Log.d("",""+p.getText());
@@ -163,8 +163,8 @@ public class FragmentConj extends FragmentM
 					// Button Next is pressed
 					if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next)))
 					{
-				    	mIndex = MenuData.next(MainActivity.mGroupPosition, MainActivity.mChildPosition);
-						if (mIndex == -1){
+				 
+						if (MenuData.next() == -1){
 							getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();;
 						} else {
 							next();
@@ -194,7 +194,7 @@ public class FragmentConj extends FragmentM
 				    				replaceAll("ú", "u").
 				    				replaceAll("é", "e").
 				    				
-								equals(p.mPronoun.conj(mText).toLowerCase().
+								equals(p.mPronoun.conj(MenuData.mText).toLowerCase().
 				    					   replaceAll("á", "a").
 				    					   replaceAll("ó", "o").
 				    					   replaceAll("ú", "u").
@@ -205,7 +205,7 @@ public class FragmentConj extends FragmentM
 								allChecked = false;
 				    		}
 
-				            editText.setText(p.mPronoun.conj(mText));
+				            editText.setText(p.mPronoun.conj(MenuData.mText));
 				    	}
 						
 				    	//allChecked = true;
@@ -229,7 +229,7 @@ public class FragmentConj extends FragmentM
 		
 		for (PronounEdited p: objects){
     	   	text = text + p.mPronoun.getText()+" ";
-    	    text = text +p.mPronoun.conj(mText) + ". ";
+    	    text = text +p.mPronoun.conj(MenuData.mText) + ". ";
     	}
 		
 		return text;

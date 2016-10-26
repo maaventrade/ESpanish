@@ -33,23 +33,19 @@ public class FragmentPhrase extends FragmentM {
     private boolean next() {
     	// 001 spa->ru completed  
     	// 010 ru->spa completed  
-		direction = MenuData.getTypeOfTheStep(mGroupPosition, mChildPosition, mIndex); 
-    	
+		
+		mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
+        mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
+
+		
+		
+		MenuData.getTypeOfTheStep(mTextViewText, mTranslation);
+		
         mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
         mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
         
-        if (direction == 0){
-    		mText = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
-    		translation = MenuData.getTranslation(mText, mGroupPosition, mChildPosition, mIndex);
-        } else {
-    		translation = MenuData.getText(mGroupPosition, mChildPosition, mIndex);
-    		mText = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, mIndex);
-        }
-		
-        mTextViewText.setText(mText);
-		
-		mTranslation.setText(translation);
-		
+      
+        
 		mTranslation.setVisibility(View.INVISIBLE);   
 		
 		return true;
@@ -84,8 +80,8 @@ public class FragmentPhrase extends FragmentM {
 
 				// Button Next is pressed
 				if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next))){
-			    	mIndex = MenuData.next(mGroupPosition, mChildPosition);
-					if (mIndex == -1){
+			    
+					if (MenuData.next() == -1){
 						getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
 					} else {
 						next();
@@ -103,7 +99,7 @@ public class FragmentPhrase extends FragmentM {
 
 					TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
 					
-					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(), direction);
+					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData. direction);
 					
 					//result = true;
 					mTranslation.setVisibility(View.VISIBLE);
@@ -111,7 +107,7 @@ public class FragmentPhrase extends FragmentM {
 					if (result){
 						mTranslation.setTextColor(getColor(mContext, R.color.green1));
 						
-						setTested(direction);
+						setTested(MenuData. direction);
 						
 					}
 					else 
@@ -144,7 +140,7 @@ public class FragmentPhrase extends FragmentM {
 		
 	}
 */
-
+/*
 	public String getTextR() {
 		if (direction == 0)
 			return mText;
@@ -152,7 +148,7 @@ public class FragmentPhrase extends FragmentM {
 			return translation;
 	}	
 	
-
+*/
 	
 }
 

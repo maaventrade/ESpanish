@@ -24,7 +24,10 @@ public class MenuData {
 	public static int mGroupPosition;
 	public static int mChildPosition;
 	public static int mIndex = 0;
-
+	public static String mText;
+	public static int direction;
+	static String translation;
+	
 	// меню
 	static ArrayList<MenuGroup> menuData;
 	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
@@ -408,8 +411,10 @@ public class MenuData {
 		return result;
 	}
 
-	public static String getText(int i, int j, int index) {
-		return textData.get(i).get(j).get(index).mText;
+	public static String getText() {
+		Log.d("my",""+mGroupPosition+" "+mChildPosition+" "+mIndex);
+		Log.d("my",""+textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText);
+		return textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText;
 	}
 
 	public static void setStepCompleted(int typeOfstep) {
@@ -431,22 +436,23 @@ public class MenuData {
 		return 0;
 	}
 	
-	public static int next(int i, int j) {
-		int size = textData.get(i).get(j).size();
+	public static int next() {
+		int size = textData.get(mGroupPosition).get(mChildPosition).size();
 
-		int index = (int) (Math.random() * size);
-		while (index < size && textData.get(i).get(j).get(index).mFlag == 3)
-			index++;
+		mIndex = (int) (Math.random() * size);
+		while (mIndex < size && textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag == 3)
+			mIndex++;
 
-		if (index == size) {
-			index = 0;
-			while (index < size && textData.get(i).get(j).get(index).mFlag == 3)
-				index++;
+		if (mIndex == size) {
+			mIndex = 0;
+			while (mIndex < size && textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag == 3)
+				mIndex++;
 		}
-
-		if (index < textData.get(i).get(j).size())
-			return index;
+Log.d("","mi"+mIndex);
+		if (mIndex < textData.get(mGroupPosition).get(mChildPosition).size())
+			return mIndex;
 		else {
+			mIndex = -1;
 			return -1;
 		}
 	}
@@ -457,17 +463,31 @@ public class MenuData {
 		}
 	}
 
-	public static int getTypeOfTheStep(int i, int j, int index) {
-		MarkedString data = textData.get(i).get(j).get(index);
+	public static void getTypeOfTheStep(TextView textViewText, TextView textViewTranslation) {
+		MarkedString data = textData.get(mGroupPosition).get(mChildPosition).get(mIndex);
 
 		if (data.mFlag == 1)
-			return 1; // span->rus
+			direction = 1; // span->rus
 		else if (data.mFlag == 2)
-			return 0; // rus->span
+			direction =  0; // rus->span
 		else if (Math.random() > 0.5)
-			return 0;
+			direction =  0;
 		else
-			return 1;
+			direction =  1;
+			
+		
+		if (direction == 0){
+    		mText = getText();
+    		translation = MenuData.getTranslation(mText, mGroupPosition, mChildPosition, mIndex);
+        } else {
+    		translation = getText();
+    		mText = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, mIndex);
+        }
+		
+		textViewText.setText(mText);
+
+		textViewTranslation.setText(translation);
+		
 
 	}
 
@@ -516,7 +536,7 @@ public class MenuData {
 		if (mIndex < size && mIndex >= 0 &&
 				textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag < 3
 				) ;
-		else mIndex = next(mGroupPosition, mChildPosition);
+		else mIndex = next();
 	}
 
 

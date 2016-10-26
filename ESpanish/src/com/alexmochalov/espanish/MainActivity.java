@@ -61,10 +61,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
 
-	String mText;
-	int direction;
 	
-	boolean randomize = false;
+	
+	
+	public static boolean randomize = false;
 	
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
@@ -241,8 +241,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		
 		editor.putInt(MENU_GROUP_POSITION, MenuData.mGroupPosition);
 		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
-		editor.putString(MTEXT, mText);
-		editor.putInt(DIRECTION, direction);
+		editor.putString(MTEXT, MenuData.mText);
+		editor.putInt(DIRECTION, MenuData.direction);
 		editor.putBoolean(RANDOMIZE, randomize);
 		
 		editor.putInt(MENU_INDEX, MenuData.mIndex);
@@ -256,7 +256,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		
 		randomize = prefs.getBoolean(RANDOMIZE, false);
 		
-		direction = prefs.getInt(DIRECTION, 0);
+		MenuData.direction = prefs.getInt(DIRECTION, 0);
 		String text = prefs.getString(MTEXT, "");
 		
 		if (text.length() > 0){
