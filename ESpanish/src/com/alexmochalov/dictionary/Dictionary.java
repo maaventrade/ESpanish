@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.dictionary;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,8 @@ import com.alex_mochalov.navdraw.R;
 
 import android.content.Context;
 import android.util.Log;
-import com.alexmochalov.espanish.Dictionary.*;
+
+import com.alexmochalov.dictionary.Dictionary.*;
 
 public class Dictionary
 {
@@ -309,6 +310,10 @@ public class Dictionary
 		}
 		 
 		return e.root + ending;
+	}
+
+	public static ArrayList<Entry> getEntries() {
+		return entries;
 	}
 
 }

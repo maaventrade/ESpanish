@@ -3,21 +3,15 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
- 
-    <EditText
-        android:id="@+id/txt_search"
-        android:inputType="text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-    />
+    
          <AutoCompleteTextView 
             android:id="@+id/editTextEntry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-			android:singleLine="true"
-    		android:lines="1"
-    		android:maxLines="1"            
             android:layout_weight="1"
+ 		android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete|textAutoCorrect"
+                    
             android:ems="10" >
 
             <requestFocus />

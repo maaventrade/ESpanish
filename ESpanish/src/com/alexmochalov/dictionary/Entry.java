@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.dictionary;
 
 public class Entry {
 	String mText;
@@ -20,5 +20,9 @@ public class Entry {
 	
 	public String getTranslation(){
 		return translation;
+	}
+	
+	public String getText(){
+		return mText;
 	}
 }

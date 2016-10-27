@@ -11,6 +11,8 @@ import java.util.*;
 import org.xmlpull.v1.*;
 
 import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.dictionary.Entry;
 
 import java.io.*;
 
@@ -70,7 +72,7 @@ public class MenuData {
 			//Log.d("",negStr);
 			Entry e = Dictionary.getTranslation(negStr);
 			if ( e != null)
-				negStr = e.translation;
+				negStr = e.getTranslation();
 				
 			if (negStr.length() > 1)
 				negStr = negStr + " ";
@@ -78,7 +80,7 @@ public class MenuData {
 			
 			e = Dictionary.getTranslation(pronoun);
 			if ( e != null)
-				pronoun = e.translation.trim();
+				pronoun = e.getTranslation().trim();
 			
 			if (pronoun.length() > 0)
 				pronoun = pronoun + " ";
@@ -87,7 +89,7 @@ public class MenuData {
 			
 			//Log.d("", text);
 			//Log.d("", Dictionary.getTranslation(text).translation);
-			mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text).translation)+" "
+			mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "
 					+ pronoun
 					+ negStr
 					+ verb + "?";
@@ -531,7 +533,7 @@ Log.d("","mi"+mIndex);
 		if (rusText.length() > 0)
 			return rusText;
 		else return	
-			Dictionary.getTranslation(text).translation;
+			Dictionary.getTranslation(text).getTranslation();
 		
 	}
 
@@ -546,7 +548,7 @@ Log.d("","mi"+mIndex);
 
 	public static void setText(TextView mTextViewText, TextView mTranslation) {
 		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
-		
+		Log.d("", "--"+MenuData.mText);
 		mTextViewText.setText(firstLetterToUpperCase(MenuData.mText));
 		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
 	}

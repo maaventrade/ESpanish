@@ -8,12 +8,11 @@ import android.widget.*;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.dictionary.Dictionary.*;
 import com.alexmochalov.espanish.*;
-import com.alexmochalov.espanish.Dictionary.*;
 
 import java.util.*;
-
-import com.alexmochalov.espanish.Dictionary;
 
 import android.util.*;
 

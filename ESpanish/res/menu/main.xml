@@ -21,11 +21,9 @@
        
     </item>
 
-	<item
-        android:id="@+id/search"
-        android:title="Dictionary"
-        android:showAsAction="ifRoom|collapseActionView"
-        android:actionLayout="@layout/search_layout"
-    />
-    
+    <item android:id="@+id/item_dictionary" 
+        android:title="Dictionary" 
+        android:visible="true" 
+        android:showAsAction="always"/>
+       
 </menu>

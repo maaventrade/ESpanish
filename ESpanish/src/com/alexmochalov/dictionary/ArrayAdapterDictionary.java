@@ -1,10 +1,8 @@
-package dictionary;
+package com.alexmochalov.dictionary;
 
 import java.util.ArrayList;
 
-import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.R.id;
-import com.alexmochalov.slovotyk.R.layout;
+import com.alex_mochalov.navdraw.R;
 
 import android.content.Context;
 import android.util.Log;
@@ -21,20 +19,20 @@ import android.widget.TextView;
  * This Adapter shows the drop-down list in the Dictionary 
  *
  */
-public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
+public class ArrayAdapterDictionary  extends ArrayAdapter<Entry>
 {
-	private ArrayList<IndexEntry> values;
-	private ArrayList<IndexEntry> suggestions;
-	private ArrayList<IndexEntry> valuesAll;
+	private ArrayList<Entry> values;
+	private ArrayList<Entry> suggestions;
+	private ArrayList<Entry> valuesAll;
 	
 	Context context;
 	int resource;
 
-	public ArrayAdapterDictionary(Context context, int res, ArrayList<IndexEntry> values){
+	public ArrayAdapterDictionary(Context context, int res, ArrayList<Entry> values){
 		super(context, res, values);
 		this.values = values;
-		this.valuesAll = (ArrayList<IndexEntry>) values.clone();
-		this.suggestions = new ArrayList<IndexEntry>();
+		this.valuesAll = (ArrayList<Entry>) values.clone();
+		this.suggestions = new ArrayList<Entry>();
 		
 		this.resource = res;
 		this.context = context;
@@ -49,11 +47,14 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 				getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 			convertView = inflater.inflate(R.layout.dic_string, null);
 		}
-		IndexEntry entry = values.get(position);
+		Entry entry = values.get(position);
 				
-		TextView text = (TextView)convertView.findViewById(R.id.dicstringTextView);
-		text.setText(""+entry.text);
+		TextView text = (TextView)convertView.findViewById(R.id.textViewText);
+		text.setText(entry.getText());
 
+		text = (TextView)convertView.findViewById(R.id.textViewTranslation);
+		text.setText(entry.getTranslation());
+		
 		return convertView;
 	}
 
@@ -69,15 +70,27 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 	{
 		//@Override 
 		public String convertResultToString(Object resultValue) {
-			return ((IndexEntry)resultValue).getName();
+			return ((Entry)resultValue).getText();
 		}
 		
 		@Override 
 		protected FilterResults performFiltering(CharSequence constraint) { 
 			if(constraint != null) {
                 suggestions.clear();
-                for (IndexEntry customer : valuesAll) {
-                    if(customer.getName().toLowerCase().startsWith(constraint.toString().toLowerCase())){
+                for (Entry customer : valuesAll) {
+                    if(customer.getText().
+                    		toLowerCase().
+		    				replaceAll("á", "a").
+		    				replaceAll("ó", "o").
+		    				replaceAll("ú", "u").
+		    				replaceAll("é", "e").
+                    		startsWith(
+                    				constraint.toString().toLowerCase().
+				    				replaceAll("á", "a").
+				    				replaceAll("ó", "o").
+				    				replaceAll("ú", "u").
+				    				replaceAll("é", "e"))){
+                    	
                         suggestions.add(customer);
                     }
                 }
@@ -93,10 +106,10 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 		@Override 
 		protected void publishResults(CharSequence constraint, FilterResults results)
 		{
-			ArrayList<IndexEntry> filteredList = (ArrayList<IndexEntry>) results.values;
+			ArrayList<Entry> filteredList = (ArrayList<Entry>) results.values;
             if(results != null && results.count > 0) {
                 clear();
-                for (IndexEntry c : filteredList) {
+                for (Entry c : filteredList) {
                     add(c);
                 }
                 notifyDataSetChanged();

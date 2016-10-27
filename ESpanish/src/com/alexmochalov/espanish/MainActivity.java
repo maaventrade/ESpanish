@@ -6,6 +6,10 @@ import java.util.Locale;
 import java.util.Map;   
 
 import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.dictionary.ArrayAdapterDictionary;
+import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.dictionary.Entry;
+import com.alexmochalov.dictionary.EntryEditor;
 import com.alexmochalov.espanish.MenuData.MarkedString;
 import com.alexmochalov.espanish.MenuData.MenuChild;
 import com.alexmochalov.espanish.MenuData.MenuGroup;
@@ -16,6 +20,7 @@ import com.alexmochalov.espanish.fragments.FragmentPhrase;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -34,12 +39,15 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
@@ -48,6 +56,9 @@ public class MainActivity extends Activity implements OnInitListener,
 OnMenuItemSelectedListener, FragmentM.OnTestedListener
 {
 	public static Context mContext;
+	
+    ActionBar actionBar;
+    Menu mMenu;
 	
 	private SharedPreferences prefs;
 
@@ -76,6 +87,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 		mContext = this;
 		
+		actionBar = getActionBar();
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setHomeButtonEnabled(true);
 
@@ -190,6 +202,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		mMenu = menu;
+		
 		return true;
 	}
 
@@ -258,17 +272,37 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 			return true;
 		}
-		case android.R.id.home:
+		case android.R.id.home: {
+	        actionBar.setDisplayHomeAsUpEnabled(false);
+	        actionBar.setDisplayShowCustomEnabled(false);	        
+	        actionBar.setTitle("ESpanish");
+
+	        MenuItem i = mMenu.findItem(R.id.item_dictionary);
+	        i.setVisible(true);
+	        
 			return true;
+		}	
+		case R.id.item_dictionary: {
+			LayoutInflater inflator = (LayoutInflater) this
+	                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        View v = inflator.inflate(R.layout.search_layout, null);
+	        
+	        actionBar.setDisplayHomeAsUpEnabled(true);
+	        actionBar.setDisplayShowCustomEnabled(true);	        
+	        actionBar.setCustomView(v);
+	        actionBar.setTitle("Search:");
+	        
+	        item.setVisible(false);
+
+			EntryEditor.start(this, v);
+			
+			return true;
+		} 
+		default:	return super.onOptionsItemSelected(item);
 		}
-
-		if (id == R.id.action_settings) {
-			return true;
-		} else
-
-			return super.onOptionsItemSelected(item);
+		
 	}
-
+//EntryEditor
 	private void loadLangueges(){
     	Locale locale[] = Locale.getAvailableLocales();
         //Spinner spinnerLanguages = ((Spinner)findViewById(R.id.spinnerLanguages));

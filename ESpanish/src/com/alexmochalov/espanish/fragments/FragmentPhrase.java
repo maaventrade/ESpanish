@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alex_mochalov.navdraw.R;
-import com.alexmochalov.espanish.Dictionary;
+import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.espanish.MenuData;
 
 public class FragmentPhrase extends FragmentM {
