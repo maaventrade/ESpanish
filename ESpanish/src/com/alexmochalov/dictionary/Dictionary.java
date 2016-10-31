@@ -13,6 +13,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.alexmochalov.dictionary.Dictionary.*;
+import com.alexmochalov.espanish.MenuData;
 
 public class Dictionary
 {
@@ -72,8 +73,12 @@ public class Dictionary
 							return sep2[1];
 					} else 
 				{
-					if (verb.substring(verb.length() - 2).equals(sep2[0]))
-						return verb.substring(0, verb.length() - 2) + sep2[1];
+					int ending_length = sep2[0].length();
+					if (verb.substring(verb.length() - ending_length).equals(sep2[0]))
+						return 
+								(verb.substring(0, verb.length() - ending_length) + sep2[1]).
+								replace("ii", "i"). // mangiare [iamo]
+								replace("ci", "chi"); // giocare [chiamo]
 					
 				}
 			}
@@ -205,8 +210,13 @@ public class Dictionary
 		String mode = "";
 
 		try {
-			XmlPullParser xpp = context.getResources().getXml(R.xml.dictionary);
 
+			XmlPullParser xpp = null;
+			if (MenuData.getLanguage().equals("ita")) 
+				xpp = context.getResources().getXml(R.xml.dictionary_it);
+			else if (MenuData.getLanguage().equals("spa"))
+				xpp = context.getResources().getXml(R.xml.dictionary_spa);
+			
 			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 				switch (xpp.getEventType()) { // начало документа
 				case XmlPullParser.START_DOCUMENT:

@@ -138,15 +138,15 @@ public class FragmentConj extends FragmentM
 		{
 			//Log.d("",""+Dictionary.isLast(p));
 			
-			if (MenuData.getGroupPosition() == 1 && MenuData.getChildPosition() == 1
-				|| !Dictionary.isLast(p)){
+			//if (MenuData.getGroupPosition() == 1 && MenuData.getChildPosition() == 1
+			//	|| !Dictionary.isLast(p)){
 					
 				//Log.d("",""+p.getText());
 
 				View layout2 = LayoutInflater.from(mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
 				mLinearLayout.addView(layout2);
 	    		objects.add(new PronounEdited(p, layout2));
-			}
+			//}
 		}
     	
 		
@@ -221,4 +221,13 @@ public class FragmentConj extends FragmentM
 			return rootView;
     }
 
+	public String getTextToTTS() {
+		String s = MenuData.getText()+".";
+		
+    	for (PronounEdited p: objects)
+    		s = s + p.mPronoun.getText()+" "+p.mPronoun.conj(MenuData.getText())+".";
+		
+		return s;
+	}	
+	
 }

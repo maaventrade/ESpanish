@@ -71,7 +71,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
-	private String language = "spa";
 
 	TextToSpeech tts;
 	Locale locale;
@@ -265,9 +264,9 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		case R.id.item_speak: {
 			if (fragment != null){
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				ttsGreater21(fragment.getTextR());
+				ttsGreater21(fragment.getTextToTTS());
 			} else {
-				ttsUnder20(fragment.getTextR());
+				ttsUnder20(fragment.getTextToTTS());
 			}
 			}
 			return true;
@@ -339,10 +338,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	    	  	
 	        	Locale locale[] = Locale.getAvailableLocales();
 	            for (int i=0; i< locale.length; i++){
+	            	//Log.d("", ""+locale[i].getISO3Language());
 	    	  		//Toast.makeText(this, locale[i].getLanguage().toUpperCase()+"  "+language, Toast.LENGTH_LONG).show();
-	            	if (locale[i].getISO3Language().equals(language)){
+	            	if (locale[i].getISO3Language().equals(MenuData.getLanguage())){
 	    	    	  	if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED){
-	    	    	  		Toast.makeText(this, getResources().getString(R.string.error_lang_not_supported)+" ("+language+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
+	    	    	  		Toast.makeText(this, getResources().getString(R.string.error_lang_not_supported)+" ("+MenuData.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
 	    	    	  		langSupported = false;
 	    	    	  	} else {
 	    	    	  		langSupported = true;
@@ -350,7 +350,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	    	    	  	}	
 	    	    	  	return; 
 	            	}}
-	            Toast.makeText(this, getResources().getString(R.string.error_lang_not_found)+" ("+language+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
+	            Toast.makeText(this, getResources().getString(R.string.error_lang_not_found)+" ("+MenuData.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
 	            
 	      }
 	      	else if (status == TextToSpeech.ERROR) {

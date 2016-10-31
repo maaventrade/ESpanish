@@ -17,10 +17,14 @@
         android:title="Speak" 
         android:visible="true" 
         android:showAsAction="always" 
-        android:icon="@drawable/speaker">
-       
-    </item>
-
+        android:icon="@drawable/speaker"/>
+    
+    <item android:id="@+id/item_help" 
+        android:title="Help" 
+        android:visible="true" 
+        android:showAsAction="always" 
+        android:icon="@drawable/help"/>
+    
     <item android:id="@+id/item_dictionary" 
         android:title="Dictionary" 
         android:visible="true" 

@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data version = "1">
-	<schemes>
-		<scheme>
-			IO PARLO
-			TU PARLY
-			LUI PARLA
-			LEY PARLA
-			&lt;font size=+1&gt;L&lt;/font&gt;EY PARLA
-			NOI PARLIAMO
-			VOI PARLATE
-			LORO PARLANO
+    <level0 title = "Урок 1">
+    	<level1 title = "Глаголы" type = "Спряжения"
+			note = "Спрягаем глаголы по формам лица и числа.">
+    	   <entry text = "parlare"></entry>
+    	   <entry text = "mangiare"></entry>
+    	   <entry text = "guardare"></entry>
+    	   <entry text = "giocare"></entry>
+    	   <entry text = "lavorare"></entry>
+    	   <entry text = "amare"></entry>
+    	   <entry text = "ascoltare"></entry>
+    	   <entry text = "imparare"></entry>
+    	   <entry text = "abitare"></entry>
+	</level1>
+		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Спряжения" 
+		    note = "Спрягаем глагол по формам лица и числа.">
+			<entry text = "avere"></entry>
+		</level1>
+    		
+	</level0>
+	
+    	<schemes>
+		<scheme title = "Формы глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
+			IO PÁRL&lt;font color=RED&gt;O&lt;/font&gt;- Я ГОВОРЮ
+			TU PÁRL&lt;font color=RED&gt;I&lt;/font&gt;- ТЫ ГОВОРИШЬ
+			LUI PÁRL&lt;font color=RED&gt;A&lt;/font&gt;- ОН ГОВОРИТ
+			LEY PÁRL&lt;font color=RED&gt;A&lt;/font&gt;- ОНА ГОВОРИТ 
+			&lt;big &gt;L&lt;/big&gt;EY PÁRL&lt;font color=RED&gt;A&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИТЕ
+			NOI PARL&lt;font color=RED&gt;IÁMO&lt;/font&gt;-МЫ ГОВОРИМ
+			VOI PARL&lt;font color=RED&gt;ÁTE&lt;/font&gt;-ВЫ ГОВОРИТЕ
+			LORO PÁRL&lt;font color=RED&gt;ANO&lt;/font&gt;-ОНИ ГОВОРЯТ
 		</scheme>
-	</schemes>
+		<scheme title = "Прошедшее время глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
+			IO HO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- Я ГОВОРИЛ
+			TU HAI PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ТЫ ГОВОРИЛ
+			LUI HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ОН ГОВОРИЛ
+			LEY HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ОНА ГОВОРИЛА 
+			&lt;big &gt;L&lt;/big&gt;EY HA PÁRL&lt;font color=RED&gt;ATO&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИЛИ
+			NOI ABBIAMO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-МЫ ГОВОРИЛИ
+			VOI AVETE PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ВЫ ГОВОРИЛИ
+			LORO HANNO PÁRL&lt;font color=RED&gt;ATO&lt;/font&gt;-ОНИ ГОВОРИЛИ
+		</scheme>
+			</schemes>
 </data>

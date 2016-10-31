@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<dictionary>
+	   	<entry text = "parlare" ending = "are" transl = "говорить" root = "говор" fit_type = "6"></entry>
+	   	<entry text = "mangiare" ending = "are" transl = "есть" root = "е" fit_type = "5"></entry>
+	   	<entry text = "guardare" ending = "are" transl = "смотреть" root = "смотр" fit_type = "6"></entry>
+	   	<entry text = "giocare" ending = "are" transl = "играть" root = "игра" fit_type = "2"></entry>
+	   	<entry text = "lavorare" ending = "are" transl = "работать" root = "работа" fit_type = "2"></entry>
+	   	<entry text = "amare" ending = "are" transl = "любить" root = "люб" fit_type = "7"></entry>
+	   	<entry text = "ascoltare" ending = "are" transl = "слушать" root = "слуша" fit_type = "2"></entry>
+	   	<entry text = "imparare" ending = "are" transl = "учиться" root = "уч" fit_type = "4"></entry>
+	   	<entry text = "abitare" ending = "are" transl = "проживать" root = "прожива" fit_type = "2"></entry>
+	   	
+	   	<entry text = "avere" ending = "ere" transl = "иметь" root = "име" fit_type = "2"></entry>
+	   		   		   				
+	   		   												   		   		   		   		   	
+	</dictionary>
+	<pronoun>
+	   	<entry text = "Io" transl = "я" verb_ending = "are:o,avere:ho">
+	    </entry>
+	   	<entry text = "Tu" transl = "ты" verb_ending = "are:i,avere:hai">
+	    </entry>
+	   	<entry text = "Lui" transl = "он" verb_ending = "are:a,avere:ha">
+	    </entry>
+	   	<entry text = "Ley" transl = "она" verb_ending = "are:a,avere:ha">
+	    </entry>
+	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,avere:ha">
+	    </entry>
+	   	<entry text = "Noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo">
+	    </entry>
+	   	<entry text = "Voi" transl = "вы" verb_ending = "are:ate,avere:avete">
+	    </entry>
+	   	<entry text = "Loro" transl = "они" verb_ending = "are:ano,avere:hanno">
+	    </entry>
+		
+		   		 </pronoun>
+	    
+	<fits>
+	   	<entry type = "1" obj = "у:ёшь:ёт"></entry>
+	   	<entry type = "2" obj = "ю:ешь:ет"></entry>
+	   	<entry type = "3" obj = "ю:ёшь:ёт"></entry>
+	   	<entry type = "4" obj = "усь:ишся:ится"></entry>
+	   	<entry type = "5" obj = "м:шь:ст"></entry>
+	   	<entry type = "6" obj = "ю:ишь:ит"></entry>
+	   	<entry type = "7" obj = "лю:ишь:ит"></entry>
+	   		   		</fits>				
+
+</data>

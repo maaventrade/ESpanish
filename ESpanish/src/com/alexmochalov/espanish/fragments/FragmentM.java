@@ -28,7 +28,7 @@ public class FragmentM extends Fragment
 	 
 	public OnTestedListener mCallback;
 
-	public String getTextR()
+	public String getTextToTTS()
 	{
 		return null;
 	}

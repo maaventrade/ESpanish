@@ -137,15 +137,12 @@ public class FragmentPhrase extends FragmentM {
 		
 	}
 */
-/*
-	public String getTextR() {
-		if (direction == 0)
-			return mText;
+	public String getTextToTTS() {
+		if (MenuData.getDirection() == 1)
+			return MenuData.getText();
 		else 
-			return translation;
+			return MenuData.getTranslation();
 	}	
-	
-*/
 	
 }
 

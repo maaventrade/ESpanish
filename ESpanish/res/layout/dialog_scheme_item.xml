@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="@dimen/text_size_small"
+    android:orientation="horizontal" >
 
 	<TextView
-		android:layout_height="wrap_content"
-		android:text="Medium Text"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:id="@+id/dialogschemeitemTextViewString"/>
+	    android:id="@+id/dialogschemeitemTextViewString"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="0.5"
+	    android:text="Medium Text"
+	    android:textSize="@dimen/text_size_medium"
+	    android:typeface="serif" />
 
+	<TextView
+	    android:id="@+id/dialogschemeitemTextViewTranslation"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="0.5"
+	    android:text="Medium Text"
+	    android:textSize="@dimen/text_size_medium"
+	    android:typeface="serif" />
+	
 </LinearLayout>
 

@@ -42,6 +42,8 @@ public class MenuData {
 
 	static ArrayList<Scheme> schemes;
 	
+	private static String language = "ita";
+	
 	static class MarkedString {
 		public MarkedString(String text) {
 			mText = text;
@@ -193,7 +195,10 @@ public class MenuData {
 		try {
 			XmlPullParser xpp = null;
 
-			xpp = mContext.getResources().getXml(R.xml.menu_it);
+			if (language.equals("ita")) 
+				xpp = mContext.getResources().getXml(R.xml.menu_it);
+			else if (language.equals("spa"))
+				xpp = mContext.getResources().getXml(R.xml.menu_spa);
 
 			groupData.clear();
 
@@ -280,9 +285,17 @@ public class MenuData {
 							}
 						}
 					} else if (xpp.getName().equals("schemes")) {
-							mode = "schames";
+							mode = "schemes";
+							schemes = new ArrayList<Scheme>();
 					} else if (xpp.getName().equals("scheme")) {
-						schemes = new ArrayList<Scheme>();
+						schemes.add(new Scheme());
+						for (int i = 0; i < xpp.getAttributeCount(); i++) {
+							if (xpp.getAttributeName(i).equals("title")) 
+								schemes.get(schemes.size()-1).title = xpp.getAttributeValue(i);
+							else if (xpp.getAttributeName(i).equals("text")) 
+								schemes.get(schemes.size()-1).text = xpp.getAttributeValue(i);
+						}	
+						
 					}
 					break; // конец тэга
 				case XmlPullParser.END_TAG:
@@ -308,7 +321,8 @@ public class MenuData {
 					if (mode.equals("Выражения") || mode.equals("Спряжения")) {
 
 					}else if (mode.equals("schemes")) {
-						schemes.get(schemes.size()).strings.add(xpp.getText());
+						schemes.get(schemes.size()-1).strings =
+								xpp.getText().split("\n");
 					}
 
 					break;
@@ -380,11 +394,6 @@ public class MenuData {
 			e.printStackTrace();
 		}
 
-	}
-
-	private static XmlPullParser prepareParser() {
-
-		return mContext.getResources().getXml(R.xml.menu);
 	}
 
 	public static String getType(int i, int j) {
@@ -632,6 +641,14 @@ Log.d("","mi"+mIndex);
 	public static void setPosition(int groupPosition, int childPosition) {
 		mGroupPosition = groupPosition;
 		mChildPosition = childPosition;
+	}
+
+	public static String getLanguage() {
+		return language;
+	}
+
+	public static String getTranslation() {
+		return translation;
 	}
 
 
