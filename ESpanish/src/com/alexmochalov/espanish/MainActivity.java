@@ -263,13 +263,13 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		}
 		case R.id.item_speak: {
-
+			if (fragment != null){
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				ttsGreater21(fragment.getTextR());
 			} else {
 				ttsUnder20(fragment.getTextR());
 			}
-
+			}
 			return true;
 		}
 		case android.R.id.home: {
@@ -298,6 +298,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			
 			return true;
 		} 
+		case R.id.action_settings:
+				DialogScheme d = new DialogScheme(this);
+				d.show();
+				
+			return true;
 		default:	return super.onOptionsItemSelected(item);
 		}
 		

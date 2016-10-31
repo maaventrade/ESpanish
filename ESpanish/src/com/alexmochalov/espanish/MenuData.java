@@ -40,6 +40,8 @@ public class MenuData {
 	static ArrayList<MenuGroup> menuData;
 	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
 
+	static ArrayList<Scheme> schemes;
+	
 	static class MarkedString {
 		public MarkedString(String text) {
 			mText = text;
@@ -191,7 +193,7 @@ public class MenuData {
 		try {
 			XmlPullParser xpp = null;
 
-			xpp = mContext.getResources().getXml(R.xml.menu);
+			xpp = mContext.getResources().getXml(R.xml.menu_it);
 
 			groupData.clear();
 
@@ -277,7 +279,10 @@ public class MenuData {
 										.getAttributeValue(i);
 							}
 						}
-
+					} else if (xpp.getName().equals("schemes")) {
+							mode = "schames";
+					} else if (xpp.getName().equals("scheme")) {
+						schemes = new ArrayList<Scheme>();
 					}
 					break; // конец тэга
 				case XmlPullParser.END_TAG:
@@ -302,6 +307,8 @@ public class MenuData {
 				case XmlPullParser.TEXT:
 					if (mode.equals("Выражения") || mode.equals("Спряжения")) {
 
+					}else if (mode.equals("schemes")) {
+						schemes.get(schemes.size()).strings.add(xpp.getText());
 					}
 
 					break;
@@ -433,14 +440,19 @@ public class MenuData {
 	}
 
 	public static int findIndex(String text) {
-		
+		Log.d("",""+mGroupPosition);
+		Log.d("",""+mChildPosition);
+		if (mGroupPosition >= textData.size()
+			|| mChildPosition >= textData.get(mGroupPosition).size())
+			return -1;
+			
 		for (MarkedString m: textData.get(mGroupPosition).get(mChildPosition))
 			if (m.mText.equals(text) && m.mFlag < 3){
 				
 				return textData.get(mGroupPosition).get(mChildPosition).indexOf(m);
 			}	
 		
-		return 0;
+		return -1;
 	}
 	
 	public static int next() {
@@ -538,6 +550,12 @@ Log.d("","mi"+mIndex);
 	}
 
 	public static void nextTestIndex() {
+		if (mGroupPosition >= textData.size() ||
+			mChildPosition >= textData.get(mGroupPosition).size()){
+				mIndex = -1;
+				return;
+			}
+			
 		mIndex = 0;
 		int size = textData.get(mGroupPosition).get(mChildPosition).size();
 		if (mIndex < size && mIndex >= 0 &&
