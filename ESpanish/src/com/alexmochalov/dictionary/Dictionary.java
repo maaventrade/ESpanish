@@ -92,6 +92,18 @@ public class Dictionary
 		public CharSequence getTranslation() {
 			return translation;
 		}
+
+		public static String firstLetterToUpperCase(String translation) {
+			return translation.substring(0,1).toUpperCase() + translation.substring(1);
+		}
+
+		
+		public CharSequence getTranslation(boolean UpperFirst) {
+			if (UpperFirst)
+				return firstLetterToUpperCase(translation);
+			else	
+				return translation;
+		}
 	}
 
 	private static ArrayList<Pronoun> pronouns = new ArrayList<Pronoun>();

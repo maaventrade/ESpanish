@@ -45,14 +45,20 @@
 		<ImageButton
 		    android:id="@+id/dialogSchemeImageButtonSpeak"
 		    android:layout_width="wrap_content"
-		    android:layout_height="match_parent"
+		    android:layout_height="wrap_content"
 		    android:src="@drawable/speaker" />
 
-		<Button
+		<ImageButton
 		    android:id="@+id/dialogSchemeImageButtonNext"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="Nexg" />
+		    android:src="@drawable/forward"/>
+
+		<ImageButton
+		    android:id="@+id/dialogSchemeImageButtonPrev"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/back"/>
 
 	</LinearLayout>
 	

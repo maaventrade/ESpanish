@@ -36,13 +36,13 @@
 		   		 </pronoun>
 	    
 	<fits>
-	   	<entry type = "1" obj = "у:ёшь:ёт"></entry>
-	   	<entry type = "2" obj = "ю:ешь:ет"></entry>
-	   	<entry type = "3" obj = "ю:ёшь:ёт"></entry>
-	   	<entry type = "4" obj = "усь:ишся:ится"></entry>
-	   	<entry type = "5" obj = "м:шь:ст"></entry>
-	   	<entry type = "6" obj = "ю:ишь:ит"></entry>
-	   	<entry type = "7" obj = "лю:ишь:ит"></entry>
+	   	<entry type = "1" obj = "у:ёшь:ёт:ёт:ёте:ём:ёте:ут"></entry>
+	   	<entry type = "2" obj = "ю:ешь:ет:ет:ете:им:ете:ют"></entry>
+	   	<entry type = "3" obj = "ю:ёшь:ёт:ёт:ёте:ём:ёте:ют"></entry>
+	   	<entry type = "4" obj = "усь:ишся:ится:ится:итесь:имся:итесь:атся"></entry>
+	   	<entry type = "5" obj = "м:шь:ст:ст:дите:дим:дите:дят"></entry>
+	   	<entry type = "6" obj = "ю:ишь:ит:ит:ите:им:ите:ят"></entry>
+	   	<entry type = "7" obj = "лю:ишь:ит:ит:ите:им:ите:ят"></entry>
 	   		   		</fits>				
 
 </data>

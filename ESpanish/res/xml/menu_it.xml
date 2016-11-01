@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data version = "1">
     <level0 title = "Урок 1">
-    	<level1 title = "Глаголы" type = "Спряжения"
+    	<level1 title = "Глаголы" type = "Спряжения" helpindex = "0"
 			note = "Спрягаем глаголы по формам лица и числа.">
     	   <entry text = "parlare"></entry>
     	   <entry text = "mangiare"></entry>
@@ -13,8 +13,8 @@
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
 	</level1>
-		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Говорим" 
-		    note = "Произносим формы глагола.">
+		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Говорим" helpindex = "1" 
+		    note = "Переводим вслух и сравниваем с образцом.">
 			<entry text = "avere"></entry>
 		</level1>
     		
@@ -31,6 +31,16 @@
 			VOI PARL&lt;font color=RED&gt;ÁTE&lt;/font&gt;-ВЫ ГОВОРИТЕ
 			LORO PÁRL&lt;font color=RED&gt;ANO&lt;/font&gt;-ОНИ ГОВОРЯТ
 		</scheme>
+		<scheme title = "Формы глагола AVERE (иметь)">
+			IO HO - Я ИМЕЮ
+			TU HAI - ТЫ ИМЕЕШЬ
+			LUI HA - ОН ИМЕЕТ
+			LEY HA - ОНА ИМЕЕТ 
+			&lt;big &gt;L&lt;/big&gt;EY HA -&lt;big &gt;В&lt;/big&gt;Ы(ВЕЖЛ.) ИМЕЕТЕ
+			NOI ABBIAMO -МЫ ИМЕЕМ
+			VOI AVETE -ВЫ ИМЕЕТЕ
+			LORO HANNO -ОНИ ИМЕЮТ
+		</scheme>
 		<scheme title = "Прошедшее время глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
 			IO HO PARL&lt;font color=RED&gt;ÁTO&lt;/font&gt;- Я ГОВОРИЛ
 			TU HAI PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ТЫ ГОВОРИЛ
@@ -39,7 +49,7 @@
 			&lt;big &gt;L&lt;/big&gt;EY HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИЛИ
 			NOI ABBIAMO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-МЫ ГОВОРИЛИ
 			VOI AVETE PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ВЫ ГОВОРИЛИ
-			LORO HANNO PÁRL&lt;font color=RED&gt;ATO&lt;/font&gt;-ОНИ ГОВОРИЛИ
+			LORO HANNO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ОНИ ГОВОРИЛИ
 		</scheme>
 			</schemes>
 </data>

@@ -88,7 +88,8 @@ public class MenuData {
 			if (pronoun.length() > 0)
 				pronoun = pronoun + " ";
 				
-			e = Dictionary.getTranslation(verb);			verb = Dictionary.fit(e, sub, "present").trim();
+			e = Dictionary.getTranslation(verb);			
+			verb = Dictionary.fit(e, sub, "present").trim();
 			
 			//Log.d("", text);
 			//Log.d("", Dictionary.getTranslation(text).translation);
@@ -154,6 +155,10 @@ public class MenuData {
 
 		public void setChildNote(String note) {
 			mChilren.get(mChilren.size() - 1).note = note;
+		}
+
+		public void setHelpIndex(String attributeValue) {
+			mHelpIndex = Integer.parseInt(attributeValue); 
 		}
 	}
 
@@ -223,10 +228,12 @@ public class MenuData {
 
 					} else if (xpp.getName().equals("level1")) {
 						// Child element
-
+						
 						for (int i = 0; i < xpp.getAttributeCount(); i++) {
 							if (xpp.getAttributeName(i).equals("title")) {
 								menuGroup.addItem(xpp.getAttributeValue(i));
+							} else if (xpp.getAttributeName(i).equals("helpindex")) {
+								menuGroup.setHelpIndex(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("type")) {
 								if (xpp.getAttributeValue(i)
 										.equals("Выражения")) {
@@ -240,6 +247,9 @@ public class MenuData {
 										"Комбинации")) {
 									mode = "Комбинации";
 									menuGroup.setChildType(mode);
+								} else if (xpp.getAttributeValue(i).equals(
+										"Говорим")) {
+									menuGroup.setChildType("Говорим");
 								}
 							} else if (xpp.getAttributeName(i).equals("note")) {
 								menuGroup
@@ -660,6 +670,12 @@ Log.d("","mi"+mIndex);
 		} else if (menuData.get(mGroupPosition).mChilren.get(mChildPosition).mHelpIndex >= 0)
 			return menuData.get(mGroupPosition).mChilren.get(mChildPosition).mHelpIndex;
 		else return menuData.get(mGroupPosition).mHelpIndex;
+	}
+
+	public static String getPositionsStr() {
+		return ("0"+mGroupPosition).substring(0, 2)+
+				("0"+mChildPosition).substring(0, 2)+
+				("0"+mIndex).substring(0, 2);
 	}
 
 }

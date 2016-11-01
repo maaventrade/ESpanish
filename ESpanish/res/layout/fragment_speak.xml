@@ -29,11 +29,19 @@
 		    android:textColor="@color/gray"
 		    android:textSize="@dimen/text_size_small" />
 
+		<TextView
+		    android:id="@+id/TextView01"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="Нажмите кнопку &quot;Запись&quot; и произнесите по итальянски:"
+		    android:textColor="@color/ltblue"
+		    android:textSize="@dimen/text_size_small" />
+
 	</LinearLayout>
 
 	<LinearLayout
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="match_parent"
 	    android:layout_marginLeft="@dimen/text_size_medium"
 	    android:layout_weight="5"
 	    android:orientation="vertical" >
@@ -59,6 +67,23 @@
 		android:layout_height="wrap_content"
 		android:layout_weight="0.1">
 
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" >
+
+		    <ImageButton
+		        android:id="@+id/button_rec"
+		        android:layout_width="wrap_content"
+		        android:layout_height="fill_parent"
+		        android:src="@drawable/mic" />
+
+		    <ImageButton
+		        android:id="@+id/button_play"
+		        android:layout_width="wrap_content"
+		        android:layout_height="fill_parent"
+		        android:src="@drawable/play" />
+		</LinearLayout>
+
 		<TextView
 			android:id="@+id/TextViewInfo"
 			android:layout_width="wrap_content"
@@ -66,21 +91,13 @@
 			android:layout_gravity="right|center_vertical"
 			android:text="TextView"
 			android:textSize="@dimen/text_size_medium"/>
-
+				
 		<Button
 			android:id="@+id/button_test"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal|center"
 			android:text="@string/button_test"
-			android:textSize="@dimen/text_size_medium"/>
-
-		<CheckBox
-			android:id="@+id/checkBoxRandom"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="left|center_vertical"
-			android:text="@string/randomize"
 			android:textSize="@dimen/text_size_medium"/>
 
 	</FrameLayout>

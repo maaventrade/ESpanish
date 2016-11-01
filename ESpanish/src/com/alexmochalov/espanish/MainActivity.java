@@ -1,5 +1,6 @@
 package com.alexmochalov.espanish;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -37,6 +38,7 @@ import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
+
 import com.alexmochalov.espanish.fragments.*;
 
 public class MainActivity extends Activity implements OnInitListener, 
@@ -213,6 +216,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		File file = new File(Utils.REC_FOLDER);
+		if(!file.exists()){                          
+			file.mkdirs();                  
+		}
+		
 	}
 
 	@Override
@@ -302,6 +311,17 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		} 
 		case R.id.item_help:
 				DialogScheme d = new DialogScheme(this, MenuData.getHelpIndex());
+				d.mCallback = new DialogScheme.OnDialogSchemeButtonListener() {
+					@Override
+					public void onSpeakButtonPressed(String text) {
+						text = Html.fromHtml(text).toString();
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+							ttsGreater21(text);
+						} else {
+							ttsUnder20(text);
+						}
+					}
+				};
 				d.show();
 				
 			return true;
