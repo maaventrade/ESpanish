@@ -51,6 +51,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
+import com.alexmochalov.espanish.fragments.*;
 
 public class MainActivity extends Activity implements OnInitListener, 
 OnMenuItemSelectedListener, FragmentM.OnTestedListener
@@ -178,6 +179,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragment = new FragmentPhrase();
 		} else if (type.equals("Спряжения")){
 			fragment = new FragmentConj();
+		} else if (type.equals("Говорим")){
+			fragment = new FragmentSpeak();
 		}
 		
 		if (fragment != null) {
@@ -297,8 +300,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			
 			return true;
 		} 
-		case R.id.action_settings:
-				DialogScheme d = new DialogScheme(this);
+		case R.id.item_help:
+				DialogScheme d = new DialogScheme(this, MenuData.getHelpIndex());
 				d.show();
 				
 			return true;

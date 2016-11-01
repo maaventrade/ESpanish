@@ -39,7 +39,6 @@ public class MenuData {
 	// меню
 	static ArrayList<MenuGroup> menuData;
 	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
-
 	static ArrayList<Scheme> schemes;
 	
 	private static String language = "ita";
@@ -123,11 +122,13 @@ public class MenuData {
 		String title;
 		String type;
 		String note;
+		int mHelpIndex = -1;
 	}
 
 	static class MenuGroup {
 		String title;
 		ArrayList<MenuChild> mChilren;
+		int mHelpIndex = 0;
 
 		MenuGroup(String name, ArrayList<MenuChild> children) {
 			title = name;
@@ -651,5 +652,14 @@ Log.d("","mi"+mIndex);
 		return translation;
 	}
 
+	public static int getHelpIndex(){
+		if (mGroupPosition >= textData.size() ||
+			mChildPosition >= textData.get(mGroupPosition).size()){
+
+			return 0;
+		} else if (menuData.get(mGroupPosition).mChilren.get(mChildPosition).mHelpIndex >= 0)
+			return menuData.get(mGroupPosition).mChilren.get(mChildPosition).mHelpIndex;
+		else return menuData.get(mGroupPosition).mHelpIndex;
+	}
 
 }

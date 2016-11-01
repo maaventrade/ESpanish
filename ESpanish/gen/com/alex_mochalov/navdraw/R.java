@@ -56,24 +56,24 @@ public final class R {
         public static final int speaker=0x7f02000b;
     }
     public static final class id {
-        public static final int EditTextTranslation=0x7f0b000f;
+        public static final int EditTextTranslation=0x7f0b000e;
         public static final int TextViewInfo=0x7f0b000c;
-        public static final int TextViewPhrase=0x7f0b0011;
-        public static final int TextViewPhraseTranslation=0x7f0b0013;
+        public static final int TextViewPhrase=0x7f0b0010;
+        public static final int TextViewPhraseTranslation=0x7f0b0012;
         public static final int action_reread=0x7f0b001a;
         public static final int action_settings=0x7f0b001b;
         public static final int am_fragmentMenu=0x7f0b0001;
-        public static final int button1=0x7f0b0005;
         public static final int button_test=0x7f0b000d;
-        public static final int checkBoxRandom=0x7f0b000e;
+        public static final int checkBoxRandom=0x7f0b0013;
+        public static final int dialogSchemeImageButtonNext=0x7f0b0005;
         public static final int dialogSchemeImageButtonSpeak=0x7f0b0004;
         public static final int dialogSchemeTextViewWord=0x7f0b0002;
         public static final int dialogschemeitemTextViewString=0x7f0b0006;
         public static final int dialogschemeitemTextViewTranslation=0x7f0b0007;
         public static final int editTextEntry=0x7f0b0019;
-        public static final int editText_phrase_transl=0x7f0b0012;
+        public static final int editText_phrase_transl=0x7f0b0011;
         public static final int fc_linearLayout=0x7f0b0003;
-        public static final int fm_listView=0x7f0b0010;
+        public static final int fm_listView=0x7f0b000f;
         public static final int fragment_container=0x7f0b0000;
         public static final int imageView1=0x7f0b0016;
         public static final int item_dictionary=0x7f0b001e;
@@ -98,9 +98,10 @@ public final class R {
         public static final int fragment_conj_item=0x7f030006;
         public static final int fragment_menu=0x7f030007;
         public static final int fragment_phrase=0x7f030008;
-        public static final int menu_child_view=0x7f030009;
-        public static final int menu_group_view=0x7f03000a;
-        public static final int search_layout=0x7f03000b;
+        public static final int fragment_speak=0x7f030009;
+        public static final int menu_child_view=0x7f03000a;
+        public static final int menu_group_view=0x7f03000b;
+        public static final int search_layout=0x7f03000c;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

@@ -13,8 +13,8 @@
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
 	</level1>
-		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Спряжения" 
-		    note = "Спрягаем глагол по формам лица и числа.">
+		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Говорим" 
+		    note = "Произносим формы глагола.">
 			<entry text = "avere"></entry>
 		</level1>
     		
@@ -32,11 +32,11 @@
 			LORO PÁRL&lt;font color=RED&gt;ANO&lt;/font&gt;-ОНИ ГОВОРЯТ
 		</scheme>
 		<scheme title = "Прошедшее время глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
-			IO HO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- Я ГОВОРИЛ
+			IO HO PARL&lt;font color=RED&gt;ÁTO&lt;/font&gt;- Я ГОВОРИЛ
 			TU HAI PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ТЫ ГОВОРИЛ
 			LUI HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ОН ГОВОРИЛ
 			LEY HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ОНА ГОВОРИЛА 
-			&lt;big &gt;L&lt;/big&gt;EY HA PÁRL&lt;font color=RED&gt;ATO&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИЛИ
+			&lt;big &gt;L&lt;/big&gt;EY HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИЛИ
 			NOI ABBIAMO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-МЫ ГОВОРИЛИ
 			VOI AVETE PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ВЫ ГОВОРИЛИ
 			LORO HANNO PÁRL&lt;font color=RED&gt;ATO&lt;/font&gt;-ОНИ ГОВОРИЛИ
