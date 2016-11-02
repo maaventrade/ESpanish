@@ -1,24 +1,15 @@
 package com.alexmochalov.espanish.fragments;
 
-import android.graphics.*;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
+import android.media.*;
 import android.os.*;
+import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-
 import com.alex_mochalov.navdraw.*;
-import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.dictionary.Entry;
-import com.alexmochalov.dictionary.Dictionary.*;
+import com.alexmochalov.dictionary.*;
 import com.alexmochalov.espanish.*;
-
-import java.io.IOException;
-import java.util.*;
-
-import android.util.*;
+import java.io.*;
 
 public class FragmentSpeak extends FragmentM implements OnClickListener {
 	private Button buttonTest;

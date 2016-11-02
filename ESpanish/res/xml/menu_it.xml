@@ -17,7 +17,10 @@
 		    note = "Переводим вслух и сравниваем с образцом.">
 			<entry text = "avere"></entry>
 		</level1>
-    		
+		<level1 title = "Отрицание NON" type = "Комбинации1"
+			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
+			<entry neg = "true" verbs = "parlare, mangiare, giocare, guardare, lavorare, amare, ascoltare, imparare, abitare"></entry>
+		</level1>
 	</level0>
 	
     	<schemes>

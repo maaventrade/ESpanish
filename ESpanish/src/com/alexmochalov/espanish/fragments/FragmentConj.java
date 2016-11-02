@@ -2,19 +2,18 @@ package com.alexmochalov.espanish.fragments;
 
 import android.graphics.*;
 import android.os.*;
+import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-
+import android.widget.CompoundButton.*;
 import com.alex_mochalov.navdraw.*;
-import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.dictionary.Dictionary.*;
+import com.alexmochalov.dictionary.*;
 import com.alexmochalov.espanish.*;
-
 import java.util.*;
 
-import android.util.*;
+import android.view.View.OnClickListener;
+import com.alexmochalov.dictionary.Dictionary;
 
 public class FragmentConj extends FragmentM
 {

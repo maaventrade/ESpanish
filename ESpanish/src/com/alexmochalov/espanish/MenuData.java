@@ -1,23 +1,17 @@
 package com.alexmochalov.espanish;
 
 import android.content.*;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
+import android.content.SharedPreferences.*;
+import android.preference.*;
 import android.util.*;
 import android.widget.*;
-
+import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.dictionary.*;
+import java.io.*;
 import java.util.*;
-
 import org.xmlpull.v1.*;
 
-import com.alex_mochalov.navdraw.R;
 import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.dictionary.Entry;
-
-import java.io.*;
-
-import android.preference.PreferenceManager;
-import android.text.*;
 
 public class MenuData {
 	static Context mContext;
@@ -44,6 +38,17 @@ public class MenuData {
 	private static String language = "ita";
 	
 	static class MarkedString {
+
+		String mText;
+		String mRusText = "";
+
+		int mFlag;
+
+		// 001 spa->ru completed
+		// 010 ru->spa completed
+		// 100 audio completed ?????????
+		
+		
 		public MarkedString(String text) {
 			mText = text;
 			mFlag = 0;
@@ -100,16 +105,61 @@ public class MenuData {
 				}	
 			mFlag = 0;
 		}
+	
+		public MarkedString(boolean neg, String verb) {
+
+			String negStr = " ";
+			String pronoun = "";
+
+			if (neg) negStr = " non ";
+/*
+			if (sub == 3) 
+				mText = "¿"+text+negStr+ Dictionary.conj(2, verb)+"?";
+			else {
+				pronoun = "tú";
+				mText = "¿"+text+" tú"+ negStr +Dictionary.conj(1, verb)+"?";
+			}	
+
+			if (mText.contains("Cómo tú llamas")){
+				mRusText = "Как тебя зовут?";
+				mText = "¿Cómo té llamas?";
+			} else {
+
+
+
+				//Log.d("",negStr);
+				Entry e = Dictionary.getTranslation(negStr);
+				if ( e != null)
+					negStr = e.getTranslation();
+
+				if (negStr.length() > 1)
+					negStr = negStr + " ";
+				else negStr = "";
+
+				e = Dictionary.getTranslation(pronoun);
+				if ( e != null)
+					pronoun = e.getTranslation().trim();
+
+				if (pronoun.length() > 0)
+					pronoun = pronoun + " ";
+
+				e = Dictionary.getTranslation(verb);			
+				verb = Dictionary.fit(e, sub, "present").trim();
+
+				//Log.d("", text);
+				//Log.d("", Dictionary.getTranslation(text).translation);
+				mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "
+					+ pronoun
+					+ negStr
+					+ verb + "?";
+			}	
+			*/
+			this.mRusText ="rus";
+			this.mText = "text";
+			
+			mFlag = 0;
+		}
 		
-		String mText;
-		String mRusText = "";
-
-		int mFlag;
-
-		// 001 spa->ru completed
-		// 010 ru->spa completed
-		// 100 audio completed ?????????
-
 		public void setFlag(String flag) {
 			mFlag = Integer.parseInt(flag);
 		}
@@ -246,7 +296,11 @@ public class MenuData {
 								} else if (xpp.getAttributeValue(i).equals(
 										"Комбинации")) {
 									mode = "Комбинации";
-									menuGroup.setChildType(mode);
+							  		 menuGroup.setChildType("Комбинации");
+						 		} else if (xpp.getAttributeValue(i).equals(
+										  "Комбинации1")) {
+							   		mode = "Комбинации1";
+							  		 menuGroup.setChildType(mode);
 								} else if (xpp.getAttributeValue(i).equals(
 										"Говорим")) {
 									menuGroup.setChildType("Говорим");
@@ -293,6 +347,7 @@ public class MenuData {
 							} else if (xpp.getAttributeName(i).equals("verbs")) {
 								rec.verbs = xpp
 										.getAttributeValue(i);
+							
 							}
 						}
 					} else if (xpp.getName().equals("schemes")) {
@@ -310,7 +365,8 @@ public class MenuData {
 					}
 					break; // конец тэга
 				case XmlPullParser.END_TAG:
-					if (xpp.getName().equals("entry") && mode.equals("Комбинации")){
+					if (xpp.getName().equals("entry") && 
+						mode.contains("Комбинации")){
 						ArrayList<MarkedString> textDataItem = 
 								textData.get(textData.size() - 1)
 									.get(textData.get(
@@ -322,7 +378,13 @@ public class MenuData {
 						for (String verb : verbs){
 							//Log.d("",rec.toString());
 							//Log.d("",verb);
-							textDataItem.add(new MarkedString(rec.text, rec.sub, rec.neg, verb.trim()));
+							if (mode.equals("Комбинации"))
+								textDataItem.add(new MarkedString(rec.text, rec.sub, rec.neg, verb.trim()));
+							else{
+								for (Pronoun p: Dictionary.getPronouns())
+									textDataItem.add(new MarkedString(rec.neg, verb.trim()));
+							} 
+		
 						}
 						
 					}
