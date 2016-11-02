@@ -1,11 +1,13 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.menu;
 
 import android.content.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
+
 import com.alex_mochalov.navdraw.*;
-import com.alexmochalov.espanish.MenuData.*;
+import com.alexmochalov.menu.MenuData.*;
+
 import java.util.*;
 
 public class ExpListAdapter extends BaseExpandableListAdapter {
@@ -25,7 +27,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return mGroups.get(groupPosition).mChilren.size();
+		return mGroups.get(groupPosition).mChildren.size();
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return mGroups.get(groupPosition).mChilren.get(childPosition);
+		return mGroups.get(groupPosition).mChildren.get(childPosition);
 	}
 	
 	@Override
@@ -88,7 +90,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 		TextView textChild = (TextView) convertView
 				.findViewById(R.id.textChild);
-		textChild.setText(Html.fromHtml(mGroups.get(groupPosition).mChilren.get(childPosition).title));
+		textChild.setText(Html.fromHtml(mGroups.get(groupPosition).mChildren.get(childPosition).title));
 		
 		TextView textChildCount = (TextView) convertView
 				.findViewById(R.id.textChildCount);
@@ -97,7 +99,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 		TextView textChildNote = (TextView) convertView
 				.findViewById(R.id.textNote);
 		textChildNote.setText(Html.fromHtml(
-			mGroups.get(groupPosition).mChilren.get(childPosition).note));
+			mGroups.get(groupPosition).mChildren.get(childPosition).note));
 		
 		ImageView imageView = (ImageView) convertView
 				.findViewById(R.id.imageView1);

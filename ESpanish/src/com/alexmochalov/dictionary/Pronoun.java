@@ -3,12 +3,18 @@ package com.alexmochalov.dictionary;
 public class Pronoun {
 	String mText;
 	String translation;
+	
 	String verb_ending;
+	String verb_ending_past;
 
-	public String conj(String verb) {
-
+	public String conj(String verb, boolean past) {
 		// split "verb_ending" to pairs: type and ending  
-		String[] sep1 = verb_ending.split(",");
+		
+		String[] sep1 = null;
+		if (past) 
+			sep1 = verb_ending_past.split(",");
+		else sep1 = verb_ending.split(",");
+		
 		for (int i = 0; i < sep1.length; i++){
 
 			// split pairs: first is type, second is ending
@@ -36,11 +42,11 @@ public class Pronoun {
 		return "";
 	}
 
-	public CharSequence getText() {
+	public String getText() {
 		return mText;
 	}
 
-	public CharSequence getTranslation() {
+	public String getTranslation() {
 		return translation;
 	}
 

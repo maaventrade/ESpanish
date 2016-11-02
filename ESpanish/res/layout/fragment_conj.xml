@@ -20,14 +20,30 @@
 			android:text="Text"
 			android:textSize="@dimen/text_size_large"/>
 
-		<TextView
-			android:id="@+id/translation"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center_horizontal"
-			android:text="Text"
-			android:textColor="@color/gray"
-			android:textSize="@dimen/text_size_small"/>
+		<FrameLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="0.1" >
+
+			<TextView
+			    android:id="@+id/translation"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:gravity="center_horizontal"
+			    android:text="Text"
+			    android:textColor="@color/gray"
+			    android:textSize="@dimen/text_size_small" />
+
+			<TextView
+			    android:id="@+id/TextViewTenseInfo"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="right"
+			    android:gravity="center_horizontal"
+			    android:text="Text"
+			    android:textSize="@dimen/text_size_small" />
+
+		</FrameLayout>
 
 	</LinearLayout>
 

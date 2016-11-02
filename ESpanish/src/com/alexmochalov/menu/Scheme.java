@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.menu;
 import java.util.*;
 
 public class Scheme

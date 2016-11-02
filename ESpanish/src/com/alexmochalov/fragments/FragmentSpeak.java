@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish.fragments;
+package com.alexmochalov.fragments;
 
 import android.media.*;
 import android.os.*;
@@ -6,9 +6,12 @@ import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+
 import com.alex_mochalov.navdraw.*;
 import com.alexmochalov.dictionary.*;
-import com.alexmochalov.espanish.*;
+import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.root.*;
+
 import java.io.*;
 
 public class FragmentSpeak extends FragmentM implements OnClickListener {
@@ -100,7 +103,7 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 
 			s = s + p.getTranslation(true) + " " + verb + ". ";
 			text = text + p.getText() + " "
-					+ Dictionary.conj(i - 1, MenuData.getText()) + ". ";
+					+ Dictionary.conj(i - 1, MenuData.getText(), false) + ". ";
 			i++;
 		}
 

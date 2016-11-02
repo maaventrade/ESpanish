@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish.fragments;
+package com.alexmochalov.fragments;
 import android.app.*;
 import android.content.*;
 import android.content.SharedPreferences.Editor;
@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 import android.view.*;
 
 import com.alex_mochalov.navdraw.*;
-import com.alexmochalov.espanish.MainActivity;
-import com.alexmochalov.espanish.MenuData;
+import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.root.MainActivity;
 
 public class FragmentM extends Fragment
 {

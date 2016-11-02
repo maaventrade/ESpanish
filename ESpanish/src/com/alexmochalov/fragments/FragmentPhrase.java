@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish.fragments;
+package com.alexmochalov.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.alex_mochalov.navdraw.R;
 import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.espanish.MenuData;
+import com.alexmochalov.menu.MenuData;
 
 public class FragmentPhrase extends FragmentM {
 	Button button_test;

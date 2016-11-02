@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_container">
     <!-- "Fragment A" -->
-    <fragment class="com.alexmochalov.espanish.FragmentMenu"
+    <fragment class="com.alexmochalov.menu.FragmentMenu"
               android:id="@+id/am_fragmentMenu"
               android:layout_width="match_parent"
               android:layout_height="match_parent"/>

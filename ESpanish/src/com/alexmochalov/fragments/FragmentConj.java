@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish.fragments;
+package com.alexmochalov.fragments;
 
 import android.graphics.*;
 import android.os.*;
@@ -7,17 +7,23 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import android.widget.CompoundButton.*;
+
 import com.alex_mochalov.navdraw.*;
 import com.alexmochalov.dictionary.*;
-import com.alexmochalov.espanish.*;
+import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.root.*;
+
 import java.util.*;
 
 import android.view.View.OnClickListener;
+
 import com.alexmochalov.dictionary.Dictionary;
 
 public class FragmentConj extends FragmentM
 {
 	private Button button_test;
+	private String tense = "";
+	private String non = "";
 	
 	static class PronounEdited
 	{
@@ -48,8 +54,28 @@ public class FragmentConj extends FragmentM
     	// Заполняем заголовок
     	mTextViewText = (TextView)rootView.findViewById(R.id.text);
         mTranslation = (TextView)rootView.findViewById(R.id.translation);
+        
+        TextView tenseInfo = (TextView)rootView.findViewById(R.id.TextViewTenseInfo); 
 
         MenuData.setText(mTextViewText, mTranslation);
+        
+		tense = "";
+		if (MenuData.getTense().equals("past"))
+			tense = "Прошедшее время";
+
+		non = "";
+		if (MenuData.getNeg() == 0);
+		else if (MenuData.getNeg() == 2) non = "Отрицание";
+		else if (Math.random() > 0.5) non = "Отрицание";
+		
+		if (tense.length() > 0 && non.length() > 0)
+			tenseInfo.setText( "("+tense+", "+non+")" );
+		else if (tense.length() > 0)
+			tenseInfo.setText( "("+tense+")" );
+		else if (non.length() > 0)
+			tenseInfo.setText( "("+non+")" );
+		else
+			tenseInfo.setText("");
 
 		if (MainActivity.randomize)
 			randomize();
@@ -130,22 +156,11 @@ public class FragmentConj extends FragmentM
 
 		ViewGroup mLinearLayout = (ViewGroup)rootView.findViewById(R.id.fc_linearLayout);
 		
-		//Log.d("",""+mGroupPosition);
-		//Log.d("",""+mChildPosition);
-		
 	    for (Pronoun p: Dictionary.getPronouns())
 		{
-			//Log.d("",""+Dictionary.isLast(p));
-			
-			//if (MenuData.getGroupPosition() == 1 && MenuData.getChildPosition() == 1
-			//	|| !Dictionary.isLast(p)){
-					
-				//Log.d("",""+p.getText());
-
 				View layout2 = LayoutInflater.from(mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
 				mLinearLayout.addView(layout2);
 	    		objects.add(new PronounEdited(p, layout2));
-			//}
 		}
     	
 		
@@ -181,27 +196,7 @@ public class FragmentConj extends FragmentM
 						boolean allChecked = true;
 						
 				    	for (PronounEdited p: objects){
-				            EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation);
-				            String text = editText.getText().toString();
-				            
-				    		if ( text.toLowerCase().
-				    				replaceAll("á", "a").
-				    				replaceAll("ó", "o").
-				    				replaceAll("ú", "u").
-				    				replaceAll("é", "e").
-				    				
-								equals(p.mPronoun.conj(MenuData.getText()).toLowerCase().
-				    					   replaceAll("á", "a").
-				    					   replaceAll("ó", "o").
-				    					   replaceAll("ú", "u").
-				    					   replaceAll("é", "e"))){
-				    			editText.setTextColor(mContext.getResources().getColor(R.color.green2));
-				    		} else {
-				    			editText.setTextColor(Color.RED);
-								allChecked = false;
-				    		}
-
-				            editText.setText(p.mPronoun.conj(MenuData.getText()));
+				    		allChecked = allChecked & test(p);
 				    	}
 						
 				    	//allChecked = true;
@@ -220,11 +215,56 @@ public class FragmentConj extends FragmentM
 			return rootView;
     }
 
+	protected boolean test(PronounEdited p) {
+		boolean result = true;
+		
+		EditText editText = (EditText)p.mLayout.findViewById(R.id.EditTextTranslation);
+        String text = editText.getText().toString();
+
+        String verb = MenuData.getText();
+
+        String textSample = "";
+        if (non.equals("Отрицание"))
+            textSample = "non ";
+        
+        int index = Dictionary.getPronouns().indexOf(p.mPronoun);
+        
+        if (tense.equals("Прошедшее время"))
+            textSample = textSample + 
+            		Dictionary.conj(index, "avere", false) +
+            		" "+
+            		Dictionary.conj(index, verb, true);
+         else 
+        	 textSample = p.mPronoun.conj(verb, false);
+        
+        editText.setText(textSample);
+        
+		if ( text.toLowerCase().
+				replaceAll("á", "a").
+				replaceAll("ó", "o").
+				replaceAll("ú", "u").
+				replaceAll("é", "e").
+				
+			equals(textSample.toLowerCase().
+					   replaceAll("á", "a").
+					   replaceAll("ó", "o").
+					   replaceAll("ú", "u").
+					   replaceAll("é", "e"))){
+			editText.setTextColor(mContext.getResources().getColor(R.color.green2));
+		} else {
+			editText.setTextColor(Color.RED);
+			result = false;
+		}
+
+		return result;
+	}
+
+
 	public String getTextToTTS() {
 		String s = MenuData.getText()+".";
 		
     	for (PronounEdited p: objects)
-    		s = s + p.mPronoun.getText()+" "+p.mPronoun.conj(MenuData.getText())+".";
+    		s = s + p.mPronoun.getText()+" "+p.mPronoun.conj(MenuData.getText(), false)+".";
 		
 		return s;
 	}	

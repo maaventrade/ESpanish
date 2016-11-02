@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.menu;
 import android.app.*;
 import android.os.*;
 import android.text.Html;
@@ -6,7 +6,7 @@ import android.view.*;
 import android.widget.*;
 
 import com.alex_mochalov.navdraw.*;
-import com.alexmochalov.espanish.fragments.FragmentM.OnTestedListener;
+import com.alexmochalov.fragments.FragmentM.OnTestedListener;
 
 import android.util.*;
 

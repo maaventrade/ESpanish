@@ -13,7 +13,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.alexmochalov.dictionary.Dictionary.*;
-import com.alexmochalov.espanish.MenuData;
+import com.alexmochalov.menu.MenuData;
 
 public class Dictionary
 {
@@ -34,9 +34,6 @@ public class Dictionary
 
 		public String getEnding(int sub)
 		{
-			
-			//Log.d("","obj "+obj);
-			//Log.d("",""+obj.length+" "+sub);
 			return obj[sub - 1].trim();
 		}
 		
@@ -120,6 +117,10 @@ public class Dictionary
 
 	public static void setVerbEnding(String text) {
 		pronouns.get(pronouns.size() - 1).verb_ending = text;
+	}
+
+	public static void setVerbEndingPast(String text) {
+		pronouns.get(pronouns.size() - 1).verb_ending_past = text;
 	}
 
 	public static ArrayList<Pronoun> getPronouns() {
@@ -222,9 +223,11 @@ public class Dictionary
 							} else if (xpp.getAttributeName(i).equals("transl")) {
 								setProniunTranslation(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals(
-									"verb_ending")) {
+									"verb_ending")) 
 								setVerbEnding(xpp.getAttributeValue(i));
-							}
+							 else if (xpp.getAttributeName(i).equals(
+								"verb_ending_past")) 
+							 setVerbEndingPast(xpp.getAttributeValue(i));
 						}
 					}
 					break; // конец тэга
@@ -260,10 +263,15 @@ public class Dictionary
 	
 	}
 
-	public static String conj(int i, String verb) {
-		return pronouns.get(i).conj(verb);
+	public static String conj(int i, String verb, boolean past) {
+		return pronouns.get(i).conj(verb, past);
 	}
 
+//	public static CharSequence conj(CharSequence text, String verb) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
 	public static String fit(Entry e, int sub, String time) {
 		String ending = "";
 	
@@ -282,5 +290,6 @@ public class Dictionary
 	public static ArrayList<Entry> getEntries() {
 		return entries;
 	}
+
 
 }

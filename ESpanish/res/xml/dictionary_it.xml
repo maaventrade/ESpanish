@@ -16,24 +16,23 @@
 	   		   												   		   		   		   		   	
 	</dictionary>
 	<pronoun>
-	   	<entry text = "Io" transl = "я" verb_ending = "are:o,avere:ho">
+	   	<entry text = "Io" transl = "я" verb_ending = "are:o,avere:ho" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Tu" transl = "ты" verb_ending = "are:i,avere:hai">
+	   	<entry text = "Tu" transl = "ты" verb_ending = "are:i,avere:hai" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Lui" transl = "он" verb_ending = "are:a,avere:ha">
+	   	<entry text = "Lui" transl = "он" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Ley" transl = "она" verb_ending = "are:a,avere:ha">
+	   	<entry text = "Ley" transl = "она" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,avere:ha">
+	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo">
+	   	<entry text = "Noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Voi" transl = "вы" verb_ending = "are:ate,avere:avete">
+	   	<entry text = "Voi" transl = "вы" verb_ending = "are:ate,avere:avete" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Loro" transl = "они" verb_ending = "are:ano,avere:hanno">
+	   	<entry text = "Loro" transl = "они" verb_ending = "are:ano,avere:hanno" verb_ending_past = "are:ato,avere:ho">
 	    </entry>
-		
-		   		 </pronoun>
+	</pronoun>
 	    
 	<fits>
 	   	<entry type = "1" obj = "у:ёшь:ёт:ёт:ёте:ём:ёте:ут"></entry>

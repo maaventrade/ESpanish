@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.menu;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -17,7 +17,7 @@ public class FragmentMenu extends Fragment {
 	ExpListAdapter adapter;
 	ExpandableListView mDrawerTree;
 
-	OnMenuItemSelectedListener mCallback;
+	public OnMenuItemSelectedListener mCallback;
 
 	public void refresh()
 	{

@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.root;
 
 import android.os.Environment;
 
@@ -13,4 +13,8 @@ public class Utils {
 		return REC_FOLDER;
 	}
 
+	public static String firstLetterToUpperCase(String text) {
+		return text.substring(0,1).toUpperCase() + text.substring(1);
+	}
+	
 }

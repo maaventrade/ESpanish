@@ -1,17 +1,21 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.menu;
 
 import android.content.*;
 import android.content.SharedPreferences.*;
 import android.preference.*;
 import android.util.*;
 import android.widget.*;
+
 import com.alex_mochalov.navdraw.*;
 import com.alexmochalov.dictionary.*;
+
 import java.io.*;
 import java.util.*;
+
 import org.xmlpull.v1.*;
 
 import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.root.Utils;
 
 public class MenuData {
 	static Context mContext;
@@ -35,135 +39,8 @@ public class MenuData {
 	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
 	static ArrayList<Scheme> schemes;
 	
+	
 	private static String language = "ita";
-	
-	static class MarkedString {
-
-		String mText;
-		String mRusText = "";
-
-		int mFlag;
-
-		// 001 spa->ru completed
-		// 010 ru->spa completed
-		// 100 audio completed ?????????
-		
-		
-		public MarkedString(String text) {
-			mText = text;
-			mFlag = 0;
-		}
-		
-		public MarkedString(String text, int sub, boolean neg, String verb) {
-			
-			String negStr = " ";
-			String pronoun = "";
-		
-			if (neg)
-				if (Math.random() > 0.5)
-					negStr = " no ";
-				
-			if (sub == 3) 
-				mText = "¿"+text+negStr+ Dictionary.conj(2, verb)+"?";
-			else {
-				pronoun = "tú";
-				mText = "¿"+text+" tú"+ negStr +Dictionary.conj(1, verb)+"?";
-			}	
-			
-			if (mText.contains("Cómo tú llamas")){
-				mRusText = "Как тебя зовут?";
-				mText = "¿Cómo té llamas?";
-			} else {
-			
-			
-			
-			//Log.d("",negStr);
-			Entry e = Dictionary.getTranslation(negStr);
-			if ( e != null)
-				negStr = e.getTranslation();
-				
-			if (negStr.length() > 1)
-				negStr = negStr + " ";
-			else negStr = "";
-			
-			e = Dictionary.getTranslation(pronoun);
-			if ( e != null)
-				pronoun = e.getTranslation().trim();
-			
-			if (pronoun.length() > 0)
-				pronoun = pronoun + " ";
-				
-			e = Dictionary.getTranslation(verb);			
-			verb = Dictionary.fit(e, sub, "present").trim();
-			
-			//Log.d("", text);
-			//Log.d("", Dictionary.getTranslation(text).translation);
-			mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "
-					+ pronoun
-					+ negStr
-					+ verb + "?";
-				}	
-			mFlag = 0;
-		}
-	
-		public MarkedString(boolean neg, String verb) {
-
-			String negStr = " ";
-			String pronoun = "";
-
-			if (neg) negStr = " non ";
-/*
-			if (sub == 3) 
-				mText = "¿"+text+negStr+ Dictionary.conj(2, verb)+"?";
-			else {
-				pronoun = "tú";
-				mText = "¿"+text+" tú"+ negStr +Dictionary.conj(1, verb)+"?";
-			}	
-
-			if (mText.contains("Cómo tú llamas")){
-				mRusText = "Как тебя зовут?";
-				mText = "¿Cómo té llamas?";
-			} else {
-
-
-
-				//Log.d("",negStr);
-				Entry e = Dictionary.getTranslation(negStr);
-				if ( e != null)
-					negStr = e.getTranslation();
-
-				if (negStr.length() > 1)
-					negStr = negStr + " ";
-				else negStr = "";
-
-				e = Dictionary.getTranslation(pronoun);
-				if ( e != null)
-					pronoun = e.getTranslation().trim();
-
-				if (pronoun.length() > 0)
-					pronoun = pronoun + " ";
-
-				e = Dictionary.getTranslation(verb);			
-				verb = Dictionary.fit(e, sub, "present").trim();
-
-				//Log.d("", text);
-				//Log.d("", Dictionary.getTranslation(text).translation);
-				mRusText = firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "
-					+ pronoun
-					+ negStr
-					+ verb + "?";
-			}	
-			*/
-			this.mRusText ="rus";
-			this.mText = "text";
-			
-			mFlag = 0;
-		}
-		
-		public void setFlag(String flag) {
-			mFlag = Integer.parseInt(flag);
-		}
-	}
 
 	static class MenuChild {
 		public MenuChild(String childName) {
@@ -174,37 +51,47 @@ public class MenuData {
 		String type;
 		String note;
 		int mHelpIndex = -1;
+		String tense = "";
+		int neg = 0; // 0 нет, 1 половина, 2 всегда
 	}
 
 	static class MenuGroup {
 		String title;
-		ArrayList<MenuChild> mChilren;
+		ArrayList<MenuChild> mChildren;
 		int mHelpIndex = 0;
 
 		MenuGroup(String name, ArrayList<MenuChild> children) {
 			title = name;
-			mChilren = children;
+			mChildren = children;
 		}
 
 		MenuGroup() {
-			mChilren = new ArrayList();
+			mChildren = new ArrayList();
 		}
 
 		public void setName(String name) {
 			title = name;
 		}
 
+		public void setTense(String attributeValue) {
+			mChildren.get(mChildren.size()-1).tense = attributeValue;
+		}
+
+		public void setNeg(String attributeValue) {
+			mChildren.get(mChildren.size()-1).neg = Integer.parseInt(attributeValue);
+		}
+
 		public void addItem(String childName) {
-			mChilren.add(new MenuChild(childName));
+			mChildren.add(new MenuChild(childName));
 		}
 
 		public void setChildType(String type) {
-			mChilren.get(mChilren.size() - 1).type = type;
+			mChildren.get(mChildren.size() - 1).type = type;
 
 		}
 
 		public void setChildNote(String note) {
-			mChilren.get(mChilren.size() - 1).note = note;
+			mChildren.get(mChildren.size() - 1).note = note;
 		}
 
 		public void setHelpIndex(String attributeValue) {
@@ -284,6 +171,10 @@ public class MenuData {
 								menuGroup.addItem(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("helpindex")) {
 								menuGroup.setHelpIndex(xpp.getAttributeValue(i));
+							} else if (xpp.getAttributeName(i).equals("tense")) {
+								menuGroup.setTense(xpp.getAttributeValue(i));
+							} else if (xpp.getAttributeName(i).equals("neg")) {
+								menuGroup.setNeg(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("type")) {
 								if (xpp.getAttributeValue(i)
 										.equals("Выражения")) {
@@ -300,7 +191,7 @@ public class MenuData {
 						 		} else if (xpp.getAttributeValue(i).equals(
 										  "Комбинации1")) {
 							   		mode = "Комбинации1";
-							  		 menuGroup.setChildType(mode);
+							  		 menuGroup.setChildType("Комбинации");
 								} else if (xpp.getAttributeValue(i).equals(
 										"Говорим")) {
 									menuGroup.setChildType("Говорим");
@@ -382,7 +273,7 @@ public class MenuData {
 								textDataItem.add(new MarkedString(rec.text, rec.sub, rec.neg, verb.trim()));
 							else{
 								for (Pronoun p: Dictionary.getPronouns())
-									textDataItem.add(new MarkedString(rec.neg, verb.trim()));
+									textDataItem.add(new MarkedString(rec.neg, p, verb.trim()));
 							} 
 		
 						}
@@ -411,11 +302,6 @@ public class MenuData {
 			e.printStackTrace();
 		}
 
-	}
-
-	public static String firstLetterToUpperCase(String translation) {
-		//Log.d("", "translation " + translation);
-		return translation.substring(0,1).toUpperCase() + translation.substring(1);
 	}
 
 	private static void loadMarks(ArrayList<Mark> marks, String marksString) {
@@ -470,7 +356,7 @@ public class MenuData {
 	}
 
 	public static String getType(int i, int j) {
-		return menuData.get(i).mChilren.get(j).type;
+		return menuData.get(i).mChildren.get(j).type;
 	}
 
 	public static String getCountStr() {
@@ -648,9 +534,10 @@ Log.d("","mi"+mIndex);
 
 	public static void setText(TextView mTextViewText, TextView mTranslation) {
 		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
-		Log.d("", "--"+MenuData.mText);
-		mTextViewText.setText(firstLetterToUpperCase(MenuData.mText));
+		
+		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
+		
 	}
 
 	public static int getGroupPosition() {
@@ -678,7 +565,7 @@ Log.d("","mi"+mIndex);
 		listString = listString + "<data version = \"1\">\n";
 		
 		for (int i = 0; i < menuData.size(); i++){
-			for (int j = 0; j < menuData.get(i).mChilren.size(); j++){
+			for (int j = 0; j < menuData.get(i).mChildren.size(); j++){
 
 				for (MarkedString s: textData.get(i).get(j)){
 					
@@ -729,8 +616,8 @@ Log.d("","mi"+mIndex);
 			mChildPosition >= textData.get(mGroupPosition).size()){
 
 			return 0;
-		} else if (menuData.get(mGroupPosition).mChilren.get(mChildPosition).mHelpIndex >= 0)
-			return menuData.get(mGroupPosition).mChilren.get(mChildPosition).mHelpIndex;
+		} else if (menuData.get(mGroupPosition).mChildren.get(mChildPosition).mHelpIndex >= 0)
+			return menuData.get(mGroupPosition).mChildren.get(mChildPosition).mHelpIndex;
 		else return menuData.get(mGroupPosition).mHelpIndex;
 	}
 
@@ -738,6 +625,14 @@ Log.d("","mi"+mIndex);
 		return ("0"+mGroupPosition).substring(0, 2)+
 				("0"+mChildPosition).substring(0, 2)+
 				("0"+mIndex).substring(0, 2);
+	}
+
+	public static String getTense() {
+		return menuData.get(mGroupPosition).mChildren.get(mChildPosition).tense;
+	}
+
+	public static int getNeg() {
+		return menuData.get(mGroupPosition).mChildren.get(mChildPosition).neg;
 	}
 
 }

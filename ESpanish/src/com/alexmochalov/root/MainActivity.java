@@ -1,4 +1,4 @@
-package com.alexmochalov.espanish;
+package com.alexmochalov.root;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,13 +11,6 @@ import com.alexmochalov.dictionary.ArrayAdapterDictionary;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.dictionary.Entry;
 import com.alexmochalov.dictionary.EntryEditor;
-import com.alexmochalov.espanish.MenuData.MarkedString;
-import com.alexmochalov.espanish.MenuData.MenuChild;
-import com.alexmochalov.espanish.MenuData.MenuGroup;
-import com.alexmochalov.espanish.FragmentMenu.OnMenuItemSelectedListener;
-import com.alexmochalov.espanish.fragments.FragmentConj;
-import com.alexmochalov.espanish.fragments.FragmentM;
-import com.alexmochalov.espanish.fragments.FragmentPhrase;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -54,7 +47,11 @@ import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
-import com.alexmochalov.espanish.fragments.*;
+import com.alexmochalov.fragments.*;
+import com.alexmochalov.menu.DialogScheme;
+import com.alexmochalov.menu.FragmentMenu;
+import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.menu.FragmentMenu.OnMenuItemSelectedListener;
 
 public class MainActivity extends Activity implements OnInitListener, 
 OnMenuItemSelectedListener, FragmentM.OnTestedListener
