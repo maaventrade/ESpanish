@@ -230,11 +230,11 @@ public class FragmentConj extends FragmentM
         int index = Dictionary.getPronouns().indexOf(p.mPronoun);
         
         if (tense.equals("Прошедшее время"))
-            textSample = textSample + 
-            		Dictionary.conj(index, "avere", false) +
-            		" "+
-            		Dictionary.conj(index, verb, true);
-         else 
+        	textSample = textSample + 
+    		Dictionary.conj(index, "avere", false) +
+    		" "+
+    		Dictionary.conj(index, verb, true);
+        else 
         	 textSample = p.mPronoun.conj(verb, false);
         
         editText.setText(textSample);

@@ -21,11 +21,34 @@ class MarkedString {
 		mFlag = 0;
 	}
 	
-	public MarkedString(String text, int sub, String neg, String verb) {
+	public MarkedString(String text, String subj, String neg, String verb) {
+		Entry e;
 		
-		String negStr = " ";
-		String negStrRus = " ";
-		String pronoun = "";
+		//text = "Quanto";
+		//neg = "false";
+		//verb = "lavorare";
+		
+		Pronoun pronoun;
+		String pronounStr = "";
+		String pronounStrRus = "";
+		
+		String negStr = "";
+		String negStrRus = "";
+		
+		String verbStr = "";
+		String verbStrRus = "";
+
+		if (!subj.equals("false")){
+			pronoun = Dictionary.getRandomPronoun();
+			pronounStr = pronoun.getText()+" ";
+			pronounStrRus = Dictionary.getTranslationAsIs(pronoun.getText()).getTranslation()+" ";
+		} else {
+			pronoun = Dictionary.getPronouns().get(2);
+			pronounStr = "";
+			pronounStrRus = "";
+		}
+		
+		int index = Dictionary.getPronouns().indexOf(pronoun);
 		
 	//Log.d("uu","neg "+neg);
 		if (neg.equals("true"))
@@ -35,6 +58,27 @@ class MarkedString {
 		else if (neg.equals(""))
 			if (Math.random() > 0.5)
 				negStr = Utils.getNeg();
+		e = Dictionary.getTranslation(negStr);
+		if ( e != null)
+			negStrRus = e.getTranslation()+" ";
+		if (negStr.length() > 0)
+			negStr = negStr + " ";
+
+		String timeStr = "";
+		if (Math.random() > 0.5){
+			timeStr = "present";
+			verbStr = pronoun.conj(verb, false);
+		} else {
+			timeStr = "past";
+			verbStr = Dictionary.conj(index, "avere", false) +
+            		" "+
+            		Dictionary.conj(index, verb, true);		
+		}	
+
+		e = Dictionary.getTranslation(verb);
+		
+		verbStrRus = Dictionary.fit(e, pronoun, timeStr).trim();
+
 			/*
 		if (sub == 3) 
 			mText = "¿"+text+negStr+ Dictionary.conj(2, verb, false)+"?";
@@ -49,33 +93,17 @@ class MarkedString {
 		} else {
 		*/
 		
+		mText = text+" "+
+				pronounStr+
+				negStr+
+				verbStr+
+				"?";
 		
-		//Log.d("",negStr);
-		Entry e = Dictionary.getTranslation(negStr);
-		if ( e != null)
-			negStr = e.getTranslation();
-			
-		if (negStr.length() > 1)
-			negStr = negStr + " ";
-		else negStr = "";
-		
-		e = Dictionary.getTranslation(pronoun);
-		if ( e != null)
-			pronoun = e.getTranslation().trim();
-		
-		if (pronoun.length() > 0)
-			pronoun = pronoun + " ";
-			
-		e = Dictionary.getTranslation(verb);			
-		verb = Dictionary.fit(e, sub, "present").trim();
-		
-		//Log.d("", text);
-		//Log.d("", Dictionary.getTranslation(text).translation);
-		mRusText = Utils.firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "
-				+ pronoun
-				+ negStr
-				+ verb + "?";
-			}
+		mRusText = Utils.firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "+
+				pronounStrRus+
+				negStrRus+
+				verbStrRus+
+				"?";
 			
 		mFlag = 0;
 	}
@@ -85,17 +113,22 @@ class MarkedString {
 		String negStr = " ";
 		String negStrRus = " ";
 
-		if (neg) {
-			negStr = " non ";
-			negStrRus = " не ";
-		}
+		if (neg.equals("true"))
+			negStr = Utils.getNeg();
+		else if (neg.equals("false"))
+			negStr = "";
+		else if (neg.equals(""))
+			if (Math.random() > 0.5)
+				negStr = Utils.getNeg();
+		if (negStr.length() > 0)
+			negStr = " " + negStr + " ";
 		
 		Entry e = Dictionary.getTranslation(verb);
 		e = Dictionary.getTranslation(verb);			
 		
 		this.mRusText = Utils.firstLetterToUpperCase(pronoun.getTranslation()) + 
 				negStrRus + 
-				Dictionary.fit(e,  Dictionary.getPronouns().indexOf(pronoun)+1 , "present").trim();
+				Dictionary.fit(e,  Dictionary.getPronouns().indexOf(pronoun) , "present").trim();
 		
 		this.mText = pronoun.getText() + negStr + pronoun.conj(verb, false);
 		

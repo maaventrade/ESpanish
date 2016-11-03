@@ -39,9 +39,6 @@ public class MenuData {
 	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
 	static ArrayList<Scheme> schemes;
 	
-	
-	
-
 	static class MenuChild {
 		public MenuChild(String childName) {
 			title = childName;
@@ -128,10 +125,16 @@ public class MenuData {
 		MenuGroup menuGroup = null;
 
 		class Record {
-			String text;
-			int sub; // subject: 2 - you, 3 this
+			String text = "";
 			String neg = "";
-			String verbs;
+			String verbs = "";
+			String subj = "";
+			public void clear() {
+				text = "";
+				neg = "";
+				verbs = "";
+				subj = "";
+			} 
 		}
 		Record rec = new Record();
 
@@ -229,9 +232,8 @@ public class MenuData {
 														textData.size() - 1)
 														.size() - 1).size() - 1)
 										.setFlag(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("sub")) {
-								rec.sub = Integer.parseInt(xpp
-										.getAttributeValue(i));
+							} else if (xpp.getAttributeName(i).equals("subj")) {
+								rec.subj = xpp.getAttributeValue(i);
 							} else if (xpp.getAttributeName(i).equals("neg")) {
 								rec.neg = xpp
 										.getAttributeValue(i);
@@ -271,14 +273,13 @@ public class MenuData {
 							//Log.d("",rec.toString());
 							//Log.d("",verb);
 							if (mode.equals("Комбинации"))
-								textDataItem.add(new MarkedString(rec.text, rec.sub, rec.neg, verb.trim()));
+								textDataItem.add(new MarkedString(rec.text, rec.subj, rec.neg, verb.trim()));
 							else{
 								for (Pronoun p: Dictionary.getPronouns())
 									textDataItem.add(new MarkedString(rec.neg, p, verb.trim()));
 							} 
-		
 						}
-						
+						rec.clear();
 					}
 					// Log.d(LOG_TAG, "END_TAG: name = " + xpp.getName());
 					break; // содержимое тэга

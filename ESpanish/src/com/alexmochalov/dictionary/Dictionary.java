@@ -28,19 +28,26 @@ public class Dictionary
 	private static class Fit {
 		int fitType;
 		String obj[];
+		String objPast[];
 		
 		public Fit(String attributeValue) {
 			fitType = Integer.parseInt(attributeValue);
 		}
 
-		public String getEnding(int sub)
+		public String getEnding(int sub, String time)
 		{
-			return obj[sub - 1].trim();
+			if (time.equals("past"))
+				return objPast[sub].trim();
+			else
+				return obj[sub].trim();
 		}
 		
 		public void setObj(String attributeValue) {
-			Log.d("","attributeValue "+attributeValue);
 			obj = attributeValue.split(":");
+		}
+		
+		public void setObjPast(String attributeValue) {
+			objPast = attributeValue.split(":");
 		}
 	}
 	
@@ -91,7 +98,6 @@ public class Dictionary
 		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "").toLowerCase();
 
 		for (Entry e : entries) {
-			//Log.d("",e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase());
 			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
 					.equals(searchString)) {
 				return e;
@@ -100,6 +106,27 @@ public class Dictionary
 		for (Entry e : entries) {
 			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
 					.contains(searchString)) {
+				return e;
+			}
+		}
+		return null;
+	}
+
+	public static Entry getTranslationAsIs(String searchString) {
+		if (searchString.trim().length() == 0)
+			return null;
+		
+		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "");
+
+		for (Entry e : entries) {
+			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").
+					equals(searchString)) {
+				return e;
+			}
+		}
+		for (Entry e : entries) {
+			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").
+					contains(searchString)) {
 				return e;
 			}
 		}
@@ -128,6 +155,10 @@ public class Dictionary
 		return pronouns;
 	}
 
+	public static Pronoun getRandomPronoun() {
+		return pronouns.get( (int) (Math.random()*pronouns.size())  );
+	}
+	
 	public static boolean testRus(String translation, String text, int direction) {
 
 	//Log.d("", "" + translation + "  " + text);
@@ -207,10 +238,12 @@ public class Dictionary
 						for (int i = 0; i < xpp.getAttributeCount(); i++) {
 							if (xpp.getAttributeName(i).equals("type")) {
 								fits.add(new Fit(xpp.getAttributeValue(i)));
-							} else if (xpp.getAttributeName(i).equals("obj")) {
+							} else if (xpp.getAttributeName(i).equals("obj")) 
 								fits.get(fits.size() - 1).
 									setObj(xpp.getAttributeValue(i));
-							}
+							else if (xpp.getAttributeName(i).equals("obj_past")) 
+								fits.get(fits.size() - 1).
+									setObjPast(xpp.getAttributeValue(i));
 						}
 					} else if (xpp.getName().equals("pronoun")) {
 						mode = "pronoun";
@@ -264,8 +297,8 @@ public class Dictionary
 	
 	}
 
-	public static String conj(int i, String verb, boolean past) {
-		return pronouns.get(i).conj(verb, past);
+	public static String conj(int i, String verb, boolean isPast) {
+		return pronouns.get(i).conj(verb, isPast);
 	}
 
 //	public static CharSequence conj(CharSequence text, String verb) {
@@ -280,7 +313,7 @@ public class Dictionary
 			int n = f.fitType;
 			int k = e.fit_type;
 			if (f.fitType == e.fit_type){
-				ending = f.getEnding(sub);
+				ending = f.getEnding(sub, time);
 				return e.root + ending;
 			}
 		}
@@ -290,6 +323,22 @@ public class Dictionary
 
 	public static ArrayList<Entry> getEntries() {
 		return entries;
+	}
+
+	public static String fit(Entry e, Pronoun pronoun, String time) {
+		String ending = "";
+		int sub = pronouns.indexOf(pronoun);
+		
+		for (Fit f : fits){
+			int n = f.fitType;
+			int k = e.fit_type;
+			if (f.fitType == e.fit_type){
+				ending = f.getEnding(sub, time);
+				return e.root + ending;
+			}
+		}
+		 
+		return e.root + ending;
 	}
 
 

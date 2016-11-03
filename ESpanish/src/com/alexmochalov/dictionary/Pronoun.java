@@ -7,11 +7,11 @@ public class Pronoun {
 	String verb_ending;
 	String verb_ending_past;
 
-	public String conj(String verb, boolean past) {
+	public String conj(String verb, boolean isPast) {
 		// split "verb_ending" to pairs: type and ending  
 		
 		String[] sep1 = null;
-		if (past) 
+		if (isPast) 
 			sep1 = verb_ending_past.split(",");
 		else sep1 = verb_ending.split(",");
 		

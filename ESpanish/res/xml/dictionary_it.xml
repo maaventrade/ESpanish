@@ -13,35 +13,53 @@
 	   	
 	   	<entry text = "avere" ending = "ere" transl = "иметь" root = "име" fit_type = "2"></entry>
 	   		   		   				
-	   		   												   		   		   		   		   	
+	   	<entry text = "che cosa" transl = "что"></entry>
+	   	<entry text = "chi" transl = "кто"></entry>
+	   	<entry text = "dove" transl = "где"></entry>
+	    <entry text = "quando" transl = "когда"></entry>
+	   	<entry text = "perche" transl = "зачем"></entry>
+	   	<entry text = "quanto" transl = "сколько"></entry>
+	   	<entry text = "come" transl = "как"></entry>
+	   	
+	   	<entry text = "io" transl = "я"></entry>
+	   	<entry text = "tu" transl = "ты"></entry>
+	   	<entry text = "lui" transl = "он"></entry>
+	    <entry text = "ley" transl = "она"></entry>
+	   	<entry text = "Ley" transl = "Вы"></entry>
+	   	<entry text = "noi" transl = "мы"></entry>
+	   	<entry text = "voi" transl = "вы"></entry>
+	   	<entry text = "loro" transl = "они"></entry>
+	   		   		   		   		   		   	
+	   	<entry text = "non" transl = "не"></entry>
+	   		   		   		   		   		   		   		   												   		   		   		   		   	
 	</dictionary>
 	<pronoun>
-	   	<entry text = "Io" transl = "я" verb_ending = "are:o,avere:ho" verb_ending_past = "are:ato">
+	   	<entry text = "io" transl = "я" verb_ending = "are:o,avere:ho" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Tu" transl = "ты" verb_ending = "are:i,avere:hai" verb_ending_past = "are:ato">
+	   	<entry text = "tu" transl = "ты" verb_ending = "are:i,avere:hai" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Lui" transl = "он" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
+	   	<entry text = "lui" transl = "он" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Ley" transl = "она" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
+	   	<entry text = "ley" transl = "она" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
 	    </entry>
 	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,avere:ha" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo" verb_ending_past = "are:ato">
+	   	<entry text = "noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Voi" transl = "вы" verb_ending = "are:ate,avere:avete" verb_ending_past = "are:ato">
+	   	<entry text = "voi" transl = "вы" verb_ending = "are:ate,avere:avete" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Loro" transl = "они" verb_ending = "are:ano,avere:hanno" verb_ending_past = "are:ato,avere:ho">
+	   	<entry text = "loro" transl = "они" verb_ending = "are:ano,avere:hanno" verb_ending_past = "are:ato,avere:ho">
 	    </entry>
 	</pronoun>
 	    
 	<fits>
-	   	<entry type = "1" obj = "у:ёшь:ёт:ёт:ёте:ём:ёте:ут"></entry>
-	   	<entry type = "2" obj = "ю:ешь:ет:ет:ете:им:ете:ют"></entry>
-	   	<entry type = "3" obj = "ю:ёшь:ёт:ёт:ёте:ём:ёте:ют"></entry>
-	   	<entry type = "4" obj = "усь:ишся:ится:ится:итесь:имся:итесь:атся"></entry>
-	   	<entry type = "5" obj = "м:шь:ст:ст:дите:дим:дите:дят"></entry>
-	   	<entry type = "6" obj = "ю:ишь:ит:ит:ите:им:ите:ят"></entry>
-	   	<entry type = "7" obj = "лю:ишь:ит:ит:ите:им:ите:ят"></entry>
+	   	<entry type = "1" obj = "у:ёшь:ёт:ёт:ёте:ём:ёте:ут" obj_past = "ал:ал:ал:ала:али:али:али:али"></entry>
+	   	<entry type = "2" obj = "ю:ешь:ет:ет:ете:им:ете:ют" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
+	   	<entry type = "3" obj = "ю:ёшь:ёт:ёт:ёте:ём:ёте:ют" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
+	   	<entry type = "4" obj = "усь:ишся:ится:ится:итесь:имся:итесь:атся" obj_past = "ился:ился:ился:илась:ились:ились:ились:ились"></entry>
+	   	<entry type = "5" obj = "м:шь:ст:ст:дите:дим:дите:дят" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
+	   	<entry type = "6" obj = "ю:ишь:ит:ит:ите:им:ите:ят" obj_past = "ел:ел:ел:ела:ели:ели:ели:ели"></entry>
+	   	<entry type = "7" obj = "лю:ишь:ит:ит:ите:им:ите:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
 	   		   		</fits>				
 
 </data>

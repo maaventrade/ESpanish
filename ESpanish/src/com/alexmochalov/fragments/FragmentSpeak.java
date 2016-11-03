@@ -96,14 +96,14 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 		String s = "";
 		text = "";
 
-		int i = 1;
+		int i = 0;
 		for (Pronoun p : Dictionary.getPronouns()) {
 			Entry e = Dictionary.getTranslation(MenuData.getText());
 			String verb = Dictionary.fit(e, i, "present").trim();
 
 			s = s + p.getTranslation(true) + " " + verb + ". ";
 			text = text + p.getText() + " "
-					+ Dictionary.conj(i - 1, MenuData.getText(), false) + ". ";
+					+ Dictionary.conj(i, MenuData.getText(), false) + ". ";
 			i++;
 		}
 
