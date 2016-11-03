@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.alexmochalov.dictionary.Dictionary.*;
 import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.root.*;
 
 public class Dictionary
 {
@@ -170,9 +171,9 @@ public class Dictionary
 		try {
 
 			XmlPullParser xpp = null;
-			if (MenuData.getLanguage().equals("ita")) 
+			if (Utils.getLanguage().equals("ita")) 
 				xpp = context.getResources().getXml(R.xml.dictionary_it);
-			else if (MenuData.getLanguage().equals("spa"))
+			else if (Utils.getLanguage().equals("spa"))
 				xpp = context.getResources().getXml(R.xml.dictionary_spa);
 			
 			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {

@@ -40,7 +40,7 @@ public class MenuData {
 	static ArrayList<Scheme> schemes;
 	
 	
-	private static String language = "ita";
+	
 
 	static class MenuChild {
 		public MenuChild(String childName) {
@@ -130,7 +130,7 @@ public class MenuData {
 		class Record {
 			String text;
 			int sub; // subject: 2 - you, 3 this
-			boolean neg;
+			String neg = "";
 			String verbs;
 		}
 		Record rec = new Record();
@@ -138,9 +138,9 @@ public class MenuData {
 		try {
 			XmlPullParser xpp = null;
 
-			if (language.equals("ita")) 
+			if (Utils.getLanguage().equals("ita")) 
 				xpp = mContext.getResources().getXml(R.xml.menu_it);
-			else if (language.equals("spa"))
+			else if (Utils.getLanguage().equals("spa"))
 				xpp = mContext.getResources().getXml(R.xml.menu_spa);
 
 			groupData.clear();
@@ -233,8 +233,8 @@ public class MenuData {
 								rec.sub = Integer.parseInt(xpp
 										.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("neg")) {
-								rec.neg = Boolean.parseBoolean(xpp
-										.getAttributeValue(i));
+								rec.neg = xpp
+										.getAttributeValue(i);
 							} else if (xpp.getAttributeName(i).equals("verbs")) {
 								rec.verbs = xpp
 										.getAttributeValue(i);
@@ -266,6 +266,7 @@ public class MenuData {
 						String verbs[] = rec.verbs.split(",");
 						//Log.d("","textDataItem "+textDataItem.toString());
 						//Log.d("",""+verbs.toString());
+						
 						for (String verb : verbs){
 							//Log.d("",rec.toString());
 							//Log.d("",verb);
@@ -603,10 +604,7 @@ Log.d("","mi"+mIndex);
 		mChildPosition = childPosition;
 	}
 
-	public static String getLanguage() {
-		return language;
-	}
-
+	
 	public static String getTranslation() {
 		return translation;
 	}

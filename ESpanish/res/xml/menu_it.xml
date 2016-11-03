@@ -28,13 +28,24 @@
     	   <entry text = "mangiare"></entry>
     	   <entry text = "guardare"></entry>
     	   <entry text = "giocare"></entry>
-    	   <entry text = "lavorare"></entry>
+			<entry text = "lavorare"></entry>
     	   <entry text = "amare"></entry>
     	   <entry text = "ascoltare"></entry>
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
 	</level1>
-				
+		<level1 title = "Вопросы" type = "Комбинации"
+			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
+			<entry text = "Che" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		<entry text = "Che cosa" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		<entry text = "Che" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		<entry text = "Chi" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		<entry text = "Dove" verbs = "lavorare,imparare,abitare"></entry>
+		<entry text = "Come" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		<entry text = "Quanto" verbs = "mangiare,lavorare,imparare"></entry>
+		<entry text = "Quando" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		<entry text = "Perche" verbs = "parlare, mangiare, guardare, giocare, lavorare, amare, ascoltare,imparare,abitare"></entry>
+		</level1>
 	</level0>
 	
     	<schemes>
@@ -79,5 +90,15 @@
 			VOI AVETE PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ВЫ ГОВОРИЛИ
 			LORO HANNO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ОНИ ГОВОРИЛИ
 		</scheme>
+			<scheme title = "Вопросительные слова">
+				CHE? - ЧТО? КАКОЙ?
+				CHE COSA? - ЧТО?
+				CHI? - КТО?
+				DOVE? - ГДЕ?
+				COME? - КАК?
+				QUANTO? - СКОЛЬКО?
+				PERCHE? - ПОЧЕМУ?
+				QUANDO? - КОГДА?
+			</scheme>
 			</schemes>
 </data>

@@ -360,9 +360,9 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	            for (int i=0; i< locale.length; i++){
 	            	//Log.d("", ""+locale[i].getISO3Language());
 	    	  		//Toast.makeText(this, locale[i].getLanguage().toUpperCase()+"  "+language, Toast.LENGTH_LONG).show();
-	            	if (locale[i].getISO3Language().equals(MenuData.getLanguage())){
+	            	if (locale[i].getISO3Language().equals(Utils.getLanguage())){
 	    	    	  	if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED){
-	    	    	  		Toast.makeText(this, getResources().getString(R.string.error_lang_not_supported)+" ("+MenuData.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
+	    	    	  		Toast.makeText(this, getResources().getString(R.string.error_lang_not_supported)+" ("+Utils.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
 	    	    	  		langSupported = false;
 	    	    	  	} else {
 	    	    	  		langSupported = true;
@@ -370,7 +370,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	    	    	  	}	
 	    	    	  	return; 
 	            	}}
-	            Toast.makeText(this, getResources().getString(R.string.error_lang_not_found)+" ("+MenuData.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
+	            Toast.makeText(this, getResources().getString(R.string.error_lang_not_found)+" ("+Utils.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
 	            
 	      }
 	      	else if (status == TextToSpeech.ERROR) {

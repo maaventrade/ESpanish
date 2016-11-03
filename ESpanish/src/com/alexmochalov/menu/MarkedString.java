@@ -1,9 +1,8 @@
 package com.alexmochalov.menu;
 
-import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.dictionary.Entry;
-import com.alexmochalov.dictionary.Pronoun;
-import com.alexmochalov.root.Utils;
+import android.util.*;
+import com.alexmochalov.dictionary.*;
+import com.alexmochalov.root.*;
 
 class MarkedString {
 
@@ -22,15 +21,21 @@ class MarkedString {
 		mFlag = 0;
 	}
 	
-	public MarkedString(String text, int sub, boolean neg, String verb) {
+	public MarkedString(String text, int sub, String neg, String verb) {
 		
 		String negStr = " ";
+		String negStrRus = " ";
 		String pronoun = "";
-	
-		if (neg)
+		
+	//Log.d("uu","neg "+neg);
+		if (neg.equals("true"))
+			negStr = Utils.getNeg();
+		else if (neg.equals("false"))
+			negStr = "";
+		else if (neg.equals(""))
 			if (Math.random() > 0.5)
-				negStr = " no ";
-			
+				negStr = Utils.getNeg();
+			/*
 		if (sub == 3) 
 			mText = "¿"+text+negStr+ Dictionary.conj(2, verb, false)+"?";
 		else {
@@ -42,7 +47,7 @@ class MarkedString {
 			mRusText = "Как тебя зовут?";
 			mText = "¿Cómo té llamas?";
 		} else {
-		
+		*/
 		
 		
 		//Log.d("",negStr);
@@ -70,11 +75,12 @@ class MarkedString {
 				+ pronoun
 				+ negStr
 				+ verb + "?";
-			}	
+			}
+			
 		mFlag = 0;
 	}
 
-	public MarkedString(boolean neg, Pronoun pronoun, String verb) {
+	public MarkedString(String neg, Pronoun pronoun, String verb) {
 
 		String negStr = " ";
 		String negStrRus = " ";
