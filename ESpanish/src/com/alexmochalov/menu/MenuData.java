@@ -38,6 +38,15 @@ public class MenuData {
 	static ArrayList<MenuGroup> menuData;
 	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
 	static ArrayList<Scheme> schemes;
+
+	public static String getTenseLast()
+	{
+		
+		return menuData.get(menuData.size()-1).
+		mChildren.
+			get(menuData.get(menuData.size()-1).
+		mChildren.size()-1).tense;
+	}
 	
 	static class MenuChild {
 		public MenuChild(String childName) {
@@ -71,6 +80,7 @@ public class MenuData {
 		}
 
 		public void setTense(String attributeValue) {
+			//Log.d("my","tense "+attributeValue);
 			mChildren.get(mChildren.size()-1).tense = attributeValue;
 		}
 
@@ -129,11 +139,13 @@ public class MenuData {
 			String neg = "";
 			String verbs = "";
 			String subj = "";
+			String tense="";
 			public void clear() {
 				text = "";
 				neg = "";
 				verbs = "";
 				subj = "";
+				tense="";
 			} 
 		}
 		Record rec = new Record();
@@ -304,6 +316,12 @@ public class MenuData {
 			e.printStackTrace();
 		}
 
+		//for (int i = 0; i < menuData.size(); i++) {
+			//for (int j = 0; j< menuData.get(i).mChildren.size(); j++)
+			//Log.d("my","ttt "+i+" "+j+" "+menuData.get(i).mChildren.get(j).tense);
+		//}
+			
+			
 	}
 
 	private static void loadMarks(ArrayList<Mark> marks, String marksString) {
@@ -536,7 +554,7 @@ Log.d("","mi"+mIndex);
 
 	public static void setText(TextView mTextViewText, TextView mTranslation) {
 		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
-		
+		Log.d("my", "???? "+mText);
 		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
 		
@@ -627,6 +645,7 @@ Log.d("","mi"+mIndex);
 	}
 
 	public static String getTense() {
+		
 		return menuData.get(mGroupPosition).mChildren.get(mChildPosition).tense;
 	}
 

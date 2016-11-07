@@ -30,6 +30,7 @@ public class FragmentConj extends FragmentM
 		public PronounEdited(Pronoun pronoun, View layout)
 		{
 			mPronoun = pronoun;
+			//Log.d("my", "!!!yyy "+pronoun);
 			mLayout = layout;
 		}
 		Pronoun mPronoun = null;
@@ -106,7 +107,7 @@ public class FragmentConj extends FragmentM
     private void setVerb(String text) {
     	
     	for (PronounEdited p: objects){
-    	    ((TextView)p.mLayout.findViewById(R.id.text)).setText(p.mPronoun.getText());
+    	    ((TextView)p.mLayout.findViewById(R.id.text)).setText(Utils.firstLetterToUpperCase(p.mPronoun.getText()));
     	    ((TextView)p.mLayout.findViewById(R.id.translation)).setText(p.mPronoun.getTranslation());
     	}
     	
@@ -159,6 +160,7 @@ public class FragmentConj extends FragmentM
 	    for (Pronoun p: Dictionary.getPronouns())
 		{
 				View layout2 = LayoutInflater.from(mContext).inflate(R.layout.fragment_conj_item, mLinearLayout, false);
+			
 				mLinearLayout.addView(layout2);
 	    		objects.add(new PronounEdited(p, layout2));
 		}

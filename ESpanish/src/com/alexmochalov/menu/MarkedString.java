@@ -64,16 +64,23 @@ class MarkedString {
 		if (negStr.length() > 0)
 			negStr = negStr + " ";
 
-		String timeStr = "";
-		if (Math.random() > 0.5){
-			timeStr = "present";
+		String timeStr = MenuData.getTenseLast();
+		
+		Log.d("","timeStr "+timeStr);
+		if (timeStr.length() == 0){
+			if (Math.random() > 0.5)
+				timeStr = "present";
+			else 
+				timeStr = "past";
+		}
+		
+		if (timeStr.equals("present"))
 			verbStr = pronoun.conj(verb, false);
-		} else {
-			timeStr = "past";
+		else 
 			verbStr = Dictionary.conj(index, "avere", false) +
             		" "+
             		Dictionary.conj(index, verb, true);		
-		}	
+	
 
 		e = Dictionary.getTranslation(verb);
 		

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
 	<dictionary>
-	   	<entry text = "parlare" ending = "are" transl = "говорить" root = "говор" fit_type = "6"></entry>
+	   	<entry text = "parlare" ending = "are" transl = "говорить" root = "говор" fit_type = "8"></entry>
 	   	<entry text = "mangiare" ending = "are" transl = "есть" root = "е" fit_type = "5"></entry>
 	   	<entry text = "guardare" ending = "are" transl = "смотреть" root = "смотр" fit_type = "6"></entry>
 	   	<entry text = "giocare" ending = "are" transl = "играть" root = "игра" fit_type = "2"></entry>
@@ -31,6 +31,8 @@
 	   	<entry text = "loro" transl = "они"></entry>
 	   		   		   		   		   		   	
 	   	<entry text = "non" transl = "не"></entry>
+		<entry text = "Chi non lavora non mangia" transl = "Кто не работает, тот не ест"></entry>
+		
 	   		   		   		   		   		   		   		   												   		   		   		   		   	
 	</dictionary>
 	<pronoun>
@@ -60,6 +62,7 @@
 	   	<entry type = "5" obj = "м:шь:ст:ст:дите:дим:дите:дят" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
 	   	<entry type = "6" obj = "ю:ишь:ит:ит:ите:им:ите:ят" obj_past = "ел:ел:ел:ела:ели:ели:ели:ели"></entry>
 	   	<entry type = "7" obj = "лю:ишь:ит:ит:ите:им:ите:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
+		<entry type = "8" obj = "ю:ишь:ит:ит:ите:им:ите:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
 	   		   		</fits>				
 
 </data>

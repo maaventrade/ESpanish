@@ -1,6 +1,9 @@
 package com.alexmochalov.root;
 
-import android.os.Environment;
+import android.content.*;
+import android.os.*;
+import android.util.*;
+import java.io.*;
 
 public class Utils {
 
@@ -26,5 +29,28 @@ public class Utils {
 	
 	public static String getNeg(){
 		return neg;
+	}
+	
+	public boolean openFile(Context context){
+		try
+		{
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+		}
+		catch (FileNotFoundException e)
+		{}
+
+		
+	}
+	
+	public boolean writeToFile(){
+		try {
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+			outputStreamWriter.write(data);
+			outputStreamWriter.close();
+		}
+		catch (IOException e) {
+			Log.e("Exception", "File write failed: " + e.toString());
+		} 
+
 	}
 }

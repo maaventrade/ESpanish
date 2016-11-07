@@ -34,7 +34,7 @@
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
 	</level1>
-		<level1 title = "Вопросы" type = "Комбинации"
+		<level1 title = "Вопросы" type = "Комбинации" helpindex = "4"  tense = "present"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
 		<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
 		<entry text = "Chi" subj = "false" verbs = "parlare, mangiare, giocare, lavorare, ascoltare"></entry>
@@ -43,6 +43,21 @@
 		<entry text = "Quanto" verbs = "mangiare,lavorare,imparare"></entry>
 		<entry text = "Quando" verbs = "mangiare, giocare, lavorare, amare, ascoltare,imparare"></entry>
 		<entry text = "Perche" verbs = "parlare, guardare, giocare, lavorare, ascoltare,imparare"></entry>
+		</level1>
+		
+		<level1 title = "Вопросы. Прошедшее время" type = "Комбинации" helpindex = "4"  tense = "past"
+			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
+			<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
+			<entry text = "Chi" subj = "false" verbs = "parlare, mangiare, giocare, lavorare, ascoltare"></entry>
+			<entry text = "Dove" verbs = "lavorare,imparare,abitare"></entry>
+			<entry text = "Come" neg = "false"  verbs = "parlare, mangiare, giocare, lavorare, imparare"></entry>
+			<entry text = "Quanto" verbs = "mangiare,lavorare,imparare"></entry>
+			<entry text = "Quando" verbs = "mangiare, giocare, lavorare, amare, ascoltare,imparare"></entry>
+			<entry text = "Perche" verbs = "parlare, guardare, giocare, lavorare, ascoltare,imparare"></entry>
+		</level1>
+		<level1 title = "Пословицы и поговорки" type = "Выражения" 
+			note = "Переводим выражения с итальянского языка на русский и с русского на итальянского.">
+    	    <entry text = "Chi non lavora non mangia"></entry>
 		</level1>
 	</level0>
 	
