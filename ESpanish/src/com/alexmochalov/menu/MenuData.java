@@ -507,9 +507,10 @@ Log.d("","mi"+mIndex);
 
 		String marksString = "";
 
-		SharedPreferences prefs;
-		prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		marksString = prefs.getString("MARKS", "");
+		//SharedPreferences prefs;
+		//prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		//marksString = prefs.getString("MARKS", "");
+		marksString = Utils.readString("MARKS", "");
 
 	//	Log.d("", "LOAD");
 		//Log.d("", marksString);
@@ -518,10 +519,10 @@ Log.d("","mi"+mIndex);
 			ArrayList<Mark> marks = new ArrayList<Mark>();
 			loadMarks(marks, marksString);
 
-			//for (Mark m : marks) {
-			//	textData.get(m.menuGroupPosition).get(m.menuChildPosition)
-			//			.get(m.index);
-			//}
+			for (Mark m : marks) {
+				textData.get(m.menuGroupPosition).get(m.menuChildPosition)
+						.get(m.index).mFlag = m.mFlag;
+			}
 
 		}
 
@@ -579,6 +580,12 @@ Log.d("","mi"+mIndex);
 		editor.putInt(DIRECTION, MenuData.direction);
 		editor.putInt(MENU_INDEX, MenuData.mIndex);
 		
+		Utils.writeFile(MENU_GROUP_POSITION, ""+MenuData.mGroupPosition);
+		Utils.writeFile(MENU_CHILD_POSITION, ""+MenuData.mChildPosition);
+		Utils.writeFile(MTEXT, ""+MenuData.mText);
+		Utils.writeFile(DIRECTION, ""+MenuData.direction);
+		Utils.writeFile(MENU_INDEX, ""+MenuData.mIndex);
+		
 		String listString = "";
 
 		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
@@ -600,15 +607,23 @@ Log.d("","mi"+mIndex);
 		
 		listString = listString + "</data>";
 		editor.putString("MARKS", listString);
+
+		Utils.writeFile("MARKS", listString);
 		
 	}
 
 	public static void loadParameters(SharedPreferences prefs) {
-		mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
-		mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
+		//mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
+		//mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
+		//direction = prefs.getInt(DIRECTION, 0);
+		//String text = prefs.getString(MTEXT, "");
+
+		mGroupPosition = Utils.readInt(MENU_GROUP_POSITION, 0);
+		mChildPosition = Utils.readInt(MENU_CHILD_POSITION, 0);
+		direction = Utils.readInt(DIRECTION, 0);
+		String text = Utils.readString(MTEXT, "");
 		
-		direction = prefs.getInt(DIRECTION, 0);
-		String text = prefs.getString(MTEXT, "");
+		
 		
 		if (text.length() > 0){
 			mIndex = MenuData.findIndex(text);

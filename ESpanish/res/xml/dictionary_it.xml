@@ -31,9 +31,25 @@
 	   	<entry text = "loro" transl = "они"></entry>
 	   		   		   		   		   		   	
 	   	<entry text = "non" transl = "не"></entry>
-		<entry text = "Chi non lavora non mangia" transl = "Кто не работает, тот не ест"></entry>
+	   	<entry text = "bene" transl = "хорошо"></entry>
+	   	<entry text = "scusare" transl = "извинять"></entry>
+	   	<entry text = "Chi non lavora non mangia" transl = "Кто не работает, тот не ест"></entry>
 		
-	   		   		   		   		   		   		   		   												   		   		   		   		   	
+	   	<entry text = "ciao" transl = "привет"></entry>
+    	<entry text = "buon giorno" transl = "добрый день"></entry>
+    	<entry text = "buona sera" transl = "добрый вечер"></entry>
+    	<entry text = "buona notte" transl = "доброй ночи"></entry>
+    	<entry text = "arrivederci" transl = "до свидания"></entry>
+    	<entry text = "piacere" transl = "приятно познакомиться"></entry>
+		<entry text = "come stai?" transl = "как твои дела?"></entry>
+		<entry text = "come sta?" transl = "как Ваши дела?"></entry>
+		<entry text = "io sto bene" transl = "у меня все хорошо"></entry>
+		<entry text = "molto bene" transl = "очень хорошо"></entry>
+		<entry text = "male" transl = "плохо"></entry>
+		<entry text = "cosí-cosí" transl = "так себе"></entry>
+		<entry text = "gracze" transl = "спасибо"></entry>
+		<entry text = "prego" transl = "пожалуйста"></entry>
+		<entry text = "scusi" transl = "прошу прощения"></entry>
 	</dictionary>
 	<pronoun>
 	   	<entry text = "io" transl = "я" verb_ending = "are:o,avere:ho" verb_ending_past = "are:ato">

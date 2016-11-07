@@ -169,12 +169,15 @@ public class Dictionary
 					.replaceAll("ó", "o")
 					.replaceAll("ú", "u").
 					replaceAll("é", "e").
-					replaceAll("á", "a").replaceAll("[^a-zA-Z]", "");
+					replaceAll("á", "a").
+					replaceAll("í", "e").
+					replaceAll("[^a-zA-Z]", "");
 			
 			String text1 = text.toLowerCase()
 					.replaceAll("á", "a").replaceAll("ó", "o")
 					.replaceAll("ú", "u").replaceAll("é", "e").
 					replaceAll("á", "a").
+					replaceAll("í", "e").
 									  replaceAll("[^a-zA-Z]", "");
 
 			if ( translation.equals(text1)) return true;

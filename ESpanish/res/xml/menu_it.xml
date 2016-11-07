@@ -61,6 +61,32 @@
 		</level1>
 	</level0>
 	
+    <level0 title = "Урок 2">
+    	<level1 title = "Приветствия" type = "Выражения" 
+			note = "Переводим выражения с итальянского языка на русский и с русского на итальянский.">
+    	    <entry text = "Ciao!"></entry>
+    	    <entry text = "Buon giorno"></entry>
+    		<entry text = "Buona sera"></entry>
+    		<entry text = "Buona notte"></entry>
+    		<entry text = "Arrivederci!"></entry>
+    		<entry text = "Piacere"></entry>
+    		<entry text = "Come stai?"></entry>
+    		<entry text = "Come sta?"></entry>
+    		<entry text = "Io sto bene"></entry>
+			<entry text = "Мolto bene"></entry>
+    		<entry text = "Male"></entry>
+    		<entry text = "Сosí-cosí"></entry>
+    		<entry text = "Grazie"></entry>
+    		<entry text = "Prego"></entry>
+    		<entry text = "Scusi"></entry>
+		</level1>
+		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;ESSERE&lt;/font&gt; (быть)" type = "Говорим" helpindex = "1" 
+		    note = "Переводим вслух и сравниваем с образцом.">
+			<entry text = "essere"></entry>
+		</level1>
+    			
+	</level0>
+    	    
     	<schemes>
 		<scheme title = "Формы глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
 			IO PÁRL&lt;font color=RED&gt;O&lt;/font&gt;- Я ГОВОРЮ
@@ -112,5 +138,16 @@
 				PERCHE? - ПОЧЕМУ?
 				QUANDO? - КОГДА?
 			</scheme>
-			</schemes>
+		<scheme title = "Формы глагола ESSERE (быть)">
+			IO SONO - Я ЕСТЬ
+			TU SEI - ТЫ ЕСТЬ
+			LUI È - ОН ЕСТЬ
+			LEY È - ОНА ЕСТЬ 
+			&lt;big &gt;L&lt;/big&gt;EY È -&lt;big &gt;В&lt;/big&gt;Ы(ВЕЖЛ.) ЕСТЬ
+			NOI SIAMO -МЫ ЕСТЬ
+			VOI SIETE -ВЫ ЕСТЬ
+			LORO SONO -ОНИ ЕСТЬ
+		</scheme>
+			
+					</schemes>
 </data>

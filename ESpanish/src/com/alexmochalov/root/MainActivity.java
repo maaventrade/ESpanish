@@ -228,8 +228,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	private void saveParameters() {
 		Editor editor = prefs.edit();
-
 		editor.putBoolean(RANDOMIZE, randomize);
+
+		Utils.resetFile();
+		Utils.writeFile(RANDOMIZE, ""+randomize);
 		
 		MenuData.saveParameters(editor);
 		
@@ -238,8 +240,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private void loadParameters() {
 		MenuData.loadParameters(prefs);
-
-		randomize = prefs.getBoolean(RANDOMIZE, false);
+		
+//		randomize = prefs.getBoolean(RANDOMIZE, false);
+		randomize = Utils.readBoolean(RANDOMIZE, false);
+		
 	}
 	
 	@SuppressWarnings("deprecation")
