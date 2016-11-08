@@ -35,7 +35,7 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 		mTextViewText = (TextView) rootView.findViewById(R.id.text);
 		mTranslation = (TextView) rootView.findViewById(R.id.translation);
 
-		MenuData.setText(mTextViewText, mTranslation);
+		//MenuData.setText(mTextViewText, mTranslation);
 
 		// setVerb(MenuData.getText());
 
@@ -101,18 +101,20 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 			Entry e = Dictionary.getTranslation(MenuData.getText());
 			String verb = Dictionary.fit(e, i, "present").trim();
 
-			s = s + p.getTranslation(true) + " " + verb + ". ";
+			
+		View layout2 = LayoutInflater.from(mContext).inflate(
+				R.layout.fragment_speak_item, mLinearLayout, false);
+		mLinearLayout.addView(layout2);
+		
+		TextView textViewSpeak = (TextView) layout2
+				.findViewById(R.id.fragmentSpeakItemtextViewText);
+		textViewSpeak.setText(p.getTranslation(true) + " " + verb + ". ");
+			
 			text = text + p.getText() + " "
 					+ Dictionary.conj(i, MenuData.getText(), false) + ". ";
 			i++;
 		}
 
-		View layout2 = LayoutInflater.from(mContext).inflate(
-				R.layout.fragment_speak_item, mLinearLayout, false);
-		mLinearLayout.addView(layout2);
-		TextView textViewSpeak = (TextView) layout2
-				.findViewById(R.id.fragmentSpeakItemtextViewText);
-		textViewSpeak.setText(s);
 
 		buttonTest = (Button) rootView.findViewById(R.id.button_test);
 		buttonTest.setOnClickListener(this);

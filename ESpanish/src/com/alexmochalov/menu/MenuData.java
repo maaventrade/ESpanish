@@ -52,6 +52,11 @@ public class MenuData {
 		public MenuChild(String childName) {
 			title = childName;
 		}
+		
+
+		public void setHelpIndex(String attributeValue) {
+			mHelpIndex = Integer.parseInt(attributeValue); 
+		}
 
 		String title;
 		String type;
@@ -103,6 +108,10 @@ public class MenuData {
 
 		public void setHelpIndex(String attributeValue) {
 			mHelpIndex = Integer.parseInt(attributeValue); 
+		}
+		
+		public void setChildHelpIndex(String attributeValue) {
+			mChildren.get(mChildren.size() - 1).mHelpIndex = Integer.parseInt(attributeValue); 
 		}
 	}
 
@@ -185,7 +194,7 @@ public class MenuData {
 							if (xpp.getAttributeName(i).equals("title")) {
 								menuGroup.addItem(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("helpindex")) {
-								menuGroup.setHelpIndex(xpp.getAttributeValue(i));
+								menuGroup.setChildHelpIndex(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("tense")) {
 								menuGroup.setTense(xpp.getAttributeValue(i));
 							} else if (xpp.getAttributeName(i).equals("neg")) {
@@ -490,10 +499,10 @@ Log.d("","mi"+mIndex);
     		translation = getText();
     		mText = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, mIndex);
         }
-		
-		textViewText.setText(mText);
+		//Log.d("my","translation "+translation);
+		textViewText.setText(Utils.firstLetterToUpperCase(mText));
 
-		textViewTranslation.setText(translation);
+		textViewTranslation.setText(Utils.firstLetterToUpperCase(translation));
 		
 
 	}
@@ -556,8 +565,11 @@ Log.d("","mi"+mIndex);
 	public static void setText(TextView mTextViewText, TextView mTranslation) {
 		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
 		Log.d("my", "???? "+mText);
-		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
-		mTranslation.setText(Dictionary.getTranslation(MenuData.mText).getTranslation());
+		//mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
+		
+		//Entry entry = Dictionary.getTranslation(MenuData.mText);
+		//if (entry != null)
+			//mTranslation.setText(entry.getTranslation());
 		
 	}
 
