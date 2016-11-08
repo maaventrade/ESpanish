@@ -80,7 +80,7 @@
     		<entry text = "Prego"></entry>
     		<entry text = "Scusi"></entry>
 		</level1>
-		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;ESSERE&lt;/font&gt; (быть)" type = "Говорим" helpindex = "1" 
+		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;ESSERE&lt;/font&gt; (быть)" type = "Говорим" helpindex = "5" 
 		    note = "Переводим вслух и сравниваем с образцом.">
 			<entry text = "essere"></entry>
 		</level1>

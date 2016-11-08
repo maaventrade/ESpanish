@@ -310,6 +310,9 @@ public class Dictionary
 //	}
 	
 	public static String fit(Entry e, int sub, String time) {
+		if (e == null)
+			return "";
+		
 		String ending = "";
 	
 		for (Fit f : fits){

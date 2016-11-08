@@ -565,11 +565,11 @@ Log.d("","mi"+mIndex);
 	public static void setText(TextView mTextViewText, TextView mTranslation) {
 		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
 		Log.d("my", "???? "+mText);
-		//mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
+		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		
-		//Entry entry = Dictionary.getTranslation(MenuData.mText);
-		//if (entry != null)
-			//mTranslation.setText(entry.getTranslation());
+		Entry entry = Dictionary.getTranslation(MenuData.mText);
+		if (entry != null)
+			mTranslation.setText(entry.getTranslation());
 		
 	}
 

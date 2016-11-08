@@ -35,7 +35,7 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 		mTextViewText = (TextView) rootView.findViewById(R.id.text);
 		mTranslation = (TextView) rootView.findViewById(R.id.translation);
 
-		//MenuData.setText(mTextViewText, mTranslation);
+		MenuData.setText(mTextViewText, mTranslation);
 
 		// setVerb(MenuData.getText());
 
