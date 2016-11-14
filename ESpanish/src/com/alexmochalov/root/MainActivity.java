@@ -90,6 +90,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		actionBar = getActionBar();
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setHomeButtonEnabled(true);
+		if (Utils.getLanguage().equals("ita"))
+			actionBar.setIcon(R.drawable.ic_launcher1);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
