@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;   
 
-import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.alang.R;
 import com.alexmochalov.dictionary.ArrayAdapterDictionary;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.dictionary.Entry;
@@ -47,6 +47,7 @@ import android.widget.ListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.Toast;
 
+import com.alexmochalov.files.Dic;
 import com.alexmochalov.fragments.*;
 import com.alexmochalov.menu.DialogScheme;
 import com.alexmochalov.menu.FragmentMenu;
@@ -108,6 +109,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		Intent checkIntent = new Intent();
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+		
+		if (!Dic.fileExists("it_ru.xdxf")){
+			Dic.unzip(this, "it_ru.xdxf", R.raw.it_ru);
+		}
+		
+		Dic.reIndex("it_ru.xdxf", "it_ru.index");
 		
 		//if (savedInstanceState != null) {
         //    fragment = (Fragment) getFragmentManager().findFragmentByTag("your_fragment_tag");
@@ -183,6 +190,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragment = new FragmentConj();
 		} else if (type.equals("Говорим")){
 			fragment = new FragmentSpeak();
+		} else if (type.equals("Запоминание")){
+			fragment = new FragmentRemember();
 		}
 		
 		if (fragment != null) {

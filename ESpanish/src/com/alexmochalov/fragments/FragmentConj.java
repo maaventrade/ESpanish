@@ -8,7 +8,7 @@ import android.view.View.*;
 import android.widget.*;
 import android.widget.CompoundButton.*;
 
-import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.alang.*;
 import com.alexmochalov.dictionary.*;
 import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.root.*;

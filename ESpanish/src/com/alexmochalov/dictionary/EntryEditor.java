@@ -10,7 +10,7 @@ import android.widget.AdapterView.*;
 
 import java.util.*;
 
-import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.alang.R;
 
 public class EntryEditor {
 	static AutoCompleteTextView text = null;

@@ -5,7 +5,7 @@ import android.text.*;
 import android.view.*;
 import android.widget.*;
 
-import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.alang.*;
 import com.alexmochalov.menu.MenuData.*;
 
 import java.util.*;

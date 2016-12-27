@@ -1,11 +1,11 @@
 package com.alexmochalov.menu;
 
 import android.util.*;
+
 import com.alexmochalov.dictionary.*;
 import com.alexmochalov.root.*;
 
-class MarkedString {
-
+public class MarkedString {
 	String mText;
 	String mRusText = "";
 
@@ -144,5 +144,13 @@ class MarkedString {
 	
 	public void setFlag(String flag) {
 		mFlag = Integer.parseInt(flag);
+	}
+
+	public String getText() {
+		return mText;
+	}
+
+	public String getRusText() {
+		return mRusText;
 	}
 }

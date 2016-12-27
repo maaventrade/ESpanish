@@ -7,7 +7,7 @@ import java.util.Arrays;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.alang.R;
 
 import android.content.Context;
 import android.util.Log;
@@ -54,18 +54,12 @@ public class Dictionary
 	private static ArrayList<Entry> entries = new ArrayList<Entry>();
 	private static ArrayList<Fit> fits = new ArrayList<Fit>();
 
-	
-
 	private static ArrayList<Pronoun> pronouns = new ArrayList<Pronoun>();
 
 	public static void addEntry(String text) {
 		Entry e = new Entry();
 		e.mText = text;
-	
-		
 		entries.add(e);
-		
-		
 	}
 
 	/*
@@ -346,6 +340,6 @@ public class Dictionary
 		 
 		return e.root + ending;
 	}
-
+	
 
 }

@@ -8,9 +8,9 @@ import java.io.*;
 
 public class Utils {
 
-	static String PROGRAMM_FOLDER = "mnogoyaz";
-	static String EXTERNAL_STORAGE_DIRECTORY = Environment.getExternalStorageDirectory().getPath();
-	static String APP_FOLDER = EXTERNAL_STORAGE_DIRECTORY+"/xolosoft/"+PROGRAMM_FOLDER;
+	static final String PROGRAMM_FOLDER = "mnogoyaz";
+	static final String EXTERNAL_STORAGE_DIRECTORY = Environment.getExternalStorageDirectory().getPath();
+	public final static String APP_FOLDER = EXTERNAL_STORAGE_DIRECTORY+"/xolosoft/"+PROGRAMM_FOLDER;
 	static String REC_FOLDER = APP_FOLDER+"/rec";
 	
 	private static String language = "ita";

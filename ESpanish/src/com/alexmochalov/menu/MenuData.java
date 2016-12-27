@@ -6,7 +6,7 @@ import android.preference.*;
 import android.util.*;
 import android.widget.*;
 
-import com.alex_mochalov.navdraw.*;
+import com.alexmochalov.alang.*;
 import com.alexmochalov.dictionary.*;
 
 import java.io.*;
@@ -60,7 +60,7 @@ public class MenuData {
 
 		String title;
 		String type;
-		String note;
+		String note = "";
 		int mHelpIndex = -1;
 		String tense = "";
 		int neg = 0; // 0 нет, 1 половина, 2 всегда
@@ -219,6 +219,9 @@ public class MenuData {
 								} else if (xpp.getAttributeValue(i).equals(
 										"Говорим")) {
 									menuGroup.setChildType("Говорим");
+								} else if (xpp.getAttributeValue(i).equals(
+										"Запоминание")) {
+									menuGroup.setChildType("Запоминание");
 								}
 							} else if (xpp.getAttributeName(i).equals("note")) {
 								menuGroup
@@ -261,7 +264,16 @@ public class MenuData {
 							} else if (xpp.getAttributeName(i).equals("verbs")) {
 								rec.verbs = xpp
 										.getAttributeValue(i);
-							
+							} else if (xpp.getAttributeName(i).equals("rus")) {
+								textData.get(textData.size() - 1)
+								.get(textData.get(textData.size() - 1)
+										.size() - 1)
+								.get(textData
+										.get(textData.size() - 1)
+										.get(textData.get(
+												textData.size() - 1)
+												.size() - 1).size() - 1).mRusText = 
+												xpp.getAttributeValue(i);
 							}
 						}
 					} else if (xpp.getName().equals("schemes")) {
@@ -391,6 +403,10 @@ public class MenuData {
 	public static String getCountStr() {
 		int size = textData.get(mGroupPosition).get(mChildPosition).size();
 		return "" + (size - getRestCount(mGroupPosition, mChildPosition)) + "/" + size;
+	}
+
+	public static ArrayList<MarkedString> getDataArray() {
+		return textData.get(mGroupPosition).get(mChildPosition);
 	}
 
 	public static String getCountStr(int mGroupPosition, int mChildPosition) {

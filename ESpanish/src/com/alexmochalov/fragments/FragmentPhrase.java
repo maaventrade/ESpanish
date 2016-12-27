@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.alang.R;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.menu.MenuData;
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.alang.R;
 
 public class FragmentMenu extends Fragment {
 	View rootView;

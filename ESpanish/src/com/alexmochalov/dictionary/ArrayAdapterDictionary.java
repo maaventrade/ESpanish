@@ -2,7 +2,7 @@ package com.alexmochalov.dictionary;
 
 import java.util.ArrayList;
 
-import com.alex_mochalov.navdraw.R;
+import com.alexmochalov.alang.R;
 
 import android.content.Context;
 import android.util.Log;
