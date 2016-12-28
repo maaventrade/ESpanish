@@ -11,6 +11,7 @@ import android.widget.AdapterView.*;
 import java.util.*;
 
 import com.alexmochalov.alang.R;
+import com.alexmochalov.files.*;
 
 public class EntryEditor {
 	static AutoCompleteTextView text = null;
@@ -24,20 +25,20 @@ public class EntryEditor {
 		
 		mContext = context;
         text = (AutoCompleteTextView)layout.findViewById(R.id.editTextEntry);
-			
+			 
 		final ArrayAdapterDictionary adapter = new ArrayAdapterDictionary(mContext, 
 															R.layout.dic_string, 
-															(ArrayList<Entry>)Dictionary.getEntries().clone());
+															(ArrayList<IndexEntry>)Dic.getEntries().clone());
         text.setAdapter(adapter);
 		
 		text.setOnItemClickListener(new OnItemClickListener(){
 			  @Override
 			  public void onItemClick(AdapterView<?> adapterView, View p2, int position, long p4)
 			  {
-				  Entry entry = (Entry)adapterView.getItemAtPosition(position);
+				  IndexEntry entry = (IndexEntry)adapterView.getItemAtPosition(position);
 				  
 				  AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-				  builder.setMessage(entry.mText+" "+entry.translation)
+				  builder.setMessage(entry.getText()+" "+entry.getTranslation())
 				         .setCancelable(false)
 				         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				             public void onClick(DialogInterface dialog, int id) {

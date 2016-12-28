@@ -3,6 +3,7 @@ package com.alexmochalov.dictionary;
 import java.util.ArrayList;
 
 import com.alexmochalov.alang.R;
+import com.alexmochalov.files.*;
 
 import android.content.Context;
 import android.util.Log;
@@ -19,25 +20,23 @@ import android.widget.TextView;
  * This Adapter shows the drop-down list in the Dictionary 
  *
  */
-public class ArrayAdapterDictionary  extends ArrayAdapter<Entry>
+public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 {
-	private ArrayList<Entry> values;
-	private ArrayList<Entry> suggestions;
-	private ArrayList<Entry> valuesAll;
+	private ArrayList<IndexEntry> values;
+	private ArrayList<IndexEntry> suggestions;
+	private ArrayList<IndexEntry> valuesAll;
 	
 	Context context;
 	int resource;
 
-	public ArrayAdapterDictionary(Context context, int res, ArrayList<Entry> values){
+	public ArrayAdapterDictionary(Context context, int res, ArrayList<IndexEntry> values){
 		super(context, res, values);
 		this.values = values;
-		this.valuesAll = (ArrayList<Entry>) values.clone();
-		this.suggestions = new ArrayList<Entry>();
+		this.valuesAll = (ArrayList<IndexEntry>) values.clone();
+		this.suggestions = new ArrayList<IndexEntry>();
 		
 		this.resource = res;
 		this.context = context;
-		
-		Log.d("", "values----> "+values.size());
 	}
 
 	@Override
@@ -47,13 +46,13 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<Entry>
 				getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 			convertView = inflater.inflate(R.layout.dic_string, null);
 		}
-		Entry entry = values.get(position);
+		IndexEntry entry = values.get(position);
 				
 		TextView text = (TextView)convertView.findViewById(R.id.textViewText);
 		text.setText(entry.getText());
 
 		text = (TextView)convertView.findViewById(R.id.textViewTranslation);
-		text.setText(entry.getTranslation());
+		//text.setText(entry.getTranslation());
 		
 		return convertView;
 	}
@@ -70,35 +69,49 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<Entry>
 	{
 		//@Override 
 		public String convertResultToString(Object resultValue) {
-			return ((Entry)resultValue).getText();
+			return ((IndexEntry)resultValue).getText();
 		}
 		
 		@Override 
 		protected FilterResults performFiltering(CharSequence constraint) { 
 			if(constraint != null) {
+            	Log.d("z", "START <"+constraint+">");
                 suggestions.clear();
-                for (Entry customer : valuesAll) {
-                    if(customer.getText().
+                
+                String constraintString = constraint.toString().toLowerCase().
+	    				replaceAll("á", "a").
+	    				replaceAll("ó", "o").
+	    				replaceAll("ú", "u").
+	    				replaceAll("é", "e");
+                int i;
+                for (i = 0; i < valuesAll.size(); i++) 
+                	if (constraintString.charAt(0) == valuesAll.get(i).getText().charAt(0)){
+                		break;
+                	}	
+
+            	//Log.d("z", "i "+i);
+                while (i < valuesAll.size()){
+                	if (constraintString.charAt(0) != valuesAll.get(i).getText().toLowerCase().charAt(0))
+                		break;
+                	
+                    if(valuesAll.get(i).getText().
                     		toLowerCase().
 		    				replaceAll("á", "a").
 		    				replaceAll("ó", "o").
 		    				replaceAll("ú", "u").
 		    				replaceAll("é", "e").
-                    		startsWith(
-                    				constraint.toString().toLowerCase().
-				    				replaceAll("á", "a").
-				    				replaceAll("ó", "o").
-				    				replaceAll("ú", "u").
-				    				replaceAll("é", "e"))){
-                    	
-                        suggestions.add(customer);
-                    }
+                    		startsWith(constraintString))
+                        suggestions.add(valuesAll.get(i));
+                     i++;
                 }
+                
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = suggestions;
                 filterResults.count = suggestions.size();
+            	//Log.d("z", "filterResults.count "+filterResults.count);
                 return filterResults;
             } else {
+            	//Log.d("z", "ZERO");
                 return new FilterResults();
             }
 		}
@@ -106,10 +119,10 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<Entry>
 		@Override 
 		protected void publishResults(CharSequence constraint, FilterResults results)
 		{
-			ArrayList<Entry> filteredList = (ArrayList<Entry>) results.values;
+			ArrayList<IndexEntry> filteredList = (ArrayList<IndexEntry>) results.values;
             if(results != null && results.count > 0) {
                 clear();
-                for (Entry c : filteredList) {
+                for (IndexEntry c : filteredList) {
                     add(c);
                 }
                 notifyDataSetChanged();

@@ -112,9 +112,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		
 		if (!Dic.fileExists("it_ru.xdxf")){
 			Dic.unzip(this, "it_ru.xdxf", R.raw.it_ru);
-		}
+			Dic.createIndexAsinc(this, "it_ru.xdxf");
+		} else
+			Dic.loadIndex(this, "it_ru.index");
 		
-		Dic.reIndex("it_ru.xdxf", "it_ru.index");
 		
 		//if (savedInstanceState != null) {
         //    fragment = (Fragment) getFragmentManager().findFragmentByTag("your_fragment_tag");
