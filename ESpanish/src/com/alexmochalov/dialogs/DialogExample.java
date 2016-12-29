@@ -8,6 +8,7 @@ import android.widget.*;
 
 import com.alexmochalov.alang.*;
 import com.alexmochalov.fragments.FragmentM.OnTestedListener;
+import com.alexmochalov.root.TtsUtils;
 
 import android.util.*;
 import android.content.*;
@@ -16,17 +17,18 @@ public class DialogExample extends Dialog implements android.view.View.OnClickLi
 {
 	Context mContext;
 	ImageButton btnSpeak;
-	ImageButton btnOk;
+	Button btnOk;
 
+	private String mTitle;
 	private String mExample;
-
 	private String mRus;
 
 
-	public DialogExample(Context context, String example, String rus){
+	public DialogExample(Context context, String title, String example, String rus){
 		super(context);
 		mContext = context;
 		
+		mTitle = title;
 		mExample = example;
 		mRus = rus;
 	}
@@ -37,36 +39,29 @@ public class DialogExample extends Dialog implements android.view.View.OnClickLi
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dialog_example);
 
+		setTitle(mTitle);
+		
 		TextView text = (TextView)findViewById(R.id.dialogExampleExample);
 		text.setText(mExample);
 		
 		text = (TextView)findViewById(R.id.dialogExampleRus);
 		text.setText(mRus);
 		
-		btnSpeak = (ImageButton)findViewById(R.id.dialogSchemeImageButtonSpeak);
+		btnSpeak = (ImageButton)findViewById(R.id.dialogExampleImageButtonSpeak);
 		btnSpeak.setOnClickListener(this);
-
+		
+		btnOk = (Button)findViewById(R.id.dialogExampleImageButtonOk);
+		btnOk.setOnClickListener(this);
 
 	}
 
 	@Override
 	public void onClick(View v) {
-		/*if (v == btnNext){
-			mIndex++;
-			if (mIndex >= MenuData.schemes.size())
-				mIndex = 0;
-			reset();
+		if (v == btnSpeak)
+			TtsUtils.speak(mExample);
+		else if (v == btnOk){
+			cancel();
 		}
-		else if (v == btnPrev){
-			mIndex--;
-			if (mIndex < 0)
-				mIndex = MenuData.schemes.size()-1;
-			reset();
-		}
-		else if (v == btnSpeak){
-			if (mCallback != null)
-				mCallback.onSpeakButtonPressed(text);
-		}*/
 	}
 
 

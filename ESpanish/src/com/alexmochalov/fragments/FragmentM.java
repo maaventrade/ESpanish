@@ -36,6 +36,7 @@ public class FragmentM extends Fragment
 	public interface OnTestedListener {
 		public void onTested();
 		public void onFinished(Fragment thisFragment);
+		public void onButtonStartTestingClick();
 	}
 	
 	public void setParams(Context context) {

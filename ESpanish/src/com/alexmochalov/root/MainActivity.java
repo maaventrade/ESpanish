@@ -74,9 +74,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
 
-	TextToSpeech tts;
-	Locale locale;
-
 	String mType;
 	
 	//private int randomize;
@@ -116,25 +113,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		} else
 			Dic.loadIndex(this, "it_ru.index");
 		
-		
-		//if (savedInstanceState != null) {
-        //    fragment = (Fragment) getFragmentManager().findFragmentByTag("your_fragment_tag");
-       // }		
-
-		//Log.d("", "CREATE");
-		
-//		DrawerMenu.setPositions(menuGroupPosition, menuChildPosition);
-
-		//if (menuChildPosition >= 0 &&  DrawerMenu.getDataSize() > 0) {
-		//	selectItem(DrawerMenu.getType());
-		//}
-		
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == MY_DATA_CHECK_CODE) {
 			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
-				tts = new TextToSpeech(this, this);
+				TtsUtils.newTts(this);
 			} else {
 				Intent installIntent = new Intent();
 				installIntent
@@ -148,7 +132,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override 
 	protected void onDestroy() {
-		if (tts != null) tts.shutdown();
+		TtsUtils.destroy();
 		saveParameters();
 		super.onDestroy(); 
 	}
@@ -196,9 +180,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		}
 		
 		if (fragment != null) {
-			//fragment.setParams(this, mGroupPosition, mChildPosition, 0);
-	    	//mIndex = MenuData.nextTestIndex(mGroupPosition, mChildPosition, mIndex);
-			//fragment.saveParams(this);
 
 			FragmentTransaction transaction = fragmentManager.beginTransaction();
 			transaction.replace(R.id.fragment_container, fragment);
@@ -258,19 +239,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		
 	}
 	
-	@SuppressWarnings("deprecation")
-	private void ttsUnder20(String text) {
-		HashMap<String, String> map = new HashMap<>();
-		map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "MessageId");
-		tts.speak(text, TextToSpeech.QUEUE_FLUSH, map);
-	}
-
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private void ttsGreater21(String text) {
-		String utteranceId = this.hashCode() + "";
-		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -287,13 +255,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		}
 		case R.id.item_speak: {
-			if (fragment != null){
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				ttsGreater21(fragment.getTextToTTS());
-			} else {
-				ttsUnder20(fragment.getTextToTTS());
-			}
-			}
+			if (fragment != null)
+				TtsUtils.speak(fragment.getTextToTTS());
 			return true;
 		}
 		case android.R.id.home: {
@@ -328,11 +291,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 					@Override
 					public void onSpeakButtonPressed(String text) {
 						text = Html.fromHtml(text).toString();
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-							ttsGreater21(text);
-						} else {
-							ttsUnder20(text);
-						}
+						TtsUtils.speak(text);
 					}
 				};
 				d.show();
@@ -360,38 +319,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	@Override
 	public void onInit(int status) {
-	      if (status == TextToSpeech.SUCCESS) {
-	    	  	loadLangueges();
-	    	  
-	    	  	langSupported = false;
-	    	  	/*
-	    	  	if (tts.isLanguageAvailable(Locale.JAPAN) != tts.LANG_NOT_SUPPORTED){ 
-	    	  		tts.setLanguage(Locale.JAPAN);
-		    	  	langSupported = true;
-	    	  	} else
-	    	  		Toast.makeText(this, getResources().getString(R.string.error_lang_not_supported)+" ("+language+")", Toast.LENGTH_LONG).show();
-	    	  	*/
-	    	  	
-	        	Locale locale[] = Locale.getAvailableLocales();
-	            for (int i=0; i< locale.length; i++){
-	            	//Log.d("", ""+locale[i].getISO3Language());
-	    	  		//Toast.makeText(this, locale[i].getLanguage().toUpperCase()+"  "+language, Toast.LENGTH_LONG).show();
-	            	if (locale[i].getISO3Language().equals(Utils.getLanguage())){
-	    	    	  	if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED){
-	    	    	  		Toast.makeText(this, getResources().getString(R.string.error_lang_not_supported)+" ("+Utils.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
-	    	    	  		langSupported = false;
-	    	    	  	} else {
-	    	    	  		langSupported = true;
-	    	    	  		tts.setLanguage(locale[i]);
-	    	    	  	}	
-	    	    	  	return; 
-	            	}}
-	            Toast.makeText(this, getResources().getString(R.string.error_lang_not_found)+" ("+Utils.getLanguage()+") "+getResources().getString(R.string.error_lang), Toast.LENGTH_LONG).show();
-	            
-	      }
-	      	else if (status == TextToSpeech.ERROR) {
-	            Toast.makeText(this, "Error occurred while initializing Text-To-Speech engine", Toast.LENGTH_LONG).show();
-	      }
+	      if (status == TextToSpeech.SUCCESS) 
+		    TtsUtils.init(this);
 	}
 
 	@Override
@@ -409,6 +338,9 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			selectItem(type);
 	}      
 	
+	// 
+	// 
+	//
 	@Override
 	public void onTested()
 	{
@@ -418,6 +350,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	@Override
 	public void onFinished(Fragment thisFragment) {
 		fragmentMenu.refresh();
+	}
+
+	@Override
+	public void onButtonStartTestingClick() {
+		selectItem("Выражения");
 	}
 	
 }

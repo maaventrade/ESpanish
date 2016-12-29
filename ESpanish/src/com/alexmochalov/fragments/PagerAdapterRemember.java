@@ -36,22 +36,24 @@ public class PagerAdapterRemember extends PagerAdapter
 	
 	public interface OnEventListener{
 		public void onButtonChangeClick();
+		public void onButtonStartTestingClick();
 	}
-	
 
     public PagerAdapterRemember(Context context) {
         mContext = context;
         ArrayList<MarkedString> data =  MenuData.getDataArray();
         for (MarkedString m: data)
         	mObjects.add(new RemEntry(m.getText(), m.getRusText()));
-        
-//        thisAdapter = this;
-        
     }
 
     @Override
     public Object instantiateItem(ViewGroup collection, int position) {
-        RemEntry remEntry = mObjects.get(position);
+        
+    	// if (mObjects != null && mObjects.size() > 0)
+    	position = position % mObjects.size();
+    	
+    	final RemEntry remEntry = mObjects.get(position);
+        
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(remEntry.getLayoutResId(), collection, false);
         collection.addView(layout);
@@ -69,7 +71,6 @@ public class PagerAdapterRemember extends PagerAdapter
 				isRus = pIsRus;
 				if (listener != null)
 					listener.onButtonChangeClick();
-				//			thisAdapter.notifyDataSetChanged();
 			}
 		};
 		
@@ -84,6 +85,7 @@ public class PagerAdapterRemember extends PagerAdapter
 				public void onItemClick(AdapterView<?> parent, View view, int position , long p4)
 				{
 					DialogExample dialog = new DialogExample(mContext,
+							Utils.firstLetterToUpperCase(remEntry.getText())+" ("+remEntry.getRus()+")",
 															 arrayListExamples.get(position),
 															 arrayListRus.get(position));
 					dialog.show();
@@ -105,39 +107,35 @@ public class PagerAdapterRemember extends PagerAdapter
 						eRu = s.substring(i+1, j);
 					else
 						eRu = s.substring(i+1);
-					arrayListRus.add(eRu);
-					arrayListExamples.add(eEx);
+					
+					//int j = s.indexOf("<abr>");
+					//if 
+					
+					arrayListRus.add(Utils.firstLetterToUpperCase(eRu.trim()
+							.replace("&apos;", "'")));
+					arrayListExamples.add(Utils.firstLetterToUpperCase(eEx.trim()
+							.replace("&apos;", "'")));
 				}
 				
 			}
-		
-			ArrayAdapter adapter;
+
+		ArrayAdapter adapter;
+			
+			
 		if (isRus)
 			adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayListRus);
 		else 
 			adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayListExamples);
 			
-       
-        listView.setAdapter(adapter);  
+        listView.setAdapter(adapter);
         
-        /*
-        if (isRus)
-        	text.setText(remEntry.getRus());
-        else
-        	text.setText(remEntry.getText());
-        */	
-  
-       /*
-        ImageButton btn = (ImageButton)layout.findViewById(R.id.imageButtonChange); 
+        Button btn = (Button)layout.findViewById(R.id.buttonStartTesting); 
         btn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				isRus = !isRus;
 				if (listener != null)
-					listener.onButtonChangeClick();
-	//			thisAdapter.notifyDataSetChanged();
+					listener.onButtonStartTestingClick();
 			}});
-*/        
         
         return layout;
     }
@@ -149,7 +147,7 @@ public class PagerAdapterRemember extends PagerAdapter
 
     @Override
     public int getCount() {
-        return mObjects.size();
+        return mObjects.size()*1000;
     }
 
     @Override

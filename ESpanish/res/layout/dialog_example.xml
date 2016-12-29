@@ -5,6 +5,7 @@
 	android:layout_height="fill_parent"
 	android:layout_marginBottom="@dimen/text_size_small"
 	android:layout_marginLeft="@dimen/text_size_medium"
+	android:layout_marginRight="@dimen/text_size_medium"
 	android:orientation="vertical">
 
 	<TextView
@@ -14,7 +15,7 @@
 		android:layout_marginBottom="@dimen/text_size_medium"
 		android:text="Large Text"
 		android:textColor="@color/blue"
-		android:textSize="@dimen/text_size_large"
+		android:textSize="@dimen/text_size_medium"
 		android:typeface="serif"/>
 
 	<TextView
@@ -24,7 +25,7 @@
 		android:layout_marginBottom="@dimen/text_size_medium"
 		android:text="Large Text"
 		android:textColor="@color/blue"
-		android:textSize="@dimen/text_size_large"
+		android:textSize="@dimen/text_size_medium"
 		android:typeface="serif"/>
 	
 
@@ -33,10 +34,16 @@
 		android:layout_height="wrap_content">
 
 		<ImageButton
-			android:id="@+id/dialogSchemeImageButtonSpeak"
+			android:id="@+id/dialogExampleImageButtonSpeak"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@drawable/speaker"/>
+
+		<Button
+		    android:id="@+id/dialogExampleImageButtonOk"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:text="Ok" />
 
 	</LinearLayout>
 
