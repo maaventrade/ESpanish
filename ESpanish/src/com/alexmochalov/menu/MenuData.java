@@ -497,18 +497,25 @@ Log.d("","mi"+mIndex);
 
 	public static void getTypeOfTheStep(TextView textViewText, TextView textViewTranslation) {
 		MarkedString data = textData.get(mGroupPosition).get(mChildPosition).get(mIndex);
-
+		//					textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag = textData.get(mGroupPosition).get(mChildPosition)
+		//		.get(mIndex).mFlag
+		//		| typeOfstep;
+		
+		double random = Math.random();
+		Log.d("", "-> "+random+" data.mFlag "+data.mFlag);
+		
 		if (data.mFlag == 1)
-			direction = 1; // span->rus
+			direction = 2; // span->rus
 		else if (data.mFlag == 2)
-			direction =  0; // rus->span
-		else if (Math.random() > 0.5)
-			direction =  0;
+			direction =  1; // rus->span
+		else if (random > 0.5f)
+			direction =  2;
 		else
 			direction =  1;
 			
+		Log.d("", "direction "+direction);
 		
-		if (direction == 0){
+		if (direction == 1){
     		mText = getText();
     		translation = MenuData.getTranslation(mText, mGroupPosition, mChildPosition, mIndex);
         } else {
@@ -648,7 +655,7 @@ Log.d("","mi"+mIndex);
 
 		mGroupPosition = Utils.readInt(MENU_GROUP_POSITION, 0);
 		mChildPosition = Utils.readInt(MENU_CHILD_POSITION, 0);
-		direction = Utils.readInt(DIRECTION, 0);
+		direction = Utils.readInt(DIRECTION, 1);
 		String text = Utils.readString(MTEXT, "");
 		
 		

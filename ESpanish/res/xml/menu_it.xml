@@ -166,12 +166,14 @@
 			<entry text = "guardare" rus = "смотреть"></entry>
 			<entry text = "sperate" rus = "надеяться"></entry>	
 			<entry text = "amare" rus = "любить"></entry>	
-					</level1>
+		</level1>
 		<level1 title = "Глаголы ума" type = "Запоминание" helpindex = "0">
 			<entry text = "sapere" rus = "знать"></entry>
 			<entry text = "pensare" rus = "думать"></entry>
 			<entry text = "intendere" rus = "понимать"></entry>
 			<entry text = "ricordare" rus = "помнить"></entry>	
+		</level1>
+		<level1 title = "Глаголы ума" type = "Запоминание" helpindex = "0">
 			<entry text = "presumere" rus = "считать"></entry>	
 			<entry text = "decidere" rus = "решать"></entry>	
 		</level1>

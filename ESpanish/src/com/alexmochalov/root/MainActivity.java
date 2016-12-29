@@ -301,22 +301,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		}
 		
 	}
-//EntryEditor
-	private void loadLangueges(){
-    	Locale locale[] = Locale.getAvailableLocales();
-        //Spinner spinnerLanguages = ((Spinner)findViewById(R.id.spinnerLanguages));
-    	/*
-        ArrayList<String> languages = new ArrayList<String>();
-        for (int i=0; i< locale.length; i++)
-        	if (tts.isLanguageAvailable(locale[i]) != tts.LANG_NOT_SUPPORTED)
-        		if (! languages.contains(locale[i].getISO3Language()))
-        			languages.add(locale[i].getISO3Language()); 
-        adapter = new ArrayAdapter(this,
-        		android.R.layout.simple_spinner_item, languages);
-        spinner.setAdapter(adapter);
-        */
-    }
-	
+
 	@Override
 	public void onInit(int status) {
 	      if (status == TextToSpeech.SUCCESS) 

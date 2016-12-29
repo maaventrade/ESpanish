@@ -39,8 +39,8 @@ public class FragmentPhrase extends FragmentM {
 
 		MenuData.getTypeOfTheStep(mTextViewText, mTranslation);
 		
-        mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
-        mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
+        //mTextViewText = (TextView)rootView.findViewById(R.id.TextViewPhrase);
+        //mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
         
 		mTranslation.setVisibility(View.INVISIBLE);   
 		

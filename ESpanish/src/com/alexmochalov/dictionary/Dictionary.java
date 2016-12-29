@@ -157,7 +157,7 @@ public class Dictionary
 
 	//Log.d("", "" + translation + "  " + text);
 
-		if (direction == 0) {
+		if (direction == 2) {
 			translation = translation.toLowerCase()
 					.replaceAll("á", "a")
 					.replaceAll("ó", "o")
@@ -174,7 +174,8 @@ public class Dictionary
 					replaceAll("í", "e").
 									  replaceAll("[^a-zA-Z]", "");
 
-			if ( translation.equals(text1)) return true;
+			if (translation.length() == 0) return false;
+			else if ( translation.equals(text1)) return true;
 			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
 			else return false;	
 			
@@ -183,7 +184,8 @@ public class Dictionary
 			
 			String text1 = text.toLowerCase();
 			
-			if ( translation.equals(text1.replaceAll("[^а-яА-Я]", ""))) return true;
+			if (translation.length() == 0) return false;
+			else if ( translation.equals(text1.replaceAll("[^а-яА-Я]", ""))) return true;
 			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
 			else return false;	
 		}
