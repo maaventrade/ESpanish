@@ -300,8 +300,10 @@ public class Dic {
 	}
 
 	public static String getTranslation(String text) {
-		// TODO Auto-generated method stub
-		return null;
+		for (IndexEntry i:indexEntries)
+			if(i.getText().equals(text))
+				return(i.getTranslation());
+		return "";
 	}	
 	
 }

@@ -18,6 +18,11 @@ import com.alexmochalov.menu.MarkedString;
 import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.files.Dic;
+import android.util.*;
+import com.alexmochalov.root.*;
+import com.alexmochalov.dialogs.*;
+import android.widget.AdapterView.*;
+import android.widget.*;
 
 public class PagerAdapterRemember extends PagerAdapter
  {
@@ -50,22 +55,69 @@ public class PagerAdapterRemember extends PagerAdapter
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(remEntry.getLayoutResId(), collection, false);
         collection.addView(layout);
-        
+       
         ImageViewSlide text = (ImageViewSlide)layout.findViewById(R.id.slider);
-        text.setTexts(remEntry.getText(), remEntry.getRus());
-
+		
+        text.setTexts(
+			Utils.firstLetterToUpperCase(remEntry.getText()), 
+			Utils.firstLetterToUpperCase(remEntry.getRus()), isRus);
+		
+		text.listener = new ImageViewSlide.OnEventListener(){
+			@Override
+			public void onSlided(boolean pIsRus)
+			{
+				isRus = pIsRus;
+				if (listener != null)
+					listener.onButtonChangeClick();
+				//			thisAdapter.notifyDataSetChanged();
+			}
+		};
+		
         ListView listView = (ListView)layout.findViewById(R.id.samples);
-        ArrayList<String> arrayList = new ArrayList<String>();
+		
+        final ArrayList<String> arrayListExamples = new ArrayList<String>();
+		final ArrayList<String> arrayListRus = new ArrayList<String>();
+		
+		listView.setOnItemClickListener(new OnItemClickListener(){
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position , long p4)
+				{
+					DialogExample dialog = new DialogExample(mContext,
+															 arrayListExamples.get(position),
+															 arrayListRus.get(position));
+					dialog.show();
+				}
+			});
+
         
         String translation = Dic.getTranslation(remEntry.getText());
-        
-        arrayList.add("qwerqwrq");
-        arrayList.add("356");
-        arrayList.add("qwe4356456346rqwrq");
-        arrayList.add("dfsdaf");
-
-        ArrayAdapter adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayList);
-
+        String stringsArray[] = translation.split("\n");
+		for (String s:stringsArray)
+			if (s.indexOf("<ex>") >= 0){
+				int i = s.indexOf("—");
+				int j = s.indexOf("</ex>");
+				if (i > 0){
+					String eEx = s.substring(
+						s.indexOf("<ex>")+4, i);
+					String eRu;
+					if (j >= 0)
+						eRu = s.substring(i+1, j);
+					else
+						eRu = s.substring(i+1);
+					arrayListRus.add(eRu);
+					arrayListExamples.add(eEx);
+				}
+				
+			}
+		
+			ArrayAdapter adapter;
+		if (isRus)
+			adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayListRus);
+		else 
+			adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayListExamples);
+			
+       
         listView.setAdapter(adapter);  
         
         /*
@@ -105,10 +157,9 @@ public class PagerAdapterRemember extends PagerAdapter
         return view == object;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-    	RemEntry remEntry = mObjects.get(position);
-    	return "";
+   
+    public String getText(int position) {
+    	return mObjects.get(position).getText();
         //return mContext.getString(customPagerEnum.getTitleResId());
     }
 

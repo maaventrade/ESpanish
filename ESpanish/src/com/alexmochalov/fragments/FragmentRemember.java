@@ -22,10 +22,6 @@ public class FragmentRemember extends FragmentM implements OnClickListener {
  	static final int PAGE_COUNT = 10;
  
   ViewPager pager;
-  PagerAdapter pagerAdapter;
-	
-  
-  
   
 	private Button buttonTest;
 	private ImageButton buttonRec;
@@ -33,6 +29,8 @@ public class FragmentRemember extends FragmentM implements OnClickListener {
 
 	private String text;
 
+	private PagerAdapterRemember adapter;
+	
 	private enum States {
 		play, record, stop
 		};
@@ -97,7 +95,7 @@ public class FragmentRemember extends FragmentM implements OnClickListener {
 
 		rootView = inflater.inflate(R.layout.fragment_remember, container, false);
 		pager = (ViewPager)rootView.findViewById(R.id.pager);
-		final PagerAdapterRemember adapter = new PagerAdapterRemember(getActivity());
+		adapter = new PagerAdapterRemember(getActivity());
 		adapter.listener = new PagerAdapterRemember.OnEventListener() {
 			@Override
 			public void onButtonChangeClick() {
@@ -113,8 +111,8 @@ public class FragmentRemember extends FragmentM implements OnClickListener {
 	}
 
 	public String getTextToTTS() {
-		Log.d("", "--" + text);
-		return text;
+
+		return adapter.getText(pager.getCurrentItem());
 	}
 
 	@Override

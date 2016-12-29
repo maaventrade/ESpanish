@@ -61,7 +61,7 @@
 		</level1>
 	</level0>
 	<level0 title = "Урок 2">
-		<level1 title = "100 глаголов для запоминания" type = "Запоминание" helpindex = "0">
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "essere" rus = "быть"></entry>
 			<entry text = "avere" rus = "иметь"></entry>
 			<entry text = "fare" rus = "делать"></entry>
@@ -72,6 +72,8 @@
 			<entry text = "sapere" rus = "знать"></entry>
 			<entry text = "pensare" rus = "думать"></entry>
 			<entry text = "prendere" rus = "брать"></entry>
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "vedere" rus = "видеть"></entry>
 			<entry text = "venire" rus = "приходить"></entry>
 			<entry text = "volere" rus = "хотеть"></entry>
@@ -82,6 +84,8 @@
 			<entry text = "lavorare" rus = "работать"></entry>
 			<entry text = "chiamare" rus = "звать"></entry>
 			<entry text = "tentare" rus = "пытаться"></entry>
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "chiedere" rus = "просить"></entry>
 			<entry text = "aver bisogno" rus = "нуждаться"></entry>
 			<entry text = "sentire" rus = "чувствовать"></entry>
@@ -92,6 +96,8 @@
 			<entry text = "serbare" rus = "хранить"></entry>
 			<entry text = "permettere" rus = "позволять"></entry>
 			<entry text = "cominciare" rus = "начинать"></entry>
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "parere" rus = "казаться"></entry>
 			<entry text = "aiutare" rus = "помогать"></entry>
 			<entry text = "mostrare" rus = "показывать"></entry>
@@ -102,6 +108,8 @@
 			<entry text = "vivere" rus = "жить"></entry>
 			<entry text = "credere" rus = "верить"></entry>
 			<entry text = "portare" rus = "приносить"></entry>
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "accadere" rus = "случаться"></entry>
 			<entry text = "scrivere" rus = "писать"></entry>
 			<entry text = "sedere" rus = "сидеть"></entry>
@@ -112,6 +120,8 @@
 			<entry text = "includere" rus = "включать"></entry>
 			<entry text = " continuare" rus = "продолжать"></entry>
 			<entry text = "fissare" rus = "учтанавливать"></entry>
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "studiare" rus = "учиться"></entry>
 			<entry text = "cambiare" rus = "менять"></entry>
 			<entry text = "guidare" rus = "вести"></entry>
@@ -122,6 +132,8 @@
 			<entry text = "creare" rus = "создаввть"></entry>
 			<entry text = "parlare" rus = "говорить"></entry>
 			<entry text = "leggere" rus = "читать"></entry>
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "spendere" rus = "тратить"></entry>
 			<entry text = "crescere" rus = "расти"></entry>
 			<entry text = "aprire" rus = "открывать"></entry>
@@ -132,6 +144,8 @@
 			<entry text = "ricordare" rus = "помнить"></entry>	
 			<entry text = "presumere" rus = "считать"></entry>	
 			<entry text = "apparire" rus = "появляться"></entry>	
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "comprare" rus = "покупать"></entry>	
 			<entry text = "servire" rus = "служить"></entry>	
 			<entry text = "morire" rus = "умирать"></entry>	
@@ -142,6 +156,8 @@
 			<entry text = "tagliare" rus = "резать"></entry>	
 			<entry text = "raggiungere" rus = "достигать"></entry>	
 			<entry text = "uccidere" rus = "убивать"></entry>	
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "levare" rus = "поднимать"></entry>	
 			<entry text = "passare" rus = "миновать"></entry>	
 			<entry text = "vendere" rus = "продавать"></entry>	
@@ -152,6 +168,8 @@
 			<entry text = "sviluppare" rus = "развивать"></entry>	
 			<entry text = "portare" rus = "везти"></entry>	
 			<entry text = "rompere" rus = "ломать"></entry>	
+		</level1>
+		<level1 title = "Глаголы для запоминания" type = "Запоминание" helpindex = "0">
 			<entry text = "ricevere" rus = "получать"></entry>	
 			<entry text = "consentire" rus = "соглашаться"></entry>	
 			<entry text = "favorire" rus = "поддерживать"></entry>	

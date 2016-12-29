@@ -40,6 +40,14 @@ public class ImageViewSlide extends ImageView{
 	
 	private Handler h = new Handler();
 	
+	public OnEventListener listener;
+
+	private boolean mIsrus;
+
+	public interface OnEventListener{
+		public void onSlided(boolean isRus);
+	}
+	
 	public ImageViewSlide(Context context, AttributeSet attrs,
 			int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
@@ -106,6 +114,12 @@ public class ImageViewSlide extends ImageView{
 		paintText.getTextBounds(text2, 0, text2.length(), bounds);				
 		leftText2 = (width - bounds.width()) / 2;
 		topText2 =   (int)((-height + height / 2) + ((paintText.descent() + paintText.ascent()) / 2)) ; 
+		Log.d("z","set text izrus "+mIsrus);
+		if (mIsrus){
+			topText2 = topText;
+			topText1 = topText * 3;
+		}
+			
 	}
 
 	@Override
@@ -135,7 +149,7 @@ public class ImageViewSlide extends ImageView{
         } else if (action == MotionEvent.ACTION_MOVE) {
         	delta = (y - y0) * 2;
         	
-        	Log.d("z", "topText "+topText+" topText2 "+topText2+" delta "+delta+" HEIGHT "+height);
+        	//Log.d("z", "topText "+topText+" topText2 "+topText2+" delta "+delta+" HEIGHT "+height);
         	
         	if (topText1 + delta >= topText && topText2 + delta <= topText){
         		topText1 = topText1 + delta;
@@ -169,6 +183,10 @@ public class ImageViewSlide extends ImageView{
 	    		topText1 = topText;
 	    		topText2 = -topText;
 			}
+		if (listener != null)
+				listener.onSlided(topText2 == topText);
+
+
     	}	
         invalidate();
 	}
@@ -179,10 +197,11 @@ public class ImageViewSlide extends ImageView{
 		}
 	};
 
-	public void setTexts(String text, String rus) {
+	public void setTexts(String text, String rus, boolean isRus) {
 		text1 = text;
 		text2 = rus;
 		
+		mIsrus = isRus;
         setTextPositions();
     	invalidate();
 	}	
