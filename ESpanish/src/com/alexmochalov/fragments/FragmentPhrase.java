@@ -67,6 +67,7 @@ public class FragmentPhrase extends FragmentM {
         MenuData.nextTestIndex();
 
         init();
+		MenuData.next();
     	next();
     	
 	    button_test = (Button)rootView.findViewById(R.id.button_test);

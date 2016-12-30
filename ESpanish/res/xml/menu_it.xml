@@ -61,12 +61,16 @@
 		</level1>
 	</level0>
 	<level0 title = "Урок 2">
-		<level1 title = "Глаголы для запоминания самые общие" type = "Запоминание" helpindex = "0">
+		<level1 title = "Глаголы самые общие" type = "Запоминание" helpindex = "0">
 			<entry text = "essere" rus = "быть"></entry>
 			<entry text = "avere" rus = "иметь"></entry>
 		    <entry text = "parere" rus = "казаться"></entry>
 			<entry text = "vivere" rus = "жить"></entry>
 			<entry text = "morire" rus = "умирать"></entry>	
+			<entry text = "fare" rus = "делать"></entry>
+		</level1>
+		<level1 title = "Глаголы самые общие" type = "Запоминание" helpindex = "0">
+			
 			<entry text = "mancare" rus = "нуждаться"></entry>
 			<entry text = "diventare" rus = "становиться"></entry>
 			<entry text = "accadere" rus = "случаться"></entry>
@@ -114,7 +118,7 @@
 			<entry text = "pagare" rus = "платить"></entry>
 		</level1>
 		<level1 title = "Глаголы действий разные" type = "Запоминание" helpindex = "0">
-		    <entry text = "fare" rus = "делать"></entry>
+		    
 			<entry text = "prendere" rus = "брать"></entry>
 			<entry text = "dare" rus = "давать"></entry>
 			<entry text = "mostrare" rus = "показывать"></entry>

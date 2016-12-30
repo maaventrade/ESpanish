@@ -16,6 +16,7 @@ import org.xmlpull.v1.*;
 
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.root.Utils;
+import com.alexmochalov.io.*;
 
 public class MenuData {
 	static Context mContext;
@@ -621,29 +622,8 @@ Log.d("","mi"+mIndex);
 		Utils.writeFile(DIRECTION, ""+MenuData.direction);
 		Utils.writeFile(MENU_INDEX, ""+MenuData.mIndex);
 		
-		String listString = "";
-
-		listString = listString + "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		listString = listString + "<data version = \"1\">\n";
+		FilesIO.saveMenu(menuData, textData);
 		
-		for (int i = 0; i < menuData.size(); i++){
-			for (int j = 0; j < menuData.get(i).mChildren.size(); j++){
-
-				for (MarkedString s: textData.get(i).get(j)){
-					
-						listString = listString + "<mark group = \""+ i 
-								+"\" child = \"" + j 
-								+"\" index = \"" + textData.get(i).get(j).indexOf(s) 
-								+ "\" value = \"" + s.mFlag  
-								+ "\"></mark>\n"; 
-				}
-			}
-		}
-		
-		listString = listString + "</data>";
-		editor.putString("MARKS", listString);
-
-		Utils.writeFile("MARKS", listString);
 		
 	}
 
