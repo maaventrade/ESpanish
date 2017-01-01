@@ -49,72 +49,9 @@ public class MenuData {
 		mChildren.size()-1).tense;
 	}
 	
-	static class MenuChild {
-		public MenuChild(String childName) {
-			title = childName;
-		}
-		
+	
 
-		public void setHelpIndex(String attributeValue) {
-			mHelpIndex = Integer.parseInt(attributeValue); 
-		}
-
-		String title;
-		String type;
-		String note = "";
-		int mHelpIndex = -1;
-		String tense = "";
-		int neg = 0; // 0 нет, 1 половина, 2 всегда
-	}
-
-	static class MenuGroup {
-		String title;
-		ArrayList<MenuChild> mChildren;
-		int mHelpIndex = 0;
-
-		MenuGroup(String name, ArrayList<MenuChild> children) {
-			title = name;
-			mChildren = children;
-		}
-
-		MenuGroup() {
-			mChildren = new ArrayList();
-		}
-
-		public void setName(String name) {
-			title = name;
-		}
-
-		public void setTense(String attributeValue) {
-			//Log.d("my","tense "+attributeValue);
-			mChildren.get(mChildren.size()-1).tense = attributeValue;
-		}
-
-		public void setNeg(String attributeValue) {
-			mChildren.get(mChildren.size()-1).neg = Integer.parseInt(attributeValue);
-		}
-
-		public void addItem(String childName) {
-			mChildren.add(new MenuChild(childName));
-		}
-
-		public void setChildType(String type) {
-			mChildren.get(mChildren.size() - 1).type = type;
-
-		}
-
-		public void setChildNote(String note) {
-			mChildren.get(mChildren.size() - 1).note = note;
-		}
-
-		public void setHelpIndex(String attributeValue) {
-			mHelpIndex = Integer.parseInt(attributeValue); 
-		}
-		
-		public void setChildHelpIndex(String attributeValue) {
-			mChildren.get(mChildren.size() - 1).mHelpIndex = Integer.parseInt(attributeValue); 
-		}
-	}
+	
 
 	static class Mark {
 		private int menuGroupPosition;
@@ -162,7 +99,26 @@ public class MenuData {
 
 		try {
 			XmlPullParser xpp = null;
+			
+			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
+			if (!file.exists()){
+				if (Utils.getLanguage().equals("ita")) 
+					xpp = mContext.getResources().getXml(R.xml.menu_it);
+				else if (Utils.getLanguage().equals("spa"))
+					xpp = mContext.getResources().getXml(R.xml.menu_spa);
+			} else {
 
+				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
+					Utils.APP_FOLDER + "/menu_it.xml")));
+															 
+			
+				XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
+				factory.setNamespaceAware(true);         
+				xpp = factory.newPullParser();
+				
+				xpp.setInput(reader);
+			}
+				
 			if (Utils.getLanguage().equals("ita")) 
 				xpp = mContext.getResources().getXml(R.xml.menu_it);
 			else if (Utils.getLanguage().equals("spa"))
@@ -184,7 +140,7 @@ public class MenuData {
 
 						for (int i = 0; i < xpp.getAttributeCount(); i++) {
 							if (xpp.getAttributeName(i).equals("title")) {
-								menuGroup.setName(xpp.getAttributeValue(i));
+								menuGroup.setTitle(xpp.getAttributeValue(i));
 							}
 						}
 
@@ -299,20 +255,20 @@ public class MenuData {
 									.get(textData.get(
 											textData.size() - 1).size() - 1);
 						
-						String verbs[] = rec.verbs.split(",");
+						//String verbs[] = rec.verbs.split(",");
 						//Log.d("","textDataItem "+textDataItem.toString());
 						//Log.d("",""+verbs.toString());
 						
-						for (String verb : verbs){
+						//for (String verb : verbs){
 							//Log.d("",rec.toString());
-							//Log.d("",verb);
+							//Log.d("d", "verbs "+rec.verbs);
 							if (mode.equals("Комбинации"))
-								textDataItem.add(new MarkedString(rec.text, rec.subj, rec.neg, verb.trim()));
+								textDataItem.add(new MarkedString(rec.text, rec.subj, rec.neg, rec.verbs));
 							else{
-								for (Pronoun p: Dictionary.getPronouns())
-									textDataItem.add(new MarkedString(rec.neg, p, verb.trim()));
+								//for (Pronoun p: Dictionary.getPronouns())
+									textDataItem.add(new MarkedString(rec.neg, Dictionary.getPronouns().get(0), rec.verbs));
 							} 
-						}
+						//}
 						rec.clear();
 					}
 					// Log.d(LOG_TAG, "END_TAG: name = " + xpp.getName());
@@ -346,56 +302,7 @@ public class MenuData {
 			
 	}
 
-	private static void loadMarks(ArrayList<Mark> marks, String marksString) {
-
-		try {
-			XmlPullParser xpp = null;
-
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			factory.setNamespaceAware(false);
-			xpp = factory.newPullParser();
-			StringReader sw = new StringReader(marksString);
-			xpp.setInput(sw);
-
-			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
-				switch (xpp.getEventType()) { // начало документа
-				case XmlPullParser.START_DOCUMENT:
-					break; // начало тэга
-				case XmlPullParser.START_TAG:
-					if (xpp.getName().equals("mark")) {
-						marks.add(new Mark());
-
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("group")) {
-								marks.get(marks.size() - 1).setGroup(
-										xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("child")) {
-								marks.get(marks.size() - 1).setChild(
-										xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("index")) {
-								marks.get(marks.size() - 1).setIndex(
-										xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("value")) {
-								marks.get(marks.size() - 1).setValue(
-										xpp.getAttributeValue(i));
-							}
-						}
-
-					}
-					break; // конец тэга
-				default:
-					break;
-				} // следующий элемент
-				xpp.next();
-			}
-
-		} catch (XmlPullParserException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+	
 
 	public static String getType(int i, int j) {
 		return menuData.get(i).mChildren.get(j).type;
@@ -538,27 +445,7 @@ Log.d("","mi"+mIndex);
 
 		loadData(menuData);
 
-		String marksString = "";
-
-		//SharedPreferences prefs;
-		//prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		//marksString = prefs.getString("MARKS", "");
-		marksString = Utils.readString("MARKS", "");
-
-	//	Log.d("", "LOAD");
-		//Log.d("", marksString);
-
-		if (marksString.length() > 0) {
-			ArrayList<Mark> marks = new ArrayList<Mark>();
-			loadMarks(marks, marksString);
-
-			for (Mark m : marks) {
-				textData.get(m.menuGroupPosition).get(m.menuChildPosition)
-						.get(m.index).mFlag = m.mFlag;
-			}
-
-		}
-
+	
 	}
 
 	public static String getTranslation(String text, int mGroupPosition, int mChildPosition, int index) {
@@ -622,7 +509,7 @@ Log.d("","mi"+mIndex);
 		Utils.writeFile(DIRECTION, ""+MenuData.direction);
 		Utils.writeFile(MENU_INDEX, ""+MenuData.mIndex);
 		
-		FilesIO.saveMenu(menuData, textData);
+		FilesIO.saveMenu(menuData, textData, schemes);
 		
 		
 	}

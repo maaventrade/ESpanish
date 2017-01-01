@@ -226,7 +226,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		Utils.resetFile();
 		Utils.writeFile(RANDOMIZE, ""+randomize);
 		
-		MenuData.saveParameters(editor);
+	//MenuData.saveParameters(editor);
 		
 		editor.commit();
 	}

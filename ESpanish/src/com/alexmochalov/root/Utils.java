@@ -97,7 +97,7 @@ public class Utils {
             String str = "";
 
 				while ( (str = bufferedReader.readLine()) != null ) {
-					Log.d("", "--->"+str);
+					//Log.d("", "--->"+str);
 					if (str.startsWith(name)){
 						inputStreamReader.close();
 						return Integer.parseInt(str.substring(name.length()+1));
@@ -121,7 +121,7 @@ public class Utils {
             String str = "";
 
 				while ( (str = bufferedReader.readLine()) != null ) {
-					Log.d("", "---->"+str);
+					//Log.d("", "---->"+str);
 					if (str.startsWith(name)){
 						inputStreamReader.close();
 						return str.substring(name.length()+1).replace(";", "\n");

@@ -6,7 +6,10 @@ import com.alexmochalov.dictionary.*;
 import com.alexmochalov.root.*;
 
 public class MarkedString {
-	String mText;
+	String mNeg = "";
+	String mVerbs = "";
+	
+	String mText = "";
 	String mRusText = "";
 
 	int mFlag;
@@ -21,7 +24,10 @@ public class MarkedString {
 		mFlag = 0;
 	}
 	
-	public MarkedString(String text, String subj, String neg, String verb) {
+	public MarkedString(String text, String subj, String neg, String verbs) {
+		mNeg = neg;
+		mVerbs = verbs;
+		
 		Entry e;
 		
 		//text = "Quanto";
@@ -66,14 +72,14 @@ public class MarkedString {
 
 		String timeStr = MenuData.getTenseLast();
 		
-		Log.d("","timeStr "+timeStr);
+		//Log.d("","timeStr "+timeStr);
 		if (timeStr.length() == 0){
 			if (Math.random() > 0.5)
 				timeStr = "present";
 			else 
 				timeStr = "past";
 		}
-		
+		/*
 		if (timeStr.equals("present"))
 			verbStr = pronoun.conj(verb, false);
 		else 
@@ -86,19 +92,6 @@ public class MarkedString {
 		
 		verbStrRus = Dictionary.fit(e, pronoun, timeStr).trim();
 
-			/*
-		if (sub == 3) 
-			mText = "¿"+text+negStr+ Dictionary.conj(2, verb, false)+"?";
-		else {
-			pronoun = "tú";
-			mText = "¿"+text+" tú"+ negStr +Dictionary.conj(1, verb, false)+"?";
-		}	
-		
-		if (mText.contains("Cómo tú llamas")){
-			mRusText = "Как тебя зовут?";
-			mText = "¿Cómo té llamas?";
-		} else {
-		*/
 		
 		mText = text+" "+
 				pronounStr+
@@ -111,12 +104,14 @@ public class MarkedString {
 				negStrRus+
 				verbStrRus+
 				"?";
-			
+		*/
 		mFlag = 0;
 	}
 
-	public MarkedString(String neg, Pronoun pronoun, String verb) {
-
+	public MarkedString(String neg, Pronoun pronoun, String verbs) {
+		mNeg = neg;
+		mVerbs = verbs;
+		
 		String negStr = " ";
 		String negStrRus = " ";
 
@@ -129,7 +124,7 @@ public class MarkedString {
 				negStr = Utils.getNeg();
 		if (negStr.length() > 0)
 			negStr = " " + negStr + " ";
-		
+	/*
 		Entry e = Dictionary.getTranslation(verb);
 		e = Dictionary.getTranslation(verb);			
 		
@@ -138,8 +133,20 @@ public class MarkedString {
 				Dictionary.fit(e,  Dictionary.getPronouns().indexOf(pronoun) , "present").trim();
 		
 		this.mText = pronoun.getText() + negStr + pronoun.conj(verb, false);
-		
+	*/
 		mFlag = 0;
+	}
+
+	public String getVerbs()
+	{
+		// TODO: Implement this method
+		return mVerbs;
+	}
+
+	public int getFlag()
+	{
+		// TODO: Implement this method
+		return mFlag;
 	}
 	
 	public void setFlag(String flag) {
@@ -153,4 +160,12 @@ public class MarkedString {
 	public String getRusText() {
 		return mRusText;
 	}
+	
+	public String getNeg() {
+		return mNeg; 
+	}
+	
+	//public String getVerb() {
+		//return mVerb; 
+	//}
 }
