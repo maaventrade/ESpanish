@@ -12,6 +12,8 @@ public class Pronoun
 
 
 	public String conj(String verb, boolean isPast) {
+		if (verb.length() == 0)
+			return "";
 		// split "verb_ending" to pairs: type and ending  
 		
 		String[] sep1 = null;

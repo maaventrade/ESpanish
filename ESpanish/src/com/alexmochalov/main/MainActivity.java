@@ -1,19 +1,7 @@
 package com.alexmochalov.main;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;   
 
-import com.alexmochalov.alang.R;
-import com.alexmochalov.dictionary.ArrayAdapterDictionary;
-import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.dictionary.Entry;
-import com.alexmochalov.dictionary.EntryEditor;
-
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,34 +13,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleExpandableListAdapter;
-import android.widget.Toast;
 
+import com.alexmochalov.alang.R;
+import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.dictionary.EntryEditor;
 import com.alexmochalov.files.Dic;
-import com.alexmochalov.fragments.*;
+import com.alexmochalov.fragments.FragmentConj;
+import com.alexmochalov.fragments.FragmentM;
+import com.alexmochalov.fragments.FragmentPhrase;
+import com.alexmochalov.fragments.FragmentRemember;
+import com.alexmochalov.fragments.FragmentSpeak;
 import com.alexmochalov.menu.DialogScheme;
 import com.alexmochalov.menu.FragmentMenu;
-import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.menu.FragmentMenu.OnMenuItemSelectedListener;
+import com.alexmochalov.menu.MenuData;
 
 public class MainActivity extends Activity implements OnInitListener, 
 OnMenuItemSelectedListener, FragmentM.OnTestedListener
@@ -97,9 +81,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		Dictionary.load(this);
 		MenuData.load(this, false);
 
+		if (savedInstanceState != null)
+			randomize = savedInstanceState.getBoolean(RANDOMIZE);
 		loadParameters();
 		
-		// 
 		fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
 		fragmentMenu.setMenu(this);
 		fragmentMenu.mCallback = this;
@@ -118,15 +103,18 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
+
 		MenuData.setText(savedInstanceState.getString(MTEXT));
-		Log.d("a", "onRestoreInstanceState");
+		randomize = savedInstanceState.getBoolean(RANDOMIZE);
+		
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//outState.putInt("count", cnt);
 		outState.putString(MTEXT, MenuData.getText());
-		Log.d("a", "onSaveInstanceState");
+		outState.putBoolean(RANDOMIZE, randomize);
+		
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -147,7 +135,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	@Override 
 	protected void onDestroy() {
 		TtsUtils.destroy();
-		Log.d("a", "onDestroy");
 		saveParameters();
 		super.onDestroy(); 
 	}
@@ -182,6 +169,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragment = null;
 			
 			fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			
+			MenuData.setIndex(-1);
 		}
 
 		if (type.equals("Выражения") 
@@ -240,7 +229,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	private void saveParameters() {
 		Editor editor = prefs.edit();
-		editor.putBoolean(RANDOMIZE, randomize);
 		
 		MenuData.saveParameters(editor);
 		
@@ -249,10 +237,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private void loadParameters() {
 		MenuData.loadParameters(prefs);
-		
-	randomize = prefs.getBoolean(RANDOMIZE, false);
-		
-		//Log.d("a", " randomize "+randomize);
 	}
 	
 	@Override

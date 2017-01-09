@@ -224,8 +224,8 @@ public class MenuData {
 	}
 
 	public static String getText() {
-		mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
-		Toast.makeText(mContext,mText, Toast.LENGTH_LONG).show();
+		if (mIndex == -1) return "";
+		else mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
 		return mText;
 	}
 
@@ -255,6 +255,10 @@ public class MenuData {
 			}	
 		
 		return -1;
+	}
+	
+	public static void setIndex(int index) {
+		mIndex = index;
 	}
 	
 	public static int nextIndex() {
