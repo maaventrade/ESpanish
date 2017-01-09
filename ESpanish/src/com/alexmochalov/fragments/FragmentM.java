@@ -8,7 +8,7 @@ import android.view.*;
 
 import com.alexmochalov.alang.*;
 import com.alexmochalov.menu.MenuData;
-import com.alexmochalov.root.MainActivity;
+import com.alexmochalov.main.MainActivity;
 
 public class FragmentM extends Fragment
 {

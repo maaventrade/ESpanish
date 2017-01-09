@@ -19,7 +19,7 @@ import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.files.Dic;
 import android.util.*;
-import com.alexmochalov.root.*;
+import com.alexmochalov.main.*;
 import com.alexmochalov.dialogs.*;
 import android.widget.AdapterView.*;
 import android.widget.*;
@@ -41,7 +41,7 @@ public class PagerAdapterRemember extends PagerAdapter
 
     public PagerAdapterRemember(Context context) {
         mContext = context;
-        ArrayList<MarkedString> data =  MenuData.getDataArray();
+        ArrayList<MarkedString> data =  MenuData.getMarkedStrings();
         for (MarkedString m: data)
         	mObjects.add(new RemEntry(m.getText(), m.getRusText()));
     }

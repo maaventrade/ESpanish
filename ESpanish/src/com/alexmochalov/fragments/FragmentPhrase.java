@@ -67,7 +67,7 @@ public class FragmentPhrase extends FragmentM {
         MenuData.nextTestIndex();
 
         init();
-		MenuData.next();
+		MenuData.nextIndex();
     	next();
     	
 	    button_test = (Button)rootView.findViewById(R.id.button_test);
@@ -79,7 +79,7 @@ public class FragmentPhrase extends FragmentM {
 				// Button Next is pressed
 				if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next))){
 			    
-					if (MenuData.next() == -1){
+					if (MenuData.nextIndex() == -1){
 						getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
 					} else {
 						next();

@@ -15,7 +15,7 @@ import java.util.*;
 import org.xmlpull.v1.*;
 
 import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.root.Utils;
+import com.alexmochalov.main.Utils;
 import com.alexmochalov.io.*;
 
 public class MenuData {
@@ -25,300 +25,169 @@ public class MenuData {
 	private final static String MENU_GROUP_POSITION = "MENU_GROUP_POSITION";
 	private final static String MENU_CHILD_POSITION = "MENU_CHILD_POSITION";
 	private final static String DIRECTION = "DIRECTION";
-	private final static String MTEXT = "TEXT";
-	private final static String MENU_INDEX = "MENU_INDEX";
+	
+	
 	
 	private static int mGroupPosition;
 	private static int mChildPosition;
-	private static int mIndex = 0;
-	private static String mText;
+	private static int mIndex = -1;
+	private static String mText = "";
 	private static int direction;
 	private static String translation;
 	
 	// меню
-	static ArrayList<MenuGroup> menuData;
-	static ArrayList<ArrayList<ArrayList<MarkedString>>> textData = new ArrayList<ArrayList<ArrayList<MarkedString>>>();
+	static ArrayList<MenuGroup> menuGroup = new ArrayList<MenuGroup>();
 	static ArrayList<Scheme> schemes;
+
+	public static void addMarkedString(MarkedString markedString)
+	{
+		//Log.d("my","MarketString "+markedString.getText());
+		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
+		menuGroupLast.
+			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
+		return ;
+	}
+
+	public static MarkedString addMarkedString(String neg, Pronoun p, String verb)
+	{
+		MarkedString markedString = new MarkedString(neg, p, verb);
+		
+		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
+		menuGroupLast.
+			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
+		return markedString;
+	}
+
+	public static MarkedString addMarkedString(String text, String subj, String neg, String verb)
+	{
+		MarkedString markedString = new MarkedString(text,subj, neg, verb);
+		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
+		menuGroupLast.
+			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
+		return markedString;
+	}
+
+
+	public static void setLastSchameStrings(String[] strings)
+	{
+		schemes.get(schemes.size()-1).strings = strings;
+	}
+
+	public static void setLastSchameText(String text)
+	{
+		schemes.get(schemes.size()-1).title = text;
+	}
+
+	public static void setLastSchameTitle(String title)
+	{
+		schemes.get(schemes.size()-1).title = title;
+	}
+
+	public static void addSchame()
+	{
+		schemes.add(new Scheme());
+	}
+	
+	public static int getIndex(){
+		return mIndex;
+	}
+
+	public static void newSchames()
+	{
+		schemes = new ArrayList<Scheme>();
+	}
+
+	public static MenuGroup newMenuGroup()
+	{
+		MenuGroup menuGroupItem = new MenuGroup();
+		menuGroup.add(menuGroupItem);
+		return menuGroupItem;
+	}
+
+	public static ArrayList<MenuChild> getMenuCildren(int i)
+	{
+		return menuGroup.get(i).menuChild;
+	}
+
+	public static String getChildNote(int groupPosition, int childPosition)
+	{
+		return menuGroup.get(groupPosition).menuChild.get(childPosition).note;
+	}
+
+	public static String getChildTitle(int groupPosition, int childPosition)
+	{
+		return menuGroup.get(groupPosition).menuChild.get(childPosition).title;
+	}
+
+	public static String getGroupTitle(int groupPosition)
+	{
+		return menuGroup.get(groupPosition).title;
+	}
+
+	public static Object getMenuChild(int groupPosition, int childPosition)
+	{
+		return menuGroup.get(groupPosition).menuChild.get(childPosition);
+	}
+
+	public static Object getMenuGroup(int groupPosition)
+	{
+
+		return menuGroup.get(groupPosition);
+	}
+
+	public static int getChildrenCoun(int groupPosition)
+	{
+		return menuGroup.get(groupPosition).menuChild.size();
+	}
+
+	public static int getGroupsSize()
+	{
+		return menuGroup.size();
+	}
 
 	public static String getTenseLast()
 	{
 		
-		return menuData.get(menuData.size()-1).
-		mChildren.
-			get(menuData.get(menuData.size()-1).
-		mChildren.size()-1).tense;
+		return menuGroup.get(menuGroup.size()-1).
+		menuChild.
+			get(menuGroup.get(menuGroup.size()-1).
+				menuChild.size()-1).tense;
 	}
 	
 	
-
-	
-
-	static class Mark {
-		private int menuGroupPosition;
-		private int menuChildPosition;
-		private int index;
-		int mFlag;
-
-		public void setGroup(String attributeValue) {
-			menuGroupPosition = Integer.parseInt(attributeValue);
-		}
-
-		public void setChild(String attributeValue) {
-			menuChildPosition = Integer.parseInt(attributeValue);
-		}
-
-		public void setIndex(String attributeValue) {
-			index = Integer.parseInt(attributeValue);
-		}
-
-		public void setValue(String attributeValue) {
-			mFlag = Integer.parseInt(attributeValue);
-		}
-	}
-
-	private static void loadData(ArrayList<MenuGroup> groupData) {
-
-		String mode = "";
-		MenuGroup menuGroup = null;
-
-		class Record {
-			String text = "";
-			String neg = "";
-			String verbs = "";
-			String subj = "";
-			String tense="";
-			public void clear() {
-				text = "";
-				neg = "";
-				verbs = "";
-				subj = "";
-				tense="";
-			} 
-		}
-		Record rec = new Record();
-
-		try {
-			XmlPullParser xpp = null;
-			
-			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
-			if (!file.exists()){
-				if (Utils.getLanguage().equals("ita")) 
-					xpp = mContext.getResources().getXml(R.xml.menu_it);
-				else if (Utils.getLanguage().equals("spa"))
-					xpp = mContext.getResources().getXml(R.xml.menu_spa);
-			} else {
-
-				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-					Utils.APP_FOLDER + "/menu_it.xml")));
-															 
-			
-				XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
-				factory.setNamespaceAware(true);         
-				xpp = factory.newPullParser();
-				
-				xpp.setInput(reader);
-			}
-				
-			if (Utils.getLanguage().equals("ita")) 
-				xpp = mContext.getResources().getXml(R.xml.menu_it);
-			else if (Utils.getLanguage().equals("spa"))
-				xpp = mContext.getResources().getXml(R.xml.menu_spa);
-
-			groupData.clear();
-
-			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
-				switch (xpp.getEventType()) { // начало документа
-				case XmlPullParser.START_DOCUMENT:
-					break; // начало тэга
-				case XmlPullParser.START_TAG:
-					if (xpp.getName().equals("level0")) {
-						textData.add(new ArrayList<ArrayList<MarkedString>>());
-
-						// Добавляем группу в меню
-						menuGroup = new MenuGroup();
-						groupData.add(menuGroup);
-
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("title")) {
-								menuGroup.setTitle(xpp.getAttributeValue(i));
-							}
-						}
-
-					} else if (xpp.getName().equals("level1")) {
-						// Child element
-						
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("title")) {
-								menuGroup.addItem(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("helpindex")) {
-								menuGroup.setChildHelpIndex(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("tense")) {
-								menuGroup.setTense(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("neg")) {
-								menuGroup.setNeg(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("type")) {
-								if (xpp.getAttributeValue(i)
-										.equals("Выражения")) {
-									mode = "Выражения";
-									menuGroup.setChildType(mode);
-								} else if (xpp.getAttributeValue(i).equals(
-										"Спряжения")) {
-									mode = "Спряжения";
-									menuGroup.setChildType(mode);
-								} else if (xpp.getAttributeValue(i).equals(
-										"Комбинации")) {
-									mode = "Комбинации";
-							  		 menuGroup.setChildType("Комбинации");
-						 		} else if (xpp.getAttributeValue(i).equals(
-										  "Комбинации1")) {
-							   		mode = "Комбинации1";
-							  		 menuGroup.setChildType("Комбинации");
-								} else if (xpp.getAttributeValue(i).equals(
-										"Говорим")) {
-									menuGroup.setChildType("Говорим");
-								} else if (xpp.getAttributeValue(i).equals(
-										"Запоминание")) {
-									menuGroup.setChildType("Запоминание");
-								}
-							} else if (xpp.getAttributeName(i).equals("note")) {
-								menuGroup
-										.setChildNote(xpp.getAttributeValue(i));
-							}
-						}
-						// Level1
-						textData.get(textData.size() - 1).add(
-								new ArrayList<MarkedString>());
-
-					} else if (xpp.getName().equals("entry")) {
-						//
-
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("text") && mode.equals("Комбинации")) {
-								rec.text = xpp
-										.getAttributeValue(i);
-							} else if (xpp.getAttributeName(i).equals("text")) {
-								textData.get(textData.size() - 1)
-								.get(textData.get(
-										textData.size() - 1).size() - 1)
-								.add(new MarkedString(xpp
-										.getAttributeValue(i)));
-							} else if (xpp.getAttributeName(i).equals("flag")) {
-
-								textData.get(textData.size() - 1)
-										.get(textData.get(textData.size() - 1)
-												.size() - 1)
-										.get(textData
-												.get(textData.size() - 1)
-												.get(textData.get(
-														textData.size() - 1)
-														.size() - 1).size() - 1)
-										.setFlag(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("subj")) {
-								rec.subj = xpp.getAttributeValue(i);
-							} else if (xpp.getAttributeName(i).equals("neg")) {
-								rec.neg = xpp
-										.getAttributeValue(i);
-							} else if (xpp.getAttributeName(i).equals("verbs")) {
-								rec.verbs = xpp
-										.getAttributeValue(i);
-							} else if (xpp.getAttributeName(i).equals("rus")) {
-								textData.get(textData.size() - 1)
-								.get(textData.get(textData.size() - 1)
-										.size() - 1)
-								.get(textData
-										.get(textData.size() - 1)
-										.get(textData.get(
-												textData.size() - 1)
-												.size() - 1).size() - 1).mRusText = 
-												xpp.getAttributeValue(i);
-							}
-						}
-					} else if (xpp.getName().equals("schemes")) {
-							mode = "schemes";
-							schemes = new ArrayList<Scheme>();
-					} else if (xpp.getName().equals("scheme")) {
-						schemes.add(new Scheme());
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("title")) 
-								schemes.get(schemes.size()-1).title = xpp.getAttributeValue(i);
-							else if (xpp.getAttributeName(i).equals("text")) 
-								schemes.get(schemes.size()-1).text = xpp.getAttributeValue(i);
-						}	
-						
-					}
-					break; // конец тэга
-				case XmlPullParser.END_TAG:
-					if (xpp.getName().equals("entry") && 
-						mode.contains("Комбинации")){
-						ArrayList<MarkedString> textDataItem = 
-								textData.get(textData.size() - 1)
-									.get(textData.get(
-											textData.size() - 1).size() - 1);
-						
-						//String verbs[] = rec.verbs.split(",");
-						//Log.d("","textDataItem "+textDataItem.toString());
-						//Log.d("",""+verbs.toString());
-						
-						//for (String verb : verbs){
-							//Log.d("",rec.toString());
-							//Log.d("d", "verbs "+rec.verbs);
-							if (mode.equals("Комбинации"))
-								textDataItem.add(new MarkedString(rec.text, rec.subj, rec.neg, rec.verbs));
-							else{
-								//for (Pronoun p: Dictionary.getPronouns())
-									textDataItem.add(new MarkedString(rec.neg, Dictionary.getPronouns().get(0), rec.verbs));
-							} 
-						//}
-						rec.clear();
-					}
-					// Log.d(LOG_TAG, "END_TAG: name = " + xpp.getName());
-					break; // содержимое тэга
-				case XmlPullParser.TEXT:
-					if (mode.equals("Выражения") || mode.equals("Спряжения")) {
-
-					}else if (mode.equals("schemes")) {
-						schemes.get(schemes.size()-1).strings =
-								xpp.getText().split("\n");
-					}
-
-					break;
-				default:
-					break;
-				} // следующий элемент
-				xpp.next();
-			}
-
-		} catch (XmlPullParserException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		//for (int i = 0; i < menuData.size(); i++) {
-			//for (int j = 0; j< menuData.get(i).mChildren.size(); j++)
-			//Log.d("my","ttt "+i+" "+j+" "+menuData.get(i).mChildren.get(j).tense);
-		//}
-			
-			
+	public static MarkedString addMarkedString(String text)
+	{
+		MarkedString markedString = new MarkedString(text);
+		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
+		menuGroupLast.
+			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
+		return markedString;
 	}
 
 	
 
 	public static String getType(int i, int j) {
-		return menuData.get(i).mChildren.get(j).type;
+		return menuGroup.get(i).menuChild.get(j).type;
 	}
 
 	public static String getCountStr() {
-		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+		int size = menuGroup.get(mGroupPosition).
+			menuChild.get(mChildPosition).
+			markedStrings.size();
 		return "" + (size - getRestCount(mGroupPosition, mChildPosition)) + "/" + size;
 	}
 
-	public static ArrayList<MarkedString> getDataArray() {
-		return textData.get(mGroupPosition).get(mChildPosition);
+	public static ArrayList<MarkedString> getMarkedStrings() {
+		return menuGroup.get(mGroupPosition).
+			menuChild.get(mChildPosition).
+			markedStrings;
 	}
 
 	public static String getCountStr(int mGroupPosition, int mChildPosition) {
-		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+		int size = menuGroup.get(mGroupPosition).
+			menuChild.get(mChildPosition).
+			markedStrings.size();
+		
 		return "" + (size - getRestCount(mGroupPosition, mChildPosition)) + "/" + size;
 	}
 
@@ -329,18 +198,25 @@ public class MenuData {
 
 	public static int getRestCount(int mGroupPosition, int mChildPosition) {
 		int result = 0;
-		for (MarkedString m : textData.get(mGroupPosition).get(mChildPosition)) {
-			if (m.mFlag != 3)
+		for (MarkedString m : getMarkedStrings(mGroupPosition, mChildPosition)) {
+			if (m.getFlag() != 3)
 				result++;
 		}
 
 		return result;
 	}
 
+	public static ArrayList<MarkedString>  getMarkedStrings(int mGroupPosition, int mChildPosition)
+	{
+		return menuGroup.get(mGroupPosition).
+			menuChild.get(mChildPosition).
+			markedStrings;
+	}
+
 	public static int getRestCount() {
 		int result = 0;
-		for (MarkedString m : textData.get(mGroupPosition).get(mChildPosition)) {
-			if (m.mFlag != 3)
+		for (MarkedString m : getMarkedStrings(mGroupPosition, mChildPosition)) {
+			if (m.getFlag() != 3)
 				result++;
 		}
 
@@ -348,48 +224,53 @@ public class MenuData {
 	}
 
 	public static String getText() {
-		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
+		mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
+		Toast.makeText(mContext,mText, Toast.LENGTH_LONG).show();
 		return mText;
 	}
 
+	
 	public static void setStepCompleted(int typeOfstep) {
 
-		textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag = textData.get(mGroupPosition).get(mChildPosition)
-				.get(mIndex).mFlag
-				| typeOfstep;
+		getMarkedStrings(mGroupPosition,
+		mChildPosition).
+		get(mIndex).
+			setFlag(getMarkedStrings(mGroupPosition, mChildPosition)
+				.get(mIndex).getFlag()
+				| typeOfstep);
 
 	}
 
 	public static int findIndex(String text) {
 		Log.d("",""+mGroupPosition);
 		Log.d("",""+mChildPosition);
-		if (mGroupPosition >= textData.size()
-			|| mChildPosition >= textData.get(mGroupPosition).size())
+		if (mGroupPosition >= getGroupsSize()
+			|| mChildPosition >= getChildrenCoun(mChildPosition))
 			return -1;
 			
-		for (MarkedString m: textData.get(mGroupPosition).get(mChildPosition))
-			if (m.mText.equals(text) && m.mFlag < 3){
+		for (MarkedString m: getMarkedStrings(mGroupPosition, mChildPosition))
+			if (m.mText.equals(text) && m.getFlag() < 3){
 				
-				return textData.get(mGroupPosition).get(mChildPosition).indexOf(m);
+				return getMarkedStrings(mGroupPosition, mChildPosition).indexOf(m);
 			}	
 		
 		return -1;
 	}
 	
-	public static int next() {
-		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+	public static int nextIndex() {
+		int size = getMarkedStrings(mGroupPosition, mChildPosition).size();
 
 		mIndex = (int) (Math.random() * size);
-		while (mIndex < size && textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag == 3)
+		while (mIndex < size && getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).getFlag() == 3)
 			mIndex++;
 
 		if (mIndex == size) {
 			mIndex = 0;
-			while (mIndex < size && textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag == 3)
+			while (mIndex < size && getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).getFlag() == 3)
 				mIndex++;
 		}
-Log.d("","mi"+mIndex);
-		if (mIndex < textData.get(mGroupPosition).get(mChildPosition).size())
+//Log.d("i","mi"+mIndex);
+		if (mIndex <size)
 			return mIndex;
 		else {
 			mIndex = -1;
@@ -398,23 +279,23 @@ Log.d("","mi"+mIndex);
 	}
 
 	public static void resetDataFlag() {
-		for (MarkedString m : textData.get(mGroupPosition).get(mChildPosition)) {
-			m.mFlag = 0;
+		for (MarkedString m : getMarkedStrings(mGroupPosition, mChildPosition)) {
+			m.setFlag(0);
 		}
 	}
 
 	public static void getTypeOfTheStep(TextView textViewText, TextView textViewTranslation) {
-		MarkedString data = textData.get(mGroupPosition).get(mChildPosition).get(mIndex);
+		MarkedString data = getMarkedStrings(mGroupPosition, mChildPosition) .get(mIndex);
 		//					textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag = textData.get(mGroupPosition).get(mChildPosition)
 		//		.get(mIndex).mFlag
 		//		| typeOfstep;
 		
 		double random = Math.random();
-		Log.d("", "-> "+random+" data.mFlag "+data.mFlag);
+		//Log.d("", "-> "+random+" data.mFlag "+data.mFlag);
 		
-		if (data.mFlag == 1)
+		if (data.getFlag() == 1)
 			direction = 2; // span->rus
-		else if (data.mFlag == 2)
+		else if (data.getFlag() == 2)
 			direction =  1; // rus->span
 		else if (random > 0.5f)
 			direction =  2;
@@ -440,47 +321,53 @@ Log.d("","mi"+mIndex);
 
 	public static void load(Context context, boolean reread) {
 		mContext = context;
+		
+		menuGroup.clear();
 
-		menuData = new ArrayList<MenuGroup>();
-
-		loadData(menuData);
+		FilesIO.loadMenu(context);
 
 	
 	}
 
 	public static String getTranslation(String text, int mGroupPosition, int mChildPosition, int index) {
-		String rusText = textData.get(mGroupPosition).get(mChildPosition).get(index).mRusText;
+		String rusText =getMarkedStrings(mGroupPosition, mChildPosition) .get(index).mRusText;
 		
 		if (rusText.length() > 0)
 			return rusText;
 		else return	
-			Dictionary.getTranslation(text).getTranslation();
+				Dictionary.translate(text).getTranslation();
 		
 	}
 
 	public static void nextTestIndex() {
-		if (mGroupPosition >= textData.size() ||
-			mChildPosition >= textData.get(mGroupPosition).size()){
+		if (mGroupPosition >= getGroupsSize() ||
+			mChildPosition >= getChildrenCoun(mGroupPosition)){
 				mIndex = -1;
 				return;
 			}
 			
 		mIndex = 0;
-		int size = textData.get(mGroupPosition).get(mChildPosition).size();
+		int size = getMarkedStrings(mGroupPosition, mChildPosition).size();
 		if (mIndex < size && mIndex >= 0 &&
-				textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mFlag < 3
+			getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).getFlag() < 3
 				) ;
-		else mIndex = next();
+		else mIndex = nextIndex();
 	}
 
 	public static void setText(TextView mTextViewText, TextView mTranslation) {
-		mText = textData.get(mGroupPosition).get(mChildPosition).get(mIndex).mText; 
-		Log.d("my", "???? "+mText);
+		mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
+		
 		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		
-		Entry entry = Dictionary.getTranslation(MenuData.mText);
+		Entry entry = Dictionary.translate(MenuData.mText);
+		
+		
 		if (entry != null)
 			mTranslation.setText(entry.getTranslation());
+	}
+
+	public static void setText(String text) {
+		mText = text; 
 		
 	}
 
@@ -499,39 +386,25 @@ Log.d("","mi"+mIndex);
 	public static void saveParameters(Editor editor) {
 		editor.putInt(MENU_GROUP_POSITION, MenuData.mGroupPosition);
 		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
-		editor.putString(MTEXT, MenuData.mText);
 		editor.putInt(DIRECTION, MenuData.direction);
-		editor.putInt(MENU_INDEX, MenuData.mIndex);
 		
-		Utils.writeFile(MENU_GROUP_POSITION, ""+MenuData.mGroupPosition);
-		Utils.writeFile(MENU_CHILD_POSITION, ""+MenuData.mChildPosition);
-		Utils.writeFile(MTEXT, ""+MenuData.mText);
-		Utils.writeFile(DIRECTION, ""+MenuData.direction);
-		Utils.writeFile(MENU_INDEX, ""+MenuData.mIndex);
-		
-		FilesIO.saveMenu(menuData, textData, schemes);
-		
+		FilesIO.saveMenu(schemes);
 		
 	}
 
 	public static void loadParameters(SharedPreferences prefs) {
-		//mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
-		//mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
-		//direction = prefs.getInt(DIRECTION, 0);
-		//String text = prefs.getString(MTEXT, "");
+		mGroupPosition = prefs.getInt(MENU_GROUP_POSITION, 0);
+		mChildPosition = prefs.getInt(MENU_CHILD_POSITION, 0);
+		direction = prefs.getInt(DIRECTION, 0);
 
-		mGroupPosition = Utils.readInt(MENU_GROUP_POSITION, 0);
-		mChildPosition = Utils.readInt(MENU_CHILD_POSITION, 0);
-		direction = Utils.readInt(DIRECTION, 1);
-		String text = Utils.readString(MTEXT, "");
-		
-		
+	
+		/*
 		
 		if (text.length() > 0){
 			mIndex = MenuData.findIndex(text);
 		} else {
 	    	MenuData.nextTestIndex();
-		}
+		}*/
 		
 	}
 
@@ -546,13 +419,13 @@ Log.d("","mi"+mIndex);
 	}
 
 	public static int getHelpIndex(){
-		if (mGroupPosition >= textData.size() ||
-			mChildPosition >= textData.get(mGroupPosition).size()){
+		if (mGroupPosition >= getGroupsSize() ||
+			mChildPosition >= getChildrenCoun(mGroupPosition)){
 
 			return 0;
-		} else if (menuData.get(mGroupPosition).mChildren.get(mChildPosition).mHelpIndex >= 0)
-			return menuData.get(mGroupPosition).mChildren.get(mChildPosition).mHelpIndex;
-		else return menuData.get(mGroupPosition).mHelpIndex;
+		} else if (menuGroup.get(mGroupPosition).menuChild.get(mChildPosition).mHelpIndex >= 0)
+			return menuGroup.get(mGroupPosition).menuChild.get(mChildPosition).mHelpIndex;
+		else return menuGroup.get(mGroupPosition).mHelpIndex;
 	}
 
 	public static String getPositionsStr() {
@@ -563,11 +436,11 @@ Log.d("","mi"+mIndex);
 
 	public static String getTense() {
 		
-		return menuData.get(mGroupPosition).mChildren.get(mChildPosition).tense;
+		return menuGroup.get(mGroupPosition).menuChild.get(mChildPosition).tense;
 	}
 
 	public static int getNeg() {
-		return menuData.get(mGroupPosition).mChildren.get(mChildPosition).neg;
+		return menuGroup.get(mGroupPosition).menuChild.get(mChildPosition).neg;
 	}
 
 }

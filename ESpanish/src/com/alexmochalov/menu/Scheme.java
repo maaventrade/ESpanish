@@ -14,6 +14,7 @@ public class Scheme
 	}
 	public String getText()
 	{
+		if (text == null) return ""; else
 		return text.
 		replace("<","&lt;").
 		replace(">","&gt;");

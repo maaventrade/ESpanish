@@ -79,7 +79,7 @@ public class DialogScheme extends Dialog implements android.view.View.OnClickLis
 	private void reset()
 	{
 		Scheme s = MenuData.schemes.get(mIndex);
-		this.setTitle(s.title);
+		this.setTitle(Html.fromHtml(s.title));
 		
 		ViewGroup mLinearLayout = (ViewGroup)findViewById(R.id.fc_linearLayout);
 		//mLinearLayout.removeAllViewsInLayout();
@@ -101,8 +101,16 @@ public class DialogScheme extends Dialog implements android.view.View.OnClickLis
 			View layout2 = LayoutInflater.from(mContext).inflate(R.layout.dialog_scheme_item, mLinearLayout, false);
 			mLinearLayout.addView(layout2);
 
+			
 			String str1[] = str.split("-");
-
+			
+			if (str1.length < 2){
+				textView = (TextView)layout2.findViewById(R.id.dialogschemeitemTextViewString);
+				textView.setText(Html.fromHtml(str.trim()));
+				
+				textView = (TextView)layout2.findViewById(R.id.dialogschemeitemTextViewTranslation);
+				textView.setText("");
+			} else {
 			textView = (TextView)layout2.findViewById(R.id.dialogschemeitemTextViewString);
 			textView.setText(Html.fromHtml(str1[0].trim()));
 			
@@ -110,7 +118,7 @@ public class DialogScheme extends Dialog implements android.view.View.OnClickLis
 
 			textView = (TextView)layout2.findViewById(R.id.dialogschemeitemTextViewTranslation);
 			textView.setText(Html.fromHtml(str1[1].trim()));
-
+			}
 		}
 		
 	}

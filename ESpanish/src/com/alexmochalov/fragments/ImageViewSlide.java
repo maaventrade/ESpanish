@@ -114,7 +114,7 @@ public class ImageViewSlide extends ImageView{
 		paintText.getTextBounds(text2, 0, text2.length(), bounds);				
 		leftText2 = (width - bounds.width()) / 2;
 		topText2 =   (int)((-height + height / 2) + ((paintText.descent() + paintText.ascent()) / 2)) ; 
-		Log.d("z","set text izrus "+mIsrus);
+		//Log.d("z","set text izrus "+mIsrus);
 		if (mIsrus){
 			topText2 = topText;
 			topText1 = topText * 3;

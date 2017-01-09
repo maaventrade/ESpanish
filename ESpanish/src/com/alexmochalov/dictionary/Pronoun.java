@@ -1,11 +1,15 @@
 package com.alexmochalov.dictionary;
 
-public class Pronoun {
+import android.util.*;
+
+public class Pronoun
+ {
 	String mText;
 	String translation;
 	
 	String verb_ending;
 	String verb_ending_past;
+
 
 	public String conj(String verb, boolean isPast) {
 		// split "verb_ending" to pairs: type and ending  
@@ -14,6 +18,16 @@ public class Pronoun {
 		if (isPast) 
 			sep1 = verb_ending_past.split(",");
 		else sep1 = verb_ending.split(",");
+		//Log.d("e","verb_ending "+verb_ending);
+		
+		// First test if oure Verb is equal to the one of образец
+		for (int i = 0; i < sep1.length; i++){
+			// split pairs: first is type, second is ending
+			String[] sep2 = sep1[i].split(":");
+			if (verb.equals(sep2[0])){
+				return sep2[1];
+			}
+		}
 		
 		for (int i = 0; i < sep1.length; i++){
 

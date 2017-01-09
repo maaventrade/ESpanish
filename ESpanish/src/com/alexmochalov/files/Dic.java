@@ -20,7 +20,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alexmochalov.root.Utils;
+import com.alexmochalov.main.Utils;
 
 public class Dic {
 	private static ArrayList<IndexEntry> indexEntries = new ArrayList<IndexEntry>();

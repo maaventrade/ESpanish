@@ -1,6 +1,20 @@
 package com.alexmochalov.menu;
 
-public class MenuChild {
+import com.alexmochalov.menu.*;
+import java.util.*;
+
+public class MenuChild
+ {
+	
+	String title;
+	String type;
+	String note = "";
+	int mHelpIndex = -1;
+	String tense = "";
+	int neg = 0; // 0 нет, 1 половина, 2 всегда
+	
+	ArrayList<MarkedString> markedStrings = new ArrayList<MarkedString>();
+	
 	public MenuChild(String childName) {
 		title = childName;
 	}
@@ -27,12 +41,6 @@ public class MenuChild {
 		mHelpIndex = Integer.parseInt(attributeValue); 
 	}
 
-	String title;
-	String type;
-	String note = "";
-	int mHelpIndex = -1;
-	String tense = "";
-	int neg = 0; // 0 нет, 1 половина, 2 всегда
 	
 	public String getTitle() {
 		return title; 

@@ -5,20 +5,20 @@ import java.util.*;
 public class MenuGroup
  {
 	String title;
-	ArrayList<MenuChild> mChildren;
+	public ArrayList<MenuChild> menuChild;
 	int mHelpIndex = 0;
 
 	MenuGroup(String name, ArrayList<MenuChild> children) {
 		title = name;
-		mChildren = children;
+		menuChild = children;
 	}
 
 	MenuGroup() {
-		mChildren = new ArrayList();
+		menuChild = new ArrayList();
 	}
 
 	public ArrayList<MenuChild> getMChildren(){
-		return mChildren;
+		return menuChild;
 	}
 	
 	public void setTitle(String t) {
@@ -32,24 +32,24 @@ public class MenuGroup
 	
 	public void setTense(String attributeValue) {
 		//Log.d("my","tense "+attributeValue);
-		mChildren.get(mChildren.size()-1).tense = attributeValue;
+		menuChild.get(menuChild.size()-1).tense = attributeValue;
 	}
 
 	public void setNeg(String attributeValue) {
-		mChildren.get(mChildren.size()-1).neg = Integer.parseInt(attributeValue);
+		menuChild.get(menuChild.size()-1).neg = Integer.parseInt(attributeValue);
 	}
 
 	public void addItem(String childName) {
-		mChildren.add(new MenuChild(childName));
+		menuChild.add(new MenuChild(childName));
 	}
 
 	public void setChildType(String type) {
-		mChildren.get(mChildren.size() - 1).type = type;
+		menuChild.get(menuChild.size() - 1).type = type;
 
 	}
 
 	public void setChildNote(String note) {
-		mChildren.get(mChildren.size() - 1).note = note;
+		menuChild.get(menuChild.size() - 1).note = note;
 	}
 
 	public void setHelpIndex(String attributeValue) {
@@ -57,6 +57,6 @@ public class MenuGroup
 	}
 
 	public void setChildHelpIndex(String attributeValue) {
-		mChildren.get(mChildren.size() - 1).mHelpIndex = Integer.parseInt(attributeValue); 
+		menuChild.get(menuChild.size() - 1).mHelpIndex = Integer.parseInt(attributeValue); 
 	}
 }

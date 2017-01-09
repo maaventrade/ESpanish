@@ -12,32 +12,32 @@ import java.util.*;
 
 public class ExpListAdapter extends BaseExpandableListAdapter {
 
-	private ArrayList<MenuGroup> mGroups;
+	//private ArrayList<MenuData> mGroups;
 	private Context mContext;
 
-	public ExpListAdapter(Context context, ArrayList<MenuGroup> menuData) {
+	public ExpListAdapter(Context context) {
 		mContext = context;
-		mGroups = menuData;
+		//mGroups = menuData;
 	}
 
 	@Override
 	public int getGroupCount() {
-		return mGroups.size();
+		return  MenuData.getGroupsSize(); 
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return mGroups.get(groupPosition).mChildren.size();
+		return MenuData.getChildrenCoun(groupPosition);
 	}
 
 	@Override
 	public Object getGroup(int groupPosition) {
-		return mGroups.get(groupPosition);
+		return MenuData.getMenuGroup(groupPosition);
 	}
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return mGroups.get(groupPosition).mChildren.get(childPosition);
+		return MenuData.getMenuChild(groupPosition, childPosition);
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 		TextView textGroup = (TextView) convertView
 				.findViewById(R.id.textGroup);
-		textGroup.setText(mGroups.get(groupPosition).title);
+		textGroup.setText(MenuData.getGroupTitle(groupPosition));
 
 		return convertView;
 
@@ -90,7 +90,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 
 		TextView textChild = (TextView) convertView
 				.findViewById(R.id.textChild);
-		textChild.setText(Html.fromHtml(mGroups.get(groupPosition).mChildren.get(childPosition).title));
+		textChild.setText(Html.fromHtml(MenuData.getChildTitle(groupPosition, childPosition)));
 		
 		TextView textChildCount = (TextView) convertView
 				.findViewById(R.id.textChildCount);
@@ -99,7 +99,7 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 		TextView textChildNote = (TextView) convertView
 				.findViewById(R.id.textNote);
 		textChildNote.setText(Html.fromHtml(
-			mGroups.get(groupPosition).mChildren.get(childPosition).note));
+			MenuData.getChildNote(groupPosition, childPosition)));
 		
 		ImageView imageView = (ImageView) convertView
 				.findViewById(R.id.imageView1);

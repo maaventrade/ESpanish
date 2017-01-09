@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.alexmochalov.dictionary.Dictionary.*;
 import com.alexmochalov.menu.MenuData;
-import com.alexmochalov.root.*;
+import com.alexmochalov.main.*;
 
 public class Dictionary
 {
@@ -85,12 +85,12 @@ public class Dictionary
 	}
 	*/
 
-	public static Entry getTranslation(String searchString) {
+	public static Entry translate(String searchString) {
 		if (searchString.trim().length() == 0)
 			return null;
 		
 		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "").toLowerCase();
-
+		Log.d("my", "searchString "+searchString);
 		for (Entry e : entries) {
 			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
 					.equals(searchString)) {

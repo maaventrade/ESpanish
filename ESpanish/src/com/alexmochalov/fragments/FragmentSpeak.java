@@ -10,7 +10,7 @@ import android.widget.*;
 import com.alexmochalov.alang.*;
 import com.alexmochalov.dictionary.*;
 import com.alexmochalov.menu.MenuData;
-import com.alexmochalov.root.*;
+import com.alexmochalov.main.*;
 
 import java.io.*;
 
@@ -98,7 +98,7 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 
 		int i = 0;
 		for (Pronoun p : Dictionary.getPronouns()) {
-			Entry e = Dictionary.getTranslation(MenuData.getText());
+			Entry e = Dictionary.translate(MenuData.getText());
 			String verb = Dictionary.fit(e, i, "present").trim();
 
 			
@@ -139,7 +139,7 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 			// Button Next is pressed
 			if (buttonTest.getText().equals(
 					mContext.getResources().getString(R.string.button_next))) {
-				if (MenuData.next() == -1) {
+				if (MenuData.nextIndex() == -1) {
 					getActivity().getFragmentManager().beginTransaction()
 							.remove(thisFragment).commit();
 					;

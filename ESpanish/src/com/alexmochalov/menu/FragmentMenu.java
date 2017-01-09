@@ -49,7 +49,7 @@ public class FragmentMenu extends Fragment {
 
 	public void setMenu(Context context) {
 		
-		adapter = new ExpListAdapter(context, MenuData.menuData);
+		adapter = new ExpListAdapter(context);
 		mDrawerTree.setAdapter(adapter);
 		mDrawerTree.setOnChildClickListener(new OnChildClickListener() {
 			@Override

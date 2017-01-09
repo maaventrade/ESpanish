@@ -3,16 +3,20 @@ package com.alexmochalov.menu;
 import android.util.*;
 
 import com.alexmochalov.dictionary.*;
-import com.alexmochalov.root.*;
+import com.alexmochalov.main.*;
+import java.util.ArrayList;
 
 public class MarkedString {
+	
 	String mNeg = "";
-	String mVerbs = "";
+	String mVerb = "";
 	
 	String mText = "";
 	String mRusText = "";
 
-	int mFlag;
+	private int mFlag;
+	
+	//private ArrayList<MarkedString> children;
 
 	// 001 spa->ru completed
 	// 010 ru->spa completed
@@ -24,9 +28,9 @@ public class MarkedString {
 		mFlag = 0;
 	}
 	
-	public MarkedString(String text, String subj, String neg, String verbs) {
+	public MarkedString(String text, String subj, String neg, String verb) {
 		mNeg = neg;
-		mVerbs = verbs;
+		mVerb = verb;
 		
 		Entry e;
 		
@@ -64,7 +68,7 @@ public class MarkedString {
 		else if (neg.equals(""))
 			if (Math.random() > 0.5)
 				negStr = Utils.getNeg();
-		e = Dictionary.getTranslation(negStr);
+		e = Dictionary.translate(negStr);
 		if ( e != null)
 			negStrRus = e.getTranslation()+" ";
 		if (negStr.length() > 0)
@@ -79,7 +83,7 @@ public class MarkedString {
 			else 
 				timeStr = "past";
 		}
-		/*
+		
 		if (timeStr.equals("present"))
 			verbStr = pronoun.conj(verb, false);
 		else 
@@ -88,7 +92,7 @@ public class MarkedString {
             		Dictionary.conj(index, verb, true);		
 	
 
-		e = Dictionary.getTranslation(verb);
+		e = Dictionary.translate(verb);
 		
 		verbStrRus = Dictionary.fit(e, pronoun, timeStr).trim();
 
@@ -99,58 +103,88 @@ public class MarkedString {
 				verbStr+
 				"?";
 		
-		mRusText = Utils.firstLetterToUpperCase(Dictionary.getTranslation(text).getTranslation())+" "+
+		mRusText = Utils.firstLetterToUpperCase(Dictionary.translate(text).getTranslation())+" "+
 				pronounStrRus+
 				negStrRus+
 				verbStrRus+
 				"?";
-		*/
+		
 		mFlag = 0;
 	}
 
-	public MarkedString(String neg, Pronoun pronoun, String verbs) {
+	public MarkedString(String neg, Pronoun pronoun, String verb) {
 		mNeg = neg;
-		mVerbs = verbs;
+		mVerb = verb;
 		
 		String negStr = " ";
 		String negStrRus = " ";
 
-		if (neg.equals("true"))
+		//Log.d("d","neg = "+neg);
+		
+		if (neg.equals("true")){
 			negStr = Utils.getNeg();
-		else if (neg.equals("false"))
+			
+		}else if (neg.equals("false"))
 			negStr = "";
 		else if (neg.equals(""))
 			if (Math.random() > 0.5)
 				negStr = Utils.getNeg();
-		if (negStr.length() > 0)
+		if (negStr.length() > 0){
 			negStr = " " + negStr + " ";
-	/*
-		Entry e = Dictionary.getTranslation(verb);
-		e = Dictionary.getTranslation(verb);			
+			negStrRus = " не ";
+		}
+	
+		Entry e = Dictionary.translate(verb);
+		e = Dictionary.translate(verb);		
+		
+		//negStrRus = Dictionary.getTranslation(negStr);
 		
 		this.mRusText = Utils.firstLetterToUpperCase(pronoun.getTranslation()) + 
 				negStrRus + 
 				Dictionary.fit(e,  Dictionary.getPronouns().indexOf(pronoun) , "present").trim();
 		
 		this.mText = pronoun.getText() + negStr + pronoun.conj(verb, false);
-	*/
+	
 		mFlag = 0;
 	}
-
-	public String getVerbs()
+/*
+	public void setVerbs(String neg, String pverbs)
 	{
-		// TODO: Implement this method
-		return mVerbs;
+		children = new ArrayList<MarkedString>();
+		String verbs[] = pverbs.split(",");
+		for (String verb : verbs){
+			for (Pronoun p: com.alexmochalov.dictionary.Dictionary.getPronouns()){
+				children.add(new MarkedString(neg, p, verb.trim()));
+			}
+		}
 	}
+*/
+	public void setRusText(String rusText)
+	{
+		mRusText = rusText;
+		//Log.d("d","rusText "+rusText);
+	}
+
+	public void setText(String text)
+	{
+		mText = text;
+	}
+
+	public void setFlag(int flag)
+	{
+		mFlag = flag;
+	}
+
+	
 
 	public int getFlag()
 	{
-		// TODO: Implement this method
 		return mFlag;
 	}
 	
 	public void setFlag(String flag) {
 		mFlag = Integer.parseInt(flag);
+		
 	}
 
 	public String getText() {
