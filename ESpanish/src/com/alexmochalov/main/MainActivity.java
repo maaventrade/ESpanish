@@ -48,8 +48,9 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	
 	private SharedPreferences prefs;
 
-	private final String RANDOMIZE = "RANDOMIZE";
+	private final static String RANDOMIZE = "RANDOMIZE";
 	private final static String MTEXT = "TEXT";
+	private final static String RANDOMIZATION_ORDER = "RANDOMIZATION_ORDER";	
 	
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
@@ -107,13 +108,16 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		MenuData.setText(savedInstanceState.getString(MTEXT));
 		randomize = savedInstanceState.getBoolean(RANDOMIZE);
 		
+		MenuData.putRandomizationOrder(savedInstanceState.getIntArray(RANDOMIZATION_ORDER));
+		
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		//outState.putInt("count", cnt);
+		
 		outState.putString(MTEXT, MenuData.getText());
 		outState.putBoolean(RANDOMIZE, randomize);
+		outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());
 		
 	}
 	

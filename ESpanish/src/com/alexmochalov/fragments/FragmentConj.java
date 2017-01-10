@@ -31,7 +31,13 @@ public class FragmentConj extends FragmentM {
 
 	ArrayList<PronounEdited> objects = new ArrayList<PronounEdited>();
 
-	private boolean next() {
+	/**
+	 * Fill the header of this dialog: text for the exercise and translation othe the text 
+	 * Fill Pronounses in the random or initial order
+	 * Fill tenseInfo 
+	 * 
+	 */
+	private void next(boolean onCreateView) {
 		// Заполняем заголовок
 		mTextViewText = (TextView) rootView.findViewById(R.id.text);
 		mTranslation = (TextView) rootView.findViewById(R.id.translation);
@@ -63,30 +69,54 @@ public class FragmentConj extends FragmentM {
 			tenseInfo.setText("");
 
 		if (MainActivity.randomize)
-			setOrder();
+			setOrder(onCreateView);
 
-		setVerb(MenuData.getText());
+		setPronouns(MenuData.getText());
 
-		return true;
 	}
 
 	/**
 	 * Sets order of the Objects (strings on the screen): random or initial. 
 	 */
-	private void setOrder() {
+	private void setOrder(boolean onCreateView) {
 
 		if (MainActivity.randomize) {
-
-			for (int i = 1; i <= objects.size(); i++) {
-				int j = (int) (Math.random() * objects.size());
-				int k = (int) (Math.random() * objects.size());
-
-				PronounEdited p1 = objects.get(j);
-				PronounEdited p2 = objects.get(k);
+			if (onCreateView && MenuData.getRandomizationOrder().length == objects.size()){
 				
-				p1.swap(p2, 100 + objects.indexOf(p1), 100 + objects.indexOf(p2));
+				int r[] = MenuData.getRandomizationOrder();
+				
+				//for (int i = 0; i < r.length; i++) {
+					
+				for (int i = 0; i < objects.size(); i++) {
+					for (int k = 0; k < objects.size(); k++) {
+						if (objects.get(k).mIndex == r[i]) {
+							
+							PronounEdited p1 = objects.get(i);
+							PronounEdited p2 = objects.get(k);
+							
+							p1.swap(p2, 100 + objects.indexOf(p1), 100 + objects.indexOf(p2));
+	 						
+							break;
+						}
+					}
+				}
+				
 			}
+			else {
+				
+				for (int i = 1; i <= objects.size(); i++) {
+					int j = (int) (Math.random() * objects.size());
+					int k = (int) (Math.random() * objects.size());
 
+					PronounEdited p1 = objects.get(j);
+					PronounEdited p2 = objects.get(k);
+					
+					p1.swap(p2, 100 + objects.indexOf(p1), 100 + objects.indexOf(p2));
+				}
+				
+				MenuData.putRandomizationOrder(objects);
+
+			}
 		} else {
 			// The simplest way of the sorting
 			for (int i = 0; i < objects.size(); i++) {
@@ -105,7 +135,7 @@ public class FragmentConj extends FragmentM {
 		}
 	}
 
-	private void setVerb(String text) {
+	private void setPronouns(String text) {
 
 		for (PronounEdited p : objects) {
 			((TextView) p.mLayout.findViewById(R.id.text)).setText(Utils
@@ -115,9 +145,23 @@ public class FragmentConj extends FragmentM {
 		}
 	}
 
+	/**
+	* Set colors of the answers
+	*/
+	private void setColorsOfTheAnswers(){
+		for (PronounEdited p : objects) {
+			EditText editText = (EditText) p.mLayout
+					.findViewById(100 + objects.indexOf(p)); 
+			test(p, false);
+		}
+	}
+	
 	@Override
 	public void onStart() {
-		setVerb(MenuData.getText());
+		setPronouns(MenuData.getText());
+		
+		setColorsOfTheAnswers();
+		
 		super.onStart();
 	}
 
@@ -149,11 +193,11 @@ public class FragmentConj extends FragmentM {
 					boolean isChecked) {
 				MainActivity.randomize = isChecked;
 
-				// Log.d("d", "set "+MainActivity.randomize);
+				setOrder(false);
 
-				setOrder();
-
-				setVerb(MenuData.getText());
+				setPronouns(MenuData.getText());
+				
+				setColorsOfTheAnswers();
 			}
 		});
 
@@ -185,12 +229,10 @@ public class FragmentConj extends FragmentM {
 					for (PronounEdited p : objects) {
 						EditText editText = (EditText) p.mLayout
 								.findViewById(100 + objects.indexOf(p)); //
-						
 						if (editText == view) {
 							if (!hasFocus)
 								test(p, false);
 							else {
-
 								editText.setTextColor(Color.BLACK);
 							}
 							break;
@@ -243,7 +285,7 @@ public class FragmentConj extends FragmentM {
 								.remove(thisFragment).commit();
 						;
 					} else {
-						next();
+						next(false);
 						button_test.setText(mContext.getResources().getString(
 								R.string.button_test));
 						for (PronounEdited p : objects) {
@@ -288,7 +330,8 @@ public class FragmentConj extends FragmentM {
 				MenuData.nextIndex();
 		}
 
-		next();
+		// Fill this Dialog
+		next(true);
 
 		return rootView;
 	}

@@ -15,6 +15,7 @@ import java.util.*;
 import org.xmlpull.v1.*;
 
 import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.fragments.PronounEdited;
 import com.alexmochalov.main.Utils;
 import com.alexmochalov.io.*;
 
@@ -38,6 +39,9 @@ public class MenuData {
 	// меню
 	static ArrayList<MenuGroup> menuGroup = new ArrayList<MenuGroup>();
 	static ArrayList<Scheme> schemes;
+	
+	
+	private static int[] randomizationOrder;
 
 	public static void addMarkedString(MarkedString markedString)
 	{
@@ -445,6 +449,27 @@ public class MenuData {
 
 	public static int getNeg() {
 		return menuGroup.get(mGroupPosition).menuChild.get(mChildPosition).neg;
+	}
+
+	public static int[] getRandomizationOrder() {
+		return randomizationOrder;
+	}
+
+	public static void putRandomizationOrder(ArrayList<PronounEdited> objects) {
+		randomizationOrder = new int[objects.size()];
+		for (int i = 0; i < objects.size(); i++)
+			randomizationOrder[i] = objects.get(i).getIndex();
+	}
+
+	public static void putRandomizationOrder(int[] intArray) {
+		if (intArray == null){
+			randomizationOrder = new int[1];
+			randomizationOrder[0] = 0;
+		} else {
+			randomizationOrder = new int[intArray.length];
+			for (int i = 0; i < intArray.length; i++)
+				randomizationOrder[i] = intArray[i];
+		}
 	}
 
 }
