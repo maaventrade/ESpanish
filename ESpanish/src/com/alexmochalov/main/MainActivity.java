@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.alexmochalov.alang.R;
+import com.alexmochalov.dialogs.DialogHelp;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.dictionary.EntryEditor;
 import com.alexmochalov.files.Dic;
@@ -290,6 +291,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		} 
 		case R.id.item_help:
+			/*
 				DialogScheme d = new DialogScheme(this, MenuData.getHelpIndex());
 				d.mCallback = new DialogScheme.OnDialogSchemeButtonListener() {
 					@Override
@@ -299,7 +301,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 					}
 				};
 				d.show();
-				
+				*/
+			
+			DialogHelp d = new DialogHelp(this, MenuData.getHelpIndex());
+			d.show();
+			
 			return true;
 		default:	return super.onOptionsItemSelected(item);
 		}
