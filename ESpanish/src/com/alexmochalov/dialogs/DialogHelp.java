@@ -45,7 +45,7 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                WindowManager.LayoutParams.MATCH_PARENT);
 		reset();
-		/*
+		
 		btnSpeak = (ImageButton)findViewById(R.id.dialogSchemeImageButtonSpeak);
 		btnSpeak.setOnClickListener(this);
 		
@@ -54,35 +54,33 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 		
 		btnPrev = (ImageButton)findViewById(R.id.dialogSchemeImageButtonPrev);
 		btnPrev.setOnClickListener(this);
-		*/
+		
 		
 	}
 
 	@Override
 	public void onClick(View v) {
-		/*
 		if (v == btnNext){
 			mIndex++;
-			if (mIndex >= MenuData.schemes.size())
-				mIndex = 0;
+			//if (mIndex >= MenuData.schemes.size())
+			//	mIndex = 0;
 			reset();
 		}
 		else if (v == btnPrev){
 			mIndex--;
-			if (mIndex < 0)
-				mIndex = MenuData.schemes.size()-1;
+			//if (mIndex < 0)
+			//	mIndex = MenuData.schemes.size()-1;
 			reset();
 		}
 		else if (v == btnSpeak){
 			if (mCallback != null)
 				mCallback.onSpeakButtonPressed(text);
 		}
-		*/
 	}
 
 	private void reset()
 	{
-		final String baseUrl = "file:///android_res/raw/help.html";
+		final String baseUrl = "file:///android_res/raw/help"+mIndex+".html";
 		
 		WebView webView = (WebView)findViewById(R.id.webViewHelp);
 		webView.loadUrl(baseUrl);

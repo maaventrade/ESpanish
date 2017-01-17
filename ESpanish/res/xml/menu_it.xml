@@ -215,40 +215,9 @@
 		</level1>
     			
 	</level0>
-    	    
-    	<schemes>
-		<scheme title = "Формы глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
-			IO PÁRL&lt;font color=RED&gt;O&lt;/font&gt;- Я ГОВОРЮ
-			TU PÁRL&lt;font color=RED&gt;I&lt;/font&gt;- ТЫ ГОВОРИШЬ
-			LUI PÁRL&lt;font color=RED&gt;A&lt;/font&gt;- ОН ГОВОРИТ
-			LEY PÁRL&lt;font color=RED&gt;A&lt;/font&gt;- ОНА ГОВОРИТ 
-			&lt;big &gt;L&lt;/big&gt;EY PÁRL&lt;font color=RED&gt;A&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИТЕ
-			NOI PARL&lt;font color=RED&gt;IÁMO&lt;/font&gt;-МЫ ГОВОРИМ
-			VOI PARL&lt;font color=RED&gt;ÁTE&lt;/font&gt;-ВЫ ГОВОРИТЕ
-			LORO PÁRL&lt;font color=RED&gt;ANO&lt;/font&gt;-ОНИ ГОВОРЯТ
-			
-			Двойное "ii" заменяется на "i" : mangiare | mangiamo
-			Сочетание "ci" заменяется на "chi" звучит как "чи": giocare | giochiamo
-		</scheme>
-		<scheme title = "Формы глагола AVERE (иметь)">
-			IO HO - Я ИМЕЮ
-			TU HAI - ТЫ ИМЕЕШЬ
-			LUI HA - ОН ИМЕЕТ
-			LEY HA - ОНА ИМЕЕТ 
-			&lt;big &gt;L&lt;/big&gt;EY HA -&lt;big &gt;В&lt;/big&gt;Ы(ВЕЖЛ.) ИМЕЕТЕ
-			NOI ABBIAMO -МЫ ИМЕЕМ
-			VOI AVETE -ВЫ ИМЕЕТЕ
-			LORO HANNO -ОНИ ИМЕЮТ
-			
-			IO SONO - Я ЕСТЬ
-			TU SEI - ТЫ ЕСТЬ
-			LUI È - ОН ЕСТЬ
-			LEY È - ОНА ЕСТЬ 
-			&lt;big &gt;L&lt;/big&gt;EY È -&lt;big &gt;В&lt;/big&gt;Ы(ВЕЖЛ.) ЕСТЬ
-			NOI SIAMO -МЫ ЕСТЬ
-			VOI SIETE -ВЫ ЕСТЬ
-			LORO SONO -ОНИ ЕСТЬ
-		</scheme>
+</data>
+
+<!--
 		<scheme title = "Формы глаголов с отрицанием" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
 			IO NON PÁRL&lt;font color=RED&gt;O&lt;/font&gt;- Я НЕ ГОВОРЮ
 			TU NON PÁRL&lt;font color=RED&gt;I&lt;/font&gt;- ТЫ НЕ ГОВОРИШЬ
@@ -289,10 +258,5 @@
 			VOI SIETE -ВЫ ЕСТЬ
 			LORO SONO -ОНИ ЕСТЬ
 		</scheme>
-			
-					</schemes>
-</data>
-
-<!--
 
 -->
