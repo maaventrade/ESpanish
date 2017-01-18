@@ -290,18 +290,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		} 
 		case R.id.item_help:
-			/*
-				DialogScheme d = new DialogScheme(this, MenuData.getHelpIndex());
-				d.mCallback = new DialogScheme.OnDialogSchemeButtonListener() {
-					@Override
-					public void onSpeakButtonPressed(String text) {
-						text = Html.fromHtml(text).toString();
-						TtsUtils.speak(text);
-					}
-				};
-				d.show();
-				*/
-				Log.d("a", "MenuData.getHelpIndex() "+MenuData.getHelpIndex());
 			DialogHelp d = new DialogHelp(this, MenuData.getHelpIndex());
 			d.show();
 			
@@ -313,7 +301,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override
 	public void onInit(int status) {
-		Log.d("a", "onInit");
 	      if (status == TextToSpeech.SUCCESS) 
 		    TtsUtils.init(this);
 	}

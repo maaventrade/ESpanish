@@ -39,14 +39,12 @@ public class FilesIO
 			XmlPullParser xpp = null;
 
 			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
-			if (!file.exists() || true){
-				Log.d("v","from resource");
+			if (!file.exists()){
 				if (Utils.getLanguage().equals("ita")) 
 					xpp = mContext.getResources().getXml(R.xml.menu_it);
 				else if (Utils.getLanguage().equals("spa"))
 					xpp = mContext.getResources().getXml(R.xml.menu_spa);
 			} else {
-				Log.d("v","from file");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
 																					 Utils.APP_FOLDER + "/menu_it.xml")));
 
@@ -57,13 +55,11 @@ public class FilesIO
 
 				xpp.setInput(reader);
 			}
-
 			
 			if (Utils.getLanguage().equals("ita")) 
 				xpp = mContext.getResources().getXml(R.xml.menu_it);
 			else if (Utils.getLanguage().equals("spa"))
 				xpp = mContext.getResources().getXml(R.xml.menu_spa);
-
 
 			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 
