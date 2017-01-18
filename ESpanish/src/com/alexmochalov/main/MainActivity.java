@@ -34,7 +34,6 @@ import com.alexmochalov.fragments.FragmentM;
 import com.alexmochalov.fragments.FragmentPhrase;
 import com.alexmochalov.fragments.FragmentRemember;
 import com.alexmochalov.fragments.FragmentSpeak;
-import com.alexmochalov.menu.DialogScheme;
 import com.alexmochalov.menu.FragmentMenu;
 import com.alexmochalov.menu.FragmentMenu.OnMenuItemSelectedListener;
 import com.alexmochalov.menu.MenuData;
@@ -302,7 +301,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 				};
 				d.show();
 				*/
-			
+				Log.d("a", "MenuData.getHelpIndex() "+MenuData.getHelpIndex());
 			DialogHelp d = new DialogHelp(this, MenuData.getHelpIndex());
 			d.show();
 			

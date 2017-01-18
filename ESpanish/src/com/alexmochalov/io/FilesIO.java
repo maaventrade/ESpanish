@@ -22,8 +22,8 @@ public class FilesIO
 			String text = "";
 			String neg = "";
 			String verbs = "";
-			String subj = "";
-			String tense="";
+			String subj = "";    
+			String tense="";   
 			public void clear() {
 				text = "";
 				neg = "";
@@ -39,13 +39,14 @@ public class FilesIO
 			XmlPullParser xpp = null;
 
 			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
-			if (!file.exists()){
+			if (!file.exists() || true){
+				Log.d("v","from resource");
 				if (Utils.getLanguage().equals("ita")) 
 					xpp = mContext.getResources().getXml(R.xml.menu_it);
 				else if (Utils.getLanguage().equals("spa"))
 					xpp = mContext.getResources().getXml(R.xml.menu_spa);
 			} else {
-
+				Log.d("v","from file");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
 																					 Utils.APP_FOLDER + "/menu_it.xml")));
 
@@ -158,22 +159,7 @@ public class FilesIO
 										xpp.getAttributeValue(i));
 								}
 							}
-						} else if (xpp.getName().equals("schemes")) {
-							mode = "schemes";
-							MenuData.newSchames();
-							
-						} else if (xpp.getName().equals("scheme")) {
-							MenuData.addSchame();
-							
-							for (int i = 0; i < xpp.getAttributeCount(); i++) {
-								if (xpp.getAttributeName(i).equals("title")) 
-									MenuData.setLastSchameTitle(xpp.getAttributeValue(i));
-									
-								else if (xpp.getAttributeName(i).equals("text")) 
-									MenuData.setLastSchameText(xpp.getAttributeValue(i));
-									
-							}	
-
+						
 						}
 						break; // конец тэга
 					case XmlPullParser.END_TAG:
@@ -222,9 +208,7 @@ public class FilesIO
 						//Log.d("d", "text ");
 						if (mode.equals("Выражения") || mode.equals("Спряжения")) {
 
-						}else if (mode.equals("schemes")) {
-							MenuData.setLastSchameStrings(xpp.getText().split("\n"));
-							
+			
 						}
 
 						break;
@@ -246,8 +230,7 @@ public class FilesIO
 	}
 	
 
-	public static void saveMenu(
-		ArrayList<Scheme> schemes)
+	public static void saveMenu()
 	{
 		//if (1==1) return;
 	File file = new File(Utils.APP_FOLDER+"/menu_it.xml");
@@ -316,18 +299,7 @@ public class FilesIO
 			os.write( "</level0>\n");
 		}
 	
-			os.write( "<schemes>\n");
-		for (Scheme s: schemes){
-			os.write( "<scheme title = \""+s.getTitle()+"\"");
-			os.write( "<text = \""+s.getText()+"\">\n");
 			
-			for (String str: s.getStrings())
-				os.write( str.
-							replace("<","&lt;").
-				replace(">","&gt;")+"\n");
-			
-		}
-		os.write( "</schemes>\n");
 		os.write( "</data>");
 		
 		os.close();

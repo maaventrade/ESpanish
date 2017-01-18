@@ -38,7 +38,6 @@ public class MenuData {
 	
 	// меню
 	static ArrayList<MenuGroup> menuGroup = new ArrayList<MenuGroup>();
-	static ArrayList<Scheme> schemes;
 	
 	
 	private static int[] randomizationOrder;
@@ -72,35 +71,12 @@ public class MenuData {
 	}
 
 
-	public static void setLastSchameStrings(String[] strings)
-	{
-		schemes.get(schemes.size()-1).strings = strings;
-	}
-
-	public static void setLastSchameText(String text)
-	{
-		schemes.get(schemes.size()-1).title = text;
-	}
-
-	public static void setLastSchameTitle(String title)
-	{
-		schemes.get(schemes.size()-1).title = title;
-	}
-
-	public static void addSchame()
-	{
-		schemes.add(new Scheme());
-	}
 	
 	public static int getIndex(){
 		return mIndex;
 	}
 
-	public static void newSchames()
-	{
-		schemes = new ArrayList<Scheme>();
-	}
-
+	
 	public static MenuGroup newMenuGroup()
 	{
 		MenuGroup menuGroupItem = new MenuGroup();
@@ -396,7 +372,7 @@ public class MenuData {
 		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
 		editor.putInt(DIRECTION, MenuData.direction);
 		
-		FilesIO.saveMenu(schemes);
+		FilesIO.saveMenu();
 		
 	}
 
