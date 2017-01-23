@@ -1,16 +1,14 @@
 package com.alexmochalov.dialogs;
 import android.app.*;
-import android.net.Uri;
 import android.os.*;
-import android.text.Html;
-import android.view.*;
-import android.webkit.WebView;
-import android.widget.*;
-
-import com.alexmochalov.alang.*;
-import com.alexmochalov.fragments.FragmentM.OnTestedListener;
-
+import android.text.*;
 import android.util.*;
+import android.view.*;
+import android.webkit.*;
+import android.widget.*;
+import com.alexmochalov.alang.*;
+import com.alexmochalov.main.*;
+import java.io.*;
 
 public class DialogHelp extends Dialog implements android.view.View.OnClickListener
 {
@@ -73,8 +71,35 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 			reset();
 		}
 		else if (v == btnSpeak){
-			if (mCallback != null)
-				mCallback.onSpeakButtonPressed(text);
+			
+			final String baseUrl = "help"+mIndex;
+			int id = mContext.getResources().
+				getIdentifier(baseUrl, "raw", mContext.getPackageName());
+			
+			InputStream is =
+				mContext.getResources().openRawResource(id);
+				
+			String s = "";
+			
+			BufferedReader reader = new BufferedReader(
+			new InputStreamReader(is));
+			String line = null;
+			try
+			{
+				while ((line = reader.readLine()) != null)
+					s = s + " " + line;
+			}
+			catch (IOException e)
+			{}
+			s = Html.fromHtml(s).toString();
+			s = s.replaceAll("[^A-Za-zÁ]", " ");
+			s = s.replaceAll(" i ", " ");
+			s = s.replaceAll(" ii ", " ");
+			s = s.replaceAll(" ci ", " ");
+			s = s.replaceAll(" chi ", " ");
+			
+			Log.d("s",s);
+			TtsUtils.speak(s);
 		}
 	}
 
