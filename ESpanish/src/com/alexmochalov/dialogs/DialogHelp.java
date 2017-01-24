@@ -86,17 +86,21 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 			String line = null;
 			try
 			{
-				while ((line = reader.readLine()) != null)
-					s = s + " " + line;
+				while ((line = reader.readLine()) != null){
+					line = Html.fromHtml(line).toString();
+					line = line.replaceAll("->", ":");
+					line = line.replaceAll("[^A-Za-zÁ:]", " ");
+					line = line.replaceAll(" i ", " ");
+					line = line.replaceAll(" ii ", " ");
+					line = line.replaceAll(" ci ", " ");
+					line = line.replaceAll(" chi ", " ");
+					line = line.replaceAll("Á", "A").trim();
+					if (line.length() > 0)
+						s = s + line+":";
+				}
 			}
 			catch (IOException e)
 			{}
-			s = Html.fromHtml(s).toString();
-			s = s.replaceAll("[^A-Za-zÁ]", " ");
-			s = s.replaceAll(" i ", " ");
-			s = s.replaceAll(" ii ", " ");
-			s = s.replaceAll(" ci ", " ");
-			s = s.replaceAll(" chi ", " ");
 			
 			Log.d("s",s);
 			TtsUtils.speak(s);
