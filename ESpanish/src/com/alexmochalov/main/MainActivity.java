@@ -290,7 +290,13 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		} 
 		case R.id.item_help:
-			DialogHelp d = new DialogHelp(this, MenuData.getHelpIndex());
+			
+			final int index = MenuData.getHelpIndex();
+			
+			DialogHelp d = new DialogHelp(this, index);
+			if (index == 999)
+				d.setWord(fragment.getWord());
+			
 			d.show();
 			
 			return true;

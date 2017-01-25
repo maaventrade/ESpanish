@@ -71,4 +71,8 @@ public class FragmentRemember extends FragmentM{
 		return adapter.getText(pager.getCurrentItem());
 	}
 
+	public String getWord() {
+		return adapter.getText(pager.getCurrentItem());
+	}
+	
 }

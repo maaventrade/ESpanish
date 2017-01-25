@@ -60,7 +60,7 @@ public class FilesIO
 				xpp = mContext.getResources().getXml(R.xml.menu_it);
 			else if (Utils.getLanguage().equals("spa"))
 				xpp = mContext.getResources().getXml(R.xml.menu_spa);
-
+			
 			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 
 				switch (xpp.getEventType()) { // начало документа

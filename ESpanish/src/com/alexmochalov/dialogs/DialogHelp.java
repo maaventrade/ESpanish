@@ -6,22 +6,36 @@ import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+
 import com.alexmochalov.alang.*;
+import com.alexmochalov.files.Dic;
+import com.alexmochalov.files.IndexEntry;
 import com.alexmochalov.main.*;
+
 import java.io.*;
+import java.util.ArrayList;
 
 public class DialogHelp extends Dialog implements android.view.View.OnClickListener
 {
 	Activity mContext;
+	DialogHelp dialog;
+	
 	ImageButton btnSpeak;
 	ImageButton btnNext;
 	ImageButton btnPrev;
+	ImageButton btnBack;
 	
 	String text = "";
 	
+	WebView webView;
+	
 	static int mIndex = 0;
 	
+	ArrayList<String> prevArrayList = new ArrayList<String>(); 
+	
 	public OnDialogSchemeButtonListener mCallback;
+	
+	private String mWord;
 	
 	public interface OnDialogSchemeButtonListener {
 		public void onSpeakButtonPressed(String text);
@@ -29,20 +43,22 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 	
 	public DialogHelp(Activity a, int index){
 		super(a);
+		
 		mContext = a;
 		mIndex = index;
+		
+		dialog = this;
 	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.dialog_help);
 		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.dialog_help);
 		
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
                WindowManager.LayoutParams.MATCH_PARENT);
-		reset();
 		
 		btnSpeak = (ImageButton)findViewById(R.id.dialogSchemeImageButtonSpeak);
 		btnSpeak.setOnClickListener(this);
@@ -52,7 +68,22 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 		
 		btnPrev = (ImageButton)findViewById(R.id.dialogSchemeImageButtonPrev);
 		btnPrev.setOnClickListener(this);
+
+		btnBack = (ImageButton)findViewById(R.id.dialogSchemeImageBack);
+		btnBack.setOnClickListener(this);
 		
+		webView = (WebView)findViewById(R.id.webViewHelp);
+
+		if (mIndex == 999){
+			
+			  String translation = Dic.getTranslation(mWord);
+			  
+			  webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
+			  
+		} else {
+			
+			reset();
+		}
 		
 	}
 
@@ -69,6 +100,14 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 			//if (mIndex < 0)
 			//	mIndex = MenuData.schemes.size()-1;
 			reset();
+		}
+		else if (v == btnBack){
+			
+			if (webView.canGoBack()) {
+                webView.goBack();
+            } else {
+                dialog.dismiss();
+            }			
 		}
 		else if (v == btnSpeak){
 			
@@ -111,8 +150,13 @@ public class DialogHelp extends Dialog implements android.view.View.OnClickListe
 	{
 		final String baseUrl = "file:///android_res/raw/help"+mIndex+".html";
 		
-		WebView webView = (WebView)findViewById(R.id.webViewHelp);
+		prevArrayList.add(baseUrl);
+		
 		webView.loadUrl(baseUrl);
 
+	}
+
+	public void setWord(String word) {
+		mWord = word;
 	}
 }

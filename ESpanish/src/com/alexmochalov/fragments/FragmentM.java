@@ -78,4 +78,9 @@ public class FragmentM extends Fragment
 		super.onDestroy(); 
 	}
 
+	public String getWord() {
+		return "";
+	}
+
+
 }
