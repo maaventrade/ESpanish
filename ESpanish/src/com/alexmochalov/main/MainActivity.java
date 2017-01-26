@@ -294,7 +294,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			final int index = MenuData.getHelpIndex();
 			
 			DialogHelp d = new DialogHelp(this, index);
-			if (index == 999)
+			if (index == 999 && fragment != null)
 				d.setWord(fragment.getWord());
 			
 			d.show();

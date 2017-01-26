@@ -43,6 +43,18 @@
 		    android:src="@drawable/back"/>
 
 		<ImageButton
+		    android:id="@+id/dialogSchemeImageButtonPlus"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/plus"/>
+
+		<ImageButton
+		    android:id="@+id/dialogSchemeImageButtonMinus"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/minus"/>
+				
+		<ImageButton
 		    android:id="@+id/dialogSchemeImageButtonSpeak"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"

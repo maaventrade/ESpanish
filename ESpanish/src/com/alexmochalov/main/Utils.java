@@ -21,7 +21,7 @@ public class Utils {
 	}
 
 	public static String firstLetterToUpperCase(String text) {
-		if (text.length() == 0) return "";
+		if (text == null || text.length() == 0) return "";
 		else return text.substring(0,1).toUpperCase() + text.substring(1);
 	}
 	
