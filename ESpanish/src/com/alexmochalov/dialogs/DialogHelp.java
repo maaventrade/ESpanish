@@ -31,7 +31,7 @@ public class DialogHelp extends Dialog implements
 
 	String text = "";
 
-	int scale = 2;
+	int scale;
 
 	WebView webView;
 
@@ -85,7 +85,20 @@ public class DialogHelp extends Dialog implements
 		btnMinus.setOnClickListener(this);
 
 		webView = (WebView) findViewById(R.id.webViewHelp);
+/*
+		scale = scale + 1;
+		webView.setInitialScale(150);
+		webView.getSettings().setLoadWithOverviewMode(true);
+		webView.getSettings().setUseWideViewPort(true);
+	*/
+		scale = (int)webView.getScale();
+		Log.d("a","scale "+webView.getScale());
+		scale = 100;
+		
+		WebSettings webSettings = webView.getSettings();
 
+		//webSettings.setTextSize(WebSettings.TextSize.LARGER);
+		
 		if (mIndex == 999) {
 			btnNext.setVisibility(View.INVISIBLE);
 			btnPrev.setVisibility(View.INVISIBLE);
@@ -165,18 +178,19 @@ public class DialogHelp extends Dialog implements
 			reset();
 		} else if (v == btnPlus) {
 			
-			scale = scale + 1;
-			webView.setInitialScale(scale);
-			webView.getSettings().setLoadWithOverviewMode(true);
-			webView.getSettings().setUseWideViewPort(true);
+			scale = scale + 10;
+			WebSettings webSettings = webView.getSettings();
+
+			webSettings.setTextZoom(scale);
+			
+			
 			
 		} else if (v == btnMinus) {
-			
-			scale = scale - 1;
-			webView.setInitialScale(scale);
-			webView.getSettings().setLoadWithOverviewMode(true);
-			webView.getSettings().setUseWideViewPort(true);
+			scale = scale  - 10;
+			WebSettings webSettings = webView.getSettings();
 
+			webSettings.setTextZoom(scale);
+			
 		} else if (v == btnBack) {
 
 			if (webView.canGoBack()) {

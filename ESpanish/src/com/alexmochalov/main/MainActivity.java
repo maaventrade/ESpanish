@@ -70,7 +70,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		setContentView(R.layout.activity_main);
 
 		mContext = this;
-		Log.d("a", "onCreate");
+		//Log.d("a", "onCreate");
 		actionBar = getActionBar();
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setHomeButtonEnabled(true);
@@ -217,7 +217,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("a", "onResume");
+		//Log.d("a", "onResume");
 		File file = new File(Utils.REC_FOLDER);
 		if(!file.exists()){                          
 			file.mkdirs();                  
@@ -227,7 +227,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override
 	public void onPause() {
-		Log.d("a", "onPause");
+		//Log.d("a", "onPause");
 		super.onPause();
 	}
 
