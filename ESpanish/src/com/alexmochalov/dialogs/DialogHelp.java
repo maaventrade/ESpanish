@@ -31,8 +31,6 @@ public class DialogHelp extends Dialog implements
 
 	String text = "";
 
-	int scale;
-
 	WebView webView;
 
 	static int mIndex = 0;
@@ -85,16 +83,7 @@ public class DialogHelp extends Dialog implements
 		btnMinus.setOnClickListener(this);
 
 		webView = (WebView) findViewById(R.id.webViewHelp);
-/*
-		scale = scale + 1;
-		webView.setInitialScale(150);
-		webView.getSettings().setLoadWithOverviewMode(true);
-		webView.getSettings().setUseWideViewPort(true);
-	*/
-		scale = (int)webView.getScale();
-		Log.d("a","scale "+webView.getScale());
-		scale = 100;
-		
+
 		WebSettings webSettings = webView.getSettings();
 
 		//webSettings.setTextSize(WebSettings.TextSize.LARGER);
@@ -178,18 +167,20 @@ public class DialogHelp extends Dialog implements
 			reset();
 		} else if (v == btnPlus) {
 			
-			scale = scale + 10;
+			Utils.incScale();
+			
 			WebSettings webSettings = webView.getSettings();
 
-			webSettings.setTextZoom(scale);
+			webSettings.setTextZoom(Utils.getScale());
 			
 			
 			
 		} else if (v == btnMinus) {
-			scale = scale  - 10;
+			Utils.decScale();
+			
 			WebSettings webSettings = webView.getSettings();
 
-			webSettings.setTextZoom(scale);
+			webSettings.setTextZoom(Utils.getScale());
 			
 		} else if (v == btnBack) {
 

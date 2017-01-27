@@ -16,6 +16,9 @@ public class Utils {
 	private static String language = "ita";
 	private static String neg = "non";
 	
+	private static boolean randomize = false;
+	private static int scale = 110;
+	
 	public static String getRecFolder(){
 		return REC_FOLDER;
 	}
@@ -33,6 +36,29 @@ public class Utils {
 		return neg;
 	}
 
+	public static void incScale() {
+		scale = scale + 10;
+	}
+
+	public static void decScale() {
+		scale = scale - 10;
+	}
+
+	public static int getScale() {
+		return scale;
+	}
+
+	public static void setRandomize(boolean boolean1) {
+		randomize = boolean1;
+	}
+
+	public static void setScale(int int1) {
+		scale = int1;
+	}
+
+	public static boolean getRandomize() {
+		return randomize;
+	}
 	
 	
 /*

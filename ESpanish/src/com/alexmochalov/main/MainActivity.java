@@ -49,13 +49,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	private SharedPreferences prefs;
 
 	private final static String RANDOMIZE = "RANDOMIZE";
+	private final static String HELPTEXTSCALE = "HELPTEXTSCALE";
 	private final static String MTEXT = "TEXT";
 	private final static String RANDOMIZATION_ORDER = "RANDOMIZATION_ORDER";	
 	
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
-	
-	public static boolean randomize = false;
 	
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
@@ -82,8 +81,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		Dictionary.load(this);
 		MenuData.load(this, false);
 
-		if (savedInstanceState != null)
-			randomize = savedInstanceState.getBoolean(RANDOMIZE);
+		if (savedInstanceState != null){
+			Utils.setRandomize( savedInstanceState.getBoolean(RANDOMIZE));
+			Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
+		}
+		
 		loadParameters();
 		
 		fragmentMenu = (FragmentMenu)getFragmentManager().findFragmentById(R.id.am_fragmentMenu);
@@ -106,7 +108,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		super.onRestoreInstanceState(savedInstanceState);
 
 		MenuData.setText(savedInstanceState.getString(MTEXT));
-		randomize = savedInstanceState.getBoolean(RANDOMIZE);
+		Utils.setRandomize(savedInstanceState.getBoolean(RANDOMIZE));
+		Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
 		
 		MenuData.putRandomizationOrder(savedInstanceState.getIntArray(RANDOMIZATION_ORDER));
 		
@@ -116,7 +119,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		super.onSaveInstanceState(outState);
 		
 		outState.putString(MTEXT, MenuData.getText());
-		outState.putBoolean(RANDOMIZE, randomize);
+		outState.putBoolean(RANDOMIZE, Utils.getRandomize());
 		outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());
 		
 	}

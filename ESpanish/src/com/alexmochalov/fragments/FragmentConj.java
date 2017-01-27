@@ -68,7 +68,7 @@ public class FragmentConj extends FragmentM {
 		else
 			tenseInfo.setText("");
 
-		if (MainActivity.randomize)
+		if (Utils.getRandomize())
 			setOrder(onCreateView);
 
 		setPronouns(MenuData.getText());
@@ -80,7 +80,7 @@ public class FragmentConj extends FragmentM {
 	 */
 	private void setOrder(boolean onCreateView) {
 
-		if (MainActivity.randomize) {
+		if (Utils.getRandomize()) {
 			if (onCreateView && MenuData.getRandomizationOrder().length == objects.size()){
 				
 				int r[] = MenuData.getRandomizationOrder();
@@ -186,12 +186,12 @@ public class FragmentConj extends FragmentM {
 		CheckBox checkBox = (CheckBox) rootView
 				.findViewById(R.id.checkBoxRandom);
 		// Log.d("d", "MainActivity.r "+MainActivity.randomize);
-		checkBox.setChecked(MainActivity.randomize);
+		checkBox.setChecked(Utils.getRandomize());
 		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				MainActivity.randomize = isChecked;
+				Utils.setRandomize(  isChecked );
 
 				setOrder(false);
 
