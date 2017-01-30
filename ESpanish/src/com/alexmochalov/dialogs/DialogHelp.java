@@ -194,7 +194,7 @@ public class DialogHelp extends Dialog implements
 
 			String s = "";
 			if (mIndex == 999) {
-
+				/*
 				String translation = Dic.getTranslation(mWord);
 				String line = translation.replace("\n", ":");
 
@@ -207,8 +207,8 @@ public class DialogHelp extends Dialog implements
 				line = line.replaceAll(" ci ", " ");
 				line = line.replaceAll(" chi ", " ");
 				line = line.replaceAll("Á", "A").trim();
-
-				s = line;
+				*/
+				s = mWord;
 
 			} else {
 				final String baseUrl = "help" + mIndex;

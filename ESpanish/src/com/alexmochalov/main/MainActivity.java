@@ -69,7 +69,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		setContentView(R.layout.activity_main);
 
 		mContext = this;
-		//Log.d("a", "onCreate");
+		Log.d("aaa", "onCreate");
 		actionBar = getActionBar();
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setHomeButtonEnabled(true);
@@ -84,6 +84,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		if (savedInstanceState != null){
 			Utils.setRandomize( savedInstanceState.getBoolean(RANDOMIZE));
 			Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
+		} else {
+			Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
 		}
 		
 		loadParameters();
@@ -111,6 +113,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		Utils.setRandomize(savedInstanceState.getBoolean(RANDOMIZE));
 		Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
 		
+		//Log.d("aaa", "SET HELPTEXTSCALE "+savedInstanceState.getInt(HELPTEXTSCALE));
+		
 		MenuData.putRandomizationOrder(savedInstanceState.getIntArray(RANDOMIZATION_ORDER));
 		
 	}
@@ -122,6 +126,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		outState.putBoolean(RANDOMIZE, Utils.getRandomize());
 		outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());
 		
+		outState.putInt( HELPTEXTSCALE, Utils.getScale());
+		//Log.d("aaa", "PUT "+Utils.getScale());
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -142,7 +148,15 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	@Override 
 	protected void onDestroy() {
 		TtsUtils.destroy();
-		saveParameters();
+		
+		Editor editor = prefs.edit();
+		
+		MenuData.saveParameters(editor);
+
+		editor.putInt(HELPTEXTSCALE, Utils.getScale());
+		
+		editor.commit();
+		
 		super.onDestroy(); 
 	}
 	
@@ -234,14 +248,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		super.onPause();
 	}
 
-	private void saveParameters() {
-		Editor editor = prefs.edit();
-		
-		MenuData.saveParameters(editor);
-		
-		editor.commit();
-	}
-	
 	private void loadParameters() {
 		MenuData.loadParameters(prefs);
 	}

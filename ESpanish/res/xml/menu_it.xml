@@ -25,12 +25,12 @@
 			<entry text = "avere"></entry>
 		</level1>
 		-->
-		<level1 title = "Отрицание NON" type = "Комбинации1"  helpindex = "2"
+		<level1 title = "Отрицание NON" type = "Комбинации1"  helpindex = "3"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
 			<entry neg = "true" verbs = "parlare, mangiare, giocare, guardare, lavorare, amare, ascoltare, imparare, abitare"></entry>
 		</level1>
 		
-    	<level1 title = "Глаголы в прошедшем времени" type = "Спряжения" helpindex = "3" tense = "past" neg = "1"
+    	<level1 title = "Глаголы в прошедшем времени" type = "Спряжения" helpindex = "4" tense = "past" neg = "1"
 			note = "Спрягаем глаголы прошедшего времени по формам лица и числа.">
     	   <entry text = "parlare"></entry>
     	   <entry text = "mangiare"></entry>
@@ -42,7 +42,7 @@
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
 	</level1>
-		<level1 title = "Вопросы" type = "Комбинации" helpindex = "4"  tense = "present"
+		<level1 title = "Вопросы" type = "Комбинации" helpindex = "5"  tense = "present"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
 		<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
 		<entry text = "Chi" subj = "false" verbs = "parlare, mangiare, giocare, lavorare, ascoltare"></entry>
@@ -53,7 +53,7 @@
 		<entry text = "Perche" verbs = "parlare, guardare, giocare, lavorare, ascoltare,imparare"></entry>
 		</level1>
 		
-		<level1 title = "Вопросы. Прошедшее время" type = "Комбинации" helpindex = "4"  tense = "past"
+		<level1 title = "Вопросы. Прошедшее время" type = "Комбинации" helpindex = "5"  tense = "past"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
 			<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
 			<entry text = "Chi" subj = "false" verbs = "parlare, mangiare, giocare, lavorare, ascoltare"></entry>
@@ -218,27 +218,7 @@
 </data>
 
 <!--
-		<scheme title = "Формы глаголов с отрицанием" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
-			IO NON PÁRL&lt;font color=RED&gt;O&lt;/font&gt;- Я НЕ ГОВОРЮ
-			TU NON PÁRL&lt;font color=RED&gt;I&lt;/font&gt;- ТЫ НЕ ГОВОРИШЬ
-			LUI NON PÁRL&lt;font color=RED&gt;A&lt;/font&gt;- ОН НЕ ГОВОРИТ
-			LEY NON PÁRL&lt;font color=RED&gt;A&lt;/font&gt;- ОНА НЕ ГОВОРИТ 
-			&lt;big &gt;L&lt;/big&gt;EY NON PÁRL&lt;font color=RED&gt;A&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы НЕ ГОВОРИТЕ
-			NOI NON PARL&lt;font color=RED&gt;IÁMO&lt;/font&gt;-МЫ НЕ ГОВОРИМ
-			VOI NON PARL&lt;font color=RED&gt;ÁTE&lt;/font&gt;-ВЫ НЕ ГОВОРИТЕ
-			LORO NON PÁRL&lt;font color=RED&gt;ANO&lt;/font&gt;-ОНИ НЕ ГОВОРЯТ
-		</scheme>
 				
-		<scheme title = "Прошедшее время глаголов" text = "PARL&lt;font color=RED&gt;ÁRE&lt;/font&gt; - ГОВОРИТЬ">
-			IO HO PARL&lt;font color=RED&gt;ÁTO&lt;/font&gt;- Я ГОВОРИЛ
-			TU HAI PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ТЫ ГОВОРИЛ
-			LUI HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ОН ГОВОРИЛ
-			LEY HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;- ОНА ГОВОРИЛА 
-			&lt;big &gt;L&lt;/big&gt;EY HA PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-&lt;big &gt;В&lt;/big&gt;Ы ГОВОРИЛИ
-			NOI ABBIAMO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-МЫ ГОВОРИЛИ
-			VOI AVETE PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ВЫ ГОВОРИЛИ
-			LORO HANNO PARL&lt;font color=RED&gt;ATO&lt;/font&gt;-ОНИ ГОВОРИЛИ
-		</scheme>
 			<scheme title = "Вопросительные слова">
 				CHE COSA? - ЧТО?
 				CHI? - КТО?
@@ -248,15 +228,5 @@
 				PERCHE? - ПОЧЕМУ?
 				QUANDO? - КОГДА?
 			</scheme>
-		<scheme title = "Формы глагола ESSERE (быть)">
-			IO SONO - Я ЕСТЬ
-			TU SEI - ТЫ ЕСТЬ
-			LUI È - ОН ЕСТЬ
-			LEY È - ОНА ЕСТЬ 
-			&lt;big &gt;L&lt;/big&gt;EY È -&lt;big &gt;В&lt;/big&gt;Ы(ВЕЖЛ.) ЕСТЬ
-			NOI SIAMO -МЫ ЕСТЬ
-			VOI SIETE -ВЫ ЕСТЬ
-			LORO SONO -ОНИ ЕСТЬ
-		</scheme>
 
 -->
