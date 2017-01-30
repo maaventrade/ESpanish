@@ -86,7 +86,8 @@ public class DialogHelp extends Dialog implements
 
 		WebSettings webSettings = webView.getSettings();
 
-		//webSettings.setTextSize(WebSettings.TextSize.LARGER);
+		webSettings.setTextZoom(Utils.getScale());
+		
 		
 		if (mIndex == 999) {
 			btnNext.setVisibility(View.INVISIBLE);
