@@ -11,7 +11,9 @@
 	<string name="button_prev">Prev</string>
 	<string name="button_speak">Speak</string>
 	<string name="button_test">Control</string>
-		
+	
+	<string name="menu_reload">Перезагрузить меню</string>
+			
 	<string name="randomize">Randomize</string>
 		
 	<string name="error_lang_not_supported">error_lang_not_supported</string>

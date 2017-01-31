@@ -13,11 +13,11 @@ import com.alexmochalov.dictionary.Pronoun;
 public class FilesIO
 {
 
-	public static void loadMenu(Context mContext) {
+	public static void loadMenu(Context mContext, boolean reRead) {
 
 		String mode = "";
 		MenuGroup menuGroupItem = null;
-
+    
 		class Record {
 			String text = "";
 			String neg = "";
@@ -31,24 +31,23 @@ public class FilesIO
 				subj = "";
 				tense="";
 			} 
-		}
+		}  
 		Record rec = new Record();
 		MarkedString markedStringLast = null;
 		
 		try {
 			XmlPullParser xpp = null;
-
 			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
-			if (!file.exists()){
+			if (!file.exists() || reRead){
+				// Load menu from resource
 				if (Utils.getLanguage().equals("ita")) 
 					xpp = mContext.getResources().getXml(R.xml.menu_it);
 				else if (Utils.getLanguage().equals("spa"))
 					xpp = mContext.getResources().getXml(R.xml.menu_spa);
 			} else {
+				// Load menu from file
 				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
 																					 Utils.APP_FOLDER + "/menu_it.xml")));
-
-				//Log.d("d","file1 "+Utils.APP_FOLDER + "/menu_it.xml");
 				XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
 				factory.setNamespaceAware(true);         
 				xpp = factory.newPullParser();
@@ -56,10 +55,12 @@ public class FilesIO
 				xpp.setInput(reader);
 			}
 			
+			/*
 			if (Utils.getLanguage().equals("ita")) 
 				xpp = mContext.getResources().getXml(R.xml.menu_it);
 			else if (Utils.getLanguage().equals("spa"))
 				xpp = mContext.getResources().getXml(R.xml.menu_spa);
+			*/	
 			
 			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 

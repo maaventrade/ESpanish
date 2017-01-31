@@ -147,27 +147,30 @@ public final class R {
         public static final int help2_1=0x7f050003;
         public static final int help2_2=0x7f050004;
         public static final int help3=0x7f050005;
-        public static final int it_ru=0x7f050006;
+        public static final int help4=0x7f050006;
+        public static final int help5=0x7f050007;
+        public static final int it_ru=0x7f050008;
     }
     public static final class string {
         public static final int action_reread=0x7f090003;
         public static final int action_settings=0x7f090002;
         public static final int app_name=0x7f090000;
-        public static final int blue=0x7f09000d;
+        public static final int blue=0x7f09000e;
         public static final int button_next=0x7f090004;
         public static final int button_prev=0x7f090005;
         public static final int button_speak=0x7f090006;
         public static final int button_test=0x7f090007;
-        public static final int error_lang=0x7f09000b;
-        public static final int error_lang_not_found=0x7f09000a;
-        public static final int error_lang_not_supported=0x7f090009;
+        public static final int error_lang=0x7f09000c;
+        public static final int error_lang_not_found=0x7f09000b;
+        public static final int error_lang_not_supported=0x7f09000a;
         public static final int hello_world=0x7f090001;
-        public static final int no=0x7f090011;
-        public static final int orange=0x7f09000e;
-        public static final int randomize=0x7f090008;
-        public static final int red=0x7f09000c;
-        public static final int startover=0x7f09000f;
-        public static final int yes=0x7f090010;
+        public static final int menu_reload=0x7f090008;
+        public static final int no=0x7f090012;
+        public static final int orange=0x7f09000f;
+        public static final int randomize=0x7f090009;
+        public static final int red=0x7f09000d;
+        public static final int startover=0x7f090010;
+        public static final int yes=0x7f090011;
     }
     public static final class style {
         /** 

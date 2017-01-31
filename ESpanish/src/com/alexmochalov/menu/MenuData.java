@@ -303,12 +303,12 @@ public class MenuData {
 
 	}
 
-	public static void load(Context context, boolean reread) {
+	public static void load(Context context, boolean reRead) {
 		mContext = context;
 		
 		menuGroup.clear();
 
-		FilesIO.loadMenu(context);
+		FilesIO.loadMenu(context, reRead);
 
 	
 	}
