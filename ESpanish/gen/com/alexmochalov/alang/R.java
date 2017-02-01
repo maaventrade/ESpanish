@@ -149,7 +149,8 @@ public final class R {
         public static final int help3=0x7f050005;
         public static final int help4=0x7f050006;
         public static final int help5=0x7f050007;
-        public static final int it_ru=0x7f050008;
+        public static final int help6=0x7f050008;
+        public static final int it_ru=0x7f050009;
     }
     public static final class string {
         public static final int action_reread=0x7f090003;

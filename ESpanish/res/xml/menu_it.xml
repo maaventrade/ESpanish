@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data version = "1">
     <level0 title = "Урок 1">
-    	<level1 title = "Глаголы" type = "Спряжения" helpindex = "1"
+    	<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-are&lt;/font&gt;" type = "Спряжения" helpindex = "1"
 			note = "Спрягаем глаголы по формам лица и числа.">
     	   <entry text = "parlare"></entry>
     	   <entry text = "mangiare"></entry>
@@ -18,6 +18,19 @@
 			<entry text = "avere"></entry>
 			<entry text = "essere"></entry>
 			<entry text = "fare"></entry>
+		</level1>
+		<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-ere&lt;/font&gt;" type = "Спряжения" helpindex = "6"
+			note = "Спрягаем глаголы по формам лица и числа.">
+			<entry text = "scrivere"></entry>
+			<entry text = "vivere"></entry>
+			<entry text = "prendere"></entry>
+			
+		</level1>
+		<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-ire&lt;/font&gt;" type = "Спряжения" helpindex = "7"
+			note = "Спрягаем глаголы по формам лица и числа.">
+			<entry text = "dormire"></entry>
+			<entry text = "aprire"></entry>
+			<entry text = "partire"></entry>
 		</level1>
 	<!--
 		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Говорим" helpindex = "1" 
