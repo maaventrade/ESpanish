@@ -372,7 +372,7 @@ public class MenuData {
 		editor.putInt(MENU_CHILD_POSITION, MenuData.mChildPosition);
 		editor.putInt(DIRECTION, MenuData.direction);
 		
-		FilesIO.saveMenu();
+		FilesIO.saveMenu(mContext);
 		
 	}
 

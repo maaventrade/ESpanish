@@ -1,14 +1,18 @@
 package com.alexmochalov.io;
 import android.content.*;
 import android.util.*;
+import android.widget.Toast;
+
 import com.alexmochalov.alang.*;
 import com.alexmochalov.menu.*;
 import com.alexmochalov.main.*;
+
 import java.io.*;
 import java.util.ArrayList;
+
 import org.xmlpull.v1.*;
+
 import com.alexmochalov.dictionary.*;
-import com.alexmochalov.dictionary.Pronoun;
 
 public class FilesIO
 {
@@ -227,7 +231,7 @@ public class FilesIO
 	}
 	
 
-	public static void saveMenu()
+	public static void saveMenu(Context mContext)
 	{
 		//if (1==1) return;
 	File file = new File(Utils.APP_FOLDER+"/menu_it.xml");
@@ -302,8 +306,12 @@ public class FilesIO
 		os.close();
 		}
 		catch (FileNotFoundException e)
-		{}
+		{
+			Toast.makeText(mContext, "Error "+e, Toast.LENGTH_LONG).show();
+		}
 		catch (IOException e)
-		{}
+		{
+			Toast.makeText(mContext, "Error "+e, Toast.LENGTH_LONG).show();
+		}
 	}
 }

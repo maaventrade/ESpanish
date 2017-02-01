@@ -12,37 +12,27 @@
     	   <entry text = "ascoltare"></entry>
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
-	</level1>
+		</level1>
 		<level1 title = "Неправильные глаголы &lt;font color=0xffff00&gt;AVERE, ESSERE, FARE&lt;/font&gt;" type = "Спряжения" helpindex = "2"
 			note = "Спрягаем глаголы по формам лица и числа.">
 			<entry text = "avere"></entry>
 			<entry text = "essere"></entry>
 			<entry text = "fare"></entry>
 		</level1>
+		<level1 title = "Отрицание NON" type = "Комбинации1"  helpindex = "3"
+			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
+			<entry neg = "true" verbs = "parlare, mangiare, giocare, guardare, lavorare, amare, ascoltare, imparare, abitare"></entry>
+		</level1>
+			
+	</level0>
+	<level0 title = "Урок 2">
+		
 		<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-ere&lt;/font&gt;" type = "Спряжения" helpindex = "6"
 			note = "Спрягаем глаголы по формам лица и числа.">
 			<entry text = "scrivere"></entry>
 			<entry text = "vivere"></entry>
 			<entry text = "prendere"></entry>
-			
 		</level1>
-		<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-ire&lt;/font&gt;" type = "Спряжения" helpindex = "7"
-			note = "Спрягаем глаголы по формам лица и числа.">
-			<entry text = "dormire"></entry>
-			<entry text = "aprire"></entry>
-			<entry text = "partire"></entry>
-		</level1>
-	<!--
-		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;AVERE&lt;/font&gt; (иметь)" type = "Говорим" helpindex = "1" 
-		    note = "Переводим вслух и сравниваем с образцом.">
-			<entry text = "avere"></entry>
-		</level1>
-		-->
-		<level1 title = "Отрицание NON" type = "Комбинации1"  helpindex = "3"
-			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-			<entry neg = "true" verbs = "parlare, mangiare, giocare, guardare, lavorare, amare, ascoltare, imparare, abitare"></entry>
-		</level1>
-		
     	<level1 title = "Глаголы в прошедшем времени" type = "Спряжения" helpindex = "4" tense = "past" neg = "1"
 			note = "Спрягаем глаголы прошедшего времени по формам лица и числа.">
     	   <entry text = "parlare"></entry>
@@ -54,7 +44,36 @@
     	   <entry text = "ascoltare"></entry>
     	   <entry text = "imparare"></entry>
     	   <entry text = "abitare"></entry>
-	</level1>
+		</level1>
+				
+    	<level1 title = "Приветствия" type = "Выражения" 
+			note = "Переводим выражения с итальянского языка на русский и с русского на итальянский.">
+    	    <entry text = "Ciao!"></entry>
+    	    <entry text = "Buon giorno"></entry>
+    		<entry text = "Buona sera"></entry>
+    		<entry text = "Buona notte"></entry>
+    		<entry text = "Arrivederci!"></entry>
+    		<entry text = "Piacere"></entry>
+    		<entry text = "Come stai?"></entry>
+    		<entry text = "Come sta?"></entry>
+    		<entry text = "Io sto bene"></entry>
+			<entry text = "Мolto bene"></entry>
+    		<entry text = "Male"></entry>
+    		<entry text = "Сosí-cosí"></entry>
+    		<entry text = "Grazie"></entry>
+    		<entry text = "Prego"></entry>
+    		<entry text = "Scusi"></entry>
+		</level1>
+    		
+	</level0>
+	<level0 title = "Урок 3">
+				
+		<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-ire&lt;/font&gt;" type = "Спряжения" helpindex = "7"
+			note = "Спрягаем глаголы по формам лица и числа.">
+			<entry text = "dormire"></entry>
+			<entry text = "aprire"></entry>
+			<entry text = "partire"></entry>
+		</level1>
 		<level1 title = "Вопросы" type = "Комбинации" helpindex = "5"  tense = "present"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
 		<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
@@ -81,7 +100,7 @@
     	    <entry text = "Chi non lavora non mangia"></entry>
 		</level1>
 	</level0>
-	<level0 title = "Урок 2">
+	<level0 title = "Урок 4">
 		<level1 title = "Глаголы самые общие" type = "Запоминание" helpindex = "999">
 			<entry text = "essere" rus = "быть"></entry>
 			<entry text = "avere" rus = "иметь"></entry>
@@ -105,6 +124,10 @@
 			<entry text = "sviluppare" rus = "развивать"></entry>	
 			<entry text = "coprire" rus = "покрывать"></entry>	
 		</level1>
+		
+	</level0>
+	<level0 title = "Урок 5">
+				
 		<level1 title = "Глаголы места и перемещений" type = "Запоминание" helpindex = "999">
 			<entry text = "apparire" rus = "появляться"></entry>	
 			<entry text = "restare" rus = "оставаться"></entry>	
@@ -138,6 +161,10 @@
 			<entry text = "spendere" rus = "тратить"></entry>
 			<entry text = "pagare" rus = "платить"></entry>
 		</level1>
+		
+	</level0>
+	<level0 title = "Урок 6">
+				
 		<level1 title = "Глаголы действий разные" type = "Запоминание" helpindex = "999">
 		    
 			<entry text = "prendere" rus = "брать"></entry>
@@ -169,6 +196,10 @@
 			<entry text = "designare" rus = "рисовать"></entry>	
 			<entry text = "scegliere" rus = "выбирать"></entry>	
 		</level1>
+		
+	</level0>
+	<level0 title = "Урок 7">
+				
 		<level1 title = "Глаголы общения" type = "Запоминание" helpindex = "999">
 			<entry text = "parlare" rus = "говорить"></entry>
 			<entry text = "raccontare" rus = "рассказывать"></entry>
@@ -197,36 +228,9 @@
 			<entry text = "pensare" rus = "думать"></entry>
 			<entry text = "intendere" rus = "понимать"></entry>
 			<entry text = "ricordare" rus = "помнить"></entry>	
-		</level1>
-		<level1 title = "Глаголы ума" type = "Запоминание" helpindex = "999">
 			<entry text = "presumere" rus = "считать"></entry>	
 			<entry text = "decidere" rus = "решать"></entry>	
 		</level1>
-	</level0>
-    <level0 title = "Урок 3">
-    	<level1 title = "Приветствия" type = "Выражения" 
-			note = "Переводим выражения с итальянского языка на русский и с русского на итальянский.">
-    	    <entry text = "Ciao!"></entry>
-    	    <entry text = "Buon giorno"></entry>
-    		<entry text = "Buona sera"></entry>
-    		<entry text = "Buona notte"></entry>
-    		<entry text = "Arrivederci!"></entry>
-    		<entry text = "Piacere"></entry>
-    		<entry text = "Come stai?"></entry>
-    		<entry text = "Come sta?"></entry>
-    		<entry text = "Io sto bene"></entry>
-			<entry text = "Мolto bene"></entry>
-    		<entry text = "Male"></entry>
-    		<entry text = "Сosí-cosí"></entry>
-    		<entry text = "Grazie"></entry>
-    		<entry text = "Prego"></entry>
-    		<entry text = "Scusi"></entry>
-		</level1>
-		<level1 title = "Неправильный глагол &lt;font color=0xffff00&gt;ESSERE&lt;/font&gt; (быть)" type = "Говорим" helpindex = "1" 
-		    note = "Переводим вслух и сравниваем с образцом.">
-			<entry text = "essere"></entry>
-		</level1>
-    			
 	</level0>
 </data>
 
