@@ -267,6 +267,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragmentMenu.refresh();
 			return true;
 		}
+		case R.id.action_reindex: {
+				Dic.unzip(this, "it_ru.xdxf", R.raw.it_ru);
+				Dic.createIndexAsinc(this, "it_ru.xdxf");
+				return true;
+		}
+		
 		case R.id.item_speak: {
 			if (fragment != null)
 				TtsUtils.speak(fragment.getTextToTTS());

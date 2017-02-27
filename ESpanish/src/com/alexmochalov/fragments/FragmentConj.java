@@ -362,16 +362,17 @@ public class FragmentConj extends FragmentM {
 			editText.setText(textSample);
 
 		if (text.toLowerCase()
-				.replaceAll("á", "a")
-				.replaceAll("ó", "o")
-				.replaceAll("ú", "u")
-				.replaceAll("é", "e")
-				.replaceAll("í", "e")
-				.
-
-				equals(textSample.toLowerCase().replaceAll("á", "a")
-						.replaceAll("ó", "o").replaceAll("ú", "u")
-						.replaceAll("é", "e").replaceAll("í", "e"))) {
+			.replaceAll("à", "a")
+			.replaceAll("ò", "o")
+			.replaceAll("ù", "u")
+			.replaceAll("è", "e")
+			.replaceAll("ì", "i")
+			.equals(textSample.toLowerCase()
+		.replaceAll("à", "a")
+			.replaceAll("ò", "o")
+			.replaceAll("ù", "u")
+			.replaceAll("è", "e")
+			.replaceAll("ì", "i"))) {
 			editText.setTextColor(mContext.getResources().getColor(
 					R.color.green2));
 		} else {

@@ -206,6 +206,7 @@ public class MenuData {
 	public static String getText() {
 		if (mIndex == -1) return "";
 		else mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
+		
 		return mText;
 	}
 

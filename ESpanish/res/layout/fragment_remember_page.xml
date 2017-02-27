@@ -14,7 +14,9 @@
         android:id="@+id/samples"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.5"
+		android:textSize="@dimen/text_size_large"
+		/>
 
     <Button
         android:id="@+id/buttonStartTesting"

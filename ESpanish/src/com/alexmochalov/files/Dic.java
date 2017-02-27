@@ -36,6 +36,7 @@ public class Dic {
 	}
 
 	public static void unzip(Context context, String fileName, int id) {
+		Log.d("dic","start unzip");
 		try {
 			int BUFFER_SIZE = 1024;
 			byte[] buffer = new byte[BUFFER_SIZE];
@@ -56,8 +57,10 @@ public class Dic {
 				//if (isCancelled()) return;
 				if (ze.isDirectory()) {
 				} else {
-					FileOutputStream fout = new FileOutputStream(nameUnzipped);
+					FileOutputStream fout = new FileOutputStream(nameUnzipped, false);
+					
 					BufferedOutputStream bout = new BufferedOutputStream(fout, BUFFER_SIZE);
+					
 					
 					while ( (size = zin.read(buffer, 0, BUFFER_SIZE)) != -1 ) {
                         fout.write(buffer, 0, size);
@@ -70,6 +73,7 @@ public class Dic {
 			}
 			zin.close();
 		} catch (Exception t) {
+			Log.d("dic","unzip error");
 			;
 		}
 	}
@@ -135,11 +139,13 @@ public class Dic {
 		byte[] buffer = new byte[BUFFER_SYZE];
 		int bytesRead = 0;
 		
-		String fileNameIndex = fileName.replace(".xdxf", ".index");
+		indexEntries.clear();
 		
+		String fileNameIndex = fileName.replace(".xdxf", ".index");
+		Log.d("dic","start indexing");
 		try {
 			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+fileName));
-			bos = new BufferedOutputStream(new FileOutputStream(Utils.APP_FOLDER+"/"+fileNameIndex));
+			bos = new BufferedOutputStream(new FileOutputStream(Utils.APP_FOLDER+"/"+fileNameIndex, false));
 			
 			int state = 0;
 			int start = 0;
@@ -225,8 +231,13 @@ public class Dic {
 			
 			EntryComparator ec = new EntryComparator();
 			java.util.Collections.sort(indexEntries, ec);			
-			
+			int n = 0;
 			for (IndexEntry IndexEntry: indexEntries){
+				n++;
+				if (n < 20)
+					Log.d("ind","-"+IndexEntry.text.getBytes());
+				
+				
 				bos.write(IndexEntry.text.getBytes());
 				bos.write((char)(0x9));
 				bos.write(String.format("%x", IndexEntry.pos).getBytes());
@@ -239,7 +250,10 @@ public class Dic {
 			bos.close();
 		}
 		catch (IOException e)
-		{}
+		{
+			Log.d("dic","indexing error");
+			
+		}
 
 		
 		
@@ -247,7 +261,7 @@ public class Dic {
 
 	public static void loadIndex(Context context, String fileNameIndex) {
 		BufferedReader reader;
-		
+		Log.d("dic","start loading index");
 		indexEntries.clear();
 		try {
 			reader = new BufferedReader(new InputStreamReader(
@@ -255,6 +269,10 @@ public class Dic {
 
 			String line = reader.readLine();
 			while (line != null){
+				//5be3b8	2249
+				if (line.contains("essere"))
+					Log.d("ess",line);
+				
 				indexEntries.add(new IndexEntry(line));
 				line = reader.readLine();
 			    //if (isCancelled()){
@@ -264,8 +282,9 @@ public class Dic {
 			}
 			reader.close();
 		} catch (IOException t) {
+			Log.d("dic", "loading index error");
 		}
-		Log.d("OK", "OK");
+		Log.d("dic", "loading index ok "+indexEntries.size());
 	}
 
 	public static ArrayList<IndexEntry> getEntries() {
@@ -273,14 +292,17 @@ public class Dic {
 	}
 
 	public static String getTranslation(IndexEntry indexEntry) {
+		Log.d("rem","gettran");
 		BufferedInputStream bis;
 		try {
 			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+"it_ru.xdxf"));
-
+			Log.d("rem","indexEntry.pos "+indexEntry.pos);
 			//bis.skip(1000);
 			//byte[] buffer = new byte[500];
 			
 			bis.skip(indexEntry.pos);
+			
+			Log.d("rem","indexEntry.length "+indexEntry.length);
 			byte[] buffer = new byte[indexEntry.length];
 
 			int bytesRead = bis.read(buffer);
@@ -289,12 +311,14 @@ public class Dic {
 //			String s = new String(buffer, 0, 500);
 
 			bis.close();
-
+			Log.d("rem","ok");
 			return s;
 		} catch (IOException t) {
+			Log.d("rem","error");
 			Toast.makeText(mContext,
 						   "Error:" + t.toString(), Toast.LENGTH_LONG)
 				.show();
+				
 			return "";
 		}
 	}

@@ -12,7 +12,8 @@
 		android:layout_weight="1"
 		android:imeOptions="actionSearch"
 		android:inputType="textAutoComplete|textAutoCorrect"
-		android:ems="10">
+		android:ems="10"
+		android:textSize="@dimen/text_size_medium">
 
 		<requestFocus/>
 

@@ -43,7 +43,7 @@ public class FragmentRemember extends FragmentM{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-
+Log.d("rem","create");
 		rootView = inflater.inflate(R.layout.fragment_remember, container, false);
 		pager = (ViewPager)rootView.findViewById(R.id.pager);
 		adapter = new PagerAdapterRemember(getActivity());
@@ -61,9 +61,9 @@ public class FragmentRemember extends FragmentM{
 					mCallback.onButtonStartTestingClick();
 			}
 		};
-		
+		Log.d("rem","created");
         pager.setAdapter(adapter);
-        
+        Log.d("rem","created all");
 		return rootView;
 	}
 

@@ -71,8 +71,9 @@ public final class R {
         public static final int TextViewPhrase=0x7f0c001c;
         public static final int TextViewPhraseTranslation=0x7f0c001e;
         public static final int TextViewTenseInfo=0x7f0c0015;
+        public static final int action_reindex=0x7f0c002e;
         public static final int action_reread=0x7f0c002d;
-        public static final int action_settings=0x7f0c002e;
+        public static final int action_settings=0x7f0c002f;
         public static final int am_fragmentMenu=0x7f0c0001;
         public static final int buttonStartTesting=0x7f0c0022;
         public static final int button_play=0x7f0c0025;
@@ -100,9 +101,9 @@ public final class R {
         public static final int fragment_container=0x7f0c0000;
         public static final int fragmentconjitemlastImageButtonOk=0x7f0c001a;
         public static final int imageView1=0x7f0c0029;
-        public static final int item_dictionary=0x7f0c0031;
-        public static final int item_help=0x7f0c0030;
-        public static final int item_speak=0x7f0c002f;
+        public static final int item_dictionary=0x7f0c0032;
+        public static final int item_help=0x7f0c0031;
+        public static final int item_speak=0x7f0c0030;
         public static final int pager=0x7f0c001f;
         public static final int samples=0x7f0c0021;
         public static final int slider=0x7f0c0020;
@@ -135,7 +136,8 @@ public final class R {
         public static final int fragment_speak_item=0x7f03000f;
         public static final int menu_child_view=0x7f030010;
         public static final int menu_group_view=0x7f030011;
-        public static final int search_layout=0x7f030012;
+        public static final int remember_text_view=0x7f030012;
+        public static final int search_layout=0x7f030013;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
@@ -153,25 +155,26 @@ public final class R {
         public static final int it_ru=0x7f050009;
     }
     public static final class string {
+        public static final int action_reindex=0x7f090004;
         public static final int action_reread=0x7f090003;
         public static final int action_settings=0x7f090002;
         public static final int app_name=0x7f090000;
-        public static final int blue=0x7f09000e;
-        public static final int button_next=0x7f090004;
-        public static final int button_prev=0x7f090005;
-        public static final int button_speak=0x7f090006;
-        public static final int button_test=0x7f090007;
-        public static final int error_lang=0x7f09000c;
-        public static final int error_lang_not_found=0x7f09000b;
-        public static final int error_lang_not_supported=0x7f09000a;
+        public static final int blue=0x7f09000f;
+        public static final int button_next=0x7f090005;
+        public static final int button_prev=0x7f090006;
+        public static final int button_speak=0x7f090007;
+        public static final int button_test=0x7f090008;
+        public static final int error_lang=0x7f09000d;
+        public static final int error_lang_not_found=0x7f09000c;
+        public static final int error_lang_not_supported=0x7f09000b;
         public static final int hello_world=0x7f090001;
-        public static final int menu_reload=0x7f090008;
-        public static final int no=0x7f090012;
-        public static final int orange=0x7f09000f;
-        public static final int randomize=0x7f090009;
-        public static final int red=0x7f09000d;
-        public static final int startover=0x7f090010;
-        public static final int yes=0x7f090011;
+        public static final int menu_reload=0x7f090009;
+        public static final int no=0x7f090013;
+        public static final int orange=0x7f090010;
+        public static final int randomize=0x7f09000a;
+        public static final int red=0x7f09000e;
+        public static final int startover=0x7f090011;
+        public static final int yes=0x7f090012;
     }
     public static final class style {
         /** 

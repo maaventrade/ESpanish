@@ -64,11 +64,11 @@
 	    </entry>
 	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo,essere:siamo,fare:faccimo" verb_ending_past = "are:ato">
+	   	<entry text = "noi" transl = "мы" verb_ending = "are:iamo,avere:abbiamo,essere:siamo,fare:facciamo" verb_ending_past = "are:ato">
 	    </entry>
 	   	<entry text = "voi" transl = "вы" verb_ending = "are:ate,avere:avete,essere:siete,fare:fate" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "loro" transl = "они" verb_ending = "are:ano,avere:hanno,essere:sono,fare:fan" verb_ending_past = "are:ato,avere:ho">
+	   	<entry text = "loro" transl = "они" verb_ending = "are:ano,avere:hanno,essere:sono,fare:fanno" verb_ending_past = "are:ato,avere:ho">
 	    </entry>
 	</pronoun>
 	    

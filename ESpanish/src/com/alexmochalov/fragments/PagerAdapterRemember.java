@@ -92,8 +92,11 @@ public class PagerAdapterRemember extends PagerAdapter
 				}
 			});
 
-        
+        Log.d("rem","text: "+remEntry.getText());
         String translation = Dic.getTranslation(remEntry.getText());
+		
+		Log.d("rem","tra: "+translation);
+		
         String stringsArray[] = translation.split("\n");
 		for (String s:stringsArray)
 			if (s.indexOf("<ex>") >= 0){
@@ -123,9 +126,9 @@ public class PagerAdapterRemember extends PagerAdapter
 			
 			
 		if (isRus)
-			adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayListRus);
+			adapter = new ArrayAdapter<String>(mContext, R.layout.remember_text_view, arrayListRus);
 		else 
-			adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayListExamples);
+			adapter = new ArrayAdapter<String>(mContext, R.layout.remember_text_view, arrayListExamples);
 			
         listView.setAdapter(adapter);
         

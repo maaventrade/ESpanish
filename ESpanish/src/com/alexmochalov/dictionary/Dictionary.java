@@ -67,16 +67,16 @@ public class Dictionary
 		if (searchString.trim().length() == 0)
 			return "";
 		
-		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "").toLowerCase();
+		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
 
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
 					.equals(searchString)) {
 				return e.translation;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
 					.contains(searchString)) {
 				return e.translation;
 			}
@@ -89,16 +89,16 @@ public class Dictionary
 		if (searchString.trim().length() == 0)
 			return null;
 		
-		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "").toLowerCase();
+		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
 		Log.d("my", "searchString "+searchString);
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
 					.equals(searchString)) {
 				return e;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
 					.contains(searchString)) {
 				return e;
 			}
@@ -110,16 +110,17 @@ public class Dictionary
 		if (searchString.trim().length() == 0)
 			return null;
 		
-		searchString = searchString.replaceAll("[^a-zA-Záóúé]", "");
+		//Log.d("atr",searchString);
+		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "");
 
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").
+			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").
 					equals(searchString)) {
 				return e;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Záóúé]", "").
+			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").
 					contains(searchString)) {
 				return e;
 			}
@@ -159,19 +160,18 @@ public class Dictionary
 
 		if (direction == 2) {
 			translation = translation.toLowerCase()
-					.replaceAll("á", "a")
-					.replaceAll("ó", "o")
-					.replaceAll("ú", "u").
-					replaceAll("é", "e").
-					replaceAll("á", "a").
-					replaceAll("í", "e").
+					.replaceAll("à", "a")
+					.replaceAll("ò", "o")
+					.replaceAll("ù", "u").
+					replaceAll("è", "e").
+					replaceAll("ì", "i").
 					replaceAll("[^a-zA-Z]", "");
 			
 			String text1 = text.toLowerCase()
-					.replaceAll("á", "a").replaceAll("ó", "o")
-					.replaceAll("ú", "u").replaceAll("é", "e").
-					replaceAll("á", "a").
-					replaceAll("í", "e").
+					.replaceAll("à", "a").replaceAll("ò", "o")
+					.replaceAll("ù", "u").replaceAll("è", "e").
+					replaceAll("à", "a").
+					replaceAll("ì", "i").
 									  replaceAll("[^a-zA-Z]", "");
 
 			if (translation.length() == 0) return false;
