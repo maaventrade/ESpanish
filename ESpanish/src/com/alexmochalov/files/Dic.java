@@ -328,6 +328,26 @@ public class Dic {
 			if(i.getText().equals(text))
 				return(i.getTranslation());
 		return "";
+	}
+
+	public static String getTranslationOnly(String text) {
+		for (IndexEntry i:indexEntries)
+			if(i.getText().equals(text)){
+				String s = i.getTranslation();
+				int j = s.indexOf("<dtrn>");
+				if (j < 0)
+					return "";
+				s = s.substring(j+6);
+				j = s.indexOf("</dtrn>");
+				if (j < 0)
+					return "";
+				s = s.substring(0,j);
+				
+				s = s.replaceAll("(&firstString=<co>)[^&]*(&endString=</co>)", "$1foo$2");
+				
+				return(s);
+			}	
+		return "";
 	}	
 	
 }

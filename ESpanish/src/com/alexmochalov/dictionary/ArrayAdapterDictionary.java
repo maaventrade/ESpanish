@@ -67,7 +67,7 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 
 	private Filter mFilter = new Filter() 
 	{
-		//@Override 
+		@Override 
 		public String convertResultToString(Object resultValue) {
 			return ((IndexEntry)resultValue).getText();
 		}
@@ -75,7 +75,7 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 		@Override 
 		protected FilterResults performFiltering(CharSequence constraint) { 
 			if(constraint != null) {
-            	Log.d("z", "START <"+constraint+">");
+            	//Log.d("z", "START <"+constraint+">");
                 suggestions.clear();
                 
                 String constraintString = constraint.toString().toLowerCase().

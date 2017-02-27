@@ -15,6 +15,7 @@ import java.util.*;
 import org.xmlpull.v1.*;
 
 import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.files.Dic;
 import com.alexmochalov.fragments.PronounEdited;
 import com.alexmochalov.main.Utils;
 import com.alexmochalov.io.*;
@@ -344,11 +345,13 @@ public class MenuData {
 		
 		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		
-		Entry entry = Dictionary.translate(MenuData.mText);
+		//Entry entry = Dictionary.translate(MenuData.mText);
+		String translation = Dic.getTranslationOnly(MenuData.mText);
+		mTranslation.setText(translation);
 		
 		
-		if (entry != null)
-			mTranslation.setText(entry.getTranslation());
+		//if (entry != null)
+		//	mTranslation.setText(entry.getTranslation());
 	}
 
 	public static void setText(String text) {

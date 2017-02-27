@@ -196,7 +196,8 @@ public class FilesIO
 								MenuData.addMarkedString(rec.text, rec.subj, rec.neg, verb.trim());
 							 else{
 								 for (Pronoun p: Dictionary.getPronouns()){
-									MenuData.addMarkedString(rec.neg, p, verb.trim());
+									 if (!p.getTranslation().equals("Вы(вежл.)"))
+										 MenuData.addMarkedString(rec.neg, p, verb.trim());
 								}
 							 } 
 							 }

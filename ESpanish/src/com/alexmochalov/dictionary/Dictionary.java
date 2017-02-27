@@ -90,7 +90,7 @@ public class Dictionary
 			return null;
 		
 		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
-		Log.d("my", "searchString "+searchString);
+		//Log.d("my", "searchString "+searchString);
 		for (Entry e : entries) {
 			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
 					.equals(searchString)) {
