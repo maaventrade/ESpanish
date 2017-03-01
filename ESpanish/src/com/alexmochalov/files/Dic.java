@@ -330,22 +330,45 @@ public class Dic {
 		return "";
 	}
 
+	private static String extractDtrn(String src, boolean first){
+		String dest = "";
+		
+		int j = src.indexOf("<dtrn>");
+		if (j < 0)
+			return "";
+		src = src.substring(j+6);
+		j = src.indexOf("</dtrn>");
+		if (j < 0)
+			return "";
+
+		String rest = src.substring(j+1);
+		
+		src = src.substring(0,j);
+
+		//s = s.replaceAll("(&firstString=<co>)[^&]*(&endString=</co>)", "$1foo$2");
+		j = src.indexOf("<co>");
+		if (j >= 0){
+			int k = src.indexOf("</co>");
+			if (k >= 0 && k > j)
+				src = src.substring(0,j) + src.substring(k+5);
+			if (src.trim().equals("")){
+				src = extractDtrn(rest, false);
+			}
+
+		}
+		
+		
+		
+		return src;
+	}
+	
 	public static String getTranslationOnly(String text) {
 		for (IndexEntry i:indexEntries)
 			if(i.getText().equals(text)){
-				String s = i.getTranslation();
-				int j = s.indexOf("<dtrn>");
-				if (j < 0)
-					return "";
-				s = s.substring(j+6);
-				j = s.indexOf("</dtrn>");
-				if (j < 0)
-					return "";
-				s = s.substring(0,j);
 				
-				s = s.replaceAll("(&firstString=<co>)[^&]*(&endString=</co>)", "$1foo$2");
+				String translation = i.getTranslation();
+				return extractDtrn(translation, true);
 				
-				return(s);
 			}	
 		return "";
 	}	
