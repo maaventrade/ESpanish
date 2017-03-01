@@ -25,6 +25,15 @@
 		</level1>
 			
 	</level0>
+	
+    <level0 title = "Урок 1+">
+		<level1 title = "Комбинации с неправильными глаголами" type = "Комбинации1"  helpindex = "3"
+			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
+			<entry  neg = "false" verbs = "avere,essere,fare"></entry>
+		</level1>
+			
+	</level0>
+    
 	<level0 title = "Урок 2">
 		
 		<level1 title = "Глаголы на &lt;font color=0xffff00&gt;-ere&lt;/font&gt;" type = "Спряжения" helpindex = "6"

@@ -125,11 +125,11 @@ public class MarkedString {
 			negStr = Utils.getNeg();
 			
 		}else if (neg.equals("false"))
-			negStr = "";
+			negStr = " "; /// ????
 		else if (neg.equals(""))
 			if (Math.random() > 0.5)
 				negStr = Utils.getNeg();
-		if (negStr.length() > 0){
+		if (negStr.trim().length() > 0){
 			negStr = " " + negStr + " ";
 			negStrRus = " не ";
 		}
