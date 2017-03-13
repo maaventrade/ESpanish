@@ -114,10 +114,10 @@ public final class R {
         public static final int textChildCount=0x7f0c002b;
         public static final int textGroup=0x7f0c002e;
         public static final int textNote=0x7f0c002d;
-        public static final int textView1=0x7f0c0015;
         public static final int textViewText=0x7f0c0011;
         public static final int textViewTranslation=0x7f0c0012;
         public static final int translation=0x7f0c0017;
+        public static final int webView=0x7f0c0015;
         public static final int webViewHelp=0x7f0c0006;
     }
     public static final class layout {
@@ -128,20 +128,21 @@ public final class R {
         public static final int dialog_scheme=0x7f030004;
         public static final int dialog_scheme_item=0x7f030005;
         public static final int dic_string=0x7f030006;
-        public static final int dictionary=0x7f030007;
-        public static final int fragment_conj=0x7f030008;
-        public static final int fragment_conj_item=0x7f030009;
-        public static final int fragment_conj_item_last=0x7f03000a;
-        public static final int fragment_menu=0x7f03000b;
-        public static final int fragment_phrase=0x7f03000c;
-        public static final int fragment_remember=0x7f03000d;
-        public static final int fragment_remember_page=0x7f03000e;
-        public static final int fragment_speak=0x7f03000f;
-        public static final int fragment_speak_item=0x7f030010;
-        public static final int menu_child_view=0x7f030011;
-        public static final int menu_group_view=0x7f030012;
-        public static final int remember_text_view=0x7f030013;
-        public static final int search_layout=0x7f030014;
+        public static final int dic_string1=0x7f030007;
+        public static final int dictionary=0x7f030008;
+        public static final int fragment_conj=0x7f030009;
+        public static final int fragment_conj_item=0x7f03000a;
+        public static final int fragment_conj_item_last=0x7f03000b;
+        public static final int fragment_menu=0x7f03000c;
+        public static final int fragment_phrase=0x7f03000d;
+        public static final int fragment_remember=0x7f03000e;
+        public static final int fragment_remember_page=0x7f03000f;
+        public static final int fragment_speak=0x7f030010;
+        public static final int fragment_speak_item=0x7f030011;
+        public static final int menu_child_view=0x7f030012;
+        public static final int menu_group_view=0x7f030013;
+        public static final int remember_text_view=0x7f030014;
+        public static final int search_layout=0x7f030015;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;

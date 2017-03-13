@@ -43,7 +43,7 @@ public class FilesIO
 			XmlPullParser xpp = null;
 			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
 			if (!file.exists() || reRead){
-				// Load menu from resource
+				// Load menu from resource 
 				if (Utils.getLanguage().equals("ita")) 
 					xpp = mContext.getResources().getXml(R.xml.menu_it);
 				else if (Utils.getLanguage().equals("spa"))

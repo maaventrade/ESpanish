@@ -3,6 +3,7 @@ package com.alexmochalov.main;
 import android.content.*;
 import android.os.*;
 import android.util.*;
+import android.webkit.WebView;
 
 import java.io.*;
 
@@ -133,4 +134,34 @@ public class Utils {
 		return def;
 	}
 */
+	
+	public static void loadHTML(String word, String translation, WebView webView) {
+		if (! word.equals(""))
+			translation = "<b>" + Utils.firstLetterToUpperCase(word) + "</b>"
+				+ translation;
+
+		translation = translation.replace("\n", "<br>");
+		translation = translation.replace("<abr>", "<font color = #00aa00>");
+		translation = translation.replace("</abr>", "</font>");
+
+		translation = translation.replace("<ex>", "<font color = #aa7777>");
+		translation = translation.replace("</ex>", "</font>");
+
+		int start = translation.indexOf("<kref>");
+		int end = translation.indexOf("</kref>");
+		while (start >= 0 && end >= 0) {
+			String text = translation.substring(start + 6, end);
+
+			translation = translation.substring(0, start) + "<a href =\""
+					+ "http://" + text + "\">" + text + "</a>"
+					+ translation.substring(end + 7);
+
+			start = translation.indexOf("<kref>");
+			end = translation.indexOf("</kref>");
+		}
+
+		webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
+	}
+
+	
 }

@@ -73,7 +73,7 @@ public class Dic {
 			}
 			zin.close();
 		} catch (Exception t) {
-			Log.d("dic","unzip error");
+			Log.d("dic","unzip error "+t);
 			;
 		}
 	}
@@ -251,7 +251,7 @@ public class Dic {
 		}
 		catch (IOException e)
 		{
-			Log.d("dic","indexing error");
+			Log.d("dic","indexing error "+e);
 			
 		}
 
@@ -292,17 +292,14 @@ public class Dic {
 	}
 
 	public static String getTranslation(IndexEntry indexEntry) {
-		Log.d("rem","gettran");
 		BufferedInputStream bis;
 		try {
 			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+"it_ru.xdxf"));
-			Log.d("rem","indexEntry.pos "+indexEntry.pos);
 			//bis.skip(1000);
 			//byte[] buffer = new byte[500];
 			
 			bis.skip(indexEntry.pos);
 			
-			Log.d("rem","indexEntry.length "+indexEntry.length);
 			byte[] buffer = new byte[indexEntry.length];
 
 			int bytesRead = bis.read(buffer);
@@ -311,10 +308,8 @@ public class Dic {
 //			String s = new String(buffer, 0, 500);
 
 			bis.close();
-			Log.d("rem","ok");
 			return s;
 		} catch (IOException t) {
-			Log.d("rem","error");
 			Toast.makeText(mContext,
 						   "Error:" + t.toString(), Toast.LENGTH_LONG)
 				.show();

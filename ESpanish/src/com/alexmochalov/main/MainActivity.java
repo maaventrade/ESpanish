@@ -26,6 +26,7 @@ import android.view.View;
 
 import com.alexmochalov.alang.R;
 import com.alexmochalov.dialogs.DialogHelp;
+import com.alexmochalov.dialogs.DictionaryDialog;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.dictionary.EntryEditor;
 import com.alexmochalov.files.Dic;
@@ -289,6 +290,12 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		}	
 		case R.id.item_dictionary: {
+			DictionaryDialog dictionaryDialog = new DictionaryDialog(this,
+					Dic.getEntries());
+			
+			dictionaryDialog.show();
+			
+			/*
 			LayoutInflater inflator = (LayoutInflater) this
 	                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	        View v = inflator.inflate(R.layout.search_layout, null);
@@ -301,6 +308,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	        item.setVisible(false);
 
 			EntryEditor.start(this, v);
+			*/
 			
 			return true;
 		} 

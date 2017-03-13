@@ -94,20 +94,17 @@ public class DialogHelp extends Dialog implements
 			btnPrev.setVisibility(View.INVISIBLE);
 
 			String translation = Dic.getTranslation(mWord);
-			loadHTML(translation);
+			Utils.loadHTML(mWord, translation, webView);
 
 			webView.setWebViewClient(new WebViewClient() {
 				@Override
 				public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
 					url = url.replace("http:", "");
 					url = url.replace("/", "");
 
-					// Log.d("", "SHOULD "+url);
-
 					mWord = url;
 					String translation = Dic.getTranslation(mWord);
-					loadHTML(translation);
+					Utils.loadHTML(mWord, translation, webView);
 
 					return true;
 				}
@@ -124,33 +121,6 @@ public class DialogHelp extends Dialog implements
 			reset();
 		}
 
-	}
-
-	private void loadHTML(String translation) {
-		translation = "<b>" + Utils.firstLetterToUpperCase(mWord) + "</b>"
-				+ translation;
-
-		translation = translation.replace("\n", "<br>");
-		translation = translation.replace("<abr>", "<font color = #00aa00>");
-		translation = translation.replace("</abr>", "</font>");
-
-		translation = translation.replace("<ex>", "<font color = #aa7777>");
-		translation = translation.replace("</ex>", "</font>");
-
-		int start = translation.indexOf("<kref>");
-		int end = translation.indexOf("</kref>");
-		while (start >= 0 && end >= 0) {
-			String text = translation.substring(start + 6, end);
-
-			translation = translation.substring(0, start) + "<a href =\""
-					+ "http://" + text + "\">" + text + "</a>"
-					+ translation.substring(end + 7);
-
-			start = translation.indexOf("<kref>");
-			end = translation.indexOf("</kref>");
-		}
-
-		webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
 	}
 
 	@SuppressWarnings("deprecation")
