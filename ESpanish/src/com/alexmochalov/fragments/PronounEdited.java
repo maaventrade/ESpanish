@@ -3,7 +3,7 @@ package com.alexmochalov.fragments;
 import android.view.View;
 import android.widget.EditText;
 
-import com.alexmochalov.dictionary.Pronoun;
+import com.alexmochalov.rules.Pronoun;
 
 public class PronounEdited {
 

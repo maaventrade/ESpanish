@@ -7,7 +7,6 @@ import android.util.*;
 import android.widget.*;
 
 import com.alexmochalov.alang.*;
-import com.alexmochalov.dictionary.*;
 
 import java.io.*;
 import java.util.*;
@@ -15,9 +14,9 @@ import java.util.*;
 import org.xmlpull.v1.*;
 
 import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.files.Dic;
 import com.alexmochalov.fragments.PronounEdited;
 import com.alexmochalov.main.Utils;
+import com.alexmochalov.rules.*;
 import com.alexmochalov.io.*;
 
 public class MenuData {
@@ -321,7 +320,7 @@ public class MenuData {
 		if (rusText.length() > 0)
 			return rusText;
 		else return	
-				Dictionary.translate(text).getTranslation();
+				Rules.translate(text).getTranslation();
 		
 	}
 
@@ -346,7 +345,7 @@ public class MenuData {
 		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		
 		//Entry entry = Dictionary.translate(MenuData.mText);
-		String translation = Dic.getTranslationOnly(MenuData.mText);
+		String translation = Dictionary.getTranslationOnly(MenuData.mText);
 		mTranslation.setText(translation);
 		
 		

@@ -1,347 +1,432 @@
 package com.alexmochalov.dictionary;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.alexmochalov.alang.R;
+import com.alexmochalov.main.Utils;
 
-import android.content.Context;
-import android.util.Log;
+public class Dictionary {
+	private static ArrayList<IndexEntry> indexEntriesMain = new ArrayList<IndexEntry>();
+	private static ArrayList<IndexEntry> indexEntriesExt = new ArrayList<IndexEntry>();
 
-import com.alexmochalov.dictionary.Dictionary.*;
-import com.alexmochalov.menu.MenuData;
-import com.alexmochalov.main.*;
+	private static boolean dictionaryDialogOpen = false;
+	private static String lastWord = "";
+	
+	private static ProgressDialog progressDialog;
+	private static MyTaskIndexing myTaskIndexing;
+	private static Context mContext; 
+	
+	private static String mDictionaryName = "it_ru";
+	
+	public interface EventCallback { 
+		void loadingFinishedCallBack(); 
+	}
+	public static EventCallback eventCallback;
 
-public class Dictionary
-{
-
-	public static boolean isLast(Pronoun p)
-	{
-		//return false;
-		return pronouns.indexOf(p) == pronouns.size() - 1;
+	public static boolean fileExists(String fileName){
+		File file = new File(Utils.APP_FOLDER + "/" + fileName);
+		return file.exists();
 	}
 
-	private static class Fit {
-		int fitType;
-		String obj[];
-		String objPast[];
-		
-		public Fit(String attributeValue) {
-			fitType = Integer.parseInt(attributeValue);
+	public static void unzip(Context context, String fileName, int id) {
+		try {
+			int BUFFER_SIZE = 1024;
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int size;
+			String nameUnzipped = Utils.APP_FOLDER + "/" + fileName;
+			
+			InputStream fin = context.getResources().openRawResource(id);
+			ZipInputStream zin = new ZipInputStream(fin);
+			
+			ZipEntry ze = null;
+			while ((ze = zin.getNextEntry()) != null) {
+				//if (isCancelled()) return;
+				if (ze.isDirectory()) {
+				} else {
+					FileOutputStream fout = new FileOutputStream(nameUnzipped, false);
+					
+					BufferedOutputStream bout = new BufferedOutputStream(fout, BUFFER_SIZE);
+					
+					while ( (size = zin.read(buffer, 0, BUFFER_SIZE)) != -1 ) {
+                        fout.write(buffer, 0, size);
+                    }
+					
+					zin.closeEntry();
+					bout.flush();
+					bout.close(); 
+				}
+			}
+			zin.close();
+		} catch (Exception t) {
+			Log.d("dic","unzip error "+t);
+			;
 		}
+	}
 
-		public String getEnding(int sub, String time)
-		{
-			if (time.equals("past"))
-				return objPast[sub].trim();
-			else
-				return obj[sub].trim();
+	public static boolean createIndexAsinc(Context context, String fileName) {
+		mContext = context;
+		
+		progressDialog = new ProgressDialog(context);
+		progressDialog.setTitle("Indexing dictionary...");
+		progressDialog.setMessage(fileName);
+		progressDialog.show();
+		
+		myTaskIndexing = new MyTaskIndexing();    
+		
+		//ArrayList a = new ArrayList();
+		//a.add(fileName);
+		//a.add(indexEntries);
+		//myTaskIndexing.execute(a);
+		
+		myTaskIndexing.execute(fileName);
+		
+		return true;
+	}	
+		
+	static class MyTaskIndexing extends AsyncTask<String, Integer, Void> {
+
+		@Override
+		protected Void doInBackground(String... params) {
+			createIndex(params[0]);
+			return null;
 		}
 		
-		public void setObj(String attributeValue) {
-			obj = attributeValue.split(":");
+		@Override    
+		protected void onCancelled(Void result) {      
+			super.onCancelled(result);
+			progressDialog.hide();
+			progressDialog.dismiss();
+			
+			Toast.makeText(mContext,
+					"Cancelled", Toast.LENGTH_LONG) // mContext.getResources().getString(R.string.loading_cancelled)
+					.show();
+			
+			if (eventCallback != null)
+				eventCallback.loadingFinishedCallBack();
 		}
 		
-		public void setObjPast(String attributeValue) {
-			objPast = attributeValue.split(":");
+		@Override    
+		protected void onPostExecute(Void result) {      
+			super.onPostExecute(result);
+			progressDialog.hide();
+			progressDialog.dismiss();
+			
+			if (eventCallback != null)
+				eventCallback.loadingFinishedCallBack();
+			
+			//Log.d("","eventCallback --->>>>> "+eventCallback);
+			//if (eventCallback != null)
+				//Log.d("","INDEXING FINISHED");
+//				private String mDictionaryName;
+//			private String mIndexFileName;
+				//eventCallback.indexingFinishedCallBack(mDictionaryName, mIndexFileName);
 		}
+	}	
+	
+	static final class EntryComparator implements Comparator<IndexEntry> {
+		  public int compare(IndexEntry e1, IndexEntry e2) {
+		    return e1.text.compareToIgnoreCase(e2.text);
+		  }
 	}
 	
-	private static ArrayList<Entry> entries = new ArrayList<Entry>();
-	private static ArrayList<Fit> fits = new ArrayList<Fit>();
+	static final int BUFFER_SYZE = 2048;
+	public static void createIndex(String fileName) {
+		BufferedInputStream bis;
+		BufferedOutputStream bos;
+		
+		String chunk;
+		String chunk0 = "";
+		byte[] buffer = new byte[BUFFER_SYZE];
+		int bytesRead = 0;
+		
+		ArrayList<IndexEntry> indexEntries = getEntries(); 
+		indexEntries.clear();
+		
+		String fileNameIndex = fileName.replace(".xdxf", ".index");
+		Log.d("dic","start indexing");
+		try {
+			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+fileName));
+			bos = new BufferedOutputStream(new FileOutputStream(Utils.APP_FOLDER+"/"+fileNameIndex, false));
+			
+			int state = 0;
+			int start = 0;
+			int end = 0;
+			int pos = 0;
+			
+			int prevTextEnd = 0;
+			
+			while ((bytesRead = bis.read(buffer)) != -1) {
+				start = 0;
+				end = 0;
+				
+				for (int i = 0; i < BUFFER_SYZE; i++){
+					switch (state) {
+					case 0:
+						if (buffer[i] == '<')
+						{	
+							prevTextEnd = pos-1;
+							state = 1;
+						}	
+						break;
+					case 1:
+						if (buffer[i] == 'k')
+							state = 2;
+						else 
+							state = 0;
+						break;
+					case 2:
+						if (buffer[i] == '>'){
+							state = 3;
+							start = i+1;
+						}	
+						break;
+					case 3:
+						if (buffer[i] != '<'){
+						} else {
+							end = i;
+							state = 4;
+						}
+						break;
+					case 4:
+						if (buffer[i] == 'k')
+							state = 5;
+						break;
+					case 5:
+						if (buffer[i] == '>'){
+						    chunk = new String(buffer, start, end-start);
+						    if ((chunk0+chunk).length() > 0
+						    &&  !chunk.startsWith("  ")){
+							    indexEntries.add(new IndexEntry((chunk0+chunk).trim(), pos+1, prevTextEnd));
+							    chunk0 = "";
+						    }
+							state = 0;
+						}
+						else
+							state = 0;
+						break;
+					default:	
+					    Log.d("", "state ??? "+state);
+					}
+					pos++;
+				}
+				if (state == 3){
+				    chunk0 = new String(buffer, start, BUFFER_SYZE-start);
+				    if (chunk0.startsWith("  ")){
+				    	chunk0 = "";
+				    	state = 0;
+				    }
+				}    
+				else
+					chunk0 = "";	
+			}		
 
-	private static ArrayList<Pronoun> pronouns = new ArrayList<Pronoun>();
+			
+			int ind = 0;
+			for (IndexEntry IndexEntry: indexEntries){
+				if (ind < indexEntries.size()-1)
+					IndexEntry.length = indexEntries.get(ind+1).length - IndexEntry.pos + 2;
+				else	
+					IndexEntry.length = pos - IndexEntry.pos;
+				ind++;
+			}
+			
+			EntryComparator ec = new EntryComparator();
+			java.util.Collections.sort(indexEntries, ec);			
+			int n = 0;
+			for (IndexEntry IndexEntry: indexEntries){
+				n++;
+				if (n < 20)
+					Log.d("ind","-"+IndexEntry.text.getBytes());
+				
+				
+				bos.write(IndexEntry.text.getBytes());
+				bos.write((char)(0x9));
+				bos.write(String.format("%x", IndexEntry.pos).getBytes());
+				bos.write((char)(0x9));
+				bos.write(String.format("%x", IndexEntry.length).getBytes());
+				bos.write((char)(0xa));
+			}
+			
+			bos.flush();
+			bos.close();
+		}
+		catch (IOException e)
+		{
+			Log.d("dic","indexing error "+e);
+			
+		}
 
-	public static void addEntry(String text) {
-		Entry e = new Entry();
-		e.mText = text;
-		entries.add(e);
+		
+		
 	}
 
-	/*
-	public static String getTranslation(String searchString) {
-		if (searchString.trim().length() == 0)
-			return "";
+	public static void loadIndex(Context context, String fileNameIndex) {
+		BufferedReader reader;
 		
-		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
+		ArrayList<IndexEntry> indexEntries = getEntries(); 
+		
+		try {
+			reader = new BufferedReader(new InputStreamReader(
+					new FileInputStream(Utils.APP_FOLDER+"/"+fileNameIndex)));
 
-		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
-					.equals(searchString)) {
-				return e.translation;
+			String line = reader.readLine();
+			while (line != null){
+				//5be3b8	2249
+				if (line.contains("essere"))
+					Log.d("ess",line);
+				
+				indexEntries.add(new IndexEntry(line));
+				line = reader.readLine();
+			    //if (isCancelled()){
+				//	reader.close();
+			    //	break;
+			    //}
 			}
+			reader.close();
+		} catch (IOException t) {
+			Log.d("dic", "loading index error");
 		}
-		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
-					.contains(searchString)) {
-				return e.translation;
-			}
+		Log.d("dic", "loading index ok "+indexEntries.size());
+		
+		if (eventCallback != null)
+			eventCallback.loadingFinishedCallBack();
+		
+	}
+
+	public static ArrayList<IndexEntry> getEntries() {
+		if (mDictionaryName.equals("it_ru"))
+			return indexEntriesMain;
+		else
+			return indexEntriesExt;
+	}
+
+	public static String getTranslation(IndexEntry indexEntry) {
+		BufferedInputStream bis;
+		try {
+			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+mDictionaryName+".xdxf"));
+			//bis.skip(1000);
+			//byte[] buffer = new byte[500];
+			
+			bis.skip(indexEntry.pos);
+			
+			byte[] buffer = new byte[indexEntry.length];
+
+			int bytesRead = bis.read(buffer);
+
+			String s = new String(buffer, 0, indexEntry.length-1);
+//			String s = new String(buffer, 0, 500);
+
+			bis.close();
+			return s;
+		} catch (IOException t) {
+			Toast.makeText(mContext,
+						   "Error:" + t.toString(), Toast.LENGTH_LONG)
+				.show();
+				
+			return "";
 		}
+	}
+
+	public static String getTranslation(String text) {
+		if (mDictionaryName.equals("it_ru")){
+			for (IndexEntry i: indexEntriesMain)
+				if(i.getText().equals(text))
+					return(i.getTranslation());
+		} else
+		{
+			for (IndexEntry i: indexEntriesExt)
+				if(i.getText().equals(text))
+					return(i.getTranslation());
+		}
+		
 		return "";
 	}
-	*/
 
-	public static Entry translate(String searchString) {
-		if (searchString.trim().length() == 0)
-			return null;
+	private static String extractDtrn(String src, boolean first){
+		String dest = "";
 		
-		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
-		//Log.d("my", "searchString "+searchString);
-		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
-					.equals(searchString)) {
-				return e;
-			}
-		}
-		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
-					.contains(searchString)) {
-				return e;
-			}
-		}
-		return null;
-	}
-
-	public static Entry getTranslationAsIs(String searchString) {
-		if (searchString.trim().length() == 0)
-			return null;
-		
-		//Log.d("atr",searchString);
-		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "");
-
-		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").
-					equals(searchString)) {
-				return e;
-			}
-		}
-		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").
-					contains(searchString)) {
-				return e;
-			}
-		}
-		return null;
-	}
-	
-	public static void addPronoun(String text) {
-		Pronoun e = new Pronoun();
-		e.mText = text;
-		pronouns.add(e);
-	}
-
-	public static void setProniunTranslation(String text) {
-		pronouns.get(pronouns.size() - 1).translation = text;
-	}
-
-	public static void setVerbEnding(String text) {
-		pronouns.get(pronouns.size() - 1).verb_ending = text;
-	}
-
-	public static void setVerbEndingPast(String text) {
-		pronouns.get(pronouns.size() - 1).verb_ending_past = text;
-	}
-
-	public static ArrayList<Pronoun> getPronouns() {
-		return pronouns;
-	}
-
-	public static Pronoun getRandomPronoun() {
-		return pronouns.get( (int) (Math.random()*pronouns.size())  );
-	}
-	
-	public static boolean testRus(String translation, String text, int direction) {
-
-	//Log.d("", "" + translation + "  " + text);
-
-		if (direction == 2) {
-			translation = translation.toLowerCase()
-					.replaceAll("à", "a")
-					.replaceAll("ò", "o")
-					.replaceAll("ù", "u").
-					replaceAll("è", "e").
-					replaceAll("ì", "i").
-					replaceAll("[^a-zA-Z]", "");
-			
-			String text1 = text.toLowerCase()
-					.replaceAll("à", "a").replaceAll("ò", "o")
-					.replaceAll("ù", "u").replaceAll("è", "e").
-					replaceAll("à", "a").
-					replaceAll("ì", "i").
-									  replaceAll("[^a-zA-Z]", "");
-
-			if (translation.length() == 0) return false;
-			else if ( translation.equals(text1)) return true;
-			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
-			else return false;	
-			
-		} else {
-			translation = translation.replaceAll("[^а-яА-Я]", "").toLowerCase();
-			
-			String text1 = text.toLowerCase();
-			
-			if (translation.length() == 0) return false;
-			else if ( translation.equals(text1.replaceAll("[^а-яА-Я]", ""))) return true;
-			else if (text1.contains(translation+",") || text1.contains(", "+translation)) return true;
-			else return false;	
-		}
-	}
-
-	public static void load(Context context) {
-		entries.clear();
-		pronouns.clear();
-		fits.clear();
-
-		String mode = "";
-
-		try {
-
-			XmlPullParser xpp = null;
-			if (Utils.getLanguage().equals("ita")) 
-				xpp = context.getResources().getXml(R.xml.dictionary_it);
-			else if (Utils.getLanguage().equals("spa"))
-				xpp = context.getResources().getXml(R.xml.dictionary_spa);
-			
-			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
-				switch (xpp.getEventType()) { // начало документа
-				case XmlPullParser.START_DOCUMENT:
-					// Log.d(LOG_TAG, "START_DOCUMENT");
-					break; // начало тэга
-				case XmlPullParser.START_TAG:
-					if (xpp.getName().equals("dictionary")) {
-						mode = "dictionary";
-					} else if (xpp.getName().equals("entry")
-							&& mode.equals("dictionary")) {
-						// Log.d(LOG_TAG, "getAttributeCount: " +
-						// xpp.getAttributeCount());
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("text")) {
-								addEntry(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("transl")) {
-								entries.get(entries.size() - 1).
-									setTranslation(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("root")) {
-								entries.get(entries.size() - 1).
-									setRoot(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("fit_type")) {
-								entries.get(entries.size() - 1).
-									setFitType(xpp.getAttributeValue(i));
-							}
-						}
-					} else if (xpp.getName().equals("entry")
-							&& mode.equals("fits")) {
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("type")) {
-								fits.add(new Fit(xpp.getAttributeValue(i)));
-							} else if (xpp.getAttributeName(i).equals("obj")) 
-								fits.get(fits.size() - 1).
-									setObj(xpp.getAttributeValue(i));
-							else if (xpp.getAttributeName(i).equals("obj_past")) 
-								fits.get(fits.size() - 1).
-									setObjPast(xpp.getAttributeValue(i));
-						}
-					} else if (xpp.getName().equals("pronoun")) {
-						mode = "pronoun";
-					} else if (xpp.getName().equals("fits")) {
-						mode = "fits";
-					} else if (xpp.getName().equals("entry")
-							&& mode.equals("pronoun")) {
-						for (int i = 0; i < xpp.getAttributeCount(); i++) {
-							if (xpp.getAttributeName(i).equals("text")) {
-								addPronoun(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals("transl")) {
-								setProniunTranslation(xpp.getAttributeValue(i));
-							} else if (xpp.getAttributeName(i).equals(
-									"verb_ending")) 
-								setVerbEnding(xpp.getAttributeValue(i));
-							 else if (xpp.getAttributeName(i).equals(
-								"verb_ending_past")) 
-							 setVerbEndingPast(xpp.getAttributeValue(i));
-						}
-					}
-					break; // конец тэга
-				case XmlPullParser.END_TAG:
-					break; // содержимое тэга
-				case XmlPullParser.TEXT:
-					/*
-					 * if (mode.equals("Выражения") ||
-					 * mode.equals("Спряжения")){
-					 * 
-					 * ArrayList<String> itemsTextData = new
-					 * ArrayList<String>(Arrays.asList(xpp.getText().
-					 * split("\n"))); for (int i = 0; i < itemsTextData.size();
-					 * i++) itemsTextData.set(i, itemsTextData.get(i).trim());
-					 * 
-					 * textData.get(textData.size()-1).add(new
-					 * Data(itemsTextData)); }
-					 */
-					break;
-				default:
-					break;
-				} // следующий элемент
-				xpp.next();
-			}
-			// Log.d(LOG_TAG, "END_DOCUMENT");
-
-		} catch (XmlPullParserException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	
-	}
-
-	public static String conj(int i, String verb, boolean isPast) {
-		return pronouns.get(i).conj(verb, isPast);
-	}
-
-//	public static CharSequence conj(CharSequence text, String verb) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
-	public static String fit(Entry e, int sub, String time) {
-		if (e == null)
+		int j = src.indexOf("<dtrn>");
+		if (j < 0)
 			return "";
-		
-		String ending = "";
-	
-		for (Fit f : fits){
-			int n = f.fitType;
-			int k = e.fit_type;
-			if (f.fitType == e.fit_type){
-				ending = f.getEnding(sub, time);
-				return e.root + ending;
-			}
-		}
-		 
-		return e.root + ending;
-	}
+		src = src.substring(j+6);
+		j = src.indexOf("</dtrn>");
+		if (j < 0)
+			return "";
 
-	public static ArrayList<Entry> getEntries() {
-		return entries;
-	}
-
-	public static String fit(Entry e, Pronoun pronoun, String time) {
-		String ending = "";
-		int sub = pronouns.indexOf(pronoun);
+		String rest = src.substring(j+1);
 		
-		for (Fit f : fits){
-			int n = f.fitType;
-			int k = e.fit_type;
-			if (f.fitType == e.fit_type){
-				ending = f.getEnding(sub, time);
-				return e.root + ending;
+		src = src.substring(0,j);
+
+		//s = s.replaceAll("(&firstString=<co>)[^&]*(&endString=</co>)", "$1foo$2");
+		j = src.indexOf("<co>");
+		if (j >= 0){
+			int k = src.indexOf("</co>");
+			if (k >= 0 && k > j)
+				src = src.substring(0,j) + src.substring(k+5);
+			if (src.trim().equals("")){
+				src = extractDtrn(rest, false);
 			}
+
 		}
-		 
-		return e.root + ending;
+		
+		return src;
 	}
 	
+	public static String getTranslationOnly(String text) {
+		if (mDictionaryName.equals("it_ru")){
+			for (IndexEntry i:indexEntriesMain)
+				if(i.getText().equals(text)){
+					
+					String translation = i.getTranslation();
+					return extractDtrn(translation, true);
+					
+				}	
+		} else {
+			for (IndexEntry i:indexEntriesExt)
+				if(i.getText().equals(text)){
+					
+					String translation = i.getTranslation();
+					return extractDtrn(translation, true);
+					
+				}	
+		}
+		
+		return "";
+	}
 
+	public static void setDialogOpen(boolean b) {
+		dictionaryDialogOpen = b;
+	}
+
+	public static void load(Context context, String dictionaryName, int resId) {
+		mDictionaryName = dictionaryName;
+		
+		if (!Dictionary.fileExists(mDictionaryName+".xdxf")
+				|| !Dictionary.fileExists(mDictionaryName+".index")
+				//|| dictionaryName.equals("ru_it")
+			){
+			Dictionary.unzip(context. getApplicationContext(), mDictionaryName+".xdxf", resId);
+			Dictionary.createIndexAsinc(context, mDictionaryName+".xdxf");
+		} else
+			Dictionary.loadIndex(context, mDictionaryName+".index");
+	}	
+	
 }

@@ -9,16 +9,13 @@ import android.widget.*;
 import android.widget.CompoundButton.*;
 
 import com.alexmochalov.alang.*;
-import com.alexmochalov.dictionary.*;
 import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.*;
 
 import java.util.*;
 
 import android.view.View.OnClickListener;
-
-import com.alexmochalov.dictionary.Dictionary;
-
 import android.text.*;
 
 public class FragmentConj extends FragmentM {
@@ -203,7 +200,7 @@ public class FragmentConj extends FragmentM {
 
 		mLinearLayout = (ViewGroup) rootView.findViewById(R.id.fc_linearLayout);
 
-		ArrayList<Pronoun> pronouns = Dictionary.getPronouns();
+		ArrayList<Pronoun> pronouns = Rules.getPronouns();
 		for (Pronoun p : pronouns) {
 			// Create Layout for every pronoun
 			View layout2 = null;
@@ -350,11 +347,11 @@ public class FragmentConj extends FragmentM {
 		if (non.equals("Отрицание"))
 			textSample = "non ";
 
-		int index = Dictionary.getPronouns().indexOf(p.mPronoun);
+		int index = Rules.getPronouns().indexOf(p.mPronoun);
 
 		if (tense.equals("Прошедшее время"))
-			textSample = textSample + Dictionary.conj(index, "avere", false)
-					+ " " + Dictionary.conj(index, verb, true);
+			textSample = textSample + Rules.conj(index, "avere", false)
+					+ " " + Rules.conj(index, verb, true);
 		else
 			textSample = p.mPronoun.conj(verb, false);
 

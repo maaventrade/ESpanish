@@ -13,14 +13,17 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 import com.alexmochalov.alang.R;
-import com.alexmochalov.dictionary.Entry;
 import com.alexmochalov.menu.MarkedString;
 import com.alexmochalov.menu.MenuData;
-import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.files.Dic;
+
 import android.util.*;
+
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.Rules;
+import com.alexmochalov.rules.Entry;
 import com.alexmochalov.dialogs.*;
+import com.alexmochalov.dictionary.Dictionary;
+
 import android.widget.AdapterView.*;
 import android.widget.*;
 
@@ -93,7 +96,7 @@ public class PagerAdapterRemember extends PagerAdapter
 			});
 
         Log.d("rem","text: "+remEntry.getText());
-        String translation = Dic.getTranslation(remEntry.getText());
+        String translation = Dictionary.getTranslation(remEntry.getText());
 		
 		Log.d("rem","tra: "+translation);
 		

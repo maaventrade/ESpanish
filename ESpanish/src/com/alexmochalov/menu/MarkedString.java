@@ -2,8 +2,9 @@ package com.alexmochalov.menu;
 
 import android.util.*;
 
-import com.alexmochalov.dictionary.*;
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.*;
+
 import java.util.ArrayList;
 
 public class MarkedString {
@@ -49,16 +50,16 @@ public class MarkedString {
 		String verbStrRus = "";
 
 		if (!subj.equals("false")){
-			pronoun = Dictionary.getRandomPronoun();
+			pronoun = Rules.getRandomPronoun();
 			pronounStr = pronoun.getText()+" ";
-			pronounStrRus = Dictionary.getTranslationAsIs(pronoun.getText()).getTranslation()+" ";
+			pronounStrRus = Rules.getTranslationAsIs(pronoun.getText()).getTranslation()+" ";
 		} else {
-			pronoun = Dictionary.getPronouns().get(2);
+			pronoun = Rules.getPronouns().get(2);
 			pronounStr = "";
 			pronounStrRus = "";
 		}
 		
-		int index = Dictionary.getPronouns().indexOf(pronoun);
+		int index = Rules.getPronouns().indexOf(pronoun);
 		
 	//Log.d("uu","neg "+neg);
 		if (neg.equals("true"))
@@ -68,7 +69,7 @@ public class MarkedString {
 		else if (neg.equals(""))
 			if (Math.random() > 0.5)
 				negStr = Utils.getNeg();
-		e = Dictionary.translate(negStr);
+		e = Rules.translate(negStr);
 		if ( e != null)
 			negStrRus = e.getTranslation()+" ";
 		if (negStr.length() > 0)
@@ -87,14 +88,14 @@ public class MarkedString {
 		if (timeStr.equals("present"))
 			verbStr = pronoun.conj(verb, false);
 		else 
-			verbStr = Dictionary.conj(index, "avere", false) +
+			verbStr = Rules.conj(index, "avere", false) +
             		" "+
-            		Dictionary.conj(index, verb, true);		
+            		Rules.conj(index, verb, true);		
 	
 
-		e = Dictionary.translate(verb);
+		e = Rules.translate(verb);
 		
-		verbStrRus = Dictionary.fit(e, pronoun, timeStr).trim();
+		verbStrRus = Rules.fit(e, pronoun, timeStr).trim();
 
 		
 		mText = text+" "+
@@ -103,7 +104,7 @@ public class MarkedString {
 				verbStr+
 				"?";
 		
-		mRusText = Utils.firstLetterToUpperCase(Dictionary.translate(text).getTranslation())+" "+
+		mRusText = Utils.firstLetterToUpperCase(Rules.translate(text).getTranslation())+" "+
 				pronounStrRus+
 				negStrRus+
 				verbStrRus+
@@ -134,14 +135,14 @@ public class MarkedString {
 			negStrRus = " не ";
 		}
 	
-		Entry e = Dictionary.translate(verb);
-		e = Dictionary.translate(verb);		
+		Entry e = Rules.translate(verb);
+		e = Rules.translate(verb);		
 		
-		//negStrRus = Dictionary.getTranslation(negStr);
+		//negStrRus = Rules.getTranslation(negStr);
 		
 		this.mRusText = Utils.firstLetterToUpperCase(pronoun.getTranslation()) + 
 				negStrRus + 
-				Dictionary.fit(e,  Dictionary.getPronouns().indexOf(pronoun) , "present").trim();
+				Rules.fit(e,  Rules.getPronouns().indexOf(pronoun) , "present").trim();
 		
 		this.mText = pronoun.getText() + negStr + pronoun.conj(verb, false);
 	
@@ -153,7 +154,7 @@ public class MarkedString {
 		children = new ArrayList<MarkedString>();
 		String verbs[] = pverbs.split(",");
 		for (String verb : verbs){
-			for (Pronoun p: com.alexmochalov.dictionary.Dictionary.getPronouns()){
+			for (Pronoun p: com.alexmochalov.Rules.Rules.getPronouns()){
 				children.add(new MarkedString(neg, p, verb.trim()));
 			}
 		}

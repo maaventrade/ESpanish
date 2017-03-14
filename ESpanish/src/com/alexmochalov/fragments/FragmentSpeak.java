@@ -8,9 +8,9 @@ import android.view.View.*;
 import android.widget.*;
 
 import com.alexmochalov.alang.*;
-import com.alexmochalov.dictionary.*;
 import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.*;
 
 import java.io.*;
 
@@ -97,9 +97,9 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 		text = "";
 
 		int i = 0;
-		for (Pronoun p : Dictionary.getPronouns()) {
-			Entry e = Dictionary.translate(MenuData.getText());
-			String verb = Dictionary.fit(e, i, "present").trim();
+		for (Pronoun p : Rules.getPronouns()) {
+			Entry e = Rules.translate(MenuData.getText());
+			String verb = Rules.fit(e, i, "present").trim();
 
 			
 		View layout2 = LayoutInflater.from(mContext).inflate(
@@ -111,7 +111,7 @@ public class FragmentSpeak extends FragmentM implements OnClickListener {
 		textViewSpeak.setText(p.getTranslation(true) + " " + verb + ". ");
 			
 			text = text + p.getText() + " "
-					+ Dictionary.conj(i, MenuData.getText(), false) + ". ";
+					+ Rules.conj(i, MenuData.getText(), false) + ". ";
 			i++;
 		}
 

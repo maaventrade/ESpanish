@@ -26,10 +26,8 @@ import android.view.View;
 
 import com.alexmochalov.alang.R;
 import com.alexmochalov.dialogs.DialogHelp;
-import com.alexmochalov.dialogs.DictionaryDialog;
 import com.alexmochalov.dictionary.Dictionary;
-import com.alexmochalov.dictionary.EntryEditor;
-import com.alexmochalov.files.Dic;
+import com.alexmochalov.dictionary.DictionaryDialog;
 import com.alexmochalov.fragments.FragmentConj;
 import com.alexmochalov.fragments.FragmentM;
 import com.alexmochalov.fragments.FragmentPhrase;
@@ -38,6 +36,8 @@ import com.alexmochalov.fragments.FragmentSpeak;
 import com.alexmochalov.menu.FragmentMenu;
 import com.alexmochalov.menu.FragmentMenu.OnMenuItemSelectedListener;
 import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.rules.Rules;
+import com.alexmochalov.rules.EntryEditor;
 
 public class MainActivity extends Activity implements OnInitListener, 
 OnMenuItemSelectedListener, FragmentM.OnTestedListener
@@ -79,7 +79,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-		Dictionary.load(this);
+		Rules.load(this);
 		MenuData.load(this, false);
 
 		if (savedInstanceState != null){
@@ -99,11 +99,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
 		
-		if (!Dic.fileExists("it_ru.xdxf")){
-			Dic.unzip(this, "it_ru.xdxf", R.raw.it_ru);
-			Dic.createIndexAsinc(this, "it_ru.xdxf");
-		} else
-			Dic.loadIndex(this, "it_ru.index");
+		Dictionary.load(this, "it_ru", R.raw.it_ru);
 		
 	}
 
@@ -268,11 +264,11 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragmentMenu.refresh();
 			return true;
 		}
-		case R.id.action_reindex: {
-				Dic.unzip(this, "it_ru.xdxf", R.raw.it_ru);
-				Dic.createIndexAsinc(this, "it_ru.xdxf");
-				return true;
-		}
+		//case R.id.action_reindex: {
+		//		Dictionary.unzip(this, "it_ru.xdxf", R.raw.it_ru);
+		//		Dictionary.createIndexAsinc(this, "it_ru.xdxf");
+		//		return true;
+		//}
 		
 		case R.id.item_speak: {
 			if (fragment != null)
@@ -290,10 +286,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			return true;
 		}	
 		case R.id.item_dictionary: {
-			DictionaryDialog dictionaryDialog = new DictionaryDialog(this,
-					Dic.getEntries());
+			new DictionaryDialog().show(getFragmentManager(), "tag"); 
 			
-			dictionaryDialog.show();
 			
 			/*
 			LayoutInflater inflator = (LayoutInflater) this

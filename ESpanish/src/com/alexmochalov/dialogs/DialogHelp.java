@@ -10,8 +10,8 @@ import android.widget.*;
 import android.graphics.Bitmap;
 
 import com.alexmochalov.alang.*;
-import com.alexmochalov.files.Dic;
-import com.alexmochalov.files.IndexEntry;
+import com.alexmochalov.dictionary.Dictionary;
+import com.alexmochalov.dictionary.IndexEntry;
 import com.alexmochalov.main.*;
 
 import java.io.*;
@@ -93,7 +93,7 @@ public class DialogHelp extends Dialog implements
 			btnNext.setVisibility(View.INVISIBLE);
 			btnPrev.setVisibility(View.INVISIBLE);
 
-			String translation = Dic.getTranslation(mWord);
+			String translation = Dictionary.getTranslation(mWord);
 			Utils.loadHTML(mWord, translation, webView);
 
 			webView.setWebViewClient(new WebViewClient() {
@@ -103,7 +103,7 @@ public class DialogHelp extends Dialog implements
 					url = url.replace("/", "");
 
 					mWord = url;
-					String translation = Dic.getTranslation(mWord);
+					String translation = Dictionary.getTranslation(mWord);
 					Utils.loadHTML(mWord, translation, webView);
 
 					return true;
@@ -165,7 +165,7 @@ public class DialogHelp extends Dialog implements
 			String s = "";
 			if (mIndex == 999) {
 				/*
-				String translation = Dic.getTranslation(mWord);
+				String translation = Dictionary.getTranslation(mWord);
 				String line = translation.replace("\n", ":");
 
 				line = Html.fromHtml(line).toString();

@@ -21,8 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alexmochalov.alang.R;
-import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.rules.Rules;
+import com.alexmochalov.rules.Rules;
 
 public class FragmentPhrase extends FragmentM {
 	Button button_test;
@@ -97,7 +98,7 @@ public class FragmentPhrase extends FragmentM {
 
 					TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
 					
-					boolean result = Dictionary.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData.getDirection());
+					boolean result = Rules.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData.getDirection());
 					
 					//result = true;
 					mTranslation.setVisibility(View.VISIBLE);

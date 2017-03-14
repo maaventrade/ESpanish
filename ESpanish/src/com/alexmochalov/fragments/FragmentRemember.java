@@ -8,10 +8,10 @@ import android.view.View.*;
 import android.widget.*;
 
 import com.alexmochalov.alang.R;
-import com.alexmochalov.dictionary.*;
 import com.alexmochalov.fragments.PagerAdapterRemember.OnEventListener;
 import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.*;
 
 import java.io.*;
 

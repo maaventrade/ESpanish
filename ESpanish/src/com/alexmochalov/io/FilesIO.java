@@ -6,13 +6,12 @@ import android.widget.Toast;
 import com.alexmochalov.alang.*;
 import com.alexmochalov.menu.*;
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.*;
 
 import java.io.*;
 import java.util.ArrayList;
 
 import org.xmlpull.v1.*;
-
-import com.alexmochalov.dictionary.*;
 
 public class FilesIO
 {
@@ -195,7 +194,7 @@ public class FilesIO
 							 if (mode.equals("Комбинации"))
 								MenuData.addMarkedString(rec.text, rec.subj, rec.neg, verb.trim());
 							 else{
-								 for (Pronoun p: Dictionary.getPronouns()){
+								 for (Pronoun p: Rules.getPronouns()){
 									 Log.d("io",p.getTranslation());
 									 if (!p.getTranslation().equals("Вы(вежл.)")){
 										 Log.d("io", "added");
