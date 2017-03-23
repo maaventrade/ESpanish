@@ -54,6 +54,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	private final static String MTEXT = "TEXT";
 	private final static String RANDOMIZATION_ORDER = "RANDOMIZATION_ORDER";	
 	
+	private final static String DIC = "DIC";
+	private final static String DIC_LASTWORD = "DIC_LASTWORD";
+	private final static String DIC_TEXT = "DIC_TEXT";
+	
 	FragmentM fragment;
 	FragmentMenu fragmentMenu;
 	
@@ -85,6 +89,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		if (savedInstanceState != null){
 			Utils.setRandomize( savedInstanceState.getBoolean(RANDOMIZE));
 			Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
+			Dictionary.setDictionaryName(savedInstanceState.getString(DIC));
+			Dictionary.setLastWord(savedInstanceState.getString(DIC_LASTWORD));
+			Dictionary.setText(savedInstanceState.getString(DIC_TEXT));
+			
 		} else {
 			Utils.setScale( prefs.getInt(HELPTEXTSCALE, 110));
 		}
@@ -99,7 +107,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
 		
-		Dictionary.load(this, "it_ru", R.raw.it_ru);
+		Dictionary.load(this);
 		
 	}
 
@@ -124,6 +132,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		outState.putIntArray(RANDOMIZATION_ORDER, MenuData.getRandomizationOrder());
 		
 		outState.putInt( HELPTEXTSCALE, Utils.getScale());
+		
+		outState.putString( DIC, Dictionary.getDictionaryName());
+		outState.putString(DIC_LASTWORD, Dictionary.getLastWord());
+		outState.putString(DIC_TEXT, Dictionary.getText());
 		//Log.d("aaa", "PUT "+Utils.getScale());
 	}
 	

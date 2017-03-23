@@ -22,19 +22,55 @@ import android.widget.Toast;
 
 import com.alexmochalov.alang.R;
 import com.alexmochalov.main.Utils;
+import com.alexmochalov.main.*;
 
 public class Dictionary {
 	private static ArrayList<IndexEntry> indexEntriesMain = new ArrayList<IndexEntry>();
 	private static ArrayList<IndexEntry> indexEntriesExt = new ArrayList<IndexEntry>();
 
 	private static boolean dictionaryDialogOpen = false;
-	private static String lastWord = "";
+	private static String mLastWord = "";
+	private static String mText = "";
 	
 	private static ProgressDialog progressDialog;
 	private static MyTaskIndexing myTaskIndexing;
 	private static Context mContext; 
 	
 	private static String mDictionaryName = "it_ru";
+
+	public static void setText(String text)
+	{
+		mText = text;
+	}
+
+	public static String getText()
+	{
+		return mText;
+	}
+
+	public static String getLastWord()
+	{
+		return mLastWord;
+	}
+
+	public static void setLastWord(String text)
+	{
+		mLastWord = text;
+	}
+
+	
+
+	public static void setDictionaryName(String name)
+	{
+		if (name != null
+		&& !name.equals(""))
+		mDictionaryName = name;
+	}
+
+	public static String getDictionaryName()
+	{
+		return mDictionaryName;
+	}
 	
 	public interface EventCallback { 
 		void loadingFinishedCallBack(); 
@@ -416,8 +452,13 @@ public class Dictionary {
 		dictionaryDialogOpen = b;
 	}
 
-	public static void load(Context context, String dictionaryName, int resId) {
-		mDictionaryName = dictionaryName;
+	public static void load(Context context) {
+		int resId;
+		if (mDictionaryName.equals("en_ru"))
+			resId = R.raw.it_ru;
+		else
+			resId = R.raw.ru_it;
+			
 		
 		if (!Dictionary.fileExists(mDictionaryName+".xdxf")
 				|| !Dictionary.fileExists(mDictionaryName+".index")
@@ -428,5 +469,6 @@ public class Dictionary {
 		} else
 			Dictionary.loadIndex(context, mDictionaryName+".index");
 	}	
+	
 	
 }

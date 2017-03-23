@@ -43,7 +43,8 @@ import com.alexmochalov.main.Utils;
 import com.alexmochalov.rules.ArrayAdapterDictionary;
 
 public class DictionaryDialog extends DialogFragment implements
-		android.view.View.OnClickListener {
+android.view.View.OnClickListener
+{
 
 	private Context mContext;
 	private DictionaryDialog dialog;
@@ -52,9 +53,12 @@ public class DictionaryDialog extends DialogFragment implements
 	private ListView listView;
 	private ArrayAdapterEntries itemsAdapter;
 	private WebView webView;
+	
+	private boolean onCreationView;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState)
+	{
 
 		mContext = getActivity();
 
@@ -63,14 +67,14 @@ public class DictionaryDialog extends DialogFragment implements
 		View v = inflater.inflate(R.layout.dictionary, null);
 
 		v.findViewById(R.id.dialogSchemeImageButtonSpeak).setOnClickListener(
-				this);
+			this);
 		v.findViewById(R.id.dialogSchemeImageBack).setOnClickListener(this);
 		v.findViewById(R.id.dialogSchemeImageButtonPlus).setOnClickListener(
-				this);
+			this);
 		v.findViewById(R.id.dialogSchemeImageButtonMinus).setOnClickListener(
-				this);
+			this);
 		v.findViewById(R.id.dialogSchemeImageButtonDictionary)
-				.setOnClickListener(this);
+			.setOnClickListener(this);
 
 		webView = (WebView) v.findViewById(R.id.webView);
 
@@ -79,61 +83,88 @@ public class DictionaryDialog extends DialogFragment implements
 		mEntries = Dictionary.getEntries();
 
 		itemsAdapter = new ArrayAdapterEntries(mContext,
-				android.R.layout.simple_list_item_1, mEntries);
+											   android.R.layout.simple_list_item_1, mEntries);
 
 		listView.setAdapter(itemsAdapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View p2,
-					int position, long p4) {
-				IndexEntry entry = mEntries.get(position); //(IndexEntry) adapterView
-						//.getItemAtPosition(position);
+				@Override
+				public void onItemClick(AdapterView<?> adapterView, View p2,
+										int position, long p4)
+				{
+					IndexEntry entry = mEntries.get(position); //(IndexEntry) adapterView
+					//.getItemAtPosition(position);
 
-				showTranslation(entry);
+					showTranslation(entry);
 
-			}
-		});
+					Dictionary.setLastWord(entry.getText());
+
+				}
+			});
 
 		EditText editText = (EditText) v.findViewById(R.id.editText);
+		
+		editText.setText(Dictionary.getText());
+		
 		editText.addTextChangedListener(new TextWatcher() {
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+											  int after)
+				{
+				}
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-			}
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before,
+										  int count)
+				{
+				}
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				String str = s.toString().toLowerCase();
+				@Override
+				public void afterTextChanged(Editable s)
+				{
+					String str = s.toString().toLowerCase();
+					Dictionary.setText(s.toString());
 
-				for (IndexEntry i : mEntries)
-					if (i.getText().toLowerCase().startsWith(str)) {
-						listView.setSelection(mEntries.indexOf(i));
-						showTranslation(i);
-						break;
-					}
-				;
-			}
+					for (IndexEntry i : mEntries)
+						if (i.getText().toLowerCase().startsWith(str))
+						{
+							listView.setSelection(mEntries.indexOf(i));
+							showTranslation(i);
 
-		});
+							Dictionary.setLastWord(i.getText());
+							break;
+						}
+					;
+				}
+
+			});
+
+
+		String s = Dictionary.getLastWord();
+		if (!s.equals(""))
+		{
+			for (IndexEntry i : mEntries)
+				if (i.getText().toLowerCase().equals(s))
+				{
+					listView.setSelection(mEntries.indexOf(i));
+					showTranslation(i);
+				}
+		}
 
 		return v;
 	}
 
 	@Override
-	public void onStart() {
+	public void onStart()
+	{
 		super.onStart();
 
 		Dialog dialog = getDialog();
-		if (dialog != null) {
+		if (dialog != null)
+		{
 			dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT);
+										 ViewGroup.LayoutParams.MATCH_PARENT);
 		}
 
 	}
@@ -207,7 +238,8 @@ public class DictionaryDialog extends DialogFragment implements
 	 * "DISM!!!!"); }}); }
 	 */
 
-	protected void showTranslation(IndexEntry entry) {
+	protected void showTranslation(IndexEntry entry)
+	{
 
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setTextZoom(Utils.getScale());
@@ -215,87 +247,112 @@ public class DictionaryDialog extends DialogFragment implements
 		Utils.loadHTML(entry.getText(), entry.getTranslation(), webView);
 
 		webView.setWebViewClient(new WebViewClient() {
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				url = url.replace("http:", "");
-				url = url.replace("/", "");
+				@Override
+				public boolean shouldOverrideUrlLoading(WebView view, String url)
+				{
+					url = url.replace("http:", "");
+					url = url.replace("/", "");
 
-				String translation = Dictionary.getTranslation(url);
-				Utils.loadHTML(url, translation, webView);
+					String translation = Dictionary.getTranslation(url);
+					Utils.loadHTML(url, translation, webView);
 
-				return true;
-			}
+					return true;
+				}
 
-			@Override
-			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			}
+				@Override
+				public void onPageStarted(WebView view, String url, Bitmap favicon)
+				{
+				}
 
-		});
+			});
 	}
 
-	private class ArrayAdapterEntries extends ArrayAdapter<IndexEntry> {
+	private class ArrayAdapterEntries extends ArrayAdapter<IndexEntry>
+	{
 
 		public ArrayAdapterEntries(Context context, int resource,
-				List<IndexEntry> objects) {
+								   List<IndexEntry> objects)
+		{
 			super(context, resource, objects);
 
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			if (convertView == null)
+			{
 				LayoutInflater inflater = (LayoutInflater) mContext
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				convertView = inflater.inflate(R.layout.dic_string1, null);
 			}
 			IndexEntry entry = mEntries.get(position);
 
 			TextView text = (TextView) convertView
-					.findViewById(R.id.textViewText);
+				.findViewById(R.id.textViewText);
 			text.setText(entry.getText());
 
 			return convertView;
 		}
 
-		public int getCount() {
+		public int getCount()
+		{
 			return mEntries.size();
 		}
 
-		public long getItemId(int position) {
+		public long getItemId(int position)
+		{
 			return position;
 		}
 
 	}
 
-	public void onDismiss(DialogInterface dialog) {
+	public void onDismiss(DialogInterface dialog)
+	{
 		super.onDismiss(dialog);
 		Log.d("", "Dialog 1: onDismiss");
 	}
 
-	public void onCancel(DialogInterface dialog) {
+	public void onCancel(DialogInterface dialog)
+	{
 		super.onCancel(dialog);
 		Log.d("", "Dialog 1: onCancel");
+
+
 	}
 
 	@Override
-	public void onClick(View v) {
-		if (v.getId() == R.id.dialogSchemeImageButtonPlus) {
+	public void onClick(View v)
+	{
+		if (v.getId() == R.id.dialogSchemeImageButtonPlus)
+		{
 			Utils.incScale();
 			WebSettings webSettings = webView.getSettings();
 			webSettings.setTextZoom(Utils.getScale());
-		} else if (v.getId() == R.id.dialogSchemeImageButtonMinus) {
+		}
+		else if (v.getId() == R.id.dialogSchemeImageButtonMinus)
+		{
 			Utils.decScale();
 			WebSettings webSettings = webView.getSettings();
 			webSettings.setTextZoom(Utils.getScale());
-		} else if (v.getId() == R.id.dialogSchemeImageButtonDictionary) {
+		}
+		else if (v.getId() == R.id.dialogSchemeImageButtonDictionary)
+		{
 			showSelectDictionary(v);
-		} else if (v.getId() == R.id.dialogSchemeImageBack) {
-			if (webView.canGoBack()) {
+		}
+		else if (v.getId() == R.id.dialogSchemeImageBack)
+		{
+			if (webView.canGoBack())
+			{
 				webView.goBack();
-			} else {
+			}
+			else
+			{
 				dialog.dismiss();
 			}
-		} else if (v.getId() == R.id.dialogExampleImageButtonSpeak) {
+		}
+		else if (v.getId() == R.id.dialogExampleImageButtonSpeak)
+		{
 			/*
 			 * String s = ""; final String baseUrl = "help" + mIndex; int id =
 			 * mContext.getResources().getIdentifier(baseUrl, "raw",
@@ -317,49 +374,56 @@ public class DictionaryDialog extends DialogFragment implements
 		}
 	}
 
-	private void showSelectDictionary(View v) {
+	private void showSelectDictionary(View v)
+	{
 		PopupMenu popupMenu = new PopupMenu(mContext, v);
 		popupMenu.inflate(R.menu.select_dictionary);
 
 		popupMenu
-				.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
-					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						// Toast.makeText(PopupMenuDemoActivity.this,
-						// item.toString(), Toast.LENGTH_LONG).show();
-						// return true;
-						switch (item.getItemId()) {
+				@Override
+				public boolean onMenuItemClick(MenuItem item)
+				{
+					// Toast.makeText(PopupMenuDemoActivity.this,
+					// item.toString(), Toast.LENGTH_LONG).show();
+					// return true;
+					switch (item.getItemId())
+					{
 						case R.id.action_it_ru:
-							
+
 							Dictionary.eventCallback = new Dictionary.EventCallback() {
 								@Override
-								public void loadingFinishedCallBack() {
+								public void loadingFinishedCallBack()
+								{
 									mEntries = Dictionary.getEntries();
 									itemsAdapter.notifyDataSetChanged();
 								}
 							}; 
-							Dictionary.load(mContext, "it_ru", R.raw.it_ru);
-							
+							Dictionary.setDictionaryName("it_ru");
+							Dictionary.load(mContext);
+
 							return true;
 						case R.id.action_ru_it:
-							
+
 							Dictionary.eventCallback = new Dictionary.EventCallback() {
 								@Override
-								public void loadingFinishedCallBack() {
+								public void loadingFinishedCallBack()
+								{
 									mEntries = Dictionary.getEntries();
 									itemsAdapter.notifyDataSetChanged();
 								}
 							}; 
-							Dictionary.load(mContext, "ru_it", R.raw.ru_it);
-							
+							Dictionary.setDictionaryName("ru_it");
+							Dictionary.load(mContext);
+
 							return true;
 						default:
 							return false;
-						}
 					}
+				}
 
-				});
+			});
 
 		popupMenu.show();
 	}
