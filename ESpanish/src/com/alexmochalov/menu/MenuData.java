@@ -64,14 +64,10 @@ public class MenuData {
 	public static MarkedString addMarkedString(String text, String subj, String neg, String verb)
 	{
 		MarkedString markedString = new MarkedString(text,subj, neg, verb);
-		//Log.d("","addmarkedstring "+text+"#"+subj+"#"+neg+"#"+verb);
-		
 		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
 		menuGroupLast.
 			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
-		//Log.d("m","markedstring "+markedString.getText()+" "+(menuGroup.size() - 1)+
-			//  " "+(menuGroupLast.menuChild.size()-1));
-//	
+		
 		return markedString;
 	}
 
@@ -140,6 +136,15 @@ public class MenuData {
 	}
 	
 	
+	public static MarkedString addMarkedString(String text, String rus)
+	{
+		MarkedString markedString = new MarkedString(text, rus);
+		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
+		menuGroupLast.
+			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
+		return markedString;
+	}
+	
 	public static MarkedString addMarkedString(String text)
 	{
 		MarkedString markedString = new MarkedString(text);
@@ -148,7 +153,6 @@ public class MenuData {
 			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
 		return markedString;
 	}
-
 	
 
 	public static String getType(int i, int j) {

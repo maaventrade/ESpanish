@@ -29,6 +29,12 @@ public class MarkedString {
 		mFlag = 0;
 	}
 	
+	public MarkedString(String text, String rus) {
+		mText = text;
+		mRusText = rus;
+		mFlag = 0;
+	}
+	
 	public MarkedString(String text, String subj, String neg, String verb) {
 		mNeg = neg;
 		mVerb = verb;

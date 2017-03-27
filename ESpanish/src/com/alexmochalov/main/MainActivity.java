@@ -154,21 +154,6 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	@Override 
-	protected void onDestroy() {
-		TtsUtils.destroy();
-		
-		Editor editor = prefs.edit();
-		
-		MenuData.saveParameters(editor);
-
-		editor.putInt(HELPTEXTSCALE, Utils.getScale());
-		
-		editor.commit();
-		
-		super.onDestroy(); 
-	}
-	
     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -253,7 +238,16 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 
 	@Override
 	public void onPause() {
-		//Log.d("a", "onPause");
+		TtsUtils.destroy();
+		
+		Editor editor = prefs.edit();
+		
+		MenuData.saveParameters(editor);
+
+		editor.putInt(HELPTEXTSCALE, Utils.getScale());
+		
+		editor.commit();
+		
 		super.onPause();
 	}
 

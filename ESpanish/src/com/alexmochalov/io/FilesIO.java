@@ -21,22 +21,27 @@ public class FilesIO
 		String mode = "";
 		MenuGroup menuGroupItem = null;
     
-		class Record {
+		class RecordF {
 			String text = "";
 			String neg = "";
 			String verbs = "";
 			String subj = "";    
-			String tense="";   
+			String tense="";
+			
+			String rus = "";   
+			String flag ="";   
 			public void clear() {
 				text = "";
 				neg = "";
 				verbs = "";
 				subj = "";
 				tense="";
+				rus = "";   
+				flag ="";   
 			} 
 		}  
-		Record rec = new Record();
-		MarkedString markedStringLast = null;
+		RecordF rec = new RecordF();
+		//MarkedString markedStringLast = null;
 		
 		try {
 			XmlPullParser xpp = null;
@@ -132,21 +137,22 @@ String ttt = "";
 							//new ArrayList<MarkedString>());
 							Log.d("d","mode = Комбинации "+ttt);
 						} else if (xpp.getName().equals("entry")) {
+							rec.clear();
 							//ArrayList<ArrayList<MarkedString>> textDataLast
 							//= textData.get(textData.size() - 1);
 
 
-							markedStringLast = new MarkedString("");
+							//markedStringLast = new MarkedString("");
 
 							for (int i = 0; i < xpp.getAttributeCount(); i++) {
 								//Log.d("d", "start "+xpp.getAttributeName(i));
-								if (xpp.getAttributeName(i).equals("text") && mode.equals("Комбинации")) {
-									rec.text = xpp
-										.getAttributeValue(i);
-								} else if (xpp.getAttributeName(i).equals("text")) {
-									markedStringLast.setText(xpp.getAttributeValue(i));
+								//if (xpp.getAttributeName(i).equals("text") && mode.equals("Комбинации")) {
+								//	rec.text = xpp
+								//		.getAttributeValue(i);
+								if (xpp.getAttributeName(i).equals("text")) {
+									rec.text = xpp.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("flag")) {
-									markedStringLast.setFlag(xpp.getAttributeValue(i));
+									rec.flag = xpp.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("subj")) {
 									rec.subj = xpp.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("neg")) {
@@ -156,67 +162,40 @@ String ttt = "";
 									rec.verbs = xpp
 										.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("rus")) {
-									markedStringLast.setRusText(
-										xpp.getAttributeValue(i));
+									rec.rus = xpp.getAttributeValue(i);
 								}
 							}
 						
 						}
 						break; // конец тэга
 					case XmlPullParser.END_TAG:
-						//Log.d("d", "end "+xpp.getName());
-						if (rec.verbs == null || rec.verbs.equals("")){
-							if (xpp.getName().equals("entry")){
-						//if (xpp.getName().equals("entry") && 
-							//! mode.contains("Комбинации")){
-							//Log.d("my","Add ");
-							MenuData.addMarkedString(markedStringLast);
-							}
-						}
-						else if (xpp.getName().equals("entry") && 
-							mode.contains("Комбинации")){
-								
-							//markedStringLast.setVerbs(rec.neg, rec.verbs);
-							//if (1==1) break;
-					   //Log.d("d","Комбинации 1 ");
-							
+						if (xpp.getName().equals("entry") && 
+							mode.contains("Комбинации"))
+						{
 							if (rec.verbs == null || rec.verbs.equals(""))
-								break;
-							
-							 String verbs[] = rec.verbs.split(",");
-							 //Log.d("","textDataItem "+textDataItem.toString());
-							// Log.d("",""+verbs.toString());
+								MenuData.addMarkedString(rec.text, rec.rus);
+							else 
+							{
+								 String verbs[] = rec.verbs.split(",");
 
-							 for (String verb : verbs){
-							 //Log.d("",rec.toString());
-							 //Log.d("d", "verbs "+rec.verbs);
-							 
-							
-							 if (mode.equals("Комбинации"))
-								MenuData.addMarkedString(rec.text, rec.subj, rec.neg, verb.trim());
-							 else{
-								 for (Pronoun p: Rules.getPronouns()){
-									 Log.d("io",p.getTranslation());
-									 if (!p.getTranslation().equals("Вы(вежл.)")){
-										 Log.d("io", "added");
-										 MenuData.addMarkedString(rec.neg, p, verb.trim());
-									 }
-										 
-								}
-							 } 
-							 }
-							 
-							rec.clear();
+								 for (String verb : verbs){
+									 if (mode.equals("Комбинации"))
+										 MenuData.addMarkedString(rec.text, rec.subj, rec.neg, verb.trim());
+									 else	
+										 for (Pronoun p: Rules.getPronouns())
+											 if (!p.getTranslation().equals("Вы(вежл.)"))
+												 MenuData.addMarkedString(rec.neg, p, verb.trim());
+								 }
+							}	 
+						} else if (xpp.getName().equals("entry")) {
+							MenuData.addMarkedString(rec.text);
 						}
-						// Log.d(LOG_TAG, "END_TAG: name = " + xpp.getName());
+							
+						rec.clear();
 						break; // содержимое тэга
 					case XmlPullParser.TEXT:
-						//Log.d("d", "text ");
 						if (mode.equals("Выражения") || mode.equals("Спряжения")) {
-
-			
 						}
-
 						break;
 					default:
 						break;
@@ -232,16 +211,65 @@ String ttt = "";
 		} catch (Exception e) {
 			Log.d("d",e.toString());
 		}
-		
-		for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
-			Log.d("m","m0 "+m.getText());
-		//  " "+(menuGroupLast.menuChild.size()-1));
+		/*
+		for (int i = 0; i < MenuData.getGroupsSize(); i++){
+			Log.d("", "<level0 title = \""+MenuData.getGroupTitle(i)+"\">\n");
+			
+			for (MenuChild m: MenuData.getMenuCildren(i)){
+				Log.d("", "<level1 ");
+				
+				if (!m.getTitleStr().equals(""))
+					Log.d("", " title = \""+ m.getTitleStr()+"\"");
+				
+				if (!m.getType().equals(""))
+					Log.d("", " type = \""+ m.getType()+"\"");
+					
+				if (!(""+m.getHelpIndex()).equals(""))
+					Log.d("", " helpindex = \""+ m.getHelpIndex()+"\"");
+				
+
+				if (!(""+m.getNote()).equals(""))
+					Log.d("", " note = \""+ m.getNote()+"\"");
+				
+					
+				if (!m.getTense().equals(""))
+					Log.d("", " tense = \""+ m.getTense()+"\"");
+				
+				if (!m.getNeg().equals(""))
+					Log.d("", " neg = \""+ m.getNeg()+"\"");
+				
+				Log.d("", ">\n");
+					
+				int j = MenuData.getMenuCildren(i).indexOf(m);
+				for (MarkedString s: MenuData.getMarkedStrings(i, j)){
+					Log.d("", "<entry");
+						if (!s.getText().equals(""))
+							Log.d("", " text = \""+ s.getText()+"\"");
+						if (!s.getNeg().equals(""))
+							Log.d("", " neg = \""+ s.getNeg()+"\"");
+						//if (!s.getVerbs().equals(""))
+							//os.write( " verbs = \""+ s.getVerbs()+"\"");
+						if (!s.getRusText().equals(""))
+							Log.d("", " rus = \""+ s.getRusText()+"\"");
+						
+						Log.d("", " flag = \""+ s.getFlag()+"\"");
+					
+						Log.d("", "></entry>\n");
+				}
+				
+				Log.d("", "</level1>\n");
+			}
+			Log.d("", "</level0>\n");
+		}
+		*/
 	}
 	
 
 	public static void saveMenu(Context mContext)
 	{
-		//if (1==1) return;
+	
+	if (1==1) return;
+	
 	File file = new File(Utils.APP_FOLDER+"/menu_it.xml");
 		try
 		{
@@ -255,9 +283,6 @@ String ttt = "";
 		os.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 		os.write( "<data version = \"1\">\n");
 			
-		for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
-				Log.d("m","m2 "+m.getText());
-				
 		for (int i = 0; i < MenuData.getGroupsSize(); i++){
 			os.write( "<level0 title = \""+MenuData.getGroupTitle(i)+"\">\n");
 			for (MenuChild m: MenuData.getMenuCildren(i)){
