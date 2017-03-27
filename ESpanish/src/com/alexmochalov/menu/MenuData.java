@@ -64,9 +64,14 @@ public class MenuData {
 	public static MarkedString addMarkedString(String text, String subj, String neg, String verb)
 	{
 		MarkedString markedString = new MarkedString(text,subj, neg, verb);
+		//Log.d("","addmarkedstring "+text+"#"+subj+"#"+neg+"#"+verb);
+		
 		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
 		menuGroupLast.
 			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
+		//Log.d("m","markedstring "+markedString.getText()+" "+(menuGroup.size() - 1)+
+			//  " "+(menuGroupLast.menuChild.size()-1));
+//	
 		return markedString;
 	}
 
@@ -163,6 +168,12 @@ public class MenuData {
 			markedStrings;
 	}
 
+	public static ArrayList<MarkedString> getMarkedStrings1(int i, int j) {
+		return menuGroup.get(i).
+			menuChild.get(j).
+			markedStrings;
+	}
+	
 	public static String getCountStr(int mGroupPosition, int mChildPosition) {
 		int size = menuGroup.get(mGroupPosition).
 			menuChild.get(mChildPosition).
@@ -207,6 +218,11 @@ public class MenuData {
 		if (mIndex == -1) return "";
 		else mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
 		
+		for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
+			Log.d("m","m1 "+m.getText());
+		
+		
+		Log.d("m","mText "+mText+" "+mGroupPosition+" "+mChildPosition+" "+mIndex);
 		return mText;
 	}
 
@@ -287,16 +303,18 @@ public class MenuData {
 		else
 			direction =  1;
 			
-		Log.d("", "direction "+direction);
 		
 		if (direction == 1){
     		mText = getText();
     		translation = MenuData.getTranslation(mText, mGroupPosition, mChildPosition, mIndex);
-        } else {
+			
+		} else {
     		translation = getText();
     		mText = MenuData.getTranslation(translation, mGroupPosition, mChildPosition, mIndex);
-        }
-		//Log.d("my","translation "+translation);
+			
+		}
+		
+		
 		textViewText.setText(Utils.firstLetterToUpperCase(mText));
 
 		textViewTranslation.setText(Utils.firstLetterToUpperCase(translation));
@@ -316,6 +334,8 @@ public class MenuData {
 
 	public static String getTranslation(String text, int mGroupPosition, int mChildPosition, int index) {
 		String rusText =getMarkedStrings(mGroupPosition, mChildPosition) .get(index).mRusText;
+		
+		Log.d("", "rusText "+rusText);
 		
 		if (rusText.length() > 0)
 			return rusText;
@@ -355,7 +375,7 @@ public class MenuData {
 
 	public static void setText(String text) {
 		mText = text; 
-		
+		Log.d("", "mText ="+text);
 	}
 
 	public static int getGroupPosition() {

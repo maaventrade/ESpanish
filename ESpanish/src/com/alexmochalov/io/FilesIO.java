@@ -87,10 +87,11 @@ public class FilesIO
 
 						} else if (xpp.getName().equals("level1")) {
 							// Child element
-
+String ttt = "";
 							for (int i = 0; i < xpp.getAttributeCount(); i++) {
 								if (xpp.getAttributeName(i).equals("title")) {
 									menuGroupItem.addItem(xpp.getAttributeValue(i));
+									ttt = xpp.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("helpindex")) {
 									menuGroupItem.setChildHelpIndex(xpp.getAttributeValue(i));
 								} else if (xpp.getAttributeName(i).equals("tense")) {
@@ -129,7 +130,7 @@ public class FilesIO
 							// Level1
 							//textData.get(textData.size() - 1).add(
 							//new ArrayList<MarkedString>());
-
+							Log.d("d","mode = Комбинации "+ttt);
 						} else if (xpp.getName().equals("entry")) {
 							//ArrayList<ArrayList<MarkedString>> textDataLast
 							//= textData.get(textData.size() - 1);
@@ -177,7 +178,7 @@ public class FilesIO
 								
 							//markedStringLast.setVerbs(rec.neg, rec.verbs);
 							//if (1==1) break;
-							//Log.d("d","verbs "+rec.verbs);
+					   //Log.d("d","Комбинации 1 ");
 							
 							if (rec.verbs == null || rec.verbs.equals(""))
 								break;
@@ -231,7 +232,10 @@ public class FilesIO
 		} catch (Exception e) {
 			Log.d("d",e.toString());
 		}
-
+		
+		for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
+			Log.d("m","m0 "+m.getText());
+		//  " "+(menuGroupLast.menuChild.size()-1));
 	}
 	
 
@@ -250,7 +254,10 @@ public class FilesIO
 		
 		os.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 		os.write( "<data version = \"1\">\n");
-
+			
+		for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
+				Log.d("m","m2 "+m.getText());
+				
 		for (int i = 0; i < MenuData.getGroupsSize(); i++){
 			os.write( "<level0 title = \""+MenuData.getGroupTitle(i)+"\">\n");
 			for (MenuChild m: MenuData.getMenuCildren(i)){
@@ -284,6 +291,9 @@ public class FilesIO
 				for (MarkedString s: MenuData.getMarkedStrings(i, j)){
 					//Log.d("d", s.getVerbs());
 						
+					if (i==3 && j == 1)
+						Log.d("m","m222 "+s.getText());
+					
 						os.write( "<entry");
 						if (!s.getText().equals(""))
 							os.write( " text = \""+ s.getText()+"\"");
