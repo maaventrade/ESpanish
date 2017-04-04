@@ -188,7 +188,8 @@ String ttt = "";
 								 }
 							}	 
 						} else if (xpp.getName().equals("entry")) {
-							MenuData.addMarkedString(rec.text);
+							//Log.d("b",rec.text+" - "+rec.rus);
+							MenuData.addMarkedString(rec.text, rec.rus);
 						}
 							
 						rec.clear();
@@ -268,7 +269,7 @@ String ttt = "";
 	public static void saveMenu(Context mContext)
 	{
 	
-	if (1==1) return;
+	//if (1==1) return;
 	
 	File file = new File(Utils.APP_FOLDER+"/menu_it.xml");
 		try
@@ -316,8 +317,8 @@ String ttt = "";
 				for (MarkedString s: MenuData.getMarkedStrings(i, j)){
 					//Log.d("d", s.getVerbs());
 						
-					if (i==3 && j == 1)
-						Log.d("m","m222 "+s.getText());
+					//if (i==3 && j == 1)
+						//Log.d("m","m222 "+s.getText());
 					
 						os.write( "<entry");
 						if (!s.getText().equals(""))

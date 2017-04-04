@@ -5,7 +5,7 @@ import android.content.SharedPreferences.Editor;
 import android.widget.*;
 import android.preference.PreferenceManager;
 import android.view.*;
-
+   
 import com.alexmochalov.alang.*;
 import com.alexmochalov.menu.MenuData;
 import com.alexmochalov.main.MainActivity;
