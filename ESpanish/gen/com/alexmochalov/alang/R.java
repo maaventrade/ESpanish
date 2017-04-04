@@ -162,8 +162,9 @@ public final class R {
         public static final int help4=0x7f050006;
         public static final int help5=0x7f050007;
         public static final int help6=0x7f050008;
-        public static final int it_ru=0x7f050009;
-        public static final int ru_it=0x7f05000a;
+        public static final int help7=0x7f050009;
+        public static final int it_ru=0x7f05000a;
+        public static final int ru_it=0x7f05000b;
     }
     public static final class string {
         public static final int action_reindex=0x7f090004;

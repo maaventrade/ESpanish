@@ -54,21 +54,21 @@
 		<entry text = "scusi" transl = "прошу прощения"></entry>
 	</dictionary>
 	<pronoun>
-	   	<entry text = "io" transl = "я" verb_ending = "are:o,ere:o,avere:ho,essere:sono,fare:faccio" verb_ending_past = "are:ato">
+	   	<entry text = "io" transl = "я" verb_ending = "are:o,ere:o,ire:o,avere:ho,essere:sono,fare:faccio" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "tu" transl = "ты" verb_ending = "are:i,ere:i,avere:hai,essere:sei,fare:fai" verb_ending_past = "are:ato">
+	   	<entry text = "tu" transl = "ты" verb_ending = "are:i,ere:i,ire:i,avere:hai,essere:sei,fare:fai" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "lui" transl = "он" verb_ending = "are:a,ere:e,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
+	   	<entry text = "lui" transl = "он" verb_ending = "are:a,ere:e,ire:e,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "ley" transl = "она" verb_ending = "are:a,ere:e,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
+	   	<entry text = "ley" transl = "она" verb_ending = "are:a,ere:e,ire:e,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,ere:e,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
+	   	<entry text = "Ley" transl = "Вы(вежл.)" verb_ending = "are:a,ere:e,ire:e,avere:ha,essere:è,fare:fa" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "noi" transl = "мы" verb_ending = "are:iamo,ere:iamo,avere:abbiamo,essere:siamo,fare:facciamo" verb_ending_past = "are:ato">
+	   	<entry text = "noi" transl = "мы" verb_ending = "are:iamo,ere:iamo,ire:iamo,avere:abbiamo,essere:siamo,fare:facciamo" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "voi" transl = "вы" verb_ending = "are:ate,ere:ete,avere:avete,essere:siete,fare:fate" verb_ending_past = "are:ato">
+	   	<entry text = "voi" transl = "вы" verb_ending = "are:ate,ere:ete,ire:ite,avere:avete,essere:siete,fare:fate" verb_ending_past = "are:ato">
 	    </entry>
-	   	<entry text = "loro" transl = "они" verb_ending = "are:ano,ere:ono,avere:hanno,essere:sono,fare:fanno" verb_ending_past = "are:ato,avere:ho">
+	   	<entry text = "loro" transl = "они" verb_ending = "are:ano,ere:ono,ire:ono,avere:hanno,essere:sono,fare:fanno" verb_ending_past = "are:ato,avere:ho">
 	    </entry>
 	</pronoun>
 	    

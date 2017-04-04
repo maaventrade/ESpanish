@@ -120,7 +120,8 @@
 		</level1>
 		<level1 title = "Глаголы самые общие" type = "Запоминание" helpindex = "999">
 			
-			<entry text = "mancare" rus = "нуждаться"></entry>
+			<entry text = "mancare" rus = "недоставать"></entry>
+			<entry text = "bisognare" rus = "нуждаться"></entry>
 			<entry text = "diventare" rus = "становиться"></entry>
 			<entry text = "accadere" rus = "случаться"></entry>
 			<entry text = "includere" rus = "включать"></entry>
@@ -138,7 +139,7 @@
 	<level0 title = "Урок 5">
 				
 		<level1 title = "Глаголы места и перемещений" type = "Запоминание" helpindex = "999">
-			<entry text = "apparire" rus = "появляться"></entry>	
+			<entry text = "sorgere" rus = "подниматься"></entry>	
 			<entry text = "restare" rus = "оставаться"></entry>	
 			<entry text = "passare" rus = "миновать"></entry>	
 			<entry text = "tornare" rus = "возвращаться"></entry>	
