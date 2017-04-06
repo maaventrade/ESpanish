@@ -172,9 +172,10 @@ String ttt = "";
 						if (xpp.getName().equals("entry") && 
 							mode.contains("Комбинации"))
 						{
-							if (rec.verbs == null || rec.verbs.equals(""))
-								MenuData.addMarkedString(rec.text, rec.rus);
-							else 
+							if (rec.verbs == null || rec.verbs.equals("")){
+								MarkedString ms = MenuData.addMarkedString(rec.text, rec.rus);
+								ms.setFlag(rec.flag);
+							} else 
 							{
 								 String verbs[] = rec.verbs.split(",");
 
@@ -189,7 +190,8 @@ String ttt = "";
 							}	 
 						} else if (xpp.getName().equals("entry")) {
 							//Log.d("b",rec.text+" - "+rec.rus);
-							MenuData.addMarkedString(rec.text, rec.rus);
+							MarkedString ms = MenuData.addMarkedString(rec.text, rec.rus);
+							ms.setFlag(rec.flag);
 						}
 							
 						rec.clear();
