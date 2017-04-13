@@ -190,7 +190,10 @@ public class MarkedString {
 	}
 	
 	public void setFlag(String flag) {
-		mFlag = Integer.parseInt(flag);
+		if (flag.length() == 0)
+			mFlag = 0;
+		else
+			mFlag = Integer.parseInt(flag);
 		
 	}
 

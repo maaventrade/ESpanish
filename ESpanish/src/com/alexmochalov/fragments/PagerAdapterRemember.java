@@ -116,7 +116,11 @@ public class PagerAdapterRemember extends PagerAdapter
 					
 					//int j = s.indexOf("<abr>");
 					//if 
-					
+					/*
+					 translation = translation.replace("<abr>", "<font color = #00aa00>");
+					 translation = translation.replace("</abr>", "</font>");
+					 
+					*/
 					arrayListRus.add(Utils.firstLetterToUpperCase(eRu.trim()
 							.replace("&apos;", "'")));
 					arrayListExamples.add(Utils.firstLetterToUpperCase(eEx.trim()
@@ -163,7 +167,9 @@ public class PagerAdapterRemember extends PagerAdapter
 
    
     public String getText(int position) {
-    	return mObjects.get(position).getText();
+		Log.d("u",""+mObjects.size()+"  "+position);
+    	return mObjects.get(//mObjects.size()%
+		position).getText();
         //return mContext.getString(customPagerEnum.getTitleResId());
     }
 

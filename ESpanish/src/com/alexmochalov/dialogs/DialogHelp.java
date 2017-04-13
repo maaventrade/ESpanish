@@ -26,7 +26,7 @@ public class DialogHelp extends Dialog implements
 	ImageButton btnNext;
 	ImageButton btnPrev;
 	ImageButton btnBack;
-	ImageButton btnPlus;
+	ImageButton btnPlus;  
 	ImageButton btnMinus;
 
 	String text = "";

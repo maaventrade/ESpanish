@@ -109,6 +109,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		
 		Dictionary.load(this);
 		
+
+		
 	}
 
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {

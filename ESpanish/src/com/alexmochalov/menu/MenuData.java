@@ -222,11 +222,11 @@ public class MenuData {
 		if (mIndex == -1) return "";
 		else mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
 		
-		for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
-			Log.d("m","m1 "+m.getText());
+		//for (MarkedString m : MenuData.getMarkedStrings(3, 1) )
+		//	Log.d("m","m1 "+m.getText());
 		
 		
-		Log.d("m","mText "+mText+" "+mGroupPosition+" "+mChildPosition+" "+mIndex);
+		//Log.d("m","mText "+mText+" "+mGroupPosition+" "+mChildPosition+" "+mIndex);
 		return mText;
 	}
 
@@ -243,8 +243,9 @@ public class MenuData {
 	}
 
 	public static int findIndex(String text) {
-		Log.d("",""+mGroupPosition);
-		Log.d("",""+mChildPosition);
+		
+		//Log.d("",""+mGroupPosition);
+		//Log.d("",""+mChildPosition);
 		if (mGroupPosition >= getGroupsSize()
 			|| mChildPosition >= getChildrenCoun(mChildPosition))
 			return -1;
@@ -339,7 +340,7 @@ public class MenuData {
 	public static String getTranslation(String text, int mGroupPosition, int mChildPosition, int index) {
 		String rusText =getMarkedStrings(mGroupPosition, mChildPosition) .get(index).mRusText;
 		
-		Log.d("", "rusText "+rusText);
+		//Log.d("", "rusText "+rusText);
 		
 		if (rusText.length() > 0)
 			return rusText;
@@ -379,7 +380,7 @@ public class MenuData {
 
 	public static void setText(String text) {
 		mText = text; 
-		Log.d("", "mText ="+text);
+		//Log.d("", "mText ="+text);
 	}
 
 	public static int getGroupPosition() {

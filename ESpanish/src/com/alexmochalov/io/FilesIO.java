@@ -135,7 +135,7 @@ String ttt = "";
 							// Level1
 							//textData.get(textData.size() - 1).add(
 							//new ArrayList<MarkedString>());
-							Log.d("d","mode = Комбинации "+ttt);
+							//Log.d("d","mode = Комбинации "+ttt);
 						} else if (xpp.getName().equals("entry")) {
 							rec.clear();
 							//ArrayList<ArrayList<MarkedString>> textDataLast
@@ -207,12 +207,11 @@ String ttt = "";
 			}
 
 		} catch (XmlPullParserException e) {
-			Log.d("d",e.toString());
-
+			Toast.makeText(mContext,e.toString(), Toast.LENGTH_LONG).show();
 		} catch (IOException e) {
-			Log.d("d",e.toString());
+			Toast.makeText(mContext,e.toString(), Toast.LENGTH_LONG).show();
 		} catch (Exception e) {
-			Log.d("d",e.toString());
+			Toast.makeText(mContext,e.toString(), Toast.LENGTH_LONG).show();
 		}
 		/*
 		for (int i = 0; i < MenuData.getGroupsSize(); i++){
