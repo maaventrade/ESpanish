@@ -167,9 +167,8 @@ public class PagerAdapterRemember extends PagerAdapter
 
    
     public String getText(int position) {
-		Log.d("u",""+mObjects.size()+"  "+position);
-    	return mObjects.get(//mObjects.size()%
-		position).getText();
+		//Log.d("u",""+mObjects.size()+"  "+position);
+    	return mObjects.get( position % mObjects.size()).getText();
         //return mContext.getString(customPagerEnum.getTitleResId());
     }
 

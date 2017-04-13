@@ -176,17 +176,19 @@ public final class R {
         public static final int button_prev=0x7f090006;
         public static final int button_speak=0x7f090007;
         public static final int button_test=0x7f090008;
+        public static final int dic_name_ita=0x7f090012;
+        public static final int dic_name_rus=0x7f090011;
         public static final int error_lang=0x7f09000d;
         public static final int error_lang_not_found=0x7f09000c;
         public static final int error_lang_not_supported=0x7f09000b;
         public static final int hello_world=0x7f090001;
         public static final int menu_reload=0x7f090009;
-        public static final int no=0x7f090013;
+        public static final int no=0x7f090015;
         public static final int orange=0x7f090010;
         public static final int randomize=0x7f09000a;
         public static final int red=0x7f09000e;
-        public static final int startover=0x7f090011;
-        public static final int yes=0x7f090012;
+        public static final int startover=0x7f090013;
+        public static final int yes=0x7f090014;
     }
     public static final class style {
         /** 

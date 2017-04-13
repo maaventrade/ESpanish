@@ -24,7 +24,9 @@
 	<string name="blue">blue</string>
 	<string name="orange">orange</string>
 
-	
+	<string name="dic_name_rus">Russian-Italian dictionary</string>
+	<string name="dic_name_ita">Italian-Russian dictionary</string>
+			
 	<string name="startover">This job is done. Start over?</string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>

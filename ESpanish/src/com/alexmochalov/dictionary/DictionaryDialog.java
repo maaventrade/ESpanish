@@ -62,7 +62,7 @@ android.view.View.OnClickListener
 
 		mContext = getActivity();
 
-		getDialog().setTitle("Title!");
+		getDialog().setTitle(mContext.getString(R.string.dic_name_ita));
 
 		View v = inflater.inflate(R.layout.dictionary, null);
 
@@ -125,6 +125,16 @@ android.view.View.OnClickListener
 				{
 					String str = s.toString().toLowerCase();
 					Dictionary.setText(s.toString());
+					
+					if (str.length() > 0)
+						if (str.substring(0, 1).matches("[а-яА-Я]"))
+							if (Dictionary.getDictionaryName().equals("it_ru")) 
+								selectDictionary("ru_it");	
+							else;
+						else 
+							if (Dictionary.getDictionaryName().equals("ru_it")) 
+								selectDictionary("it_ru");	
+							else;
 
 					for (IndexEntry i : mEntries)
 						if (i.getText().toLowerCase().startsWith(str))
@@ -373,6 +383,23 @@ android.view.View.OnClickListener
 			 */
 		}
 	}
+	
+	private void selectDictionary(final String name){
+		Dictionary.eventCallback = new Dictionary.EventCallback() {
+			@Override
+			public void loadingFinishedCallBack()
+			{
+				mEntries = Dictionary.getEntries();
+				itemsAdapter.notifyDataSetChanged();
+				if (name.equals("ru_it"))
+					getDialog().setTitle(mContext.getString(R.string.dic_name_rus));
+				else
+					getDialog().setTitle(mContext.getString(R.string.dic_name_ita));
+			}
+		}; 
+		Dictionary.setDictionaryName(name);
+		Dictionary.load(mContext);
+	}
 
 	private void showSelectDictionary(View v)
 	{
@@ -391,30 +418,10 @@ android.view.View.OnClickListener
 					switch (item.getItemId())
 					{
 						case R.id.action_it_ru:
-
-							Dictionary.eventCallback = new Dictionary.EventCallback() {
-								@Override
-								public void loadingFinishedCallBack()
-								{
-									mEntries = Dictionary.getEntries();
-									itemsAdapter.notifyDataSetChanged();
-								}
-							}; 
-							Dictionary.setDictionaryName("it_ru");
-							Dictionary.load(mContext);
-
+							selectDictionary("it_ru");	
 							return true;
 						case R.id.action_ru_it:
-
-							Dictionary.eventCallback = new Dictionary.EventCallback() {
-								@Override
-								public void loadingFinishedCallBack()
-								{
-									mEntries = Dictionary.getEntries();
-									itemsAdapter.notifyDataSetChanged();
-								}
-							}; 
-							Dictionary.setDictionaryName("ru_it");
+							selectDictionary("ru_it");	
 							Dictionary.load(mContext);
 
 							return true;
