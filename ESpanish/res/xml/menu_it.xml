@@ -140,15 +140,14 @@
 				
 		<level1 title = "Глаголы места и перемещений" type = "Запоминание" helpindex = "999">
 			<entry text = "sorgere" rus = "подниматься"></entry>	
-			<entry text = "restare" rus = "оставаться"></entry>	
 			<entry text = "passare" rus = "миновать"></entry>	
 			<entry text = "tornare" rus = "возвращаться"></entry>	
 			<entry text = "andare" rus = "идти"></entry>
 			<entry text = "venire" rus = "приходить"></entry>
 			<entry text = "correre" rus = "бежать"></entry>
-			<entry text = "muoverci" rus = "двигаться"></entry>
+			<entry text = "muovere" rus = "двигаться"></entry>
 			<entry text = "sedere" rus = "сидеть"></entry>
-			<entry text = "stare" rus = "стоять"></entry>
+			<entry text = "stare" rus = "оставаться"></entry>
 			<entry text = "seguire" rus = "следовать"></entry>
 			<entry text = "guidare" rus = "вести"></entry>
 			<entry text = "fermare" rus = "останавливать"></entry>
