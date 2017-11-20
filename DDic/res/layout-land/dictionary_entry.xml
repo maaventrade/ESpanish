@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ 	android:id="@+id/ltMain"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.6"
+        android:focusable="true" 
+  		android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText  
+                android:id="@+id/etEntry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_bar"
+                android:drawableLeft="@drawable/icon_magnify48"
+                android:drawablePadding="20dp"
+                android:hint="@string/search"
+                android:paddingBottom="12dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"  >
+
+            <!--      <requestFocus />-->
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/ibRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_remove" />
+        </FrameLayout>
+
+        <ListView
+            android:id="@+id/lvDictionary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:listSelector="@drawable/selector_list_item"
+            android:paddingLeft="@dimen/text_size_medium"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+  
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.4"
+        android:background="@drawable/bg2"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/text_size_medium" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="0.9"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/tvWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/tvPhonetic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/MediumPlus"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1" >
+
+            <ImageButton
+                android:id="@+id/ibSpeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/speaker" />
+
+            <ImageButton
+                android:id="@+id/ibAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add" />
+
+            <ImageButton
+                android:id="@+id/ibForward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/forward" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTranslation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg2"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        
+    </LinearLayout>
+
+</LinearLayout>

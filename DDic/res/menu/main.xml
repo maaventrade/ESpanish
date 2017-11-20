@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.alexmochalov.enru.MainActivity" >
+    
+    <item
+        android:id="@+id/action_parameters"
+        android:orderInCategory="3"
+        android:showAsAction="always"
+        android:title="Start"/>
+    
+
+</menu>

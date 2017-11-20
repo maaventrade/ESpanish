@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EnRu</string>
+    <string name="hello_world">Hello world!</string>
+
+	<string name="index_not_found">Index not found.</string>
+	<string name="query_index_dictionary">Reindex dictionary?</string>
+
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="ok">Ok</string>
+
+	<string name="exit">Don\'t save</string>
+	<string name="cancel">Cancel</string>
+
+	<string name="search">Search</string>
+
+	<string name="action_select_dic">Select dictionary</string>
+	<string name="action_tree">Tree</string>
+	<string name="action_reindex">Reindex</string>
+					
+	
+</resources>

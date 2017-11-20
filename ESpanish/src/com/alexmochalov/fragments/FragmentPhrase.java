@@ -61,6 +61,12 @@ public class FragmentPhrase extends FragmentM {
 		super.onResume();
 	}
 	
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy(); 
+	}
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
