@@ -99,6 +99,8 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	public void onClick(View v) {
 		if (v == ibMenu){
 			showPopupMenu(v);
+		} else if (v == ibSpeak){
+			TtsUtils.speak(tvWord.getText().toString());
 		}
 	}
 

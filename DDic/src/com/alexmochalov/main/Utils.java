@@ -85,6 +85,10 @@ public final class Utils {
 		return fileName;
 	}
 
+	public static String getLanguage(){
+		return mLanguage;
+	}
+	
 	public static void setDictionaryName(String dictionaryName)
 	{
 		mDictionaryName = dictionaryName;

@@ -68,14 +68,25 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		
 		super.onPause();
 	}
+
+	//@Override
+    //public void onInit()
+	//{
+	//	super.onInit();
+	//}	
 	
 	@Override
     public void onResume()
 	{
 		super.onResume();
 		
+		if (Dictionary.getSize() > 0)
+			return;
+		
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		
+		
 		etEntry.setText(prefs.getString(MTEXT, ""));
 		currentPosition = prefs.getInt(MINDEX, -1);
 		
@@ -166,6 +177,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 
 		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
+		
 		etEntry.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -185,6 +197,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 				}
 			}
 		});
+		
 
         return rootView;
     }

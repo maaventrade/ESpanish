@@ -64,19 +64,22 @@ public final class Dictionary{
 
 		File file = new File(Utils.getIndexPath());
 
-		if(!file.exists()){
+		if(!file.exists()){ ///// ?? 
 			if (eventCallback != null)
 				eventCallback.loadingFinishedCallBack(file.exists());
 			return;
 		}
 		
-		//Log.d("a","Start Loading "+dictionary_name);
-		//Log.d("a",index_file_name);
+		Log.d("ab","Start Loading "+dictionary_name);
 		
 		
 		loadIndexAsinc();
 	}
 
+	public static int getSize(){
+		return indexEntries.size();
+	}
+	
 	private static void loadIndexAsinc() {
 		progressDialog = new ProgressDialog(mContext);
 		progressDialog.setTitle("Loading dictionary...");

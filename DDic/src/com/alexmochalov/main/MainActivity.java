@@ -5,6 +5,8 @@ import android.content.*;
 import android.content.SharedPreferences.Editor;
 import android.os.*;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.text.*;
 import android.text.method.ScrollingMovementMethod;
 import android.util.*;
@@ -26,7 +28,7 @@ import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.ddic.R;
 import com.alexmochalov.tree.FragmentTree;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener, OnInitListener{
 
 	private FragmentDic fragmentDic;
 	private String TAG_FRAGMENT_DIC = "TAG_FRAGMENT_DIC";
@@ -39,6 +41,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private Activity mContext;
 
+	private int MY_DATA_CHECK_CODE = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +94,7 @@ public class MainActivity extends Activity implements OnClickListener {
 					else if (name.equals("it-ru"))
 						Utils.setDictionaryName("it_ru.xdxf");
 
+					TtsUtils.setLanguage(mContext);
 					fragmentDic.setHint(name);
 					Dictionary.loadIndex(Utils.getDictionaryName(), false);
 
@@ -135,6 +140,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			ft.commit();
 		}
 
+		Intent checkIntent = new Intent();
+		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
 		
 	}
 
@@ -175,6 +183,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onPause() {
+		TtsUtils.destroy();
 		super.onPause();
 	}
 
@@ -187,4 +196,34 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 	}
+	
+	@Override
+	public void onInit(int status) {
+	      if (status == TextToSpeech.SUCCESS){
+			    TtsUtils.init(this);
+	    	  
+	      }
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == MY_DATA_CHECK_CODE) {
+			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+				TtsUtils.newTts(this, this);
+			} else {
+				Intent installIntent = new Intent();
+				installIntent
+						.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+				startActivity(installIntent);
+			}
+		}
+		else super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+	     // code here to show dialog
+	     super.onBackPressed();  // optional depending on your needs
+	}	
 }
