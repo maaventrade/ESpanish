@@ -12,8 +12,10 @@ import android.view.View.*;
 import android.view.inputmethod.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.main.*;
+
 import java.util.*;
 
 import android.view.View.OnClickListener;
@@ -82,7 +84,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		
 		//Toast.makeText(mContext,"size "+Dictionary.getSize(),Toast.LENGTH_LONG).show();
 		
-		
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		
@@ -148,8 +149,16 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 						}
 					};
 					
+					// If some text in the Search string exists, execute an action "setText"
 					if (!etEntry.getText().toString().equals(""))
 						etEntry.setText(etEntry.getText().toString());
+					// If position in ListView was stored, set this position
+					else if (currentPosition >= 0){
+						lvDictionary.setSelection(currentPosition);
+						if (callback != null) 
+							callback.itemSelected(adapter.getItem(currentPosition));
+					}
+						
 				} else {
 					// If Index file not found show the message
 					queryReindex();
@@ -171,6 +180,9 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		setHasOptionsMenu(true);
+		
         rootView = inflater.inflate(R.layout.fragment_dic, container, false);
         
 		ibRemove = (ImageButton)rootView.findViewById(R.id.ibRemove);
@@ -274,5 +286,12 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	public void setContext(Activity context) {
 		mContext = context;
 	}
+	
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.main, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
 	
 }

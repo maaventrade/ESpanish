@@ -19,6 +19,9 @@
 	<string name="action_select_dic">Select dictionary</string>
 	<string name="action_tree">Tree</string>
 	<string name="action_reindex">Reindex</string>
-					
+	
+	<string name="action_dictionary">Dictionary</string>
+	<string name="action_add_group">Add group</string>
+							
 	
 </resources>

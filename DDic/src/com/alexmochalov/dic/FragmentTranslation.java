@@ -61,9 +61,6 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		ibSpeak = (ImageButton)rootView.findViewById(R.id.ibSpeak);
 		ibSpeak.setOnClickListener(this);
 		
-		ibMenu = (ImageButton)rootView.findViewById(R.id.ibMenu);
-		ibMenu.setOnClickListener(this);
-
 		tvWord = (TextView)rootView.findViewById(R.id.tvWord);
 		tvTranslation = (TextView)rootView.findViewById(R.id.tvTranslation);
 		tvTranslation.setMovementMethod(new ScrollingMovementMethod());
@@ -97,69 +94,9 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-		if (v == ibMenu){
-			showPopupMenu(v);
-		} else if (v == ibSpeak){
+		if (v == ibSpeak){
 			TtsUtils.speak(tvWord.getText().toString());
 		}
 	}
-
-	private void showPopupMenu(View v) {
-		PopupMenu popupMenu = new PopupMenu(mContext, v);
-        popupMenu.inflate(R.menu.popup); 
-
-        popupMenu
-                .setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        // Toast.makeText(PopupMenuDemoActivity.this,
-                        // item.toString(), Toast.LENGTH_LONG).show();
-                        // return true;
-                        switch (item.getItemId()) {
-                        case R.id.action_tree:
-                			if (callback != null)
-                				callback.btnForwardClicked();
-                            return true;
-                        case R.id.action_reindex:
-            				callback.btnReindex();
-                            return true;
-                        case R.id.action_select_dic:
-								AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-								dialog.setTitle("Select divtionaty");
-								//dialog.setMessage(getResources().getString(R.string.action_move));
-
-								final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
-								arrayAdapter.add("en-ru");
-								arrayAdapter.add("it-ru");
-								arrayAdapter.add("ru-it");
-
-								dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											dialog.dismiss();
-										}
-									});
-
-								dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											String strName = arrayAdapter.getItem(which);
-											if (callback != null)
-												callback.btnSelectDictionary(strName);
-										}
-									});
-								dialog.show();
-							
-							
-                			
-                            return true;
-                           default:
-                                return false;
-                        }
-                    }
-                });
-        popupMenu.show();	
-       }
 	
 }

@@ -23,7 +23,7 @@ public class FragmentTree extends Fragment
 	private View rootView;
 
 	private ExpandableListView listView;
-	private AdapterTree adapter;
+	private AdapterTree adapterTree;
 
 	private int selectedGroupIndex = -1;
 	private int selectedItemIndex = -1;
@@ -50,15 +50,18 @@ public class FragmentTree extends Fragment
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+		
+		setHasOptionsMenu(true);
+		
         rootView = inflater.inflate(R.layout.fragment_tree, container, false);
 
 		listView = (ExpandableListView)rootView.findViewById(R.id.ListViewTree); 
 
 		Tree.readFilesList();
 		
-		adapter = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
+		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
 
-		adapter.listener = new AdapterTree.OnButtonClickListener(){
+		adapterTree.listener = new AdapterTree.OnButtonClickListener(){
 
 			@Override
 			public void onEdit(String text)
@@ -76,7 +79,7 @@ public class FragmentTree extends Fragment
 			}
 		};
 
-		listView.setAdapter(adapter);
+		listView.setAdapter(adapterTree);
 /*
 		listView.setOnGroupClickListener(new OnGroupClickListener() {
 				@Override
@@ -246,5 +249,16 @@ public class FragmentTree extends Fragment
 		}
 	}
 */
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.tree, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	public void addGroup() {
+		Tree.addGroup(-1);	
+		adapterTree.notifyDataSetChanged();
+	}
+
 
 }

@@ -3,10 +3,21 @@
     tools:context="com.alexmochalov.enru.MainActivity" >
     
     <item
-        android:id="@+id/action_parameters"
+        android:id="@+id/action_select_dic"
         android:orderInCategory="3"
-        android:showAsAction="always"
-        android:title="Start"/>
+        android:title="@string/action_select_dic"/>
+    
+    <item
+        android:id="@+id/action_tree"
+        android:orderInCategory="3"
+        android:title="@string/action_tree" 
+        android:showAsAction="always"/>
+    
+    <item
+        android:id="@+id/action_reindex"
+        android:orderInCategory="3"
+        android:title="@string/action_reindex"/>
+    
     
 
 </menu>

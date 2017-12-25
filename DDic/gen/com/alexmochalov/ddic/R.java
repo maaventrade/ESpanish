@@ -65,24 +65,24 @@ public final class R {
         public static final int speaker=0x7f020011;
     }
     public static final class id {
-        public static final int ListViewTree=0x7f0b000c;
-        public static final int action_parameters=0x7f0b0011;
-        public static final int action_reindex=0x7f0b0014;
-        public static final int action_select_dic=0x7f0b0012;
-        public static final int action_tree=0x7f0b0013;
+        public static final int ListViewTree=0x7f0b000b;
+        public static final int action_add_group=0x7f0b0013;
+        public static final int action_dictionary=0x7f0b0014;
+        public static final int action_reindex=0x7f0b0012;
+        public static final int action_select_dic=0x7f0b0010;
+        public static final int action_tree=0x7f0b0011;
         public static final int dicstringTextView=0x7f0b0000;
         public static final int etEntry=0x7f0b0001;
-        public static final int fcDictionary=0x7f0b000f;
-        public static final int fcTranslation=0x7f0b0010;
+        public static final int fcDictionary=0x7f0b000e;
+        public static final int fcTranslation=0x7f0b000f;
         public static final int ibAdd=0x7f0b0009;
-        public static final int ibFolder=0x7f0b000d;
+        public static final int ibFolder=0x7f0b000c;
         public static final int ibForward=0x7f0b000a;
-        public static final int ibMenu=0x7f0b000b;
         public static final int ibRemove=0x7f0b0002;
         public static final int ibSpeak=0x7f0b0006;
         public static final int ltMain=0x7f0b0008;
         public static final int lvDictionary=0x7f0b0003;
-        public static final int tvName=0x7f0b000e;
+        public static final int tvName=0x7f0b000d;
         public static final int tvPhonetic=0x7f0b0005;
         public static final int tvTranslation=0x7f0b0007;
         public static final int tvWord=0x7f0b0004;
@@ -103,6 +103,7 @@ public final class R {
     public static final class menu {
         public static final int main=0x7f0a0000;
         public static final int popup=0x7f0a0001;
+        public static final int tree=0x7f0a0002;
     }
     public static final class raw {
         public static final int en_ru=0x7f040000;
@@ -110,6 +111,8 @@ public final class R {
         public static final int ru_it=0x7f040002;
     }
     public static final class string {
+        public static final int action_add_group=0x7f08000e;
+        public static final int action_dictionary=0x7f08000d;
         public static final int action_reindex=0x7f08000c;
         public static final int action_select_dic=0x7f08000a;
         public static final int action_tree=0x7f08000b;

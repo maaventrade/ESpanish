@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// hideSystemUI();
 		// Log.d("a",""+Dictionary);
 
-		getActionBar().hide();
+		//getActionBar().hide();
 
 		if (savedInstanceState != null) {
 
@@ -86,47 +86,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 
 			fragmentTranslation = new FragmentTranslation(this);
-			fragmentTranslation.callback = new FragmentTranslation.FragmentTranslationCallback() {
-
-				@Override
-				public void btnSelectDictionary(String name) {
-					if (name.equals("en-ru"))
-						Utils.setDictionaryName("en_ru.xdxf");
-					else if (name.equals("ru-it"))
-						Utils.setDictionaryName("ru_it.xdxf");
-					else if (name.equals("it-ru"))
-						Utils.setDictionaryName("it_ru.xdxf");
-
-					TtsUtils.setLanguage(mContext);
-					fragmentDic.setHint(name);
-					Dictionary.loadIndex(Utils.getDictionaryName(), false);
-
-				}
-
-				@Override
-				public void btnForwardClicked() {
-					FragmentTransaction ft = getFragmentManager()
-							.beginTransaction();
-
-					
-					Bundle args = new Bundle();
-
-					// args.putString("name", record.getName());
-					// fragmentDic.setArguments(args);
-
-					ft.replace(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
-					
-					//ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
-					ft.addToBackStack(null);
-
-					ft.commit();
-				}
-
-				@Override
-				public void btnReindex() {
-					fragmentDic.reindex();
-				}
-			};
 
 			ft.add(R.id.fcTranslation, fragmentTranslation, TAG_FRAGMENT_TRANSL);
 			ft.commit();
@@ -156,7 +115,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -167,12 +126,83 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		// if (id == R.id.action_settings) {
-		// return true;
-		// }
-		return super.onOptionsItemSelected(item);
-	}
+        switch (item.getItemId()) {
+        case R.id.action_tree:
+    		FragmentTree myFragment = (FragmentTree)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_TREE);
+    		if (myFragment == null){
+        		FragmentTransaction ft = getFragmentManager().beginTransaction();
+        		Bundle args = new Bundle();
+        		// args.putString("name", record.getName());
+        		// fragmentDic.setArguments(args);
+        		ft.replace(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
+        		//ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
+        		ft.addToBackStack(null);
+        		ft.commit();
+    		}
+        	
+            return true;
+        case R.id.action_dictionary:
+    		FragmentDic myFragmentD = (FragmentDic)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_DIC);
+    		if (myFragmentD == null){
+        		FragmentTransaction ft = getFragmentManager().beginTransaction();
+        		ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+        		ft.addToBackStack(null);
+        		ft.commit();
+    		} else {
+    			getFragmentManager().popBackStack();
+    		}
+        	
+            return true;
+            
+        case R.id.action_add_group:
+			fragmentTree.addGroup();
+            return true;
+        case R.id.action_reindex:
+			fragmentDic.reindex();
+            return true;
+        case R.id.action_select_dic:
+				AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+				dialog.setTitle("Select divtionaty");
+				//dialog.setMessage(getResources().getString(R.string.action_move));
 
+				final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
+				arrayAdapter.add("en-ru");
+				arrayAdapter.add("it-ru");
+				arrayAdapter.add("ru-it");
+
+				dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+
+				dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							String strName = arrayAdapter.getItem(which);
+							if (strName.equals("en-ru"))
+								Utils.setDictionaryName("en_ru.xdxf");
+							else if (strName.equals("ru-it"))
+								Utils.setDictionaryName("ru_it.xdxf");
+							else if (strName.equals("it-ru"))
+								Utils.setDictionaryName("it_ru.xdxf");
+
+							TtsUtils.setLanguage(mContext);
+							fragmentDic.setHint(strName);
+							Dictionary.loadIndex(Utils.getDictionaryName(), false);
+						}
+					});
+				dialog.show();
+			
+			
+			
+            return true;
+           default:
+                return false;
+        }
+	}
+	
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 
@@ -226,11 +256,11 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		}
 		else super.onActivityResult(requestCode, resultCode, data);
 	}
-/*
+
 	@Override
 	public void onBackPressed()
 	{
-	    
+	    /*
 		FragmentTree myFragment1 = (FragmentTree)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_TREE);
 		if (myFragment1 != null && myFragment1.isVisible()) {
 			Toast.makeText(mContext, "dic", Toast.LENGTH_LONG).show();
@@ -242,6 +272,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			ft.commit();
 			
 		} else
+			*/
 	  	   super.onBackPressed();  // optional depending on your needs
-	}	*/
+	}	
+	
 }

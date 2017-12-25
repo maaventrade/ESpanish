@@ -101,6 +101,12 @@ public class Tree {
 		return listDataChild;
 	}
 
+	public static void addGroup(int index) {
+		if (index < 0) index = 0;
+		
+		listDataHeader.add(index, "New"); 
+		listDataChild.put("New", new ArrayList<IndexEntry>());
+	}
 	
 	
 /*
@@ -196,14 +202,6 @@ public class Tree {
 		return null;
 	}
 
-	public static void addGroup(File file, int index) {
-		if (index < 0) index = 0;
-		
-		PFile pFile = new PFile(file);
-		
-		listDataHeader.add(index, pFile); 
-		listDataChild.put(pFile, new ArrayList<PFile>());
-	}
 	*/
 	
 	/*
