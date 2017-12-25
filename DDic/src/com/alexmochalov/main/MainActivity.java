@@ -78,6 +78,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			fragmentTranslation = (FragmentTranslation) getFragmentManager()
 					.findFragmentByTag(TAG_FRAGMENT_TRANSL);
 //			fragmentFiles.setParams(this);
+					
+			fragmentTree = (FragmentTree) getFragmentManager()
+				.findFragmentByTag(TAG_FRAGMENT_TREE);
 
 		} else {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -105,14 +108,15 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 					FragmentTransaction ft = getFragmentManager()
 							.beginTransaction();
 
-					fragmentTree = new FragmentTree(mContext);
-
+					
 					Bundle args = new Bundle();
 
 					// args.putString("name", record.getName());
 					// fragmentDic.setArguments(args);
 
 					ft.replace(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
+					
+					//ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
 					ft.addToBackStack(null);
 
 					ft.commit();
@@ -138,6 +142,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			};
 			ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
 			ft.commit();
+			
+			fragmentTree = new FragmentTree(mContext);
+			
 		}
 
 		Intent checkIntent = new Intent();
@@ -219,11 +226,22 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		}
 		else super.onActivityResult(requestCode, resultCode, data);
 	}
-
+/*
 	@Override
 	public void onBackPressed()
 	{
-	     // code here to show dialog
-	     super.onBackPressed();  // optional depending on your needs
-	}	
+	    
+		FragmentTree myFragment1 = (FragmentTree)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_TREE);
+		if (myFragment1 != null && myFragment1.isVisible()) {
+			Toast.makeText(mContext, "dic", Toast.LENGTH_LONG).show();
+			FragmentTransaction ft = getFragmentManager()
+				.beginTransaction();
+			
+			ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+			//ft.addToBackStack(null);
+			ft.commit();
+			
+		} else
+	  	   super.onBackPressed();  // optional depending on your needs
+	}	*/
 }

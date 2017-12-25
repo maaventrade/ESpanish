@@ -80,8 +80,8 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	{
 		super.onResume();
 		
-		if (Dictionary.getSize() > 0)
-			return;
+		//Toast.makeText(mContext,"size "+Dictionary.getSize(),Toast.LENGTH_LONG).show();
+		
 		
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -163,7 +163,9 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		};
         
 		Dictionary.setParams(mContext);
-		Dictionary.loadIndex(Utils.getDictionaryName(), true);
+		
+		if (Dictionary.getSize() == 0)
+			Dictionary.loadIndex(Utils.getDictionaryName(), true);
 		
 	}
 	
@@ -176,6 +178,34 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 
+		adapter = new ArrayAdapterDictionary(mContext,
+											 R.layout.dic_string,
+											 (ArrayList<IndexEntry>) Dictionary
+											 .getIndexEntries());
+
+		lvDictionary.setAdapter(adapter);
+		lvDictionary
+			.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(
+					AdapterView<?> adapterView, View p2,
+					int position, long p4) {
+					currentPosition = position;
+					if (callback != null) 
+						callback.itemSelected(adapter.getItem(position));
+					//Log.d("e","= "+adapter.getItem(position).getText());
+					View view = mContext.getCurrentFocus();
+					if (view != null) {  
+						InputMethodManager imm = (InputMethodManager)mContext.
+							getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+					}										
+
+				}
+			});
+		
+		
 		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
 		
 		etEntry.addTextChangedListener(new TextWatcher() {
