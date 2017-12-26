@@ -161,6 +161,26 @@ public final class Utils {
 		return mLanguage;
 	}
 
+	public static String getLanguageNoRus() {
+		if (mDictionaryName.equals("en_ru.xdxf")){
+			return "eng";
+		}
+		else if (mDictionaryName.equals("sp_eng.xdxf")){
+			return  "spa";
+		}
+		else if (mDictionaryName.equals("it_ru.xdxf")){
+			return  "ita";
+		}
+		else if (mDictionaryName.equals("ru_it.xdxf")){
+			return  "ita";
+		}
+		else if (mDictionaryName.equals("ru_en.xdxf")){
+			return  "eng";
+		}
+		else
+			return  "";
+	}
+
 
 	/*
 	 public static CharSequence getDictionaryPath() {

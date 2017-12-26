@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-	android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
@@ -10,10 +9,10 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:layout_weight="0.9"
-	    android:choiceMode="singleChoice"
 	    android:indicatorLeft="250dp"
 	    android:indicatorRight="300dp" 
-	    android:layoutDirection="rtl" 
+	    android:layoutDirection="rtl"
+	    android:choiceMode="singleChoice"
 	    android:listSelector = "@drawable/selector_list_item"
 	    android:groupIndicator="@null"
 />

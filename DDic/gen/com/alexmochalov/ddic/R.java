@@ -11,24 +11,31 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int black=0x7f05000f;
-        public static final int blue=0x7f050004;
-        public static final int blue1=0x7f05000a;
-        public static final int blue_dark=0x7f050005;
-        public static final int blue_light=0x7f050006;
-        public static final int blue_light_s=0x7f050007;
-        public static final int bronze=0x7f050000;
-        public static final int bronze_light=0x7f050001;
-        public static final int bronze_light1=0x7f050003;
-        public static final int bronze_light2=0x7f050002;
-        public static final int gray_dark=0x7f05000c;
-        public static final int gray_light=0x7f05000b;
-        public static final int navy=0x7f050008;
-        public static final int navy_light=0x7f050009;
-        public static final int salad=0x7f050010;
-        public static final int sky_blue=0x7f05000d;
-        public static final int white=0x7f05000e;
-        public static final int yellow=0x7f050011;
+        public static final int black=0x7f050014;
+        public static final int blue=0x7f05000a;
+        public static final int blue1=0x7f050010;
+        public static final int blue_dark=0x7f05000b;
+        public static final int blue_light=0x7f05000c;
+        public static final int blue_light_s=0x7f05000d;
+        public static final int bronze=0x7f050005;
+        public static final int bronze_light=0x7f050006;
+        public static final int bronze_light1=0x7f050008;
+        public static final int bronze_light2=0x7f050007;
+        public static final int bronze_light3=0x7f050009;
+        public static final int button=0x7f050018;
+        public static final int gray_light=0x7f050011;
+        public static final int navy=0x7f05000e;
+        public static final int navy_light=0x7f05000f;
+        public static final int ryb_blue=0x7f050002;
+        public static final int ryb_red=0x7f050000;
+        public static final int ryb_umbra=0x7f050004;
+        public static final int ryb_white=0x7f050003;
+        public static final int ryb_yellow=0x7f050001;
+        public static final int salad=0x7f050015;
+        public static final int sky_blue=0x7f050012;
+        public static final int transparent=0x7f050017;
+        public static final int white=0x7f050013;
+        public static final int yellow=0x7f050016;
     }
     public static final class dimen {
         public static final int MediumPlus=0x7f060002;
@@ -58,16 +65,19 @@ public final class R {
         public static final int icon_magnify72=0x7f02000a;
         public static final int icon_remove=0x7f02000b;
         public static final int item_background_selector=0x7f02000c;
-        public static final int item_text_selector=0x7f02000d;
-        public static final int item_text_selector1=0x7f02000e;
-        public static final int search_bar=0x7f02000f;
-        public static final int selector_list_item=0x7f020010;
-        public static final int speaker=0x7f020011;
+        public static final int item_background_selector1=0x7f02000d;
+        public static final int item_text_selector=0x7f02000e;
+        public static final int item_text_selector1=0x7f02000f;
+        public static final int search_bar=0x7f020010;
+        public static final int selector_list_item=0x7f020011;
+        public static final int speaker=0x7f020012;
     }
     public static final class id {
         public static final int ListViewTree=0x7f0b000b;
-        public static final int action_add_group=0x7f0b0013;
-        public static final int action_dictionary=0x7f0b0014;
+        public static final int action_add_group=0x7f0b0014;
+        public static final int action_add_item=0x7f0b0013;
+        public static final int action_dictionary=0x7f0b0016;
+        public static final int action_edit=0x7f0b0015;
         public static final int action_reindex=0x7f0b0012;
         public static final int action_select_dic=0x7f0b0010;
         public static final int action_tree=0x7f0b0011;
@@ -112,12 +122,16 @@ public final class R {
     }
     public static final class string {
         public static final int action_add_group=0x7f08000e;
+        public static final int action_add_item=0x7f08000f;
         public static final int action_dictionary=0x7f08000d;
+        public static final int action_edit=0x7f080010;
         public static final int action_reindex=0x7f08000c;
         public static final int action_select_dic=0x7f08000a;
         public static final int action_tree=0x7f08000b;
         public static final int app_name=0x7f080000;
         public static final int cancel=0x7f080008;
+        public static final int error_load_xml=0x7f080012;
+        public static final int error_saving_file=0x7f080011;
         public static final int exit=0x7f080007;
         public static final int hello_world=0x7f080001;
         public static final int index_not_found=0x7f080002;

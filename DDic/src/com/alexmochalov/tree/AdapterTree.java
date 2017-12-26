@@ -129,10 +129,11 @@ public class AdapterTree extends BaseExpandableListAdapter {
 		}
 
 		ImageButton ibFolder = (ImageButton)convertView.findViewById(R.id.ibFolder);
-		//if (record.isDirectory())
-		//	ibFile.setImageResource(R.drawable.folder);
-		//else	
-		//	ibFile.setImageResource(R.drawable.file);
+		
+		if (childPosition >= 0)
+			ibFolder.setImageResource(R.drawable.folder);
+		else	
+			ibFolder.setImageResource(0);
 		
 		
 

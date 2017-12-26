@@ -69,6 +69,11 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		
 		String name = prefs.getString(DICTIONARI_NAME, "en_ru.xdxf");
 		Utils.setDictionaryName(name);
+		Dictionary.setParams(mContext);
+		
+		if (Dictionary.getSize() == 0)
+			Dictionary.loadIndex(Utils.getDictionaryName(), true);
+		
 
 		if (savedInstanceState != null) {
 
@@ -154,6 +159,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
         		//ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
         		ft.addToBackStack(null);
         		ft.commit();
+        		
+    		} else {
+    			getFragmentManager().popBackStack();
     		}
         	
             return true;
@@ -172,6 +180,12 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
             
         case R.id.action_add_group:
 			fragmentTree.addGroup();
+            return true;
+        case R.id.action_add_item:
+			fragmentTree.addItem();
+            return true;
+        case R.id.action_edit:
+			fragmentTree.edit();
             return true;
         case R.id.action_reindex:
 			fragmentDic.reindex();

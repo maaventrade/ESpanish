@@ -16,13 +16,14 @@ import java.io.File;
 import java.util.*;
 
 import com.alexmochalov.dic.IndexEntry;
+import com.alexmochalov.main.Utils;
 
 public class FragmentTree extends Fragment
 {
 	private Activity mContext;
 	private View rootView;
 
-	private ExpandableListView listView;
+	private ExpandableListView lvTree;
 	private AdapterTree adapterTree;
 
 	private int selectedGroupIndex = -1;
@@ -55,9 +56,10 @@ public class FragmentTree extends Fragment
 		
         rootView = inflater.inflate(R.layout.fragment_tree, container, false);
 
-		listView = (ExpandableListView)rootView.findViewById(R.id.ListViewTree); 
+		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
+		lvTree.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		Tree.readFilesList();
+		Tree.loadXML(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
 		
 		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
 
@@ -79,9 +81,9 @@ public class FragmentTree extends Fragment
 			}
 		};
 
-		listView.setAdapter(adapterTree);
-/*
-		listView.setOnGroupClickListener(new OnGroupClickListener() {
+		lvTree.setAdapter(adapterTree);
+
+		lvTree.setOnGroupClickListener(new OnGroupClickListener() {
 				@Override
 				public boolean onGroupClick(ExpandableListView parent, View v,
 											int groupPosition, long id)
@@ -91,24 +93,14 @@ public class FragmentTree extends Fragment
 														   .getPackedPositionForGroup(groupPosition));
 					parent.setItemChecked(index, true);
 
-					IndexEntry pFile = (IndexEntry)adapter.getGroup(groupPosition);
-
-					if (pFile.isDirectory())
-					{
-						selectedGroupIndex = groupPosition;
-						selectedItemIndex = -1;
-					}
-					else
-					{
-						selectedGroupIndex = -1;
-						selectedItemIndex = groupPosition;
-					}
-
+					selectedGroupIndex = groupPosition;
+					selectedItemIndex = -1;
+					
 					return false;
 				}
 			});
 
-		listView.setOnChildClickListener(new OnChildClickListener() {
+		lvTree.setOnChildClickListener(new OnChildClickListener() {
 
 				@Override
 				public boolean onChildClick(ExpandableListView parent, View v,
@@ -126,10 +118,10 @@ public class FragmentTree extends Fragment
 				}
 
 			});
-*/
+
 
 		/*
-		 listView.setOnItemClickListener( new ListView.OnItemClickListener(){
+		 lvTree.setOnItemClickListener( new ListView.OnItemClickListener(){
 		 @Override
 		 public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
 		 {
@@ -260,5 +252,47 @@ public class FragmentTree extends Fragment
 		adapterTree.notifyDataSetChanged();
 	}
 
+	@Override
+	public void onPause() {
+		//Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+		super.onPause();
+	}
+
+	public void addItem() {
+		Tree.addItem("New2");	
+		adapterTree.notifyDataSetChanged();
+	}
+
+	public void edit() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle("Edit");
+
+		final EditText name = new EditText(mContext);
+		name.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(name);
+		
+		name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface p1, int p2)
+				{
+					Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
+					
+					//listViewFiles.setItemChecked(selectedItemIndex, true); /// ???????????
+
+					 adapterTree.notifyDataSetChanged();
+				}
+			});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int p2)
+				{
+					dialog.cancel();
+				}
+			});
+		builder.show();
+	}
+	
 
 }

@@ -63,7 +63,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		editor.putString(MTEXT, etEntry.getText().toString());
 		editor.putInt(MINDEX, currentPosition);
 
-		
 		editor.commit();
 		
 		super.onPause();
@@ -170,10 +169,10 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 			}
 		};
         
-		Dictionary.setParams(mContext);
+//		Dictionary.setParams(mContext);
 		
-		if (Dictionary.getSize() == 0)
-			Dictionary.loadIndex(Utils.getDictionaryName(), true);
+//		if (Dictionary.getSize() == 0)
+//			Dictionary.loadIndex(Utils.getDictionaryName(), true);
 		
 	}
 	
@@ -188,7 +187,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		ibRemove.setOnClickListener(this);
 		
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
-
+		/*
 		adapter = new ArrayAdapterDictionary(mContext,
 											 R.layout.dic_string,
 											 (ArrayList<IndexEntry>) Dictionary
@@ -215,7 +214,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 
 				}
 			});
-		
+		*/
 		
 		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
 		
