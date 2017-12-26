@@ -35,8 +35,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	
 	private final static String MTEXT = "TEXT";
 	private final static String MINDEX = "ITEM";
-	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
-
+	
 	
 	public FragmentDicCallback callback = null;
 	public interface FragmentDicCallback {
@@ -64,7 +63,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		editor.putString(MTEXT, etEntry.getText().toString());
 		editor.putInt(MINDEX, currentPosition);
 
-		editor.putString(DICTIONARI_NAME, Utils.getDictionaryName());
 		
 		editor.commit();
 		
@@ -84,6 +82,8 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		
 		//Toast.makeText(mContext,"size "+Dictionary.getSize(),Toast.LENGTH_LONG).show();
 		
+		//Toast.makeText(mContext,"ON RESUME",Toast.LENGTH_LONG).show();
+		
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		
@@ -91,9 +91,8 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		etEntry.setText(prefs.getString(MTEXT, ""));
 		currentPosition = prefs.getInt(MINDEX, -1);
 		
-		String name = prefs.getString(DICTIONARI_NAME, "en_ru.xdxf");
-		Utils.setDictionaryName(name);
-		setHint(name);
+		
+		setHint(Utils.getDictionaryName());
 		
 		Dictionary.eventCallback = new Dictionary.EventCallback() {
 			@Override

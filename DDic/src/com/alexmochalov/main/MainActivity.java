@@ -38,7 +38,12 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	private FragmentTree fragmentTree;
 	private String TAG_FRAGMENT_TREE = "TAG_FRAGMENT_TREE";
+	
+	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
+	
 
+	private String CURRENTFRAG = "CURRENTFRAG";
+	
 	private Activity mContext;
 
 	private int MY_DATA_CHECK_CODE = 0;
@@ -60,6 +65,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// Log.d("a",""+Dictionary);
 
 		//getActionBar().hide();
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		
+		String name = prefs.getString(DICTIONARI_NAME, "en_ru.xdxf");
+		Utils.setDictionaryName(name);
 
 		if (savedInstanceState != null) {
 
@@ -99,10 +108,17 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 				}
 			};
-			ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+			fragmentTree = new FragmentTree(mContext);
+			
+			
+			String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
+			if (tag.equals(TAG_FRAGMENT_DIC))
+				ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+			else
+				ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
 			ft.commit();
 			
-			fragmentTree = new FragmentTree(mContext);
+			
 			
 		}
 
@@ -212,15 +228,38 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		
+		outState.putString( CURRENTFRAG, getVisibleFragmentTag());
+		
 		// outState.putString(MTEXT, etMagnify.getText().toString());
 		// outState.putString(MINDEX, MenuData.getText());
 		// outState.put
 		// outState.putString(MINDEX, MenuData.getText());
 	}
 
+	private String getVisibleFragmentTag()
+	{
+		Fragment f = getFragmentManager().findFragmentById(R.id.fcDictionary);
+		if (f instanceof FragmentDic) 
+			return TAG_FRAGMENT_DIC;
+		else
+			return TAG_FRAGMENT_TREE;
+		
+	}
+
 	@Override
 	public void onPause() {
 		TtsUtils.destroy();
+		
+		SharedPreferences prefs;
+		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		Editor editor = prefs.edit();
+
+		editor.putString(CURRENTFRAG, getVisibleFragmentTag());
+		editor.putString(DICTIONARI_NAME, Utils.getDictionaryName());
+		
+		editor.commit();
+
 		super.onPause();
 	}
 
@@ -273,7 +312,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			
 		} else
 			*/
-	  	   super.onBackPressed();  // optional depending on your needs
+			this.finishAffinity();
+	  	  // super.onBackPressed();  // optional depending on your needs
 	}	
 	
 }
