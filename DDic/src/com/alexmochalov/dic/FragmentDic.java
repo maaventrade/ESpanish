@@ -93,82 +93,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		
 		setHint(Utils.getDictionaryName());
 		
-		Dictionary.eventCallback = new Dictionary.EventCallback() {
-			@Override
-			public void loadingFinishedCallBack(boolean result) {
-
-				if (result) {
-					//dictionary_name = Utils.getDictionaryFileName();
-
-					
-					if (adapter == null){
-						adapter = new ArrayAdapterDictionary(mContext,
-								R.layout.dic_string,
-								(ArrayList<IndexEntry>) Dictionary
-										.getIndexEntries());
-
-						lvDictionary.setAdapter(adapter);
-						lvDictionary
-								.setOnItemClickListener(new OnItemClickListener() {
-
-									@Override
-									public void onItemClick(
-											AdapterView<?> adapterView, View p2,
-											int position, long p4) {
-										currentPosition = position;
-										if (callback != null) 
-											callback.itemSelected(adapter.getItem(position));
-											//Log.d("e","= "+adapter.getItem(position).getText());
-										View view = mContext.getCurrentFocus();
-										if (view != null) {  
-										    InputMethodManager imm = (InputMethodManager)mContext.
-										    		getSystemService(Context.INPUT_METHOD_SERVICE);
-										    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-										}										
-										
-									}
-								});
-					} else {
-						adapter.notifyDataSetChanged();
-						Log.d("e","changed");
-					}
-					
-					adapter.callback = new ArrayAdapterDictionary.AdapterCallback() {
-						@Override
-						public void valuesFiltered() {
-							if (currentPosition >= 0){
-								lvDictionary.setSelection(currentPosition);
-								IndexEntry IndexEntry = (IndexEntry)adapter.getItem(currentPosition);
-								if (IndexEntry != null)
-									if (callback != null) 
-										callback.itemSelected(IndexEntry);
-								//currentPosition = -1;
-							}
-						}
-					};
-					
-					// If some text in the Search string exists, execute an action "setText"
-					if (!etEntry.getText().toString().equals(""))
-						etEntry.setText(etEntry.getText().toString());
-					// If position in ListView was stored, set this position
-					else if (currentPosition >= 0){
-						lvDictionary.setSelection(currentPosition);
-						if (callback != null) 
-							callback.itemSelected(adapter.getItem(currentPosition));
-					}
-						
-				} else {
-					// If Index file not found show the message
-					queryReindex();
-				}
-			}
-
-			@Override
-			public void indexingFinishedCallBack(String dictionary_name) {
-				Dictionary.loadIndex(dictionary_name, false);
-			}
-		};
-        
 //		Dictionary.setParams(mContext);
 		
 //		if (Dictionary.getSize() == 0)
@@ -187,7 +111,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		ibRemove.setOnClickListener(this);
 		
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
-		/*
+		
 		adapter = new ArrayAdapterDictionary(mContext,
 											 R.layout.dic_string,
 											 (ArrayList<IndexEntry>) Dictionary
@@ -214,7 +138,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 
 				}
 			});
-		*/
 		
 		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
 		

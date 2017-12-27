@@ -254,7 +254,7 @@ public class FragmentTree extends Fragment
 
 	@Override
 	public void onPause() {
-		//Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+		Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
 		super.onPause();
 	}
 
@@ -264,34 +264,39 @@ public class FragmentTree extends Fragment
 	}
 
 	public void edit() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle("Edit");
+		if (selectedItemIndex >= 0){
+			DialogEdit dialog = new DialogEdit(mContext);
+			dialog.show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+			builder.setTitle("Edit");
 
-		final EditText name = new EditText(mContext);
-		name.setInputType(InputType.TYPE_CLASS_TEXT);
-		builder.setView(name);
-		
-		name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
+			final EditText name = new EditText(mContext);
+			name.setInputType(InputType.TYPE_CLASS_TEXT);
+			builder.setView(name);
+			
+			name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
 
-		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface p1, int p2)
-				{
-					Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
-					
-					//listViewFiles.setItemChecked(selectedItemIndex, true); /// ???????????
+			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface p1, int p2)
+					{
+						Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
+						
+						//listViewFiles.setItemChecked(selectedItemIndex, true); /// ???????????
 
-					 adapterTree.notifyDataSetChanged();
-				}
-			});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int p2)
-				{
-					dialog.cancel();
-				}
-			});
-		builder.show();
+						 adapterTree.notifyDataSetChanged();
+					}
+				});
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int p2)
+					{
+						dialog.cancel();
+					}
+				});
+			builder.show();
+		}
 	}
 	
 

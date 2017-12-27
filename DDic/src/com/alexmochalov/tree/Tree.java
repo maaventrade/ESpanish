@@ -33,20 +33,22 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class Tree {
-
-	private static ArrayList<String> listDataHeader = new ArrayList<String>();
-	private static HashMap<String, List<IndexEntry>> listDataChild = new HashMap<String, List<IndexEntry>>();
+ 
+	private static boolean errorLoading = false; 
+	
+	private static ArrayList<Header> listDataHeader = new ArrayList<Header>();
+	private static HashMap<Header, List<Child>> listDataChild = new HashMap<Header, List<Child>>();
 
 	public static void clear() {
-		listDataHeader = new ArrayList<String>();
-		listDataChild = new HashMap<String, List<IndexEntry>>();
+		listDataHeader = new ArrayList<Header>();
+		listDataChild = new HashMap<Header, List<Child>>();
 	}
 
-	public static ArrayList<String> getGroups() {
+	public static ArrayList<Header> getGroups() {
 		return listDataHeader;
 	}
 
-	public static HashMap<String, List<IndexEntry>> getChilds() {
+	public static HashMap<Header, List<Child>> getChilds() {
 		return listDataChild;
 	}
 
@@ -56,8 +58,9 @@ public class Tree {
 
 		for (int i = 1; i < 999999; i++){
 			if (!listDataHeader.contains("New"+i)){
-				listDataHeader.add(index, "New"+i);
-				listDataChild.put("New"+i, new ArrayList<IndexEntry>());
+				Header h = new Header("New"+i);
+				listDataHeader.add(index,  h);
+				listDataChild.put(h, new ArrayList<Child>());
 				break;
 			}
 		}
@@ -166,6 +169,8 @@ public class Tree {
 	 */
 	public static File save(Context mContext, String fileName) {
 
+		if (errorLoading) return null;
+		
 		File file = new File(Utils.getAppFolder());
 		if (!file.exists()) {
 			file.mkdirs();
@@ -179,13 +184,13 @@ public class Tree {
 			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
 			writer.write("<body type = \"tree\">" + "\n");
 
-			for (String s : listDataHeader) {
+			for (Header s : listDataHeader) {
 
-				writer.write("<group name=\"" + s + "\"" + ">" + "\n");
+				writer.write("<group name=\"" + s.getName() + "\"" + ">" + "\n");
 
 				if (listDataChild.get(s) != null) {
-					for (IndexEntry l : listDataChild.get(s)) {
-						writer.write("<record name=\"" + l.getText() + "\""
+					for (Child l : listDataChild.get(s)) {
+						writer.write("<record name=\"" + l.getName() + "\""
 								+ ">\n");
 						writer.write("</record>" + "\n");
 					}
@@ -215,13 +220,14 @@ public class Tree {
 	public static boolean loadXML(Activity mContext, String fileName) {
 		clear();
 
-		String currentGroup = null;
+		Header currentGroup = null;
 
 		File file = new File(Utils.getAppFolder() + "/" + fileName);
 
 		if (!file.exists()) {
-			listDataHeader.add("Root");
-			listDataChild.put("Root", new ArrayList<IndexEntry>());
+			Header h = new Header("New1");
+			listDataHeader.add(h);
+			listDataChild.put(h, new ArrayList<Child>());
 			return true;
 		}
 
@@ -268,47 +274,46 @@ public class Tree {
 					if (parser.getName() == null)
 						;
 					else if (parser.getName().equals("group")) {
-
-						currentGroup = parser.getAttributeValue(null, "name");
+						currentGroup = new Header(parser.getAttributeValue(null, "name"));
 
 						listDataHeader.add(currentGroup);
-						listDataChild.put(currentGroup,
-								new ArrayList<IndexEntry>());
+						listDataChild.put(currentGroup, new ArrayList<Child>());
 
 					} else if (parser.getName().equals("record")) {
 
 						String name = parser.getAttributeValue(null, "name");
 
-						IndexEntry record = Dictionary.find(name);
-
-						listDataChild.get(currentGroup).add(record);
+						listDataChild.get(currentGroup).add(new Child(name));
 
 					}
 				}
 				try {
 					eventType = parser.next();
 				} catch (XmlPullParserException e) {
+					errorLoading = true;
 					Toast.makeText(
 							mContext,
 							mContext.getResources().getString(
 									R.string.error_load_xml)
-									+ ". " + e.toString(), Toast.LENGTH_LONG)
+									+ ". !!! " + e.toString(), Toast.LENGTH_LONG)
 							.show();
 					return false;
 				}
 			}
 
 		} catch (Throwable t) {
+			errorLoading = true;
 			Toast.makeText(
 					mContext,
 					mContext.getResources().getString(R.string.error_load_xml)
-							+ ". " + t.toString(), Toast.LENGTH_LONG).show();
+							+ ". ???  " + t.toString(), Toast.LENGTH_LONG).show();
 			return false;
 		}
 
 		if (listDataHeader.size() == 0) {
-			listDataHeader.add("Root");
-			listDataChild.put("Root", new ArrayList<IndexEntry>());
+			Header h = new Header("New1");
+			listDataHeader.add(h);
+			listDataChild.put(h, new ArrayList<Child>());
 		}
 
 		return true;
@@ -318,20 +323,21 @@ public class Tree {
 	}
 
 	public static void addItem(String key) {
-		listDataChild.get(key).add(Dictionary.find("Head"));	
+		//listDataChild.get(key).add(Dictionary.find("Head"));	
 	}
 
 	public static String getName(int selectedGroupIndex,
 			int selectedItemIndex) {
 		if (selectedItemIndex == -1)
-			return listDataHeader.get(selectedGroupIndex); 
+			return listDataHeader.get(selectedGroupIndex).getName(); 
 		else
-			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getText(); 
+			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getName(); 
 			
 	}
 
 	public static void setName(int selectedGroupIndex, int selectedItemIndex,
-			String string) {
+			String name) {
+			listDataHeader.get(selectedGroupIndex).setName(name); 
 //		if (selectedItemIndex == -1)
 //			listDataHeader. .put(selectedGroupIndex, string); 
 //		else

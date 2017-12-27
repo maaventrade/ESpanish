@@ -12,13 +12,21 @@ import com.alexmochalov.ddic.R;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 public final class Utils {
+	private static String mInformation = "";
+	
+	
 	private static String mDictionaryName;
 	
 	
@@ -200,18 +208,6 @@ public final class Utils {
 	 return mIndex_file_name;
 	 }
 	 */
-
-	public static void setInformation(String info){
-		/*
-		 String text = textViewInformation.getText().toString();
-		 if (text.length() > 0)
-		 text = text+'\n'+info;
-		 else
-		 text = info;
-		 textViewInformation.setText(text);
-		 textViewInformation.setVisibility(View.VISIBLE);
-		 */
-	}
 
 	public static void clearInfo() {
 		/*
@@ -455,5 +451,42 @@ public final class Utils {
 	public static String getIndexPath() {
 		return APP_FOLDER+"/"+mDictionaryName.replace(".xdxf", ".index");
 	}
+	
+	public static void addInformation(String info){
+		mInformation = mInformation + info + "\n";
+	}
+
+	
+	static class ViewDialog {
+
+	    public void showDialog(Context activity, String msg){
+	        final Dialog dialog = new Dialog(activity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+	        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	        //dialog.requestWindowFeature(Window.);
+	        dialog.setCancelable(true);
+	        dialog.setContentView(R.layout.information);
+
+	        TextView text = (TextView) dialog.findViewById(R.id.tvInformation);
+	        text.setText(mInformation);
+
+	        Button btnClose = (Button) dialog.findViewById(R.id.btnClose);
+	        btnClose.setOnClickListener(new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	                dialog.dismiss();
+	            }
+	        });
+
+	        dialog.show();
+
+	    }
+	}
+	
+	public static void showInfo(Context mContext) {
+		ViewDialog alert = new ViewDialog();
+		alert.showDialog(mContext, "Error de conexión al servidor");
+		}
+	
+	
 }
 

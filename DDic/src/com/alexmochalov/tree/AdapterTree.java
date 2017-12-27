@@ -24,8 +24,8 @@ public class AdapterTree extends BaseExpandableListAdapter {
 	private Activity mActivity;
 	private Context mContext;
 	
-	private List<String> mGroups; // header titles
-	private HashMap<String, List<IndexEntry>> mChilds;
+	private List<Header> mGroups; // header titles
+	private HashMap<Header, List<Child>> mChilds;
 	
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
@@ -33,8 +33,8 @@ public class AdapterTree extends BaseExpandableListAdapter {
 	}
 	public OnButtonClickListener listener;
 
-	AdapterTree(Activity activity, Context context, List<String> groups,
-			HashMap<String, List<IndexEntry>> childs) {
+	AdapterTree(Activity activity, Context context, List<Header> groups,
+			HashMap<Header, List<Child>> childs) {
 		
 		mContext = context;
 		mActivity = activity;
@@ -113,29 +113,25 @@ public class AdapterTree extends BaseExpandableListAdapter {
 			ViewGroup parent) {
 		
 		if (convertView == null) { 
-			convertView = inflater.inflate(R.layout.item_tree, null);
+			if (childPosition < 0)
+				convertView = inflater.inflate(R.layout.item_tree_header, null);
+			else	
+				convertView = inflater.inflate(R.layout.item_tree_child, null);
 		}
 				
-		if (childPosition >= 0){
-			convertView.setPadding(40, 0, 0, 0);
-		}
 		TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
 		
-		if (childPosition < 0)
-			tvName.setText( (String) getGroup(groupPosition));
-		else {
-			IndexEntry record = (IndexEntry)getChild(groupPosition, childPosition);
-			tvName.setText(record.getText());
-		}
-
-		ImageButton ibFolder = (ImageButton)convertView.findViewById(R.id.ibFolder);
-		
-		if (childPosition >= 0)
+		if (childPosition < 0){
+			ImageButton ibFolder = (ImageButton)convertView.findViewById(R.id.ibFolder);
+			Header h = (Header) getGroup(groupPosition);
+			tvName.setText(h.getName());
 			ibFolder.setImageResource(R.drawable.folder);
-		else	
-			ibFolder.setImageResource(0);
-		
-		
+		}	
+		else {
+			convertView.setPadding(40, 0, 0, 0);
+			Child record = (Child)getChild(groupPosition, childPosition);
+			tvName.setText(record.getName());
+		}
 
 		return convertView;
 	}

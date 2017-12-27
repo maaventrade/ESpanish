@@ -24,7 +24,8 @@
 	<string name="action_add_group">Add group</string>
 	<string name="action_add_item">Add</string>
 	<string name="action_edit">Edit</string>
-									
+	<string name="action_info">Info</string>
+										
 	
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>

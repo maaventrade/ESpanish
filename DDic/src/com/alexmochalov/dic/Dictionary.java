@@ -109,7 +109,7 @@ public final class Dictionary{
 			progressDialog.hide();
 			progressDialog.dismiss();
 
-			Utils.setInformation(info);
+			Utils.addInformation("onCancelled");
 
 			//seekBarVertical.setMax(getStringsSize());
 			Toast.makeText(mContext,
@@ -126,7 +126,7 @@ public final class Dictionary{
 
 			Utils.setDictionaryName(mDictionaryName);
 
-			Utils.setInformation(info);
+			Utils.addInformation("onPostExecute: eventCallback = "+eventCallback);
 
 			if (eventCallback != null)
 				eventCallback.loadingFinishedCallBack(true);
@@ -156,14 +156,12 @@ public final class Dictionary{
 				    	break;
 				    }
 				}
-				info = "File <"+mDictionaryName+"> loaded. "+ens.size()+" entries.";
+				Utils.addInformation("loadAsinc: File <"+mDictionaryName+"> loaded. "+ens.size()+" entries.");
 				reader.close();
 			} catch (IOException t) {
-				info = "Error loading <"+mDictionaryName+"> loaded. "+t.toString();
-				//Log.d("s", info);
+				Utils.addInformation("loadAsinc: Error loading <"+mDictionaryName+"> loaded. "+t.toString());
 			}
 			parsing = false;
-			//Log.d("s", "OK");
 		}
 
 	}	
@@ -249,7 +247,7 @@ public final class Dictionary{
 			Toast.makeText(mContext,
 						   "Error:" + t.toString(), Toast.LENGTH_LONG)
 				.show();
-			Utils.setInformation(""+t);
+			Utils.addInformation(""+t);
 			return "";
 		}
 
@@ -286,7 +284,7 @@ public final class Dictionary{
 			super.onCancelled(result);
 			progressDialog.hide();
 			progressDialog.dismiss();
-			Utils.setInformation(info);
+			Utils.addInformation(info);
 			Toast.makeText(mContext,
 						   "Cancelled", Toast.LENGTH_LONG) // mContext.getResources().getString(R.string.loading_cancelled)
 				.show();
@@ -297,7 +295,7 @@ public final class Dictionary{
 			super.onPostExecute(result);
 			progressDialog.hide();
 			progressDialog.dismiss();
-			Utils.setInformation(info);
+			Utils.addInformation(info);
 			Log.d("","eventCallback --->>>>> "+eventCallback);
 			if (eventCallback != null){
 				eventCallback.indexingFinishedCallBack(mDictionaryName);
@@ -527,7 +525,7 @@ public final class Dictionary{
 			reader.close();
 			return "";
 		} catch (IOException t) {
-			Utils.setInformation(""+t);
+			Utils.addInformation(""+t);
 			return "";
 		}
 	}

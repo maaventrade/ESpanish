@@ -25,6 +25,11 @@
         android:orderInCategory="20"
         android:title="@string/action_dictionary" android:showAsAction="always"/>
     
+    <item
+        android:id="@+id/action_info"
+        android:orderInCategory="30"
+        android:title="@string/action_info" 
+        android:showAsAction="never"/>
     
     
 
