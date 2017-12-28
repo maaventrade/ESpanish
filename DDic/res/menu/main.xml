@@ -3,6 +3,18 @@
     tools:context="com.alexmochalov.enru.MainActivity" >
     
     <item
+        android:id="@+id/action_choose"
+        android:orderInCategory="3"
+        android:title="@string/action_choose" 
+        android:showAsAction="always"/>
+    
+    <item
+        android:id="@+id/action_add"
+        android:orderInCategory="3"
+        android:title="@string/action_add" 
+        android:showAsAction="always"/>
+    
+    <item
         android:id="@+id/action_select_dic"
         android:orderInCategory="3"
         android:title="@string/action_select_dic"/>

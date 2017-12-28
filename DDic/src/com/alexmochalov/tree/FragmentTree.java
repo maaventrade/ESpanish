@@ -31,8 +31,10 @@ public class FragmentTree extends Fragment
 
 	public interface OnTreeEventListener
 	{
-		//public void onGoSelected(String text);
 		public void onEditSelected(String text);
+		public void onAddSelected(int selectedGroupIndex);
+		public void itemSelected(IndexEntry indexEntry);
+		
 	}
 
 	public OnTreeEventListener listener;
@@ -41,6 +43,11 @@ public class FragmentTree extends Fragment
 	{
 		super();
 		mContext = context;
+		
+		Tree.copy(mContext, "tree_"+Utils.getLanguageNoRus()+".xml", "tree_"+Utils.getLanguageNoRus()+"_bak.xml"); 
+		
+		Tree.loadXML(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+		
 	}
 
 	public FragmentTree()
@@ -59,8 +66,6 @@ public class FragmentTree extends Fragment
 		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
 		lvTree.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		Tree.loadXML(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
-		
 		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
 
 		adapterTree.listener = new AdapterTree.OnButtonClickListener(){
@@ -113,6 +118,12 @@ public class FragmentTree extends Fragment
 
 					selectedGroupIndex = groupPosition;
 					selectedItemIndex = childPosition;
+					
+					if (listener != null) 
+						listener.itemSelected(
+								com.alexmochalov.dic.Dictionary.find(
+								Tree.getName(groupPosition, childPosition)));
+					
 
 					return true;
 				}
@@ -148,99 +159,6 @@ public class FragmentTree extends Fragment
 		return rootView;
 	}
 
-/*
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		int id = item.getItemId();
-
-		switch (id)
-		{
-			case R.id.action_edit:
-				if (selectedItemIndex >= 0)
-				{
-					FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
-					FragmentEditor fragmentEditor = new FragmentEditor(mContext);
-
-					Bundle args = new Bundle();
-
-					if (selectedGroupIndex == -1)
-						args.putString("name",
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-					else
-						args.putString("name",
-									   Files.getGroup(selectedGroupIndex).getName() + "/" +
-									   Files.getItem(selectedGroupIndex, selectedItemIndex).getName()
-									   );
-
-					fragmentEditor.setArguments(args);
-
-					ft.replace(R.id.frgmCont, fragmentEditor, TAG_FRAGMENT_EDITOR);
-					ft.addToBackStack(null);
-
-					ft.commit();
-				} else if (selectedGroupIndex >= 0){
-					DialogAddPasteRename("renameGroup", getResources().getString(R.string.action_rename_group));
-				}
-				return true;
-
-			case R.id.action_delete:
-				if (selectedItemIndex >= 0)
-				{
-					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-					builder.setMessage("Delete " +
-									   Files.getItem(selectedGroupIndex, selectedItemIndex) + ". Are you sure?").setPositiveButton("Yes", dialogClickListener)
-					    .setNegativeButton("No", dialogClickListener).show();
-
-				}
-
-				return true;
-			case R.id.action_copy:
-				if (selectedItemIndex >= 0)
-					copyPFile = Files.getItem(selectedGroupIndex, selectedItemIndex);
-				else 
-					Toast.makeText(mContext, getResources().getString(R.string.warning_select_programm), Toast.LENGTH_LONG).show();
-				return true;
-			case R.id.action_paste:
-				if (copyPFile !=  null)
-					DialogAddPasteRename("paste", getResources().getString(R.string.action_add_child));
-				return true;
-			case R.id.action_rename:
-				//if (copyItemIndex >= 0)
-				//{
-				//	DialogAddPasteRename("rename", getResources().getString(R.string.action_add_child));
-				//}
-
-				return true;
-
-			case R.id.action_add_child:
-				DialogAddPasteRename("add", getResources().getString(R.string.action_add_child));
-				return true;
-
-			case R.id.action_add:
-				DialogAddPasteRename("addGroup", getResources().getString(R.string.action_add_group));
-				return true;
-
-			case R.id.action_calendar:
-				FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
-				FragmentCalendar fragmentCalendar = new FragmentCalendar(mContext);
-
-				Bundle arguments = new Bundle();
-				return true;
-			case R.id.action_archive:
-				archive();
-				return true;
-			case R.id.action_extract:
-				extract();
-				return true;						
-			default:	
-				return super.onOptionsItemSelected(item);
-		}
-	}
-*/
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.tree, menu);
@@ -259,17 +177,15 @@ public class FragmentTree extends Fragment
 	}
 
 	public void addItem() {
-		Tree.addItem("New2");	
-		adapterTree.notifyDataSetChanged();
+		if (selectedGroupIndex >= 0)
+			if (listener != null)
+				listener.onAddSelected(selectedGroupIndex);
 	}
 
 	public void edit() {
 		if (selectedItemIndex >= 0){
 			if (listener != null)
-				listener.onEditSelected("");
-			
-			//DialogEdit dialog = new DialogEdit(mContext);
-	//dialog.show();
+				listener.onEditSelected(Tree.getName(selectedGroupIndex, selectedItemIndex));
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Edit");
@@ -300,6 +216,21 @@ public class FragmentTree extends Fragment
 				});
 			builder.show();
 		}
+	}
+
+	public void setText(String text) {
+		if (selectedItemIndex >= 0){
+			Tree.setName(selectedGroupIndex, selectedItemIndex, text);
+			adapterTree.notifyDataSetChanged();
+		}
+	}
+
+	public void addChild(String text) {
+		Tree.addItem(selectedGroupIndex, text);
+		Toast.makeText(
+				mContext, "Added <"+text+">"
+						, Toast.LENGTH_SHORT).show();
+		
 	}
 	
 

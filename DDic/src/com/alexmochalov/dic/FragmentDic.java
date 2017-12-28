@@ -40,15 +40,13 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	public FragmentDicCallback callback = null;
 	
 	private int mMode = 0;
-	private Menu mMenu;
+	private String mtext = "";
 
 	public void setMode(int mode)
 	{
 		mMode = mode;
-		MenuItem mItem = mMenu.getItem(R.id.action_tree);
-		mItem.setVisible(false);
-		
 	}
+	
 	public interface FragmentDicCallback {
 		void itemSelected(IndexEntry indexEntry); 
 	} 
@@ -77,6 +75,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		editor.commit();
 		
 		super.onPause();
+		
 	}
 
 	//@Override
@@ -101,6 +100,11 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		etEntry.setText(prefs.getString(MTEXT, ""));
 		currentPosition = prefs.getInt(MINDEX, -1);
 		
+		if (mtext.length() > 0){
+			etEntry.setText(mtext);
+			mtext = "";
+		}
+		
 		
 		setHint(Utils.getDictionaryName());
 		
@@ -121,14 +125,13 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		ibRemove = (ImageButton)rootView.findViewById(R.id.ibRemove);
 		ibRemove.setOnClickListener(this);
 		
+
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 		
-		adapter = new ArrayAdapterDictionary(mContext,
-											 R.layout.dic_string,
-											 (ArrayList<IndexEntry>) Dictionary
-											 .getIndexEntries());
-
-		lvDictionary.setAdapter(adapter);
+		if (! Dictionary.isLoaded()){
+			setAdapter();
+		}
+		
 		lvDictionary
 			.setOnItemClickListener(new OnItemClickListener() {
 
@@ -136,10 +139,12 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 				public void onItemClick(
 					AdapterView<?> adapterView, View p2,
 					int position, long p4) {
+					
 					currentPosition = position;
+					
 					if (callback != null) 
 						callback.itemSelected(adapter.getItem(position));
-					//Log.d("e","= "+adapter.getItem(position).getText());
+					
 					View view = mContext.getCurrentFocus();
 					if (view != null) {  
 						InputMethodManager imm = (InputMethodManager)mContext.
@@ -175,6 +180,15 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 
         return rootView;
     }
+
+	public void setAdapter() {
+		adapter = new ArrayAdapterDictionary(mContext,
+				 R.layout.dic_string,
+				 (ArrayList<IndexEntry>) Dictionary
+				 .getIndexEntries());
+		
+		lvDictionary.setAdapter(adapter);
+	}
 
 	protected void queryReindex() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
@@ -223,7 +237,43 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	{
 		inflater.inflate(R.menu.main, menu);
 		super.onCreateOptionsMenu(menu, inflater);
-		mMenu = menu;
+		
+		MenuItem mItem;
+		if (mMode == 1){
+			mItem = menu.findItem(R.id.action_tree);
+			mItem.setVisible(false);
+			mItem = menu.findItem(R.id.action_choose);
+			mItem.setVisible(true);
+			mItem = menu.findItem(R.id.action_add);
+			mItem.setVisible(false);
+		}
+		else if (mMode == 2){
+			mItem = menu.findItem(R.id.action_tree);
+			mItem.setVisible(false);
+			mItem = menu.findItem(R.id.action_choose);
+			mItem.setVisible(false);
+			mItem = menu.findItem(R.id.action_add);
+			mItem.setVisible(true);
+		}
+		else{
+			mItem = menu.findItem(R.id.action_tree);
+			mItem.setVisible(true);
+			mItem = menu.findItem(R.id.action_choose);
+			mItem.setVisible(false);
+			mItem = menu.findItem(R.id.action_add);
+			mItem.setVisible(false);
+		}
+
+	}
+
+	public String getSelectedText() {
+		if (currentPosition >= 0)
+			return adapter.getItem(currentPosition).getText();		
+		else return "";
+	}
+
+	public void setText(String text) {
+		mtext = text;
 	}
 
 	

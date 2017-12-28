@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:background="@drawable/item_background_selector1"
+    android:background="@drawable/item_background_selector"
     android:descendantFocusability="blocksDescendants"
     
     android:orientation="horizontal" >
@@ -13,7 +13,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:text="My File.xml"
-                    android:textColor="@drawable/item_text_selector1" 
+                    android:textColor="@drawable/item_text_selector" 
                     android:textAppearance="?android:attr/textAppearanceLarge"/>
         
 

@@ -74,14 +74,16 @@ public final class R {
     }
     public static final class id {
         public static final int ListViewTree=0x7f0b000c;
-        public static final int action_add_group=0x7f0b0017;
-        public static final int action_add_item=0x7f0b0016;
-        public static final int action_dictionary=0x7f0b0019;
-        public static final int action_edit=0x7f0b0018;
-        public static final int action_info=0x7f0b0015;
-        public static final int action_reindex=0x7f0b0014;
-        public static final int action_select_dic=0x7f0b0012;
-        public static final int action_tree=0x7f0b0013;
+        public static final int action_add=0x7f0b0013;
+        public static final int action_add_group=0x7f0b0019;
+        public static final int action_add_item=0x7f0b0018;
+        public static final int action_choose=0x7f0b0012;
+        public static final int action_dictionary=0x7f0b001b;
+        public static final int action_edit=0x7f0b001a;
+        public static final int action_info=0x7f0b0017;
+        public static final int action_reindex=0x7f0b0016;
+        public static final int action_select_dic=0x7f0b0014;
+        public static final int action_tree=0x7f0b0015;
         public static final int btnClose=0x7f0b000e;
         public static final int dicstringTextView=0x7f0b0000;
         public static final int etEntry=0x7f0b0001;
@@ -127,8 +129,10 @@ public final class R {
         public static final int ru_it=0x7f040002;
     }
     public static final class string {
+        public static final int action_add=0x7f080013;
         public static final int action_add_group=0x7f08000e;
         public static final int action_add_item=0x7f08000f;
+        public static final int action_choose=0x7f080012;
         public static final int action_dictionary=0x7f08000d;
         public static final int action_edit=0x7f080010;
         public static final int action_info=0x7f080011;
@@ -137,8 +141,8 @@ public final class R {
         public static final int action_tree=0x7f08000b;
         public static final int app_name=0x7f080000;
         public static final int cancel=0x7f080008;
-        public static final int error_load_xml=0x7f080013;
-        public static final int error_saving_file=0x7f080012;
+        public static final int error_load_xml=0x7f080015;
+        public static final int error_saving_file=0x7f080014;
         public static final int exit=0x7f080007;
         public static final int hello_world=0x7f080001;
         public static final int index_not_found=0x7f080002;

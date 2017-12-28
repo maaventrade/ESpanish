@@ -36,13 +36,13 @@ public final class Dictionary{
 	static MyTaskIndexing myTaskIndexing;
 
 	static ProgressDialog progressDialog;
-	static Boolean parsing = false;
+	static Boolean mIsLoaded = false;
 
 	public static EventCallback eventCallback;
 
 	private static String mDictionaryName;
 
-	static String info;
+	private static String info;
 
 	public interface EventCallback { 
 		void loadingFinishedCallBack(boolean result); 
@@ -104,11 +104,12 @@ public final class Dictionary{
 		}
 
 		@Override    
-		protected void onCancelled(Void result) {      
+		protected void onCancelled(Void result) {    
 			super.onCancelled(result);
 			progressDialog.hide();
 			progressDialog.dismiss();
 
+			mIsLoaded = false;
 			Utils.addInformation("onCancelled");
 
 			//seekBarVertical.setMax(getStringsSize());
@@ -119,7 +120,8 @@ public final class Dictionary{
 		}
 
 		@Override    
-		protected void onPostExecute(Void result) {      
+		protected void onPostExecute(Void result) {  
+			mIsLoaded = false;
 			super.onPostExecute(result);
 			progressDialog.hide();
 			progressDialog.dismiss();
@@ -135,7 +137,7 @@ public final class Dictionary{
 		}
 
 		protected void loadAsinc(ArrayList<IndexEntry> ens) {
-			parsing = true;
+			mIsLoaded = true;
 			ens.clear();
 
 			BufferedReader reader;
@@ -161,10 +163,14 @@ public final class Dictionary{
 			} catch (IOException t) {
 				Utils.addInformation("loadAsinc: Error loading <"+mDictionaryName+"> loaded. "+t.toString());
 			}
-			parsing = false;
+			mIsLoaded = false;
 		}
 
 	}	
+	
+	public static boolean isLoaded(){
+		return mIsLoaded;
+	}
 
 	public static IndexEntry find(String string) {
 		ArrayList<IndexEntry> results = new ArrayList<IndexEntry>();

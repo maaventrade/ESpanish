@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -322,8 +325,8 @@ public class Tree {
 		// listDataChild.put("Root", new ArrayList<IndexEntry>() );
 	}
 
-	public static void addItem(String key) {
-		//listDataChild.get(key).add(Dictionary.find("Head"));	
+	public static void addItem(int selectedGroupIndex, String name) {
+		listDataChild.get(listDataHeader.get(selectedGroupIndex)).add(new Child(name)); 
 	}
 
 	public static String getName(int selectedGroupIndex,
@@ -337,11 +340,41 @@ public class Tree {
 
 	public static void setName(int selectedGroupIndex, int selectedItemIndex,
 			String name) {
+		
+		listDataChild.get(listDataHeader.get(selectedGroupIndex));
+		
+		if (selectedItemIndex == -1)
 			listDataHeader.get(selectedGroupIndex).setName(name); 
-//		if (selectedItemIndex == -1)
-//			listDataHeader. .put(selectedGroupIndex, string); 
-//		else
-//			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getText(); 
+		else
+			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setName(name); 
 	}
 
+	public static void copy(Activity mContext, String from, String to) {
+		InputStream in = null;
+	    OutputStream out = null;
+	    try {
+
+	        in = new FileInputStream(Utils.getAppFolder() + "/" +  from);        
+	        out = new FileOutputStream(Utils.getAppFolder() + "/" +  to);
+
+	        byte[] buffer = new byte[1024];
+	        int read;
+	        while ((read = in.read(buffer)) != -1) {
+	            out.write(buffer, 0, read);
+	        }
+	        in.close();
+	        in = null;
+
+	            // write the output file (You have now copied the file)
+	            out.flush();
+	        out.close();
+	        out = null;        
+
+	    }  catch (FileNotFoundException fnfe1) {
+	        Log.e("tag", fnfe1.getMessage());
+	    }
+	            catch (Exception e) {
+	        Log.e("tag", e.getMessage());
+	    }
+	}
 }

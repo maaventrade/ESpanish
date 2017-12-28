@@ -78,6 +78,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			@Override
 			public void loadingFinishedCallBack(boolean result) {
 				if (result) {
+					//fragmentDic.setAdapter();
 					/*
 					if (adapter == null){
 						Utils.addInformation(" new ArrayAdapterDictionary  ");				
@@ -161,7 +162,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				@Override
 				public void itemSelected(IndexEntry indexEntry) {
 					fragmentTranslation.setTranslation(indexEntry);
-
 				}
 			};
 			
@@ -203,6 +203,22 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
 					ft.addToBackStack(null);
 					ft.commit();
+					fragmentDic.setText(text);
+				}
+
+				@Override
+				public void onAddSelected(int selectedGroupIndex) {
+					mode = 2;
+					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					fragmentDic.setMode(2);
+					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+					ft.addToBackStack(null);
+					ft.commit();
+				}
+
+				@Override
+				public void itemSelected(IndexEntry indexEntry) {
+					fragmentTranslation.setTranslation(indexEntry);
 				}
 			};
 			
@@ -255,6 +271,21 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
     			getFragmentManager().popBackStack();
     		}
         	
+            return true;
+        case R.id.action_choose:
+        	String text = fragmentDic.getSelectedText();
+			getFragmentManager().popBackStack();
+        	
+			if (text.length() > 0)
+				fragmentTree.setText(text);
+			
+            return true;
+        case R.id.action_add:
+        	text = fragmentDic.getSelectedText();
+        	
+			if (text.length() > 0)
+				fragmentTree.addChild(text);
+			
             return true;
         case R.id.action_dictionary:
     		FragmentDic myFragmentD = (FragmentDic)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_DIC);
@@ -407,7 +438,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	@Override
 	public void onBackPressed()
 	{
-	    if (mode == 1){
+	    if (mode > 0){
 			mode = 0;
 			super.onBackPressed(); 
 		}
