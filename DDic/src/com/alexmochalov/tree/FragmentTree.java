@@ -29,13 +29,13 @@ public class FragmentTree extends Fragment
 	private int selectedGroupIndex = -1;
 	private int selectedItemIndex = -1;
 
-	public interface OnStartProgrammListener
+	public interface OnTreeEventListener
 	{
-		public void onGoSelected(String text);
+		//public void onGoSelected(String text);
 		public void onEditSelected(String text);
 	}
 
-	public OnStartProgrammListener listener;
+	public OnTreeEventListener listener;
 
 	public FragmentTree(Activity context)
 	{
@@ -69,8 +69,8 @@ public class FragmentTree extends Fragment
 			public void onEdit(String text)
 			{
 				//Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
-				if (listener != null && text.length() > 0)
-					listener.onGoSelected(text);
+	//if (listener != null && text.length() > 0)
+					//listener.onGoSelected(text);
 
 			}
 
@@ -265,8 +265,11 @@ public class FragmentTree extends Fragment
 
 	public void edit() {
 		if (selectedItemIndex >= 0){
-			DialogEdit dialog = new DialogEdit(mContext);
-			dialog.show();
+			if (listener != null)
+				listener.onEditSelected("");
+			
+			//DialogEdit dialog = new DialogEdit(mContext);
+	//dialog.show();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Edit");

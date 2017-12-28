@@ -38,6 +38,17 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	
 	
 	public FragmentDicCallback callback = null;
+	
+	private int mMode = 0;
+	private Menu mMenu;
+
+	public void setMode(int mode)
+	{
+		mMode = mode;
+		MenuItem mItem = mMenu.getItem(R.id.action_tree);
+		mItem.setVisible(false);
+		
+	}
 	public interface FragmentDicCallback {
 		void itemSelected(IndexEntry indexEntry); 
 	} 
@@ -212,6 +223,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	{
 		inflater.inflate(R.menu.main, menu);
 		super.onCreateOptionsMenu(menu, inflater);
+		mMenu = menu;
 	}
 
 	

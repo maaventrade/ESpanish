@@ -49,6 +49,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	private int MY_DATA_CHECK_CODE = 0;
 	
+	private int mode = 1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -190,6 +192,19 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				}
 			};
 			fragmentTree = new FragmentTree(mContext);
+			fragmentTree.listener = new FragmentTree.OnTreeEventListener(){
+
+				@Override
+				public void onEditSelected(String text)
+				{
+					mode = 1;
+					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					fragmentDic.setMode(1);
+					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+					ft.addToBackStack(null);
+					ft.commit();
+				}
+			};
 			
 			
 			String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
@@ -392,7 +407,11 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	@Override
 	public void onBackPressed()
 	{
-	    /*
+	    if (mode == 1){
+			mode = 0;
+			super.onBackPressed(); 
+		}
+		/*
 		FragmentTree myFragment1 = (FragmentTree)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_TREE);
 		if (myFragment1 != null && myFragment1.isVisible()) {
 			Toast.makeText(mContext, "dic", Toast.LENGTH_LONG).show();
@@ -403,8 +422,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			//ft.addToBackStack(null);
 			ft.commit();
 			
-		} else
-			*/
+		}*/
+		else
+			
 			this.finishAffinity();
 	  	  // super.onBackPressed();  // optional depending on your needs
 	}	
