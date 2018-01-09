@@ -17,6 +17,7 @@ import java.util.*;
 
 import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
+import android.view.SurfaceHolder.*;
 
 public class FragmentTree extends Fragment
 {
@@ -28,6 +29,55 @@ public class FragmentTree extends Fragment
 
 	private int selectedGroupIndex = -1;
 	private int selectedItemIndex = -1;
+
+	public void dialogSelect()
+	{
+		DialogSelect dialogSelect = new DialogSelect(mContext, true);
+		dialogSelect.show();
+		
+	}
+
+	public void select(int p0, int p1)
+	{
+		selectedGroupIndex = p0;
+		selectedItemIndex = p1;
+		
+		int index = lvTree.getFlatListPosition(ExpandableListView
+											   .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
+											   
+		Toast.makeText(mContext, ""+selectedGroupIndex+"  "+selectedItemIndex+"  "+index, Toast.LENGTH_LONG).show();			   
+											   
+		lvTree.setItemChecked(index, true);
+		
+	}
+
+	public void select()
+	{
+		/*lvTree.expandGroup(selectedGroupIndex);
+		
+		int index = lvTree.getFlatListPosition(ExpandableListView
+											   .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
+		lvTree.setItemChecked(index, true);
+		*/
+		new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					int index = lvTree.getFlatListPosition(ExpandableListView
+														   .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
+					lvTree.setItemChecked(index, true);
+					//lvTree.setSelection(index);
+					//adapterTree.notifyDataSetChanged();
+				}
+			}, 500);
+		
+	
+
+	}
+	
+	public void save()
+	{
+		Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+	}
 
 	public interface OnTreeEventListener
 	{
@@ -65,6 +115,7 @@ public class FragmentTree extends Fragment
 
 		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
 		lvTree.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	
 
 		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
 
@@ -73,7 +124,7 @@ public class FragmentTree extends Fragment
 			@Override
 			public void onEdit(String text)
 			{
-				//Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
+				//Toast.makeText(mContext, ""+selectedItemIndex, Toast.LENGTH_LONG).show();
 	//if (listener != null && text.length() > 0)
 					//listener.onGoSelected(text);
 
@@ -155,10 +206,19 @@ public class FragmentTree extends Fragment
 		 }}
 		 );	
 		 */
+		 
+		 if (selectedItemIndex >= 0){
+			 int index = lvTree.getFlatListPosition(ExpandableListView
+													.getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
+			
+			 lvTree.setSelection(index);
+		 }
+			
 
 		return rootView;
 	}
 
+	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.tree, menu);
@@ -172,20 +232,37 @@ public class FragmentTree extends Fragment
 
 	@Override
 	public void onPause() {
-		Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+		// Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
 		super.onPause();
 	}
 
 	public void addItem() {
-		if (selectedGroupIndex >= 0)
-			if (listener != null)
-				listener.onAddSelected(selectedGroupIndex);
+		
+		DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, true);
+		dialog.show();
+		
+		//if (selectedGroupIndex >= 0)
+			//if (listener != null)
+				//listener.onAddSelected(selectedGroupIndex);
 	}
 
 	public void edit() {
 		if (selectedItemIndex >= 0){
+			/*
 			if (listener != null)
-				listener.onEditSelected(Tree.getName(selectedGroupIndex, selectedItemIndex));
+				listener.onEditSelected(Tree.getName(selectedGroupIndex, selectedItemIndex));*/
+				
+			DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, false);
+			/*dialog.callback = new DialogEdit.CallbackOk(){
+
+				@Override
+				public void onOk()
+				{
+					adapterTree.notifyDataSetChanged();
+				}
+			};   */
+				dialog.show();
+				
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 			builder.setTitle("Edit");
@@ -226,11 +303,9 @@ public class FragmentTree extends Fragment
 	}
 
 	public void addChild(String text) {
-		Tree.addItem(selectedGroupIndex, text);
-		Toast.makeText(
-				mContext, "Added <"+text+">"
-						, Toast.LENGTH_SHORT).show();
+		selectedItemIndex = Tree.insertItem(selectedGroupIndex, text);
 		
+		//adapterTree.notifyDataSetChanged();
 	}
 	
 

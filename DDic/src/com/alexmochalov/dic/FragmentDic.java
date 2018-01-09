@@ -235,7 +235,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		inflater.inflate(R.menu.main, menu);
+		inflater.inflate(R.menu.dic, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 		
 		MenuItem mItem;
@@ -244,32 +244,36 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 			mItem.setVisible(false);
 			mItem = menu.findItem(R.id.action_choose);
 			mItem.setVisible(true);
-			mItem = menu.findItem(R.id.action_add);
-			mItem.setVisible(false);
+			//mItem = menu.findItem(R.id.action_add_item);
+			//mItem.setVisible(false);
 		}
 		else if (mMode == 2){
 			mItem = menu.findItem(R.id.action_tree);
 			mItem.setVisible(false);
 			mItem = menu.findItem(R.id.action_choose);
-			mItem.setVisible(false);
-			mItem = menu.findItem(R.id.action_add);
 			mItem.setVisible(true);
+			//mItem = menu.findItem(R.id.action_add_item);
+			//mItem.setVisible(true);
 		}
 		else{
 			mItem = menu.findItem(R.id.action_tree);
 			mItem.setVisible(true);
 			mItem = menu.findItem(R.id.action_choose);
 			mItem.setVisible(false);
-			mItem = menu.findItem(R.id.action_add);
-			mItem.setVisible(false);
+			//mItem = menu.findItem(R.id.action_add_item);
+			//mItem.setVisible(false);
 		}
 
 	}
 
 	public String getSelectedText() {
-		if (currentPosition >= 0)
-			return adapter.getItem(currentPosition).getText();		
-		else return "";
+		if (currentPosition >= 0){
+			IndexEntry l = adapter.getItem(currentPosition);
+			if (l != null)
+				return l.getText();
+			else return etEntry.getText().toString();
+		}
+		else return etEntry.getText().toString();
 	}
 
 	public void setText(String text) {

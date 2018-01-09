@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/item_background_selector"
-    android:descendantFocusability="blocksDescendants"
-    
-    android:orientation="horizontal" >
-        
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:text="My File.xml"
-                    android:textColor="@drawable/item_text_selector" 
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
-        
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/item_background_selector"
+	android:descendantFocusability="blocksDescendants"
+	android:orientation="horizontal">
 
+	<TextView
+		android:id="@+id/tvName"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.4"
+		android:text="Text"
+		android:textColor="@drawable/item_text_selector"
+		android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+	<TextView
+		android:id="@+id/tvTranslation"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.4"
+		android:textColor="@drawable/item_text_selector"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:paddingLeft="10dp"/>
 
 </LinearLayout>
+

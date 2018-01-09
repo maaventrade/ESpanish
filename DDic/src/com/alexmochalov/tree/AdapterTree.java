@@ -18,14 +18,20 @@ import java.util.*;
 
 import com.alexmochalov.dic.IndexEntry;
 
-public class AdapterTree extends BaseExpandableListAdapter {
+public class AdapterTree extends BaseExpandableListAdapter
+{
+
+
+
+	
+	
 	private LayoutInflater inflater;
 	
 	private Activity mActivity;
 	private Context mContext;
 	
-	private List<Header> mGroups; // header titles
-	private HashMap<Header, List<Child>> mChilds;
+	private List<Line> mGroups; // Line titles
+	private HashMap<Line, List<Line>> mLines;
 	
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
@@ -33,8 +39,8 @@ public class AdapterTree extends BaseExpandableListAdapter {
 	}
 	public OnButtonClickListener listener;
 
-	AdapterTree(Activity activity, Context context, List<Header> groups,
-			HashMap<Header, List<Child>> childs) {
+	AdapterTree(Activity activity, Context context, List<Line> groups,
+			HashMap<Line, List<Line>> Lines) {
 		
 		mContext = context;
 		mActivity = activity;
@@ -42,36 +48,36 @@ public class AdapterTree extends BaseExpandableListAdapter {
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		mGroups = groups;
-		mChilds = childs;
+		mLines = Lines;
 		
 	}
 	
 	@Override
-	public Object getChild(int groupPosition, int childPosititon) {
-		return mChilds.get(mGroups.get(groupPosition)).get(childPosititon);
+	public Object getChild(int groupPosition, int LinePosititon) {
+		return mLines.get(mGroups.get(groupPosition)).get(LinePosititon);
 	}
 
 	@Override
-	public long getChildId(int groupPosition, int childPosition) {
-		return childPosition;
+	public long getChildId(int groupPosition, int LinePosition) {
+		return LinePosition;
 	}
 
 	@Override
-	public View getChildView(int groupPosition, final int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(int groupPosition, final int LinePosition,
+			boolean isLastLine, View convertView, ViewGroup parent) {
 
-		return getView(groupPosition, childPosition, isLastChild, false,
+		return getView(groupPosition, LinePosition, isLastLine, false,
 				convertView, parent);
 	}
 	
 	@Override
 	public int getChildrenCount(int groupPosition) {
 
-		if (mChilds.get(mGroups.get(groupPosition)) == null)
+		if (mLines.get(mGroups.get(groupPosition)) == null)
 			return 0;
 
 		else
-			return mChilds.get(mGroups.get(groupPosition)).size();
+			return mLines.get(mGroups.get(groupPosition)).size();
 	}
 
 	@Override
@@ -103,34 +109,36 @@ public class AdapterTree extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public boolean isChildSelectable(int groupPosition, int childPosition) {
+	public boolean isChildSelectable(int groupPosition, int LinePosition) {
 		return true;
 	}
 
 	@SuppressLint("NewApi")
-	private View getView(final int groupPosition, final int childPosition,
-			boolean isLastChild, boolean isExpanded, View convertView,
+	private View getView(final int groupPosition, final int LinePosition,
+			boolean isLastLine, boolean isExpanded, View convertView,
 			ViewGroup parent) {
 		
 		if (convertView == null) { 
-			if (childPosition < 0)
-				convertView = inflater.inflate(R.layout.item_tree_header, null);
-			else	
+			if (LinePosition >= 0)
 				convertView = inflater.inflate(R.layout.item_tree_child, null);
+			else	
+				convertView = inflater.inflate(R.layout.item_tree_header, null);
 		}
 				
 		TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
 		
-		if (childPosition < 0){
+		if (LinePosition < 0){
 			ImageButton ibFolder = (ImageButton)convertView.findViewById(R.id.ibFolder);
-			Header h = (Header) getGroup(groupPosition);
+			Line h = (Line) getGroup(groupPosition);
 			tvName.setText(h.getName());
 			ibFolder.setImageResource(R.drawable.folder);
 		}	
 		else {
 			convertView.setPadding(40, 0, 0, 0);
-			Child record = (Child)getChild(groupPosition, childPosition);
+			Line record = (Line)getChild(groupPosition, LinePosition);
 			tvName.setText(record.getName());
+			TextView tvTranslation = (TextView)convertView.findViewById(R.id.tvTranslation);
+			tvTranslation.setText(record.getTranslation());
 		}
 
 		return convertView;

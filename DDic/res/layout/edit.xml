@@ -1,125 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ltMain"
-    android:layout_width="match_parent"
-	android:focusableInTouchMode="true"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/ltMain"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_margin="10dp"
+	android:orientation="vertical">
 
-    <!-- "Fragment A" -->
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.5"
+		android:orientation="horizontal"
+		android:paddingLeft="@dimen/text_size_medium">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.8"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical" >
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="@string/text"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"/>
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-			android:focusableInTouchMode="true"
-            android:layout_height="wrap_content" >
+		<EditText
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:layout_width="wrap_content"
+			android:id="@+id/etText"/>
 
-            <EditText
-                android:id="@+id/etEntry"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/search_bar"
-                android:drawableLeft="@drawable/icon_magnify48"
-                android:drawablePadding="20dp"
-                android:hint="@string/search"
-                android:paddingBottom="12dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="12dp"
-                android:paddingTop="12dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"  >
+	</LinearLayout>
 
-                
-            </EditText>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.5"
+		android:orientation="horizontal"
+		android:paddingLeft="@dimen/text_size_medium"
+		>
 
-            <ImageButton
-                android:id="@+id/ibRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:background="@android:color/transparent"
-                android:src="@drawable/icon_remove" />
-        </FrameLayout>
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="@string/translation"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content"/>
 
-        <ListView
-            android:id="@+id/lvDictionary"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:listSelector="@drawable/selector_list_item"
-            android:paddingLeft="@dimen/text_size_medium"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+		<EditText
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:layout_width="wrap_content"
+			android:id="@+id/etTranslation"/>
 
-    </LinearLayout>       
-    
-    <LinearLayout
-        android:id="@+id/fcTranslation"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.5"
-        android:background="@drawable/bg2"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/text_size_medium" >
+	</LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:orientation="horizontal" >
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.5"
+		android:orientation="horizontal"
+		android:paddingLeft="@dimen/text_size_medium">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_weight="0.9"
-            android:orientation="horizontal" >
-            
-            <TextView
-                android:id="@+id/tvWord"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|center"
-                android:text="634"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+		<Button
+			android:layout_height="wrap_content"
+			android:text="@string/ok"
+			android:id="@+id/btnOk"
+			android:layout_weight="0.5"
+			android:layout_width="fill_parent"/>
 
-            <TextView
-                android:id="@+id/tvPhonetic"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/MediumPlus"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+		<Button
+			android:layout_height="wrap_content"
+			android:text="@string/cancel"
+			android:id="@+id/btnCancel"
+			android:layout_weight="0.5"
+			android:layout_width="fill_parent"/>
 
-        </LinearLayout>
+	</LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1" >
-
-            <ImageButton
-                android:id="@+id/ibSpeak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/speaker" />
-
-        </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvTranslation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg2"
-            android:scrollbars="vertical"
-            android:textAppearance="?android:attr/textAppearanceLarge" />        
-        
-    </LinearLayout>
-    
 </LinearLayout>
+
