@@ -22,6 +22,8 @@ import android.view.SurfaceHolder.*;
 public class FragmentTree extends Fragment
 {
 	private Activity mContext;
+	private boolean mModified = false;
+	
 	private View rootView;
 
 	private ExpandableListView lvTree;
@@ -30,6 +32,8 @@ public class FragmentTree extends Fragment
 	private int selectedGroupIndex = -1;
 	private int selectedItemIndex = -1;
 
+	private int firstVisible = -1;
+	
 	public void dialogSelect()
 	{
 		DialogSelect dialogSelect = new DialogSelect(mContext, true);
@@ -207,11 +211,11 @@ public class FragmentTree extends Fragment
 		 );	
 		 */
 		 
-		 if (selectedItemIndex >= 0){
-			 int index = lvTree.getFlatListPosition(ExpandableListView
-													.getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
+		 if (firstVisible >= 0){
+			 //int index = lvTree.getFlatListPosition(ExpandableListView
+			//										.getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
 			
-			 lvTree.setSelection(index);
+			 lvTree.setSelection(firstVisible);
 		 }
 			
 
@@ -240,13 +244,14 @@ public class FragmentTree extends Fragment
 		
 		DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, true);
 		dialog.show();
-		
+		mModified = true;
 		//if (selectedGroupIndex >= 0)
 			//if (listener != null)
 				//listener.onAddSelected(selectedGroupIndex);
 	}
 
 	public void edit() {
+		mModified = true;
 		if (selectedItemIndex >= 0){
 			/*
 			if (listener != null)
@@ -303,9 +308,31 @@ public class FragmentTree extends Fragment
 	}
 
 	public void addChild(String text) {
+		mModified = true;
 		selectedItemIndex = Tree.insertItem(selectedGroupIndex, text);
+	}
+
+	public void getFirstVisiblePosition() {
+		firstVisible = lvTree.getFirstVisiblePosition();
+		//mModified = true;
+		//listView.getFirstVisiblePosition();
+		//listView.getChildAt(0)
+		//setSelection(index) 
 		
-		//adapterTree.notifyDataSetChanged();
+	}
+
+	public boolean isModified() {
+		return mModified;
+	}
+
+	public String getCurrentText() {
+		return Tree.getName(selectedGroupIndex, selectedItemIndex);		
+	}
+
+	public void deleteItem() {
+		mModified = true;
+		Tree.delete(selectedGroupIndex, selectedItemIndex);
+		adapterTree.notifyDataSetChanged();
 	}
 	
 

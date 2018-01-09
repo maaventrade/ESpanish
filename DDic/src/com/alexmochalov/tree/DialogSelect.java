@@ -30,7 +30,7 @@ public class DialogSelect extends Dialog
 
 		setContentView(R.layout.dialog_select);
 		
-		FragmentDic fd = (FragmentDic)findViewById(R.id.dic);
+		//FragmentDic fd = (FragmentDic)findViewById(R.id.dic);
 		
 	}
 }

@@ -34,9 +34,16 @@
 	<string name="action_add">Add</string>
 	<string name="action_save">Save</string>
 	<string name="action_delete">Delete</string>
-	<string name="action_edit1">Edit1</string>
+	<string name="action_cut">Cut</string>
+		<string name="action_paste">Paste</string>
+		<string name="action_edit1">Edit1</string>
 	
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>
 		
+    <string name="tree_was_changed">Tree was changed</string>
+    <string name="save_tree_before_exit">Save tree before exit?</string>
+	<string name="query_delete">Delete</string>
+	<string name="are_you_shure">Are you shure?</string>
+	
 </resources>

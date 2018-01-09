@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	private int MY_DATA_CHECK_CODE = 0;
 
-	private int mode = 1;
+	private int mode = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -297,17 +297,16 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				return true;
 			case R.id.action_add_item:
 				//fragmentTree.select(2,2);
-				fragmentTree.dialogSelect();
+
+				fragmentTree.getFirstVisiblePosition();
 				
-				
-				/*
 				mode = 2;
 				ft = getFragmentManager().beginTransaction();
 				fragmentDic.setMode(2);
 				ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
 				ft.addToBackStack(null);
 				ft.commit();
-*/
+
 				return true;
 			
 			case R.id.action_dictionary:
@@ -341,6 +340,31 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				return true;
 			case R.id.action_info:
 				Utils.showInfo(mContext);
+				return true;
+			case R.id.action_delete:
+				new AlertDialog.Builder(MainActivity.this)
+				 .setIcon(R.drawable.ic_launcher)
+				 
+				 .setTitle(getResources().getString(R.string.query_delete)+ "\""  + fragmentTree.getCurrentText() +"\"?")
+				 .setMessage(getResources().getString(R.string.are_you_shure))
+				 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 fragmentTree.deleteItem();
+					 }
+				 	})
+				 .setNegativeButton("No", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 return;
+					 }
+				 	})
+				 .show();
+				
 				return true;
 			case R.id.action_reindex:
 				fragmentDic.reindex();
@@ -482,7 +506,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	@Override
 	public void onBackPressed()
 	{
-	    if (mode > 0)
+	    if (mode == 9999)
 		{
 			mode = 0;
 			super.onBackPressed(); 
@@ -499,9 +523,48 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		 ft.commit();
 
 		 }*/
-		else
+		else {
+			if (fragmentTree.isModified()){
+				new AlertDialog.Builder(MainActivity.this)
+				 
+				 .setIcon(R.drawable.ic_launcher)
+				 
+				 .setTitle(getResources().getString(R.string.tree_was_changed))
+				 
+				 .setMessage(getResources().getString(R.string.save_tree_before_exit))
+				 
+				 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 fragmentTree.save();
+						 finishAffinity();
+					 }
+				 	})
+				 .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 return;
+					 }
+				 	})
+				 .setNeutralButton("No", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 finishAffinity();
+					 }
+				 	})
+				 .show();
+			} else	
+			super.onBackPressed();
+			
+		}
 
-			this.finishAffinity();
+			//this.finishAffinity();
 		// super.onBackPressed();  // optional depending on your needs
 	}	
 

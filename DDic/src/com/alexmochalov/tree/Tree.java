@@ -415,4 +415,10 @@ public class Tree {
 	        Log.e("tag", e.getMessage());
 	    }
 	}
+
+	public static void delete(int selectedGroupIndex, int selectedItemIndex) {
+		if (selectedGroupIndex >= 0 && selectedItemIndex >= 0){
+			listDataChild.get(listDataHeader.get(selectedGroupIndex)).remove(selectedItemIndex);
+		}		
+	}
 }
