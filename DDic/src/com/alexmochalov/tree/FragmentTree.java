@@ -33,6 +33,19 @@ public class FragmentTree extends Fragment
 	private int selectedItemIndex = -1;
 
 	private int firstVisible = -1;
+
+	public void paste()
+	{
+		mModified = true;
+		selectedItemIndex = Tree.paste(selectedGroupIndex);
+		adapterTree.notifyDataSetChanged();
+	}
+
+	public void copyItem()
+	{
+		mModified = true;
+		Tree.copyItem(selectedGroupIndex, selectedItemIndex);
+	}
 	
 	public void dialogSelect()
 	{

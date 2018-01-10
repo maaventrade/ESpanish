@@ -341,6 +341,18 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			case R.id.action_info:
 				Utils.showInfo(mContext);
 				return true;
+				
+			case R.id.action_cut:
+				fragmentTree.copyItem();
+				fragmentTree.deleteItem();
+				return true;
+				
+			case R.id.action_paste:
+				fragmentTree.paste();
+				fragmentTree.select();
+				
+				
+				return true;
 			case R.id.action_delete:
 				new AlertDialog.Builder(MainActivity.this)
 				 .setIcon(R.drawable.ic_launcher)

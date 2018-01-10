@@ -7,6 +7,11 @@ public class Line{
 		mTranslation = translation;
 	}
 	
+	public Line(Line line) {
+		mName = line.mName;
+		mTranslation = line.mTranslation;
+	}
+	
 	public Line(String name) {
 		mName = name;
 	}
