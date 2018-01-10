@@ -288,7 +288,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 					else if (mode == 2){
 						fragmentTree.addChild(text);
 						fragmentTree.select();
-						fragmentTree.edit();
+						fragmentTree.edit(false);
 					}
 						
 				}
@@ -326,14 +326,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				return true;
 
 			case R.id.action_add_group:
-				fragmentTree.select();
-				//fragmentTree.addGroup();
+				fragmentTree.edit(true);
 				return true;
-			/*case R.id.action_add_item:
-				fragmentTree.addItem();
-				return true;*/
 			case R.id.action_edit:
-				fragmentTree.edit();
+				fragmentTree.edit(false);
 				return true;
 			case R.id.action_save:
 				fragmentTree.save();

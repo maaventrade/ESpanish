@@ -6,9 +6,11 @@ import android.os.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.*;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.alexmochalov.ddic.R;
 
@@ -17,6 +19,7 @@ import java.util.*;
 
 import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
+
 import android.view.SurfaceHolder.*;
 
 public class FragmentTree extends Fragment
@@ -242,75 +245,131 @@ public class FragmentTree extends Fragment
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	public void addGroup() {
-		Tree.addGroup(-1);	
-		adapterTree.notifyDataSetChanged();
-	}
-
 	@Override
 	public void onPause() {
-		// Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
 		super.onPause();
 	}
 
 	public void addItem() {
-		
 		DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, true);
 		dialog.show();
 		mModified = true;
-		//if (selectedGroupIndex >= 0)
-			//if (listener != null)
-				//listener.onAddSelected(selectedGroupIndex);
 	}
 
-	public void edit() {
+	public void edit(final boolean newGroup) {
 		mModified = true;
-		if (selectedItemIndex >= 0){
-			/*
-			if (listener != null)
-				listener.onEditSelected(Tree.getName(selectedGroupIndex, selectedItemIndex));*/
-				
-			DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, false);
-			/*dialog.callback = new DialogEdit.CallbackOk(){
+		if (selectedItemIndex >= 0 && !newGroup){
+			editItem();
 
+			// DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, false);
+			// dialog.show();
+			
+		} else 
+			editGroup(newGroup);
+	}
+
+	private void editItem() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+		LinearLayout layout = new LinearLayout(mContext);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		builder.setView(layout);
+
+	//	LayoutParams lp = (LayoutParams)((ViewGroup)layout).getLayoutParams();
+	//	((MarginLayoutParams) lp).leftMargin = 10;
+		
+		LinearLayout layout1 = new LinearLayout(mContext);
+		layout1.setOrientation(LinearLayout.HORIZONTAL);
+		layout.addView(layout1);
+				
+		TextView nameCaption = new TextView(mContext);
+		nameCaption.setText("Name:");
+		
+		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		llp.setMargins(10, 0, 0, 0); 
+		nameCaption.setLayoutParams(llp);
+		
+		layout1.addView(nameCaption);
+		
+		final EditText name = new EditText(mContext);
+		name.setInputType(InputType.TYPE_CLASS_TEXT);
+		layout1.addView(name);
+
+		LinearLayout layout2 = new LinearLayout(mContext);
+		layout2.setOrientation(LinearLayout.HORIZONTAL);
+		layout.addView(layout2);
+
+		TextView translationCaption = new TextView(mContext);
+		translationCaption.setText("Translation:");
+		translationCaption.setLayoutParams(llp);
+		
+		layout2.addView(translationCaption);
+		
+		final EditText translation = new EditText(mContext);
+		translation.setInputType(InputType.TYPE_CLASS_TEXT);
+		llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		translation.setLayoutParams(llp);
+		layout2.addView(translation);
+		
+		llp.setMargins(0, 0, 0, 20); 
+		layout2.setLayoutParams(llp);
+
+		builder.setTitle("Edit");
+		name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
+		translation.setText(Tree.getTranslation(selectedGroupIndex, selectedItemIndex));
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
 				@Override
-				public void onOk()
+				public void onClick(DialogInterface p1, int p2)
 				{
+					Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
+					Tree.setTranslation(selectedGroupIndex, selectedItemIndex, translation.getText().toString());
 					adapterTree.notifyDataSetChanged();
 				}
-			};   */
-				dialog.show();
-				
+			});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int p2)
+				{
+					dialog.cancel();
+				}
+			});
+		builder.show();
+	}
+
+	private void editGroup(final boolean newGroup) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+		final EditText name = new EditText(mContext);
+		name.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(name);
+
+		if (newGroup){
+			builder.setTitle("New group");
 		} else {
-			AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-			builder.setTitle("Edit");
-
-			final EditText name = new EditText(mContext);
-			name.setInputType(InputType.TYPE_CLASS_TEXT);
-			builder.setView(name);
-			
+			builder.setTitle("Edit group");
 			name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
-
-			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-					@Override
-					public void onClick(DialogInterface p1, int p2)
-					{
-						Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
-						
-						//listViewFiles.setItemChecked(selectedItemIndex, true); /// ???????????
-
-						 adapterTree.notifyDataSetChanged();
-					}
-				});
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-					@Override
-					public void onClick(DialogInterface dialog, int p2)
-					{
-						dialog.cancel();
-					}
-				});
-			builder.show();
 		}
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface p1, int p2)
+				{
+					if (newGroup) {
+						Tree.addGroup(selectedGroupIndex, name.getText().toString());	
+					} else 
+						Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
+						adapterTree.notifyDataSetChanged();
+				}
+			});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int p2)
+				{
+					dialog.cancel();
+				}
+			});
+		builder.show();
 	}
 
 	public void setText(String text) {
@@ -344,8 +403,10 @@ public class FragmentTree extends Fragment
 
 	public void deleteItem() {
 		mModified = true;
-		Tree.delete(selectedGroupIndex, selectedItemIndex);
-		adapterTree.notifyDataSetChanged();
+		if (Tree.delete(selectedGroupIndex, selectedItemIndex))
+			adapterTree.notifyDataSetChanged();
+		else
+			Toast.makeText(mContext, "Group is not empty!", Toast.LENGTH_LONG).show();
 	}
 	
 

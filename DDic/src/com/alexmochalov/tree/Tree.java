@@ -91,18 +91,13 @@ public class Tree {
 		return listDataChild;
 	}
 
-	public static void addGroup(int index) {
+	public static void addGroup(int index, String name) {
 		if (index < 0)
 			index = 0;
 
-		for (int i = 1; i < 999999; i++){
-			if (!listDataHeader.contains("New"+i)){
-				Line h = new Line("New"+i);
-				listDataHeader.add(index,  h);
-				listDataChild.put(h, new ArrayList<Line>());
-				break;
-			}
-		}
+		Line h = new Line(name);
+		listDataHeader.add(index,  h);
+		listDataChild.put(h, new ArrayList<Line>());
 
 	}
 
@@ -344,9 +339,30 @@ public class Tree {
 	    }
 	}
 
-	public static void delete(int selectedGroupIndex, int selectedItemIndex) {
+	public static boolean delete(int selectedGroupIndex, int selectedItemIndex) {
 		if (selectedGroupIndex >= 0 && selectedItemIndex >= 0){
 			listDataChild.get(listDataHeader.get(selectedGroupIndex)).remove(selectedItemIndex);
-		}		
+		} else if (selectedGroupIndex >= 0){
+			if (listDataChild.get(listDataHeader.get(selectedGroupIndex)).size() == 0){
+				listDataChild.remove(listDataHeader.get(selectedGroupIndex));
+				listDataHeader.remove(selectedGroupIndex);
+			} else {
+				return false;
+			}
+				
+		}
+		return true;
+	}
+
+
+	public static void setTranslation(int selectedGroupIndex,
+			int selectedItemIndex, String translation) {
+		
+		listDataChild.get(listDataHeader.get(selectedGroupIndex));
+
+		if (selectedItemIndex == -1)
+			listDataHeader.get(selectedGroupIndex).setTranslation(translation); 
+		else
+			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setTranslation(translation); 
 	}
 }
