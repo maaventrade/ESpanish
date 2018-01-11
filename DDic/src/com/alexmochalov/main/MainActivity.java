@@ -68,7 +68,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			{
 				if (result)
 				{
-					//fragmentDic.setAdapter();
+					fragmentDic.setAdapter();
 					/*
 					 if (adapter == null){
 					 Utils.addInformation(" new ArrayAdapterDictionary  ");				

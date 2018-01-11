@@ -187,7 +187,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 				 (ArrayList<IndexEntry>) Dictionary
 				 .getIndexEntries());
 		
-		lvDictionary.setAdapter(adapter);
+		lvDictionary.setAdapter(adapter);  
 	}
 
 	protected void queryReindex() {
