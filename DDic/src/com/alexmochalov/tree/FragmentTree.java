@@ -21,6 +21,7 @@ import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
 
 import android.view.SurfaceHolder.*;
+import com.alexmochalov.dic.*;
 
 public class FragmentTree extends Fragment
 {
@@ -190,10 +191,16 @@ public class FragmentTree extends Fragment
 					selectedGroupIndex = groupPosition;
 					selectedItemIndex = childPosition;
 					
-					if (listener != null) 
-						listener.itemSelected(
-								com.alexmochalov.dic.Dictionary.find(
-								Tree.getName(groupPosition, childPosition)));
+					if (listener != null){
+						String name;
+						if (Utils.isInvertedDic())
+							name = Tree.getTranslation(groupPosition, childPosition);
+							else
+						name = Tree.getName(groupPosition, childPosition);
+						IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
+						listener.itemSelected(e);
+					}
+						
 					
 
 					return true;

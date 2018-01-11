@@ -77,6 +77,11 @@ public final class Utils {
 
 	public static String info = "";
 
+	public static boolean isInvertedDic()
+	{
+		return mDictionaryName.startsWith("ru");
+	}
+
 	public static String getSampleFileName()
 	{
 		if (mLanguage.equals("eng")){
@@ -338,6 +343,10 @@ public final class Utils {
 		else if (mDictionaryName.equals("ru_it.xdxf")){
 			mLanguage = "rus";
 			internalDictionaryID = R.raw.ru_it;
+		}
+		else if (mDictionaryName.equals("ru_en.xdxf")){
+			mLanguage = "rus";
+			internalDictionaryID = R.raw.ru_en;
 		}
 		else
 			internalDictionaryID = 0;

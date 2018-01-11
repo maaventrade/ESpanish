@@ -71,25 +71,37 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
     }
 
 	public void setTranslation(IndexEntry indexEntry) {
-		String str = Dictionary
-				.readTranslation(indexEntry);
-
+		
 		Entry entry = new Entry();
-		entry.setTranslationAndPhonetic(str,
-				indexEntry.getText());
+		if (indexEntry != null){
+			String str = Dictionary
+				.readTranslation(indexEntry);
+			entry.setTranslationAndPhonetic(str,
+											indexEntry.getText());
+			tvWord.setText(indexEntry.getText());
 
-		tvWord.setText(indexEntry.getText());
+			tvTranslation.setText(Html.fromHtml(entry
+												.getTranslation().toString()));			
+		
+			String phonetic = entry.getPhonetic();
+			if (phonetic.length() > 0)
+				tvPhonetic
+					.setText("[" + phonetic + "]");
+			else
+				tvPhonetic.setText("");						
+		} else {
+			entry.setTranslationAndPhonetic("",
+										"");
+			tvWord.setText("");
 
-		tvTranslation.setText(Html.fromHtml(entry
-				.getTranslation().toString()));
+			tvTranslation.setText("");
+			
+			tvPhonetic.setText("");		
+		}
+		
 		tvTranslation.scrollTo(0, 0);
 
-		String phonetic = entry.getPhonetic();
-		if (phonetic.length() > 0)
-			tvPhonetic
-					.setText("[" + phonetic + "]");
-		else
-			tvPhonetic.setText("");
+		
 	}
 	
 	@Override

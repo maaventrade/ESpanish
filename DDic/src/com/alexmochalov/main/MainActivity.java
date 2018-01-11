@@ -384,6 +384,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 				final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
 				arrayAdapter.add("en-ru");
+				arrayAdapter.add("ru-en");
 				arrayAdapter.add("it-ru");
 				arrayAdapter.add("ru-it");
 
@@ -406,7 +407,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 								Utils.setDictionaryName("ru_it.xdxf");
 							else if (strName.equals("it-ru"))
 								Utils.setDictionaryName("it_ru.xdxf");
-
+							else if (strName.equals("ru-en"))
+								Utils.setDictionaryName("ru_en.xdxf");
+								
 							TtsUtils.setLanguage(mContext);
 							fragmentDic.setHint(strName);
 							Dictionary.loadIndex(Utils.getDictionaryName(), false);
