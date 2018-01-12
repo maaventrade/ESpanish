@@ -186,7 +186,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 				 R.layout.dic_string,
 				 (ArrayList<IndexEntry>) Dictionary
 				 .getIndexEntries());
-		
 		lvDictionary.setAdapter(adapter);  
 	}
 

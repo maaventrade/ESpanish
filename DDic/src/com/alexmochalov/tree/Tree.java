@@ -267,7 +267,13 @@ public class Tree {
 
 	public static int insertItem(int selectedGroupIndex, String name) {
 		Line key = listDataHeader.get(selectedGroupIndex);
-		Line newLine = new Line(name);
+		Line newLine;
+		
+		if (Utils.isInvertedDic())
+			newLine = new Line("", name);
+		else
+			newLine = new Line(name);
+		
 		Boolean find = false;
 		
 		for (int i = 0; i < listDataChild.get(key).size(); i++){

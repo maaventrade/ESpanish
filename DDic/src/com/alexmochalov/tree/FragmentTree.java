@@ -195,8 +195,8 @@ public class FragmentTree extends Fragment
 						String name;
 						if (Utils.isInvertedDic())
 							name = Tree.getTranslation(groupPosition, childPosition);
-							else
-						name = Tree.getName(groupPosition, childPosition);
+						else
+							name = Tree.getName(groupPosition, childPosition);
 						IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
 						listener.itemSelected(e);
 					}

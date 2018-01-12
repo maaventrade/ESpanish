@@ -234,33 +234,29 @@ public final class Dictionary{
 	 */
 	public static String readTranslation(IndexEntry indexEntry)
 	{
-		//BufferedInputStream bis;
 		BufferedReader bis;
 
-		
-		
-		
-		try {/*
-			if (Utils.isInternalDictionary())
-				bis = new BufferedInputStream(mContext.getResources().openRawResource(Utils.getInternalDictionaryID()));
-			else
-				bis = new BufferedInputStream(new FileInputStream(Utils.getDictionaryName())); //PATH
-*/
-			//bis.skip(1000);
-			//byte[] buffer = new byte[500];
-
+		try {
+			
 			if (Utils.isInternalDictionary())
 				bis = new BufferedReader(new InputStreamReader(mContext.getResources().openRawResource(Utils.getInternalDictionaryID())));
 			else
 				bis = new BufferedReader(new InputStreamReader(
 											 new FileInputStream(mDictionaryName)));
 			
+			char[] buffer = new char[indexEntry.getLength()+1];
 			
 			bis.skip(indexEntry.getPos());
-			String s = "";
+			bis.read(buffer, 0, indexEntry.getLength());
 			
-			for (int i = 0; i < indexEntry.getLength(); i++)
-				s = s + (char)bis.read();
+			String s = new String(buffer);
+			
+			for (int i = 0; i < 30; i++){
+				s = s.replaceFirst(i+".", "<br>"+i+".");
+			}
+			
+			//for (int i = 0; i < indexEntry.getLength(); i++)
+			//	s = s + (char)bis.read();
 			
 			bis.close();
 
@@ -350,8 +346,7 @@ public final class Dictionary{
 			int state = 0;
 			
 			int pos = 0;
-			
-			
+			int posStart = 0;
 
 			while ((code = bis.read()) != -1) {
 					chr = (char)code;
@@ -372,6 +367,7 @@ public final class Dictionary{
 						case 2:
 							if (chr == '>'){
 								state = 3;
+								posStart = pos;
 							}	
 							break;
 						case 3:
@@ -395,7 +391,7 @@ public final class Dictionary{
 								
 								if (str.length() > 0
 									){
-									indexEntries.add(new IndexEntry(str, pos+1, 50));
+									indexEntries.add(new IndexEntry(str, posStart));
 									str = "";
 								}
 								state = 0;
@@ -423,7 +419,7 @@ public final class Dictionary{
 			int ind = 0;
 			for (IndexEntry indexEntry: indexEntries){
 				if (ind < indexEntries.size()-1)
-					indexEntry.setLength(indexEntries.get(ind+1).getLength() - indexEntry.getPos() + 2);
+					indexEntry.setLength(indexEntries.get(ind+1).getPos() - indexEntries.get(ind).getPos());
 				else	
 					indexEntry.setLength(pos - indexEntry.getPos());
 				ind++;
