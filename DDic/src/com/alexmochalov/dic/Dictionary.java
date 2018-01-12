@@ -234,24 +234,34 @@ public final class Dictionary{
 	 */
 	public static String readTranslation(IndexEntry indexEntry)
 	{
-		BufferedInputStream bis;
-		try {
+		//BufferedInputStream bis;
+		BufferedReader bis;
+
+		
+		
+		
+		try {/*
 			if (Utils.isInternalDictionary())
 				bis = new BufferedInputStream(mContext.getResources().openRawResource(Utils.getInternalDictionaryID()));
 			else
 				bis = new BufferedInputStream(new FileInputStream(Utils.getDictionaryName())); //PATH
-
+*/
 			//bis.skip(1000);
 			//byte[] buffer = new byte[500];
 
+			if (Utils.isInternalDictionary())
+				bis = new BufferedReader(new InputStreamReader(mContext.getResources().openRawResource(Utils.getInternalDictionaryID())));
+			else
+				bis = new BufferedReader(new InputStreamReader(
+											 new FileInputStream(mDictionaryName)));
+			
+			
 			bis.skip(indexEntry.getPos());
-			byte[] buffer = new byte[indexEntry.getLength()];
-
-			int bytesRead = bis.read(buffer);
-
-			String s = new String(buffer, 0, indexEntry.getLength()-1);
-//			String s = new String(buffer, 0, 500);
-
+			String s = "";
+			
+			for (int i = 0; i < indexEntry.getLength(); i++)
+				s = s + (char)bis.read();
+			
 			bis.close();
 
 			return s;
@@ -265,8 +275,7 @@ public final class Dictionary{
 
 	}
 
-//	static final int BUFFER_SYZE = 2048;
-	static final int BUFFER_SYZE = 4096;
+//	
 	public static boolean createIndexAsinc(String dictionary_name) {
 
 		String index_file_name;
@@ -319,11 +328,8 @@ public final class Dictionary{
 	public static boolean createIndex() {
 		ArrayList<IndexEntry> indexEntries = new ArrayList<IndexEntry>();
 
-		String chunk;
-		String chunk0 = "";
-
-		char chr;
-		int bytesRead = 0;
+		
+		
 		
 		try {
 
@@ -337,25 +343,25 @@ public final class Dictionary{
 						   new FileInputStream(mDictionaryName)));
 				
 			bos = new BufferedOutputStream(new FileOutputStream(Utils.getIndexPath()));
-
+			
+			char chr;
+			int code;
+			String str = "";
 			int state = 0;
-			int start = 0;
-			int end = 0;
+			
 			int pos = 0;
+			
+			
 
-			int prevTextEnd = 0;
-
-			while ((chr = (char)bis.read()) != -1) {
-				start = 0;
-				end = 0;
-
+			while ((code = bis.read()) != -1) {
+					chr = (char)code;
+					pos++;
 					switch (state) {
 						case 0:
 							if (chr == '<')
 							{	
-								prevTextEnd = pos-1;
 								state = 1;
-							}	
+							}
 							break;
 						case 1:
 							if (chr == 'k')
@@ -366,13 +372,12 @@ public final class Dictionary{
 						case 2:
 							if (chr == '>'){
 								state = 3;
-								start = i+1;
 							}	
 							break;
 						case 3:
 							if (chr != '<'){
+								str = str + chr;
 							} else {
-								end = i;
 								state = 4;
 							}
 							break;
@@ -388,11 +393,10 @@ public final class Dictionary{
 									Log.d("", ""+uuu);
 								}
 								
-								chunk = new String(buffer, start, end-start);
-								if ((chunk0+chunk).trim().length() > 0
-									&&  !chunk.startsWith("  ")){
-									indexEntries.add(new IndexEntry((chunk0+chunk).trim(), pos+1, prevTextEnd));
-									chunk0 = "";
+								if (str.length() > 0
+									){
+									indexEntries.add(new IndexEntry(str, pos+1, 50));
+									str = "";
 								}
 								state = 0;
 							}
@@ -402,8 +406,8 @@ public final class Dictionary{
 						default:	
 							Log.d("", "state ??? "+state);
 					}
-					pos++;
 					
+					/*
 				if (state == 3){
 				    chunk0 = new String(buffer, start, BUFFER_SYZE-start);
 				    if (chunk0.startsWith("  ")){
@@ -412,7 +416,7 @@ public final class Dictionary{
 				    }
 				}    
 				else
-					chunk0 = "";	
+					chunk0 = "";	*/
 			}		
 
 
@@ -452,173 +456,7 @@ public final class Dictionary{
 		
 	}
 
-	public static boolean createIndex1() {
-		ArrayList<IndexEntry> indexEntries = new ArrayList<IndexEntry>();
-
-		BufferedInputStream bis;
-		BufferedOutputStream bos;
-
-		String chunk;
-		String chunk0 = "";
-
-		byte[] buffer = new byte[BUFFER_SYZE];
-		int bytesRead = 0;
-		
-		
-		
-		try {
-			
-			if (Utils.isInternalDictionary())
-				bis = new BufferedInputStream(mContext.getResources().openRawResource(Utils.getInternalDictionaryID()));
-			else
-				bis = new BufferedInputStream(new FileInputStream(mDictionaryName));
-
-		/*		
-			 int c[] = {0,0,0};
-
-			InputStream fis = mContext.getResources().openRawResource(Utils.getInternalDictionaryID());
-
-			 if (fis.available() >= 2){
-			 c[0] = fis.read();
-			 c[1] = fis.read();
-			 }
-			 if (fis.available() >= 3)
-			 c[2] = fis.read();
-
-			BufferedReader reader;
-			 
-			
-			 if (c[0] == 255 && c[1] == 254 )
-			 reader = new BufferedReader(fis, "UTF-16");
-			 else if (c[0] == 239 && c[1] == 187 && c[2] == 191 )
-			 reader = new BufferedReader(new InputStreamReader(openFileInputStream(name), "UTF-8"));
-			 else
-			 reader = new BufferedReader(new InputStreamReader(openFileInputStream(name), "windows-1251"));
-
-			 reader = new BufferedReader(new InputStreamReader(openFileInputStream(name), "UTF-8"));
-*/
-			 
-				
-				
-				
-				
-			bos = new BufferedOutputStream(new FileOutputStream(Utils.getIndexPath()));
-
-			int state = 0;
-			int start = 0;
-			int end = 0;
-			int pos = 0;
-
-			int prevTextEnd = 0;
-
-			while ((bytesRead = bis.read(buffer)) != -1) {
-				start = 0;
-				end = 0;
-
-				for (int i = 0; i < BUFFER_SYZE; i++){
-					switch (state) {
-						case 0:
-							if (buffer[i] == '<')
-							{	
-								prevTextEnd = pos-1;
-								state = 1;
-							}	
-							break;
-						case 1:
-							if (buffer[i] == 'k')
-								state = 2;
-							else 
-								state = 0;
-							break;
-						case 2:
-							if (buffer[i] == '>'){
-								state = 3;
-								start = i+1;
-							}	
-							break;
-						case 3:
-							if (buffer[i] != '<'){
-							} else {
-								end = i;
-								state = 4;
-							}
-							break;
-						case 4:
-							if (buffer[i] == 'k')
-								state = 5;
-							break;
-						case 5:
-							if (buffer[i] == '>'){
-								
-								if (indexEntries.size() == 551 ){
-									int uuu = 1;
-									Log.d("", ""+uuu);
-								}
-								
-								chunk = new String(buffer, start, end-start);
-								if ((chunk0+chunk).trim().length() > 0
-									&&  !chunk.startsWith("  ")){
-									indexEntries.add(new IndexEntry((chunk0+chunk).trim(), pos+1, prevTextEnd));
-									chunk0 = "";
-								}
-								state = 0;
-							}
-							else
-								state = 0;
-							break;
-						default:	
-							Log.d("", "state ??? "+state);
-					}
-					pos++;
-				}
-				if (state == 3){
-				    chunk0 = new String(buffer, start, BUFFER_SYZE-start);
-				    if (chunk0.startsWith("  ")){
-				    	chunk0 = "";
-				    	state = 0;
-				    }
-				}    
-				else
-					chunk0 = "";	
-			}		
-
-
-			int ind = 0;
-			for (IndexEntry indexEntry: indexEntries){
-				if (ind < indexEntries.size()-1)
-					indexEntry.setLength(indexEntries.get(ind+1).getLength() - indexEntry.getPos() + 2);
-				else	
-					indexEntry.setLength(pos - indexEntry.getPos());
-				ind++;
-			}
-
-			//EntryComparator ec = new EntryComparator();
-			//java.util.Collections.sort(indexEntries, ec);			
-
-			for (IndexEntry indexEntry: indexEntries){
-				bos.write(indexEntry.getText().getBytes());
-				bos.write((char)(0x9));
-				bos.write(String.format("%x", indexEntry.getPos()).getBytes());
-				bos.write((char)(0x9));
-				bos.write(String.format("%x", indexEntry.getLength()).getBytes());
-				bos.write((char)(0xa));
-			}
-
-			bos.flush();
-			bos.close();
-
-			//Utils.dictionary_name = name;
-			//Utils.dictionary_index = index;
-			Log.d("a","ind end");
-			return true;
-		} catch (IOException t) {
-			info = "Error indexing "+t;
-			Log.d("a","ind error "+t);
-			return false;
-		}
-		
-	}
-
+	
 	static final class EntryComparator implements Comparator<IndexEntry> {
 		public int compare(IndexEntry e1, IndexEntry e2) {
 		    return e1.getText().compareToIgnoreCase(e2.getText());
