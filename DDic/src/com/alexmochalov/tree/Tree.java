@@ -43,6 +43,17 @@ public class Tree {
 	private static HashMap<Line, List<Line>> listDataChild = new HashMap<Line, List<Line>>();
 	private static Line copyLine = null;
 
+	public static void clearText()
+	{
+		for (Line s : listDataHeader) {
+			if (listDataChild.get(s) != null) {
+				for (Line l : listDataChild.get(s)) {
+					l.setName("") ;
+				}
+			}
+		}
+	}
+
 	public static int paste(int selectedGroupIndex)
 	{
 		Line key = listDataHeader.get(selectedGroupIndex);
@@ -79,8 +90,8 @@ public class Tree {
 	}
 
 	public static void clear() {
-		listDataHeader = new ArrayList<Line>();
-		listDataChild = new HashMap<Line, List<Line>>();
+		listDataHeader.clear(); // = new ArrayList<Line>();
+		listDataChild.clear();  // = new HashMap<Line, List<Line>>();
 	}
 
 	public static ArrayList<Line> getGroups() {
@@ -119,7 +130,6 @@ public class Tree {
 			writer.write("<body type = \"tree\">" + "\n");
 
 			for (Line s : listDataHeader) {
-
 				writer.write("<group name=\"" + s.getName() + "\"" + ">" + "\n");
 
 				if (listDataChild.get(s) != null) {

@@ -59,6 +59,14 @@
         android:orderInCategory="20"
         android:title="@string/action_dictionary" 
         android:showAsAction="never"/>
+	
+	<item
+        android:id="@+id/action_copy_tree"
+        android:orderInCategory="25"
+        android:title="@string/action_copy_tree" 
+        android:showAsAction="never"/>
+	
+	
     
     <item
         android:id="@+id/action_info"

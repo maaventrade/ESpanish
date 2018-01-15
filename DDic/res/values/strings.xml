@@ -21,6 +21,7 @@
 
 	<string name="action_select_dic">Select dictionary</string>
 	<string name="action_tree">Tree</string>
+	<string name="action_copy_tree">Copy tree</string>
 	<string name="action_reindex">Reindex</string>
 	
 	<string name="action_dictionary">Dictionary</string>
@@ -45,5 +46,6 @@
     <string name="save_tree_before_exit">Save tree before exit?</string>
 	<string name="query_delete">Delete</string>
 	<string name="are_you_shure">Are you shure?</string>
+	<string name="query_copy_tree">Replace current tree</string>
 	
 </resources>

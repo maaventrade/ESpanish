@@ -179,6 +179,9 @@ public final class Dictionary{
 	}
 
 	public static IndexEntry find(String string) {
+		
+		if (string.length() == 0) return null;
+		
 		ArrayList<IndexEntry> results = new ArrayList<IndexEntry>();
 		string = string.toLowerCase();
 
@@ -368,7 +371,8 @@ public final class Dictionary{
 							if (chr == '>'){
 								state = 3;
 								posStart = pos;
-							}	
+							} else 
+								state = 0;
 							break;
 						case 3:
 							if (chr != '<'){

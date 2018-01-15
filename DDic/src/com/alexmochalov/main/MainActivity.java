@@ -375,19 +375,14 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				 .show();
 				
 				return true;
-			case R.id.action_reindex:
-				fragmentDic.reindex();
-				return true;
-			case R.id.action_select_dic:
+			case R.id.action_copy_tree:
 				AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-				dialog.setTitle("Select divtionaty");
+				dialog.setTitle("Copy tree");
 				//dialog.setMessage(getResources().getString(R.string.action_move));
 
 				final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
 				arrayAdapter.add("en-ru");
-				arrayAdapter.add("ru-en");
 				arrayAdapter.add("it-ru");
-				arrayAdapter.add("ru-it");
 
 				dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
 						@Override
@@ -402,6 +397,72 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 						public void onClick(DialogInterface dialog, int which)
 						{
 							String strName = arrayAdapter.getItem(which);
+							if (strName.equals("en-ru"))
+								fragmentTree.copyTree("eng");
+							else if (strName.equals("it-ru"))
+								fragmentTree.copyTree("ita");
+						}
+					});
+				dialog.show();
+
+
+
+				return true;
+				/*
+				
+				new AlertDialog.Builder(MainActivity.this)
+					.setIcon(R.drawable.ic_launcher)
+
+					.setTitle(getResources().getString(R.string.query_copy_tree)+ "\""  + fragmentTree.getCurrentText() +"\"?")
+					.setMessage(getResources().getString(R.string.are_you_shure))
+					.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+				 	{
+						@Override
+						public void onClick(DialogInterface dialog, int which) 
+						{
+							fragmentTree.copyTree();
+						}
+				 	})
+					.setNegativeButton("No", new DialogInterface.OnClickListener()
+				 	{
+						@Override
+						public void onClick(DialogInterface dialog, int which) 
+						{
+							return;
+						}
+				 	})
+					.show();
+
+				return true;
+				*/
+				
+			case R.id.action_reindex:
+				fragmentDic.reindex();
+				return true;
+			case R.id.action_select_dic:
+			 dialog = new AlertDialog.Builder(mContext);
+				dialog.setTitle("Select divtionaty");
+				//dialog.setMessage(getResources().getString(R.string.action_move));
+
+				final ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
+				arrayAdapter1.add("en-ru");
+				arrayAdapter1.add("ru-en");
+				arrayAdapter1.add("it-ru");
+				arrayAdapter1.add("ru-it");
+
+				dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							dialog.dismiss();
+						}
+					});
+
+				dialog.setAdapter(arrayAdapter1, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							String strName = arrayAdapter1.getItem(which);
 							if (strName.equals("en-ru"))
 								Utils.setDictionaryName("en_ru.xdxf");
 							else if (strName.equals("ru-it"))

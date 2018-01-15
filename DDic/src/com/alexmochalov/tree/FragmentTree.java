@@ -38,11 +38,23 @@ public class FragmentTree extends Fragment
 
 	private int firstVisible = -1;
 
+public void copyTree(String name)
+{
+ 	Tree.clear();
+	Tree.loadXML(mContext, "tree_"+name+".xml");
+	Tree.clearText();
+	
+	adapterTree.notifyDataSetChanged();
+	mModified = true;
+}
+
 	public void paste()
 	{
 		mModified = true;
 		selectedItemIndex = Tree.paste(selectedGroupIndex);
 		adapterTree.notifyDataSetChanged();
+		
+		
 	}
 
 	public void copyItem()
@@ -116,7 +128,6 @@ public class FragmentTree extends Fragment
 		mContext = context;
 		
 		Tree.copy(mContext, "tree_"+Utils.getLanguageNoRus()+".xml", "tree_"+Utils.getLanguageNoRus()+"_bak.xml"); 
-		
 		Tree.loadXML(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
 		
 	}
