@@ -54,6 +54,7 @@
             android:id="@+id/tvTranslation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:autoLink="web"
             android:background="@drawable/bg2"
             android:scrollbars="vertical"
             android:textAppearance="?android:attr/textAppearanceLarge" />
