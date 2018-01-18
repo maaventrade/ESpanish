@@ -255,7 +255,7 @@ public final class Dictionary{
 			String s = new String(buffer);
 			
 			for (int i = 0; i < 30; i++){
-				s = s.replaceFirst(i+".", "<br>"+i+".");
+				s = s.replaceFirst(i+"\\.", "<br>"+i+".");
 			}
 			
 			//for (int i = 0; i < indexEntry.getLength(); i++)

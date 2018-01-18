@@ -1,13 +1,14 @@
 package com.alexmochalov.dic;
 
 import android.app.Activity;
+import android.text.Spanned;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
 public class KrefSpan extends ClickableSpan {
 
-	final FragmentTranslation fragmentTranslation;
-	final String articleId;
+	private final FragmentTranslation fragmentTranslation;
+	private String articleId;
 
 	public KrefSpan(FragmentTranslation fragmentTranslation, String articleId) {
 		super();
@@ -19,6 +20,11 @@ public class KrefSpan extends ClickableSpan {
 	public void onClick(View arg0) {
 		IndexEntry indexEntry =  Dictionary.find(articleId);
 		fragmentTranslation.setTranslation(indexEntry);
+	}
+
+	public void setArticleId(String spannedText, int start) {
+		articleId = spannedText.toString().substring(start);
+		
 	}
 
 }

@@ -81,6 +81,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
         return rootView;
     }
 
+	Spanned spannedText;
 	public void setTranslation(IndexEntry indexEntry) {
 						
 		Entry entry = new Entry();
@@ -93,7 +94,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 
 			String text = entry.getTranslation().toString();
 			
-	    	Spanned spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
+	    	spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
 	    	Spannable reversedText = revertSpanned(spannedText);
 			
 			tvTranslation.setText(reversedText);
@@ -145,10 +146,12 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		}
 	};
 	
+	int len0 = -1;
 	void processSpan(boolean opening, Editable output, Object span) {
 		int len = output.length();
 		if (opening) {
 			output.setSpan(span, len, len, Spannable.SPAN_MARK_MARK);
+			len0 = len;
 		} else {
 			Object[] objs = output.getSpans(0, len, span.getClass());
 			int where = len;
@@ -156,6 +159,10 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 				for(int i = objs.length - 1; i >= 0; --i) {
 					if (output.getSpanFlags(objs[i]) == Spannable.SPAN_MARK_MARK) {
 						where = output.getSpanStart(objs[i]);
+						
+						KrefSpan k = (KrefSpan)objs[i];
+						k.setArticleId(output.toString(), len0);
+						
 						output.removeSpan(objs[i]);
 						break;
 					}
