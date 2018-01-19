@@ -13,16 +13,17 @@ public class KrefSpan extends ClickableSpan {
 		super();
 		this.fragmentTranslation = fragmentTranslation;
 		this.articleId = articleId;
-		Log.d("","NEW - "+this);
+		//Log.d("","NEW - "+this);
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		IndexEntry indexEntry =  Dictionary.find(articleId);
-		Log.d("","Sel "+this);
-		Log.d("","articleId "+articleId);
+		//Log.d("","Sel "+this);
+		//Log.d("","articleId "+articleId);
 		
-		fragmentTranslation.setTranslation(indexEntry);
+		if (indexEntry != null)
+			fragmentTranslation.setTranslation(indexEntry, 1);
 	}
 
 	public void setArticleId(String spannedText, int start) {

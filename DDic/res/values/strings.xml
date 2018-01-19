@@ -41,7 +41,9 @@
 	
     <string name="error_saving_file">Error saving file</string>
     <string name="error_load_xml">Error loading xml</string>
-		
+
+    <string name="action_switch">Switch</string>
+    		
     <string name="tree_was_changed">Tree was changed</string>
     <string name="save_tree_before_exit">Save tree before exit?</string>
 	<string name="query_delete">Delete</string>

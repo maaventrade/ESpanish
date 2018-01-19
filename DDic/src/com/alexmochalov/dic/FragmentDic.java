@@ -220,7 +220,8 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	}
 
 	public void setHint(String hint) {
-		etEntry.setHint("Search ("+hint+")");
+		if (etEntry != null)
+			etEntry.setHint("Search ("+hint+")");
 		
 	}
 

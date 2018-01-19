@@ -1,5 +1,7 @@
 package com.alexmochalov.dic;
 
+import java.util.ArrayList;
+
 import org.xml.sax.XMLReader;
 
 import android.app.*;
@@ -28,7 +30,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	private TextView tvTranslation;
 
 	private ImageButton ibSpeak;
-	private ImageButton ibMenu;
+	private ImageButton ibBack;
 	
 	public FragmentTranslationCallback callback = null;
 	public interface FragmentTranslationCallback {
@@ -36,7 +38,8 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		void btnSelectDictionary(String name);
 		void btnReindex();
 	} 
-	
+		
+	private ArrayList<String> stackArray;
 	
 	public FragmentTranslation(Activity context)
 	{
@@ -67,6 +70,9 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
         
 		ibSpeak = (ImageButton)rootView.findViewById(R.id.ibSpeak);
 		ibSpeak.setOnClickListener(this);
+
+		ibBack = (ImageButton)rootView.findViewById(R.id.ibBack);
+		ibBack.setOnClickListener(this);
 		
 		tvWord = (TextView)rootView.findViewById(R.id.tvWord);
 		
@@ -78,14 +84,32 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		
 		tvPhonetic = (TextView)rootView.findViewById(R.id.tvPhonetic);
         
+		stackArray = new ArrayList<String>();
+		
         return rootView;
     }
-int n = 0;
-	Spanned spannedText;
-	public void setTranslation(IndexEntry indexEntry) {
+	
+	/**
+	 * 
+	 * @param indexEntry - object, contains Text and addess of Translation 
+	 * @param saveToStack - 0 don't save, 1 save, 2 clear stack and save  
+	 */
+	public void setTranslation(IndexEntry indexEntry, int saveToStack ) {
 						
 		Entry entry = new Entry();
 		if (indexEntry != null){
+			
+			String oldWord = tvWord.getText().toString();
+			if (oldWord.length() == 0);
+			else if (saveToStack == 2){
+				stackArray.clear();
+				stackArray.add(oldWord);
+			} else if (saveToStack == 1){
+				stackArray.add(oldWord);
+				if (stackArray.size() > 100)
+					stackArray.remove(0);
+			}
+			
 			String str = Dictionary
 				.readTranslation(indexEntry);
 			entry.setTranslationAndPhonetic(str,
@@ -94,7 +118,7 @@ int n = 0;
 
 			String text = entry.getTranslation().toString();
 			
-	    	spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
+			Spanned spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
 	    	Spannable reversedText = revertSpanned(spannedText);
 			
 			tvTranslation.setText(reversedText);
@@ -104,7 +128,8 @@ int n = 0;
 				tvPhonetic
 					.setText("[" + phonetic + "]");
 			else
-				tvPhonetic.setText("");						
+				tvPhonetic.setText("");		
+				
 		} else {
 			entry.setTranslationAndPhonetic("",
 										"");
@@ -135,7 +160,8 @@ int n = 0;
 		
 			if (tag.startsWith("article_")) span = new ArticleSpan(mContext, tag);
 			else if (tag.startsWith("kref")){
-				span = new KrefSpan(FragmentTranslation.this, ""+n); n++;}
+				span = new KrefSpan(FragmentTranslation.this, ""); 
+			}
 			else if ("title".equalsIgnoreCase(tag)) span = new AppearanceSpan(0xffff2020, AppearanceSpan.NONE, 20, true, true, false, false);
 			else if (tag.startsWith("color_")) span = new ParameterizedSpan(tag.substring(6));
 			else if (tag.startsWith("abr")) span = new ColorSpan();
@@ -164,16 +190,17 @@ int n = 0;
 					if (output.getSpanFlags(objs[i]) == Spannable.SPAN_MARK_MARK) {
 						where = output.getSpanStart(objs[i]);
 						
-						Log.d("","output "+output);
-						Log.d("","len "+len0);
+						//Log.d("","output "+output);
+						//Log.d("","len "+len0);
 					
 						//KrefSpan k = (KrefSpan)objs[i];
 						//Log.d("","k "+k);
 						//Log.d("","span "+span);
-						if (""+span.getClass() == "KrefSpan"){
-						KrefSpan k = (KrefSpan)span;
-						k.setArticleId(output.toString(), len0);
+						if (span instanceof KrefSpan){
+							KrefSpan k = (KrefSpan)span;
+							k.setArticleId(output.toString(), len0);
 						}
+						
 						output.removeSpan(objs[i]);
 						break;
 					}
@@ -202,7 +229,14 @@ int n = 0;
 	public void onClick(View v) {
 		if (v == ibSpeak){
 			TtsUtils.speak(tvWord.getText().toString());
-		}
+		} else if (v == ibBack){
+			if (stackArray.size() > 0){
+				IndexEntry indexEntry =  Dictionary.find(stackArray.get(stackArray.size()-1));
+				if (indexEntry != null)
+					setTranslation(indexEntry, 0);
+				stackArray.remove(stackArray.size()-1);
+			}
+		}	
 	}
 	
 }

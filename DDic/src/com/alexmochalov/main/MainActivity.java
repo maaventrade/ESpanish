@@ -153,11 +153,12 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 			fragmentDic = (FragmentDic) getFragmentManager()
 				.findFragmentByTag(TAG_FRAGMENT_DIC);
-			fragmentDic.callback = new FragmentDicCallback() {
+				fragmentDic.callback = new FragmentDicCallback() {
 				@Override
 				public void itemSelected(IndexEntry indexEntry)
 				{
-					fragmentTranslation.setTranslation(indexEntry);
+					// Set translation for current item of the dictionary list
+					fragmentTranslation.setTranslation(indexEntry, 2);
 				}
 			};
 
@@ -186,7 +187,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				@Override
 				public void itemSelected(IndexEntry indexEntry)
 				{
-					fragmentTranslation.setTranslation(indexEntry);
+					// Set translation for current item of the dictionary list
+					fragmentTranslation.setTranslation(indexEntry, 2);
 
 				}
 			};
@@ -219,7 +221,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				@Override
 				public void itemSelected(IndexEntry indexEntry)
 				{
-					fragmentTranslation.setTranslation(indexEntry);
+					// Set translation for current item of the tree
+					fragmentTranslation.setTranslation(indexEntry, 2);
 				}
 			};
 
@@ -245,7 +248,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -347,9 +350,16 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			case R.id.action_paste:
 				fragmentTree.paste();
 				fragmentTree.select();
+				return true;
 				
+			case R.id.action_switch:
+				Utils.switchDictionary();
+				TtsUtils.setLanguage(mContext);
+				fragmentDic.setHint(Utils.getDictionaryName());
+				Dictionary.loadIndex(Utils.getDictionaryName(), false);
 				
 				return true;
+				
 			case R.id.action_delete:
 				new AlertDialog.Builder(MainActivity.this)
 				 .setIcon(R.drawable.ic_launcher)
@@ -471,7 +481,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 								Utils.setDictionaryName("it_ru.xdxf");
 							else if (strName.equals("ru-en"))
 								Utils.setDictionaryName("ru_en.xdxf");
-								
 							TtsUtils.setLanguage(mContext);
 							fragmentDic.setHint(strName);
 							Dictionary.loadIndex(Utils.getDictionaryName(), false);

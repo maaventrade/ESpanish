@@ -41,11 +41,17 @@
             android:layout_weight="0.1" >
 
             <ImageButton
+                android:id="@+id/ibBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back" />
+
+            <ImageButton
                 android:id="@+id/ibSpeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/speaker" />
-
+            
         </LinearLayout>
 
         </LinearLayout>

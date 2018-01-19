@@ -10,7 +10,7 @@ public class ColorSpan extends CharacterStyle {
 
 	public ColorSpan() {
 		try {
-			color = Color.parseColor("#0x00ff00");
+			color = Color.parseColor("#ff00CC00");
 		} catch(Exception ex) { }
 	}
 

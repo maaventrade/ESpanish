@@ -29,7 +29,6 @@ public final class Utils {
 	
 	private static String mDictionaryName;
 	
-	
 	private static TextView textViewInformation;
 	private static ActionBar actionBar;
 	private static Activity activity;
@@ -71,8 +70,6 @@ public final class Utils {
 	private static int firstLinePixelShift = -1;
 	private static int firstPosition = -1;
 
-	private static String mLanguage = "";
-
 	public static boolean instant_translation;
 
 	public static String info = "";
@@ -82,62 +79,12 @@ public final class Utils {
 		return mDictionaryName.startsWith("ru");
 	}
 
-	public static String getSampleFileName()
-	{
-		if (mLanguage.equals("eng")){
-			fileName = "salinger.txt";
-		}
-		else if (mLanguage.equals("spa")){
-			fileName = "noname.txt";
-		}
-		else if (mLanguage.equals("ita")){
-			fileName = "intrigo.txt";
-		}
-		else
-			fileName = "noname.txt";
-		return fileName;
-	}
-
-	public static String getLanguage(){
-		return mLanguage;
-	}
-	
 	public static void setDictionaryName(String dictionaryName)
 	{
 		mDictionaryName = dictionaryName;
 		setInternalDictionary();
 	}
 
-	/*
-	 public static void restoreViewParams(Object object)
-	 {
-	 if (object instanceof ViewTextSelectable){
-	 if (firstLine >= 0)
-	 ((ViewTextSelectable)object).setFirstLine(firstLine, firstLinePixelShift);
-	 } else {
-	 ((Lexicon)object).setPosition(firstPosition);
-	 }
-
-	 }
-
-	 public static void restoreViewParams()
-	 {
-	 Lexicon.setPosition(firstPosition);
-	 }
-
-	 public static void saveViewParams()
-	 {
-	 firstPosition = Lexicon.getPosition();
-	 }
-
-	 public static void saveViewParams(ViewTextSelectable object)
-	 {
-	 if (object != null){
-	 firstLine = ((ViewTextSelectable)object).getFirstLine();
-	 firstLinePixelShift = ((ViewTextSelectable)object).getFirstLinePixelShift();
-	 }
-	 }
-	 */
 	public static String getAppDirectory() {
 		File file = new File(EXTERNAL_STORAGE_DIRECTORY, PROGRAMM_FOLDER);
 		if(!file.exists()){                          
@@ -168,10 +115,6 @@ public final class Utils {
 			return "No file opened";
 		else
 			return fileName;
-	}
-
-	public static String getaLanguage() {
-		return mLanguage;
 	}
 
 	public static String getLanguageNoRus() {
@@ -329,7 +272,6 @@ public final class Utils {
 
 	public static void setInternalDictionary() {
 		if (mDictionaryName.equals("en_ru.xdxf")){
-			mLanguage = "eng";
 			internalDictionaryID = R.raw.en_ru;
 		}
 		else if (mDictionaryName.equals("sp_eng.xdxf")){
@@ -337,15 +279,12 @@ public final class Utils {
 			//internalDictionaryID = R.raw.span_eng;
 		}
 		else if (mDictionaryName.equals("it_ru.xdxf")){
-			mLanguage = "ita";
 			internalDictionaryID = R.raw.it_ru;
 		}
 		else if (mDictionaryName.equals("ru_it.xdxf")){
-			mLanguage = "rus";
 			internalDictionaryID = R.raw.ru_it;
 		}
 		else if (mDictionaryName.equals("ru_en.xdxf")){
-			mLanguage = "rus";
 			internalDictionaryID = R.raw.ru_en;
 		}
 		else
@@ -404,7 +343,7 @@ public final class Utils {
 
 
 	public static String[] getStringForms(String string){
-		if (mLanguage.equals("ita")){
+		if (getLanguageNoRus().equals("ita")){
 			String[] strings = {string};
 			if (string.endsWith("mi"))
 				string = string.substring(0,string.length()-2);
@@ -495,6 +434,21 @@ public final class Utils {
 		ViewDialog alert = new ViewDialog();
 		alert.showDialog(mContext, "Error de conexión al servidor");
 		}
+
+	public static void switchDictionary() {
+		if (mDictionaryName.equals("en_ru.xdxf")){
+			setDictionaryName("ru_en.xdxf");
+		}
+		else if (mDictionaryName.equals("it_ru.xdxf")){
+			setDictionaryName("ru_it.xdxf");
+		}
+		else if (mDictionaryName.equals("ru_it.xdxf")){
+			setDictionaryName("it_ru.xdxf");
+		}
+		else if (mDictionaryName.equals("ru_en.xdxf")){
+			setDictionaryName("en_ru.xdxf");
+		}
+	}
 	
 	
 }

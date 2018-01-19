@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.alexmochalov.enru.MainActivity" >
+    
+    <item
+        android:id="@+id/action_switch"
+        android:orderInCategory="999"
+        android:showAsAction="always"
+        android:icon="@drawable/ru"
+        android:title="@string/action_switch"/>
+
+</menu>

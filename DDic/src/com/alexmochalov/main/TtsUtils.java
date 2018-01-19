@@ -58,18 +58,16 @@ public class TtsUtils
 	public static void setLanguage(Context context)
 	{
 		
-		Log.d("", "LANG "+Utils.getLanguage());
-		
 		langSupported = false;
 		loadLangueges();
 		Locale locale[] = Locale.getAvailableLocales();
 		for (int i=0; i < locale.length; i++)
 		{
-			if (locale[i].getISO3Language().equals(Utils.getLanguage()))
+			if (locale[i].getISO3Language().equals(Utils.getLanguageNoRus()))
 			{
 				if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED)
 				{
-					Toast.makeText(context, "язык не поддерживается" + " (" + Utils.getLanguage() + ") ", Toast.LENGTH_LONG).show();
+					Toast.makeText(context, "язык не поддерживается" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 					langSupported = false;
 				}
 				else
@@ -79,7 +77,7 @@ public class TtsUtils
 				}	
 				return; 
 			}}
-		Toast.makeText(context, "язык не найден" + " (" + Utils.getLanguage() + ") ", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, "язык не найден" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 	}
 	
 	public static void init(Context context)
@@ -100,18 +98,16 @@ public class TtsUtils
             }
         });		
 		
-		Log.d("", "LANG "+Utils.getLanguage());
-		
 		langSupported = false;
 		loadLangueges();
 		Locale locale[] = Locale.getAvailableLocales();
 		for (int i=0; i < locale.length; i++)
 		{
-			if (locale[i].getISO3Language().equals(Utils.getLanguage()))
+			if (locale[i].getISO3Language().equals(Utils.getLanguageNoRus()))
 			{
 				if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED)
 				{
-					Toast.makeText(context, "язык не поддерживается" + " (" + Utils.getLanguage() + ") ", Toast.LENGTH_LONG).show();
+					Toast.makeText(context, "язык не поддерживается" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 					langSupported = false;
 				}
 				else
@@ -121,7 +117,7 @@ public class TtsUtils
 				}	
 				return; 
 			}}
-		Toast.makeText(context, "язык не найден" + " (" + Utils.getLanguage() + ") ", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, "язык не найден" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 	}
 
 	@SuppressWarnings("deprecation")
