@@ -80,7 +80,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
         
         return rootView;
     }
-
+int n = 0;
 	Spanned spannedText;
 	public void setTranslation(IndexEntry indexEntry) {
 						
@@ -132,11 +132,14 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	Html.TagHandler htmlTagHandler = new Html.TagHandler() {
 		public void handleTag(boolean opening, String tag, Editable output,	XMLReader xmlReader) {
 			Object span = null; 
+		
 			if (tag.startsWith("article_")) span = new ArticleSpan(mContext, tag);
-			else if (tag.startsWith("kref"))
-				span = new KrefSpan(FragmentTranslation.this, tag);
+			else if (tag.startsWith("kref")){
+				span = new KrefSpan(FragmentTranslation.this, ""+n); n++;}
 			else if ("title".equalsIgnoreCase(tag)) span = new AppearanceSpan(0xffff2020, AppearanceSpan.NONE, 20, true, true, false, false);
 			else if (tag.startsWith("color_")) span = new ParameterizedSpan(tag.substring(6));
+			else if (tag.startsWith("abr")) span = new ColorSpan();
+			
 			if (span != null) processSpan(opening, output, span);
 			
 			//Element table = source.getFirstElement();
@@ -152,6 +155,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		if (opening) {
 			output.setSpan(span, len, len, Spannable.SPAN_MARK_MARK);
 			len0 = len;
+			
 		} else {
 			Object[] objs = output.getSpans(0, len, span.getClass());
 			int where = len;
@@ -160,9 +164,16 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 					if (output.getSpanFlags(objs[i]) == Spannable.SPAN_MARK_MARK) {
 						where = output.getSpanStart(objs[i]);
 						
-						KrefSpan k = (KrefSpan)objs[i];
+						Log.d("","output "+output);
+						Log.d("","len "+len0);
+					
+						//KrefSpan k = (KrefSpan)objs[i];
+						//Log.d("","k "+k);
+						//Log.d("","span "+span);
+						if (""+span.getClass() == "KrefSpan"){
+						KrefSpan k = (KrefSpan)span;
 						k.setArticleId(output.toString(), len0);
-						
+						}
 						output.removeSpan(objs[i]);
 						break;
 					}

@@ -1,9 +1,8 @@
 package com.alexmochalov.dic;
 
-import android.app.Activity;
-import android.text.Spanned;
-import android.text.style.ClickableSpan;
-import android.view.View;
+import android.text.style.*;
+import android.util.*;
+import android.view.*;
 
 public class KrefSpan extends ClickableSpan {
 
@@ -14,11 +13,15 @@ public class KrefSpan extends ClickableSpan {
 		super();
 		this.fragmentTranslation = fragmentTranslation;
 		this.articleId = articleId;
+		Log.d("","NEW - "+this);
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		IndexEntry indexEntry =  Dictionary.find(articleId);
+		Log.d("","Sel "+this);
+		Log.d("","articleId "+articleId);
+		
 		fragmentTranslation.setTranslation(indexEntry);
 	}
 
