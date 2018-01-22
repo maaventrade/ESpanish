@@ -153,6 +153,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 			fragmentDic = (FragmentDic) getFragmentManager()
 				.findFragmentByTag(TAG_FRAGMENT_DIC);
+			fragmentDic.setContext(this);
 				fragmentDic.callback = new FragmentDicCallback() {
 				@Override
 				public void itemSelected(IndexEntry indexEntry)

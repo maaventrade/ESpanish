@@ -489,6 +489,7 @@ public final class Dictionary{
 	}
 
 	public static ArrayList<IndexEntry> getIndexEntries(){
+		//int n = indexEntries.size();
 		return indexEntries;
 	}
 

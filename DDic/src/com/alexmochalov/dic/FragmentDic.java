@@ -96,6 +96,8 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		
+		String z = prefs.getString(MTEXT, "");
+		int n  = prefs.getInt(MINDEX, -1);;
 		
 		etEntry.setText(prefs.getString(MTEXT, ""));
 		currentPosition = prefs.getInt(MINDEX, -1);
@@ -104,6 +106,10 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 			etEntry.setText(mtext);
 			mtext = "";
 		}
+		
+		if (currentPosition >= 0)
+			lvDictionary.setItemChecked(currentPosition, true);
+		
 		
 		
 		setHint(Utils.getDictionaryName());
