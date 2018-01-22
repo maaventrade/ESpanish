@@ -1,4 +1,4 @@
-package com.alexmochalov.dic;
+package com.alexmochalov.translation;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,9 @@ import android.webkit.WebView;
 import android.widget.*;
 
 import com.alexmochalov.ddic.*;
+import com.alexmochalov.dic.Dictionary;
+import com.alexmochalov.dic.Entry;
+import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.*;
 
 public class FragmentTranslation extends Fragment   implements OnClickListener{
@@ -117,6 +120,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 			tvWord.setText(indexEntry.getText());
 
 			String text = entry.getTranslation().toString();
+			text = nextSelectedText(text);
 			
 			Spanned spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
 	    	Spannable reversedText = revertSpanned(spannedText);
@@ -144,7 +148,33 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 
 	}
 	
-    Html.ImageGetter htmlImageGetter = new Html.ImageGetter() {
+    private String nextSelectedText(String text) {
+		int start = -1;
+		int end = -1;
+		
+		for (int i = 0; i < text.length(); i++){
+			char c = text.charAt(i);
+			if (start < 0){
+				if (c >= 'a' && c <= 'z' ){
+					start = i;
+				}
+			} else {
+				if (c < 'a' || c > 'z' ){
+					end = i;
+					break;
+				}
+			}
+//			Log.d("", ""+c+" "+(int)c);
+		}
+
+		if (start >= 0 && end >= 0){
+			text = text.substring(0, start)+"*"+text.substring(start, end)+"&"+text.substring(end);
+		}
+    	
+		return text;
+	}
+
+	Html.ImageGetter htmlImageGetter = new Html.ImageGetter() {
 		public Drawable getDrawable(String source) {
 			return null;
 //			int resId = getResources().getIdentifier(source, "drawable", getPackageName());

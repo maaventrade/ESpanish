@@ -10,9 +10,11 @@ import android.speech.tts.TextToSpeech.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.dic.FragmentDic.*;
+import com.alexmochalov.translation.FragmentTranslation;
 import com.alexmochalov.tree.*;
 
 public class MainActivity extends Activity implements OnClickListener, OnInitListener
@@ -70,64 +72,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				{
 					if (getVisibleFragmentTag().equals(TAG_FRAGMENT_DIC))
 						fragmentDic.setAdapter();
-					/*
-					 if (adapter == null){
-					 Utils.addInformation(" new ArrayAdapterDictionary  ");				
-					 adapter = new ArrayAdapterDictionary(mContext,
-					 R.layout.dic_string,
-					 (ArrayList<IndexEntry>) Dictionary
-					 .getIndexEntries());
-
-					 lvDictionary.setAdapter(adapter);
-					 lvDictionary
-					 .setOnItemClickListener(new OnItemClickListener() {
-
-					 @Override
-					 public void onItemClick(
-					 AdapterView<?> adapterView, View p2,
-					 int position, long p4) {
-					 currentPosition = position;
-					 if (callback != null) 
-					 callback.itemSelected(adapter.getItem(position));
-					 //Log.d("e","= "+adapter.getItem(position).getText());
-					 View view = mContext.getCurrentFocus();
-					 if (view != null) {  
-					 InputMethodManager imm = (InputMethodManager)mContext.
-					 getSystemService(Context.INPUT_METHOD_SERVICE);
-					 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-					 }										
-
-					 }
-					 });
-					 } else {
-					 adapter.notifyDataSetChanged();
-					 Log.d("e","changed");
-					 }
-
-					 adapter.callback = new ArrayAdapterDictionary.AdapterCallback() {
-					 @Override
-					 public void valuesFiltered() {
-					 if (currentPosition >= 0){
-					 lvDictionary.setSelection(currentPosition);
-					 IndexEntry IndexEntry = (IndexEntry)adapter.getItem(currentPosition);
-					 if (IndexEntry != null)
-					 if (callback != null) 
-					 callback.itemSelected(IndexEntry);
-					 //currentPosition = -1;
-					 }
-					 }
-					 };
-
-					 // If some text in the Search string exists, execute an action "setText"
-					 if (!etEntry.getText().toString().equals(""))
-					 etEntry.setText(etEntry.getText().toString());
-					 // If position in ListView was stored, set this position
-					 else if (currentPosition >= 0){
-					 lvDictionary.setSelection(currentPosition);
-					 if (callback != null) 
-					 callback.itemSelected(adapter.getItem(currentPosition));
-					 }
-					 */
 				}
 				else
 				{
@@ -607,6 +551,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 		 }*/
 		else {
+			if (fragmentTree != null)
 			if (fragmentTree.isModified()){
 				new AlertDialog.Builder(MainActivity.this)
 				 
@@ -644,6 +589,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				 .show();
 			} else	
 			super.onBackPressed();
+			else	
+				super.onBackPressed();
 			
 		}
 

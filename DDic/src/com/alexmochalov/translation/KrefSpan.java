@@ -1,4 +1,7 @@
-package com.alexmochalov.dic;
+package com.alexmochalov.translation;
+
+import com.alexmochalov.dic.Dictionary;
+import com.alexmochalov.dic.IndexEntry;
 
 import android.text.style.*;
 import android.util.*;

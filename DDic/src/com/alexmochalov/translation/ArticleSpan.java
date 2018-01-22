@@ -1,4 +1,4 @@
-package com.alexmochalov.dic;
+package com.alexmochalov.translation;
 
 import android.app.Activity;
 import android.text.style.ClickableSpan;

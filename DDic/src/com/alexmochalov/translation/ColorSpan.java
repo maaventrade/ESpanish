@@ -1,16 +1,15 @@
-package com.alexmochalov.dic;
+package com.alexmochalov.translation;
 
 import android.graphics.Color;
 import android.text.TextPaint;
 import android.text.style.CharacterStyle;
 
-public class ParameterizedSpan extends CharacterStyle {
-
+public class ColorSpan extends CharacterStyle {
 	int color = 0;
 
-	public ParameterizedSpan(String param) {
+	public ColorSpan() {
 		try {
-			color = Color.parseColor("#" + param);
+			color = Color.parseColor("#ff00CC00");
 		} catch(Exception ex) { }
 	}
 

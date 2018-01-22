@@ -1,4 +1,4 @@
-package com.alexmochalov.dic;
+package com.alexmochalov.translation;
 import android.text.TextPaint;
 import android.text.style.CharacterStyle;
 

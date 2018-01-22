@@ -34,13 +34,17 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 	private ImageButton ibRemove;
 	
 	private final static String MTEXT = "TEXT";
+	private final static String MFILTER = "MFILTER";
 	private final static String MINDEX = "ITEM";
 	
+	private boolean itemClicked = false;
+	private boolean textChanged = false;
 	
 	public FragmentDicCallback callback = null;
 	
 	private int mMode = 0;
 	private String mtext = "";
+	private String mFilter = "";
 
 	public void setMode(int mode)
 	{
@@ -70,29 +74,36 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		Editor editor = prefs.edit();
 		
 		editor.putString(MTEXT, etEntry.getText().toString());
+		editor.putString(MFILTER, mFilter);
 		editor.putInt(MINDEX, currentPosition);
-
+		
 		editor.commit();
 		
 		super.onPause();
-		
 	}
 
-	//@Override
-    //public void onInit()
-	//{
-	//	super.onInit();
-	//}	
+	@Override
+    public void onStart()
+	{
+		super.onStart();
+	}	
 	
 	@Override
     public void onResume()
 	{
 		super.onResume();
+	}
+	
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
-		//Toast.makeText(mContext,"size "+Dictionary.getSize(),Toast.LENGTH_LONG).show();
+		// Define views
+        rootView = inflater.inflate(R.layout.fragment_dic, container, false);
+		ibRemove = (ImageButton)rootView.findViewById(R.id.ibRemove);
+		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
+		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 		
-		//Toast.makeText(mContext,"ON RESUME",Toast.LENGTH_LONG).show();
-		
+		// Read preferences 
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		
@@ -100,42 +111,30 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		int n  = prefs.getInt(MINDEX, -1);;
 		
 		etEntry.setText(prefs.getString(MTEXT, ""));
-		currentPosition = prefs.getInt(MINDEX, -1);
+		mFilter = prefs.getString(MFILTER, "");
+		
+		//currentPosition = prefs.getInt(MINDEX, -1);
 		
 		if (mtext.length() > 0){
 			etEntry.setText(mtext);
 			mtext = "";
 		}
 		
-		if (currentPosition >= 0)
-			lvDictionary.setItemChecked(currentPosition, true);
-		
-		
-		
 		setHint(Utils.getDictionaryName());
-		
-//		Dictionary.setParams(mContext);
-		
-//		if (Dictionary.getSize() == 0)
-//			Dictionary.loadIndex(Utils.getDictionaryName(), true);
-		
-	}
-	
-	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 		setHasOptionsMenu(true);
 		
-        rootView = inflater.inflate(R.layout.fragment_dic, container, false);
-        
-		ibRemove = (ImageButton)rootView.findViewById(R.id.ibRemove);
 		ibRemove.setOnClickListener(this);
-		
-
-		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 		
 		if (! Dictionary.isLoaded()){
 			setAdapter();
+		}
+		
+		if (adapter != null){
+			if (mFilter.length() > 0){
+				adapter.getFilter().filter(mFilter);
+				mFilter = "";
+			}
 		}
 		
 		lvDictionary
@@ -147,6 +146,9 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 					int position, long p4) {
 					
 					currentPosition = position;
+					itemClicked = true;
+					etEntry.setText(adapter.getItem(position).getText()); 
+					itemClicked = false;
 					
 					if (callback != null) 
 						callback.itemSelected(adapter.getItem(position));
@@ -161,7 +163,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 				}
 			});
 		
-		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
 		
 		etEntry.addTextChangedListener(new TextWatcher() {
 
@@ -177,9 +178,11 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (adapter != null){
-					adapter.getFilter().filter(s);
-				}
+				if (! itemClicked)
+					if (adapter != null){
+						mFilter = s.toString();
+						adapter.getFilter().filter(s);
+					}
 			}
 		});
 		
@@ -193,6 +196,11 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 				 (ArrayList<IndexEntry>) Dictionary
 				 .getIndexEntries());
 		lvDictionary.setAdapter(adapter);  
+		
+		if (mFilter.length() > 0){
+			adapter.getFilter().filter(mFilter);
+			mFilter = "";
+		}
 	}
 
 	protected void queryReindex() {
