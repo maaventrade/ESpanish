@@ -35,6 +35,8 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	private ImageButton ibSpeak;
 	private ImageButton ibBack;
 	
+	private ArrayList<String> alExpressions = new ArrayList<String>();
+	
 	public FragmentTranslationCallback callback = null;
 	public interface FragmentTranslationCallback {
 		void btnForwardClicked(); 
@@ -151,25 +153,46 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
     private String nextSelectedText(String text) {
 		int start = -1;
 		int end = -1;
+		boolean tag = false;
+		
+		alExpressions.clear();
 		
 		for (int i = 0; i < text.length(); i++){
 			char c = text.charAt(i);
-			if (start < 0){
-				if (c >= 'a' && c <= 'z' ){
+			
+			if (c == '<')
+				if (start >= 0){
+					end = i;
+					if (start >= 0 && end >= 0)
+						alExpressions.add(text.substring(start, end));
+					start = -1;
+					end = -1;
+					
+				} else tag = true;
+			else if (tag){
+				if (c == '>')
+					tag = false;
+			}
+			
+			else if (start < 0 && !tag){
+				if (c >= 'A' && c <= 'z' ){
 					start = i;
 				}
 			} else {
-				if (c < 'a' || c > 'z' ){
+				if (start >= 0 && (c < 'A' || c > 'z' )){
 					end = i;
-					break;
+					if (start >= 0 && end >= 0)
+						alExpressions.add(text.substring(start, end));
+					start = -1;
+					end = -1;
 				}
 			}
 //			Log.d("", ""+c+" "+(int)c);
 		}
 
-		if (start >= 0 && end >= 0){
-			text = text.substring(0, start)+"*"+text.substring(start, end)+"&"+text.substring(end);
-		}
+		//if (start >= 0 && end >= 0){
+			//text = text.substring(0, start)+"<sel>"+text.substring(start, end)+"</sel>"+text.substring(end);
+		//}
     	
 		return text;
 	}
@@ -189,9 +212,10 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 			Object span = null; 
 		
 			if (tag.startsWith("article_")) span = new ArticleSpan(mContext, tag);
-			else if (tag.startsWith("kref")){
+			else if (tag.startsWith("kref"))
 				span = new KrefSpan(FragmentTranslation.this, ""); 
-			}
+			//else if (tag.startsWith("sel"))
+				//span = new SelSpan(FragmentTranslation.this, ""); 
 			else if ("title".equalsIgnoreCase(tag)) span = new AppearanceSpan(0xffff2020, AppearanceSpan.NONE, 20, true, true, false, false);
 			else if (tag.startsWith("color_")) span = new ParameterizedSpan(tag.substring(6));
 			else if (tag.startsWith("abr")) span = new ColorSpan();
