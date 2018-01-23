@@ -65,7 +65,7 @@ public class TtsUtils
 		{
 			if (locale[i].getISO3Language().equals(Utils.getLanguageNoRus()))
 			{
-				if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED)
+				if (tts.isLanguageAvailable(locale[i]) == TextToSpeech.LANG_NOT_SUPPORTED)
 				{
 					Toast.makeText(context, "язык не поддерживается" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 					langSupported = false;
@@ -80,7 +80,7 @@ public class TtsUtils
 		Toast.makeText(context, "язык не найден" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 	}
 	
-	public static void init(Context context)
+	public static void init(final Context context)
 	{
 		mContext = context;
 		
@@ -91,6 +91,7 @@ public class TtsUtils
 
             @Override
             public void onError(String utteranceId) {
+				Toast.makeText(context, "TTS error "+utteranceId, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -105,7 +106,7 @@ public class TtsUtils
 		{
 			if (locale[i].getISO3Language().equals(Utils.getLanguageNoRus()))
 			{
-				if (tts.isLanguageAvailable(locale[i]) == tts.LANG_NOT_SUPPORTED)
+				if (tts.isLanguageAvailable(locale[i]) == TextToSpeech.LANG_NOT_SUPPORTED)
 				{
 					Toast.makeText(context, "язык не поддерживается" + " (" + Utils.getLanguageNoRus() + ") ", Toast.LENGTH_LONG).show();
 					langSupported = false;

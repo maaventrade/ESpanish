@@ -22,6 +22,7 @@ import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.Dictionary;
 import com.alexmochalov.dic.Entry;
 import com.alexmochalov.dic.IndexEntry;
+import com.alexmochalov.expr.DialogExpr;
 import com.alexmochalov.main.*;
 
 public class FragmentTranslation extends Fragment   implements OnClickListener{
@@ -34,6 +35,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 
 	private ImageButton ibSpeak;
 	private ImageButton ibBack;
+	private ImageButton ibList;
 	
 	private ArrayList<String> alExpressions = new ArrayList<String>();
 	
@@ -78,6 +80,9 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 
 		ibBack = (ImageButton)rootView.findViewById(R.id.ibBack);
 		ibBack.setOnClickListener(this);
+
+		ibList = (ImageButton)rootView.findViewById(R.id.ibList);
+		ibList.setOnClickListener(this);
 		
 		tvWord = (TextView)rootView.findViewById(R.id.tvWord);
 		
@@ -122,7 +127,8 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 			tvWord.setText(indexEntry.getText());
 
 			String text = entry.getTranslation().toString();
-			text = nextSelectedText(text);
+			fillExpressionsList(text);
+			//Log.d("",text);
 			
 			Spanned spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
 	    	Spannable reversedText = revertSpanned(spannedText);
@@ -150,7 +156,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 
 	}
 	
-    private String nextSelectedText(String text) {
+    private String fillExpressionsList(String text) {
 		int start = -1;
 		int end = -1;
 		boolean tag = false;
@@ -160,29 +166,28 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		for (int i = 0; i < text.length(); i++){
 			char c = text.charAt(i);
 			
-			if (c == '<')
+			if (c == '<'){
 				if (start >= 0){
 					end = i;
-					if (start >= 0 && end >= 0)
-						alExpressions.add(text.substring(start, end));
+					addExpression(text, start, end);
 					start = -1;
 					end = -1;
 					
-				} else tag = true;
-			else if (tag){
+				}
+				tag = true;
+			} else if (tag){
 				if (c == '>')
 					tag = false;
 			}
 			
 			else if (start < 0 && !tag){
-				if (c >= 'A' && c <= 'z' ){
+				if (c >= 'A' && c <= 'z' || c == ' ' || c == '/' || c == '*' || c == '\''){
 					start = i;
 				}
 			} else {
-				if (start >= 0 && (c < 'A' || c > 'z' )){
+				if (start >= 0 && (c < 'A' || c > 'z' ) && c != ' ' && c != '/' && c != '*' && c != '\''){
 					end = i;
-					if (start >= 0 && end >= 0)
-						alExpressions.add(text.substring(start, end));
+					addExpression(text, start, end);
 					start = -1;
 					end = -1;
 				}
@@ -195,6 +200,17 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		//}
     	
 		return text;
+	}
+
+	private void addExpression(String text, int start, int end) {
+		String s = text.substring(start, end).trim().replaceAll("\\*", " ");
+		
+		if (start >= 0 
+				&& end >= 0
+				&& s.length() > 1
+				&& !s.startsWith("_"))
+			if (alExpressions.indexOf(s) < 0)
+				alExpressions.add(s);
 	}
 
 	Html.ImageGetter htmlImageGetter = new Html.ImageGetter() {
@@ -283,6 +299,8 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	public void onClick(View v) {
 		if (v == ibSpeak){
 			TtsUtils.speak(tvWord.getText().toString());
+		} else if (v == ibList){
+			ShowListOfExpressions();
 		} else if (v == ibBack){
 			if (stackArray.size() > 0){
 				IndexEntry indexEntry =  Dictionary.find(stackArray.get(stackArray.size()-1));
@@ -291,6 +309,11 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 				stackArray.remove(stackArray.size()-1);
 			}
 		}	
+	}
+
+	private void ShowListOfExpressions() {
+		DialogExpr dialog = new DialogExpr(mContext, alExpressions);
+		dialog.show();
 	}
 	
 }

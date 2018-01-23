@@ -133,7 +133,6 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		if (adapter != null){
 			if (mFilter.length() > 0){
 				adapter.getFilter().filter(mFilter);
-				mFilter = "";
 			}
 		}
 		

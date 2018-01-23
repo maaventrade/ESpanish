@@ -50,4 +50,7 @@
 	<string name="are_you_shure">Are you shure?</string>
 	<string name="query_copy_tree">Replace current tree</string>
 	
+	<string name="expressions">Expressions</string>
+		
+	
 </resources>

@@ -506,6 +506,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		if (status == TextToSpeech.SUCCESS)
 		{
 			TtsUtils.init(this);
+//			TtsUtils.setLanguage(mContext);
 
 		}
 	}

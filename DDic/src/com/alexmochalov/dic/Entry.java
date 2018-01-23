@@ -126,9 +126,26 @@ public class Entry
 		if (translation.startsWith(text))
 			translation = translation.substring(text.length());
 
-		translation = translation.replaceAll("\n ", "\n"+"\u0009");
+		int f = translation.indexOf(10);
+		Log.d("", "IND "+f);
 		
-		translation = translation.replaceAll("(\r\n|\n)", "<br />");
+		char c = 10; 
+		
+		//for (int y = 100; y < 300; y++)
+		//	Log.d("", ""+(int)translation.charAt(y)+"  "+translation.charAt(y));
+		
+//		translation = translation.replaceAll("\n ", "\n"+"\u0009").replaceAll(""+c, "");
+		translation = translation.replaceAll("\n", "");
+		
+		f = translation.indexOf(10);
+		Log.d("", "IND "+f);
+		
+		
+		translation = translation.replace("<dtrn>", "").replace("</dtrn>", "");
+		translation = translation.replace("<co>", "").replace("</co>", "");
+		translation = translation.replace("<k>", "").replace("</k>", "");
+		
+		//translation = translation.replaceAll("(\r\n|\n)", "</br>");
 		translation = translation.replace("<nu />'<nu />", "");
 		
 /*
