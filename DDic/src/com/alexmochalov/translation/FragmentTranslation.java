@@ -37,8 +37,6 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	private ImageButton ibBack;
 	private ImageButton ibList;
 	
-	private ArrayList<String> alExpressions = new ArrayList<String>();
-	
 	public FragmentTranslationCallback callback = null;
 	public interface FragmentTranslationCallback {
 		void btnForwardClicked(); 
@@ -164,7 +162,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		int end = -1;
 		boolean tag = false;
 		
-		alExpressions.clear();
+		Utils.getExpressions().clear();
 		
 		for (int i = 0; i < text.length(); i++){
 			char c = text.charAt(i);
@@ -184,11 +182,16 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 			}
 			
 			else if (start < 0 && !tag){
-				if (c >= 'A' && c <= 400 || c == ' ' || c == '/' || c == '*' || c == '\''){
+				if (c >= 0x41 && c <= 0x7a  // latinian
+						||c >= 0xe0 && c <= 0x17e  // diacretioan
+						|| c == ' ' || c == '/' || c == '*' || c == '\''){
 					start = i;
 				}
 			} else {
-				if (start >= 0 && (c < 'A' || c > 400 ) && c != ' ' && c != '/' && c != '*' && c != '\''){
+				if (start >= 0 && 
+						(c < 0x41 || c > 0x7a ) // latinian
+						&& (c < 0xe0 || c > 0x172 ) // latinian
+						&& c != ' ' && c != '/' && c != '*' && c != '\''){
 					end = i;
 					addExpression(text, start, end);
 					start = -1;
@@ -212,8 +215,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 				&& end >= 0
 				&& s.length() > 1
 				&& !s.startsWith("_"))
-			if (alExpressions.indexOf(s) < 0)
-				alExpressions.add(s);
+			Utils.addExpression(s);
 	}
 
 	Html.ImageGetter htmlImageGetter = new Html.ImageGetter() {
@@ -262,13 +264,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 				for(int i = objs.length - 1; i >= 0; --i) {
 					if (output.getSpanFlags(objs[i]) == Spannable.SPAN_MARK_MARK) {
 						where = output.getSpanStart(objs[i]);
-						
-						//Log.d("","output "+output);
-						//Log.d("","len "+len0);
-					
-						//KrefSpan k = (KrefSpan)objs[i];
-						//Log.d("","k "+k);
-						//Log.d("","span "+span);
+
 						if (span instanceof KrefSpan){
 							KrefSpan k = (KrefSpan)span;
 							k.setArticleId(output.toString(), len0);
@@ -315,7 +311,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	}
 
 	private void ShowListOfExpressions() {
-		DialogExpr dialog = new DialogExpr(mContext, alExpressions);
+		DialogExpr dialog = new DialogExpr(mContext, Utils.getExpressions(), false);
 		dialog.show();
 	}
 	

@@ -2,10 +2,12 @@ package com.alexmochalov.tree;
 
 import android.app.*;
 import android.content.*;
+import android.graphics.Color;
 import android.os.*;
 import android.text.*;
 import android.util.*;
 import android.view.*;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.*;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -21,6 +23,7 @@ import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
 
 import android.view.SurfaceHolder.*;
+
 import com.alexmochalov.dic.*;
 
 public class FragmentTree extends Fragment
@@ -283,13 +286,8 @@ public void copyTree(String name)
 	}
 
 	public void edit(final boolean newGroup) {
-		mModified = true;
 		if (selectedItemIndex >= 0 && !newGroup){
 			editItem();
-
-			// DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, false);
-			// dialog.show();
-			
 		} else 
 			editGroup(newGroup);
 	}
@@ -304,22 +302,55 @@ public void copyTree(String name)
 	//	LayoutParams lp = (LayoutParams)((ViewGroup)layout).getLayoutParams();
 	//	((MarginLayoutParams) lp).leftMargin = 10;
 		
-		LinearLayout layout1 = new LinearLayout(mContext);
-		layout1.setOrientation(LinearLayout.HORIZONTAL);
-		layout.addView(layout1);
-				
+		FrameLayout layoutName = new FrameLayout(mContext);
+		android.widget.FrameLayout.LayoutParams llpName = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		//layout1.setOrientation(LinearLayout.HORIZONTAL);
+		layoutName.setLayoutParams(llpName);
+		layout.addView(layoutName);
+
+		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		llp.setMargins(10, 0, 0, 0); 
+		
+		/*
 		TextView nameCaption = new TextView(mContext);
 		nameCaption.setText("Name:");
 		
-		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		llp.setMargins(10, 0, 0, 0); 
 		nameCaption.setLayoutParams(llp);
-		
 		layout1.addView(nameCaption);
+		*/
+
+		LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		llp1.setMargins(0, 0, 0, 0); 
 		
-		final EditText name = new EditText(mContext);
+		// NAME 
+		final AutoCompleteTextView name = new AutoCompleteTextView(mContext);
 		name.setInputType(InputType.TYPE_CLASS_TEXT);
-		layout1.addView(name);
+		name.setLayoutParams(llp1);
+		name.setHint("Name");
+		name.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice, 
+				Utils.getExpressions());
+        
+		name.setThreshold(1);
+		name.setAdapter(adapter);
+		layoutName.addView(name);
+////		
+		ImageButton ibDropDown = new ImageButton(mContext);
+		android.widget.FrameLayout.LayoutParams llpDropDown = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		llpDropDown.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+		ibDropDown.setImageResource(R.drawable.dropdown);
+		ibDropDown.setBackgroundColor(Color.TRANSPARENT);
+		ibDropDown.setLayoutParams(llpDropDown);
+		ibDropDown.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				name.showDropDown();
+			}});
+		
+		
+		layoutName.addView(ibDropDown);
+//////////////		
 
 		LinearLayout layout2 = new LinearLayout(mContext);
 		layout2.setOrientation(LinearLayout.HORIZONTAL);
@@ -348,6 +379,7 @@ public void copyTree(String name)
 				@Override
 				public void onClick(DialogInterface p1, int p2)
 				{
+					mModified = true;
 					Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
 					Tree.setTranslation(selectedGroupIndex, selectedItemIndex, translation.getText().toString());
 					adapterTree.notifyDataSetChanged();
@@ -381,6 +413,7 @@ public void copyTree(String name)
 				@Override
 				public void onClick(DialogInterface p1, int p2)
 				{
+					mModified = true;
 					if (newGroup) {
 						Tree.addGroup(selectedGroupIndex, name.getText().toString());	
 					} else 

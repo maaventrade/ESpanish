@@ -256,6 +256,7 @@ public final class Dictionary{
 			
 			for (int i = 0; i < 30; i++){
 				s = s.replaceFirst(i+"\\.", "<br>"+i+".");
+				s = s.replaceFirst(i+"\\)", "<br>"+i+")");
 				s = s.replaceAll(i+"\\:", "  <br>"+"\u0009"+i+":");
 			}
 			

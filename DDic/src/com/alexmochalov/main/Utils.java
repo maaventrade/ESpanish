@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import com.alexmochalov.ddic.R;
 
@@ -74,6 +75,8 @@ public final class Utils {
 
 	public static String info = "";
 
+	private static ArrayList<String> alExpressions = new ArrayList<String>();
+	
 	public static boolean isInvertedDic()
 	{
 		return mDictionaryName.startsWith("ru");
@@ -448,6 +451,15 @@ public final class Utils {
 		else if (mDictionaryName.equals("ru_en.xdxf")){
 			setDictionaryName("en_ru.xdxf");
 		}
+	}
+
+	public static ArrayList<String> getExpressions() {
+		return alExpressions;
+	}
+
+	public static void addExpression(String s) {
+		if (alExpressions.indexOf(s) < 0)
+			alExpressions.add(s);
 	}
 	
 	

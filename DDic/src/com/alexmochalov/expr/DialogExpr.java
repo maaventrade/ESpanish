@@ -14,7 +14,7 @@ import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.main.TtsUtils;
 
-public class DialogExpr extends Dialog
+public class DialogExpr extends Dialog implements android.view.View.OnClickListener
 {
 /*
 	public CallbackOk callback = null;
@@ -46,17 +46,23 @@ public class DialogExpr extends Dialog
 	private ArrayList<String> alExpressions;
 	private ArrayAdapterExpr mAdapter;
 	
+	private ImageButton ibSpeak;
+	private Button btnCancel;
+	private Button btnCopy;
+	
 	private int selectedStringIndex = -1;
+	private boolean mCopy;
 	
 	protected DialogExpr(Context context, boolean cancelable,
 			OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 	}
 
-	public DialogExpr(Activity context, ArrayList<String> a) {
+	public DialogExpr(Activity context, ArrayList<String> a, boolean copy) {
 		super(context);
 		mContext = context;
 		alExpressions = a;
+		mCopy = copy;
 	}
 
 	@Override
@@ -92,90 +98,34 @@ public class DialogExpr extends Dialog
 		);	
 		
 		
-		ImageButton ibSpeak = (ImageButton)findViewById(R.id.ibSpeak);
-		ibSpeak.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					if (selectedStringIndex != -1){
-						TtsUtils.speak( alExpressions.get(selectedStringIndex) );
-					}
-				}
-			});
+		ibSpeak = (ImageButton)findViewById(R.id.ibSpeak);
+		ibSpeak.setOnClickListener(this);
 		
+		btnCopy = (Button)findViewById(R.id.btnCopy);
+		if (mCopy){
+			btnCopy.setVisibility(View.VISIBLE);
+			btnCopy.setOnClickListener(this);
+		} else {
+			btnCopy.setVisibility(View.INVISIBLE);
+		}
 		
-		/*
-		Button btnCancel = (Button)findViewById(R.id.btnCancel);
-		btnCancel.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					Exercises.SaveExercises(mContext);
-					dialog.dismiss();
-				}
-			});
+		btnCancel = (Button)findViewById(R.id.btnCancel);
+		btnCancel.setOnClickListener(this);
 		
-		Button btnSelect = (Button)findViewById(R.id.btnSelect);
-		btnSelect.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					if (selectedStringIndex != -1){
-						if (callback != null){
-							Exercises.SaveExercises(mContext);
-							callback.selected(Exercises.getExercises().get(selectedStringIndex));
-							dialog.dismiss();
-						}
-					}
-				}
-			});
-		
-		Button btnEdit = (Button)findViewById(R.id.btnEdit);
-		btnEdit.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					if (selectedStringIndex != -1){
-						DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), Exercises.getExercises().get(selectedStringIndex), false);
-						dialogEditExercise.show();
-						dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
-							@Override
-							public void callbackOk(Exercise exercise) {
-								//Exercises
-								adapter.notifyDataSetChanged();
-							}
-						};
-					}
-				}
-			});
-		
-		Button btnAdd = (Button)findViewById(R.id.btnAdd);
-		btnAdd.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View p1)
-				{
-					DialogEditExercise dialogEditExercise = new DialogEditExercise(getContext(), new Exercise(), true);
-					dialogEditExercise.show();
-					dialogEditExercise.callback = new DialogEditExercise.MyCallback() {
-						@Override
-						public void callbackOk(Exercise exercise) {
-							Exercises.addExercise(exercise);
-							adapter.notifyDataSetChanged();
-							listViewExercice.setSelection(Exercises.getExercises().indexOf(exercise));							
-						}
-					};
-				}
-			});
-		
-		this.setOnCancelListener(new OnCancelListener(){
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				Exercises.SaveExercises(mContext);
-			}});
-		*/
 	}
 
-	
+	@Override
+	public void onClick(View v) {
+		if (v == ibSpeak){
+			if (selectedStringIndex != -1){
+				TtsUtils.speak( alExpressions.get(selectedStringIndex) );
+			}
+		} else if (v == btnCancel){
+			dismiss();
+		} else if (v == btnCopy){
+			dismiss();
+		}
+	}
 
 	
 }

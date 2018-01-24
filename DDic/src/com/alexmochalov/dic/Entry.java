@@ -141,12 +141,15 @@ public class Entry
 		Log.d("", "IND "+f);
 		
 		
-		translation = translation.replace("<dtrn>", "").replace("</dtrn>", "");
-		translation = translation.replace("<co>", "").replace("</co>", "");
-		translation = translation.replace("<k>", "").replace("</k>", "");
+		//translation = translation.replace("<dtrn>", "").replace("</dtrn>", "");
+		//translation = translation.replace("<co>", "").replace("</co>", "");
+		//translation = translation.replace("<k>", "").replace("</k>", "");
 		
 		//translation = translation.replaceAll("(\r\n|\n)", "</br>");
 		translation = translation.replace("<nu />'<nu />", "");
+		
+		translation = translation.replace("&apos;", "'");
+		
 		
 /*
 		translation = translation.trim();
