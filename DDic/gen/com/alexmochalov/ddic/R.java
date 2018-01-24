@@ -49,6 +49,7 @@ public final class R {
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
         public static final int information=0x7f060003;
+        public static final int ten=0x7f060005;
         public static final int text_size_medium=0x7f060004;
     }
     public static final class drawable {

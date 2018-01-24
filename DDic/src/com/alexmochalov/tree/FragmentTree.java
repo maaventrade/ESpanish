@@ -48,6 +48,14 @@ public void copyTree(String name)
 	mModified = true;
 }
 
+	public void reload(String name)
+	{
+		Tree.clear();
+		Tree.loadXML(mContext, "tree_"+name+".xml");
+		if (adapterTree != null)
+		adapterTree.notifyDataSetChanged();
+	}
+
 	public void paste()
 	{
 		mModified = true;

@@ -128,8 +128,11 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 
 			String text = entry.getTranslation().toString();
 			fillExpressionsList(text);
+			text = "<br>"+text;
 			//Log.d("",text);
-			
+			//for (int y = 0; y < text.length();y++)
+			//Log.d("",""+(int)text.charAt(y)+"  "+text.charAt(y));
+			//text.
 			Spanned spannedText = Html.fromHtml(text, htmlImageGetter, htmlTagHandler);
 	    	Spannable reversedText = revertSpanned(spannedText);
 			
@@ -181,11 +184,11 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 			}
 			
 			else if (start < 0 && !tag){
-				if (c >= 'A' && c <= 'z' || c == ' ' || c == '/' || c == '*' || c == '\''){
+				if (c >= 'A' && c <= 400 || c == ' ' || c == '/' || c == '*' || c == '\''){
 					start = i;
 				}
 			} else {
-				if (start >= 0 && (c < 'A' || c > 'z' ) && c != ' ' && c != '/' && c != '*' && c != '\''){
+				if (start >= 0 && (c < 'A' || c > 400 ) && c != ' ' && c != '/' && c != '*' && c != '\''){
 					end = i;
 					addExpression(text, start, end);
 					start = -1;
