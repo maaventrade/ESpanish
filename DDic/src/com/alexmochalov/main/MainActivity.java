@@ -331,7 +331,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				
 				return true;
 			case R.id.action_copy_tree:
+				fragmentTree.commTrees();
 				AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+/*				
 				dialog.setTitle("Copy tree");
 				//dialog.setMessage(getResources().getString(R.string.action_move));
 
@@ -359,7 +361,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 						}
 					});
 				dialog.show();
-
+*/
 
 
 				return true;

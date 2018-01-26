@@ -130,13 +130,13 @@ public class AdapterTree extends BaseExpandableListAdapter
 		if (LinePosition < 0){
 			ImageButton ibFolder = (ImageButton)convertView.findViewById(R.id.ibFolder);
 			Line h = (Line) getGroup(groupPosition);
-			tvName.setText(h.getName());
+			tvName.setText(h.getName1());
 			ibFolder.setImageResource(R.drawable.folder);
 		}	
 		else {
 			convertView.setPadding(40, 0, 0, 0);
 			Line record = (Line)getChild(groupPosition, LinePosition);
-			tvName.setText(record.getName());
+			tvName.setText(record.getName1());
 			TextView tvTranslation = (TextView)convertView.findViewById(R.id.tvTranslation);
 			tvTranslation.setText(record.getTranslation());
 		}

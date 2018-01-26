@@ -120,7 +120,7 @@ public void copyTree(String name)
 	
 	public void save()
 	{
-		Tree.save(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+		Tree.save(mContext, "tree"+".xml");
 	}
 
 	public interface OnTreeEventListener
@@ -466,6 +466,15 @@ public void copyTree(String name)
 			adapterTree.notifyDataSetChanged();
 		else
 			Toast.makeText(mContext, "Group is not empty!", Toast.LENGTH_LONG).show();
+	}
+
+	public void commTrees() {
+	 	Tree.clear();
+		Tree.loadXML(mContext, "tree_eng"+".xml");
+		Tree.loadXML1(mContext, "tree_ita"+".xml");
+
+		Tree.save(mContext, "tree"+".xml");
+		
 	}
 	
 
