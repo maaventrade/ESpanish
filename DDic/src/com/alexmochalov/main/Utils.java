@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.*;
 
 public final class Utils {
 	private static String mInformation = "";
@@ -76,6 +77,12 @@ public final class Utils {
 	public static String info = "";
 
 	private static ArrayList<String> alExpressions = new ArrayList<String>();
+
+	public static void setTitle(MenuItem maSwitch, Activity context)
+	{
+		maSwitch.setTitle(mDictionaryName.substring(0, mDictionaryName.indexOf(".")));
+		//context.invalidateOptionsMenu();
+	}
 	
 	public static boolean isInvertedDic()
 	{

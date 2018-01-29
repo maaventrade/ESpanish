@@ -42,7 +42,7 @@ public class DialogEdit extends Dialog
 	private EditText etName;
 	private EditText etTranslation;
 
-	private Line mLine;
+	private LineItem mLine;
 
 	private boolean mModeAdd = false;
 	
@@ -51,7 +51,7 @@ public class DialogEdit extends Dialog
 		super(context, cancelable, cancelListener);
 	}
 
-	protected DialogEdit(Activity context, Line line, AdapterTree adapter, boolean modeAdd ) {
+	protected DialogEdit(Activity context, LineItem line, AdapterTree adapter, boolean modeAdd ) {
 		super(context);
 		mContext = context;
 		mLine = line;
@@ -73,7 +73,7 @@ public class DialogEdit extends Dialog
 		if (mModeAdd){
 			
 		}
-		etName.setText(mLine.getText());
+		etName.setText(mLine.getName1());
 		etTranslation.setText(mLine.getTranslation());
 		
 		Button btnOk = (Button)findViewById(R.id.btnOk);
@@ -81,7 +81,7 @@ public class DialogEdit extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
-					mLine.setName(etName.getText().toString());
+					mLine.setName1(etName.getText().toString());
 					mLine.setTranslation(etTranslation.getText().toString());
 					mAdapter.notifyDataSetChanged();
 					

@@ -41,20 +41,12 @@ public class FragmentTree extends Fragment
 
 	private int firstVisible = -1;
 
-public void copyTree(String name)
-{
- 	Tree.clear();
-	Tree.loadXML(mContext, "tree_"+name+".xml");
-	Tree.clearText();
-	
-	adapterTree.notifyDataSetChanged();
-	mModified = true;
-}
+
 
 	public void reload(String name)
 	{
 		Tree.clear();
-		Tree.loadXML(mContext, "tree_"+name+".xml");
+		Tree.loadXML(mContext, "tree.xml");
 		if (adapterTree != null)
 		adapterTree.notifyDataSetChanged();
 	}
@@ -138,8 +130,8 @@ public void copyTree(String name)
 		super();
 		mContext = context;
 		
-		Tree.copy(mContext, "tree_"+Utils.getLanguageNoRus()+".xml", "tree_"+Utils.getLanguageNoRus()+"_bak.xml"); 
-		Tree.loadXML(mContext, "tree_"+Utils.getLanguageNoRus()+".xml");
+		Tree.copy(mContext, "tree.xml", "tree_bak.xml"); 
+		Tree.loadXML(mContext, "tree.xml");
 		
 	}
 
@@ -280,7 +272,7 @@ public void copyTree(String name)
 	}
 
 	public void addItem() {
-		DialogEdit dialog = new DialogEdit(mContext, Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, true);
+		DialogEdit dialog = new DialogEdit(mContext, (LineItem)Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, true);
 		dialog.show();
 		mModified = true;
 	}
@@ -468,14 +460,7 @@ public void copyTree(String name)
 			Toast.makeText(mContext, "Group is not empty!", Toast.LENGTH_LONG).show();
 	}
 
-	public void commTrees() {
-	 	Tree.clear();
-		Tree.loadXML(mContext, "tree_eng"+".xml");
-		Tree.loadXML1(mContext, "tree_ita"+".xml");
-
-		Tree.save(mContext, "tree"+".xml");
-		
-	}
+	
 	
 
 }

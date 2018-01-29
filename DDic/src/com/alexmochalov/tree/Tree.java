@@ -39,10 +39,10 @@ public class Tree {
 
 	private static boolean errorLoading = false; 
 
-	private static ArrayList<Line> listDataHeader = new ArrayList<Line>();
-	private static HashMap<Line, List<Line>> listDataChild = new HashMap<Line, List<Line>>();
+	private static ArrayList<LineGroup> listDataHeader = new ArrayList<LineGroup>();
+	private static HashMap<LineGroup, List<LineItem>> listDataChild = new HashMap<LineGroup, List<LineItem>>();
 	private static Line copyLine = null;
-
+/*
 	public static void clearText()
 	{
 		for (Line s : listDataHeader) {
@@ -53,13 +53,15 @@ public class Tree {
 			}
 		}
 	}
-
+*/
 	public static int paste(int selectedGroupIndex)
 	{
-		Line key = listDataHeader.get(selectedGroupIndex);
+		/*Line key = listDataHeader.get(selectedGroupIndex);
 		Line newLine = new Line(copyLine);
 		Boolean find = false;
-		String name = copyLine.getText();
+		
+		String name = copyLine.getNameEng();
+		
 
 		for (int i = 0; i < listDataChild.get(key).size(); i++){
 			if (listDataChild.get(key).get(i).getText().compareTo(name) > 0){
@@ -70,18 +72,19 @@ public class Tree {
 		if (!find)
 			listDataChild.get(key).add(newLine); 
 		return listDataChild.get(key).indexOf(newLine);
-		
+		*/
+		return 0;
 	}
 	
 	
 	public static void copyItem(int selectedGroupIndex, int selectedItemIndex)
 	{
-		if (selectedGroupIndex >= 0 && selectedItemIndex >= 0){
+		/*if (selectedGroupIndex >= 0 && selectedItemIndex >= 0){
 			
 			copyLine = new Line( listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getText(),
 								listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getTranslation());
 		}		
-		
+		*/
 	}
 
 	public static String getTranslation(int selectedGroupIndex, int selectedItemIndex)
@@ -94,22 +97,22 @@ public class Tree {
 		listDataChild.clear();  // = new HashMap<Line, List<Line>>();
 	}
 
-	public static ArrayList<Line> getGroups() {
+	public static ArrayList<LineGroup> getGroups() {
 		return listDataHeader;
 	}
 
-	public static HashMap<Line, List<Line>> getChilds() {
+	public static HashMap<LineGroup, List<LineItem>> getChilds() {
 		return listDataChild;
 	}
 
 	public static void addGroup(int index, String name) {
 		if (index < 0)
 			index = 0;
-
+/*
 		Line h = new Line(name);
 		listDataHeader.add(index,  h);
 		listDataChild.put(h, new ArrayList<Line>());
-
+*/
 	}
 
 	public static File save(Context mContext, String fileName) {
@@ -129,13 +132,13 @@ public class Tree {
 			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>" + "\n");
 			writer.write("<body type = \"tree\">" + "\n");
 
-			for (Line s : listDataHeader) {
-				writer.write("<group name=\"" + s.getName1() + "\"" + ">" + "\n");
+			for (LineGroup s : listDataHeader) {
+				writer.write("<group name=\"" + s.getName() + "\"" + ">" + "\n");
 
 				if (listDataChild.get(s) != null) {
-					for (Line l : listDataChild.get(s)) {
-						writer.write("<record nameEng=\"" + l.getName1() + "\""
-								 + " nameIt=\"" + l.getName2() + "\""
+					for (LineItem l : listDataChild.get(s)) {
+						writer.write("<record nameEng=\"" + l.getNameEng() + "\""
+								 + " nameIt=\"" + l.getNameIt() + "\""
 								 + " transl=\"" + l.getTranslation() + "\""
 									 + ">\n");
 						writer.write("</record>" + "\n");
@@ -166,14 +169,14 @@ public class Tree {
 	public static boolean loadXML(Activity mContext, String fileName) {
 		clear();
 
-		Line currentGroup = null;
+		LineGroup currentGroup = null;
 
 		File file = new File(Utils.getAppFolder() + "/" + fileName);
 
 		if (!file.exists()) {
-			Line h = new Line("New1");
+			/*Line h = new Line("New1");
 			listDataHeader.add(h);
-			listDataChild.put(h, new ArrayList<Line>());
+			listDataChild.put(h, new ArrayList<Line>());*/
 			return true;
 		}
 
@@ -220,19 +223,21 @@ public class Tree {
 					if (parser.getName() == null)
 						;
 					else if (parser.getName().equals("group")) {
-						currentGroup = new Line(parser.getAttributeValue(null, "name"));
+						currentGroup = new LineGroup(parser.getAttributeValue(null, "name"));
 
 						listDataHeader.add(currentGroup);
-						listDataChild.put(currentGroup, new ArrayList<Line>());
+						listDataChild.put(currentGroup, new ArrayList<LineItem>());
 
 					} else if (parser.getName().equals("record")) {
 
-						String name = parser.getAttributeValue(null, "name");
+						String nameEng = parser.getAttributeValue(null, "nameEng");
+						String nameIt = parser.getAttributeValue(null, "nameIt");
+						
 						String transl = parser.getAttributeValue(null, "transl");
 						if (transl == null || transl.equals("null"))
 							transl = "";
 						
-						listDataChild.get(currentGroup).add(new Line(name, transl));
+						listDataChild.get(currentGroup).add(new LineItem(nameEng, nameIt, transl));
 
 					}
 				}
@@ -260,9 +265,9 @@ public class Tree {
 		}
 
 		if (listDataHeader.size() == 0) {
-			Line h = new Line("New1");
+			LineGroup h = new LineGroup("New1");
 			listDataHeader.add(h);
-			listDataChild.put(h, new ArrayList<Line>());
+			listDataChild.put(h, new ArrayList<LineItem>());
 		}
 
 		return true;
@@ -272,139 +277,19 @@ public class Tree {
 	}
 
 	
-	public static boolean loadXML1(Activity mContext, String fileName) {
-		Line currentGroup = null;
-
-		File file = new File(Utils.getAppFolder() + "/" + fileName);
-
-		if (!file.exists()) {
-			Line h = new Line("New1");
-			listDataHeader.add(h);
-			listDataChild.put(h, new ArrayList<Line>());
-			return true;
-		}
-
-		try {
-
-			fileName = Utils.getAppFolder() + "/" + fileName;
-
-			BufferedReader reader;
-			BufferedReader rd = new BufferedReader(new InputStreamReader(
-													   new FileInputStream(fileName)));
-
-			String line = rd.readLine();
-
-			rd.close();
-
-			if (line.toLowerCase().contains("windows-1251"))
-				reader = new BufferedReader(new InputStreamReader(
-												new FileInputStream(fileName), "windows-1251")); // Cp1252
-			else if (line.toLowerCase().contains("utf-8"))
-				reader = new BufferedReader(new InputStreamReader(
-												new FileInputStream(fileName), "UTF-8"));
-			else if (line.toLowerCase().contains("utf-16"))
-				reader = new BufferedReader(new InputStreamReader(
-												new FileInputStream(fileName), "utf-16"));
-			else
-				reader = new BufferedReader(new InputStreamReader(
-												new FileInputStream(fileName)));
-
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			factory.setNamespaceAware(true);
-			XmlPullParser parser = factory.newPullParser();
-
-			parser.setInput(reader);
-
-			int eventType = parser.getEventType();
-			while (eventType != XmlPullParser.END_DOCUMENT) {
-				// Log.d("a", ""+eventType);
-				if (eventType == XmlPullParser.START_DOCUMENT)
-					;
-				else if (eventType == XmlPullParser.END_TAG)
-					;
-				else if (eventType == XmlPullParser.START_TAG) {
-
-					if (parser.getName() == null)
-						;
-					else if (parser.getName().equals("group")) {
-						String s = parser.getAttributeValue(null, "name");
-						
-						for (int i = 0; i < listDataHeader.size(); i++){
-							if (listDataHeader.get(i).getName1().equals(s)){
-								currentGroup = listDataHeader.get(i);
-								break;
-							}
-						}
-						
-								//new Line(parser.getAttributeValue(null, "name"));
-
-						//listDataHeader.add(currentGroup);
-						//listDataChild.put(currentGroup, new ArrayList<Line>());
-
-					} else if (parser.getName().equals("record")) {
-
-						String name = parser.getAttributeValue(null, "name");
-						String transl = parser.getAttributeValue(null, "transl");
-						if (transl == null || transl.equals("null"))
-							transl = "";
-						
-//						listDataChild.get(currentGroup).add(new Line(name, transl));
-						
-						for (int i = 0; i < listDataChild.get(currentGroup).size(); i++){
-							if (listDataChild.get(currentGroup).get(i).getTranslation().equals(transl)){
-								listDataChild.get(currentGroup).get(i).setName2(name);
-								break;
-							}
-						}
-
-					}
-				}
-				try {
-					eventType = parser.next();
-				} catch (XmlPullParserException e) {
-					errorLoading = true;
-					Toast.makeText(
-						mContext,
-						mContext.getResources().getString(
-							R.string.error_load_xml)
-						+ ". !!! " + e.toString(), Toast.LENGTH_LONG)
-						.show();
-					return false;
-				}
-			}
-
-		} catch (Throwable t) {
-			errorLoading = true;
-			Toast.makeText(
-				mContext,
-				mContext.getResources().getString(R.string.error_load_xml)
-				+ ". ???  " + t.toString(), Toast.LENGTH_LONG).show();
-			return false;
-		}
-
-		if (listDataHeader.size() == 0) {
-			Line h = new Line("New1");
-			listDataHeader.add(h);
-			listDataChild.put(h, new ArrayList<Line>());
-		}
-
-		return true;
-
-		// listDataHeader.add("Root");
-		// listDataChild.put("Root", new ArrayList<IndexEntry>() );
-	}
+	
 	
 	public static int addItem(int selectedGroupIndex, String name) {
-		listDataChild.get(listDataHeader.get(selectedGroupIndex)).add(new Line(name)); 
+		listDataChild.get(listDataHeader.get(selectedGroupIndex)).add(new LineItem(name)); 
 		return listDataChild.get(listDataHeader.get(selectedGroupIndex)).size()-1;
 	}
 
 	public static int insertItem(int selectedGroupIndex, String name) {
 		Line key = listDataHeader.get(selectedGroupIndex);
 		Line newLine;
-		
+		/*
 		if (Utils.isInvertedDic())
-			newLine = new Line("", name);
+			newLine = new Line("", "", name);
 		else
 			newLine = new Line(name);
 		
@@ -418,15 +303,16 @@ public class Tree {
 		}}
 		if (!find)
 			listDataChild.get(key).add(newLine); 
-		return listDataChild.get(key).indexOf(newLine);
+		return listDataChild.get(key).indexOf(newLine);*/
+		return 0;
 	}
 	
 	public static String getName(int selectedGroupIndex,
 								 int selectedItemIndex) {
 		if (selectedItemIndex == -1)
-			return listDataHeader.get(selectedGroupIndex).getName1(); 
+			return listDataHeader.get(selectedGroupIndex).getName(); 
 		else
-			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getName1(); 
+			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getNameEng(); 
 
 	}
 	
@@ -447,7 +333,7 @@ public class Tree {
 		if (selectedItemIndex == -1)
 			listDataHeader.get(selectedGroupIndex).setName(name); 
 		else
-			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setName(name); 
+			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setNameEng(name); 
 	}
 
 	public static void copy(Activity mContext, String from, String to) {
@@ -501,7 +387,7 @@ public class Tree {
 		listDataChild.get(listDataHeader.get(selectedGroupIndex));
 
 		if (selectedItemIndex == -1)
-			listDataHeader.get(selectedGroupIndex).setTranslation(translation); 
+			listDataHeader.get(selectedGroupIndex).setName(translation); 
 		else
 			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setTranslation(translation); 
 	}

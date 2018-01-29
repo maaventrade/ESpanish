@@ -6,7 +6,6 @@
         android:id="@+id/action_switch"
         android:orderInCategory="999"
         android:showAsAction="always"
-        android:icon="@drawable/ru"
         android:title="@string/action_switch"/>
 
 </menu>

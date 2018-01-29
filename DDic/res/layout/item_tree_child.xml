@@ -7,23 +7,45 @@
 	android:descendantFocusability="blocksDescendants"
 	android:orientation="horizontal">
 
-	<TextView
-		android:id="@+id/tvName"
-		android:layout_width="match_parent"
+	<LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_weight="0.4"
-		android:text="Text"
-		android:textColor="@drawable/item_text_selector"
-		android:textAppearance="?android:attr/textAppearanceLarge"/>
+		android:layout_width="wrap_content"
+		android:layout_weight="0.5"
+		android:orientation="vertical">
 
-	<TextView
-		android:id="@+id/tvTranslation"
-		android:layout_width="match_parent"
+		<TextView
+			android:id="@+id/tvName1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Text"
+			android:textColor="@drawable/item_text_selector"
+			android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+		<TextView
+			android:id="@+id/tvName2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Text"
+			android:textColor="@drawable/item_text_selector"
+			android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+	</LinearLayout>
+
+	<LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_weight="0.4"
-		android:textColor="@drawable/item_text_selector"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:paddingLeft="10dp"/>
+		android:layout_width="wrap_content"
+		android:layout_weight="0.5"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/tvTranslation"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@drawable/item_text_selector"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:paddingLeft="10dp"/>
+
+	</LinearLayout>
 
 </LinearLayout>
 

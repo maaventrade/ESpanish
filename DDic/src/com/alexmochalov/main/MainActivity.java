@@ -39,6 +39,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private int MY_DATA_CHECK_CODE = 0;
 
 	private int mode = 0;
+	private MenuItem maSwitch;
+	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -62,6 +65,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 		String name = prefs.getString(DICTIONARI_NAME, "en_ru.xdxf");
 		Utils.setDictionaryName(name);
+		
 		Dictionary.setParams(mContext);
 
 		Dictionary.eventCallback = new Dictionary.EventCallback() {
@@ -194,6 +198,12 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		
+		
+		maSwitch = menu.findItem(R.id.action_switch);
+		Utils.setTitle(maSwitch, mContext);
+		
+		
 		return true;
 	}
 
@@ -201,6 +211,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		FragmentTransaction ft ;
+		
+		AlertDialog.Builder dialog;
+		
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
@@ -298,106 +311,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				return true;
 				
 			case R.id.action_switch:
-				Utils.switchDictionary();
-				TtsUtils.setLanguage(mContext);
-				fragmentDic.setHint(Utils.getDictionaryName());
-				Dictionary.loadIndex(Utils.getDictionaryName(), false);
-				
-				return true;
-				
-			case R.id.action_delete:
-				new AlertDialog.Builder(MainActivity.this)
-				 .setIcon(R.drawable.ic_launcher)
-				 
-				 .setTitle(getResources().getString(R.string.query_delete)+ "\""  + fragmentTree.getCurrentText() +"\"?")
-				 .setMessage(getResources().getString(R.string.are_you_shure))
-				 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-				 	{
-					 @Override
-					 public void onClick(DialogInterface dialog, int which) 
-					 {
-						 fragmentTree.deleteItem();
-					 }
-				 	})
-				 .setNegativeButton("No", new DialogInterface.OnClickListener()
-				 	{
-					 @Override
-					 public void onClick(DialogInterface dialog, int which) 
-					 {
-						 return;
-					 }
-				 	})
-				 .show();
-				
-				return true;
-			case R.id.action_copy_tree:
-				fragmentTree.commTrees();
-				AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-/*				
-				dialog.setTitle("Copy tree");
-				//dialog.setMessage(getResources().getString(R.string.action_move));
-
-				final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
-				arrayAdapter.add("en-ru");
-				arrayAdapter.add("it-ru");
-
-				dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which)
-						{
-							dialog.dismiss();
-						}
-					});
-
-				dialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which)
-						{
-							String strName = arrayAdapter.getItem(which);
-							if (strName.equals("en-ru"))
-								fragmentTree.copyTree("eng");
-							else if (strName.equals("it-ru"))
-								fragmentTree.copyTree("ita");
-						}
-					});
-				dialog.show();
-*/
-
-
-				return true;
-				/*
-				
-				new AlertDialog.Builder(MainActivity.this)
-					.setIcon(R.drawable.ic_launcher)
-
-					.setTitle(getResources().getString(R.string.query_copy_tree)+ "\""  + fragmentTree.getCurrentText() +"\"?")
-					.setMessage(getResources().getString(R.string.are_you_shure))
-					.setPositiveButton("Yes", new DialogInterface.OnClickListener()
-				 	{
-						@Override
-						public void onClick(DialogInterface dialog, int which) 
-						{
-							fragmentTree.copyTree();
-						}
-				 	})
-					.setNegativeButton("No", new DialogInterface.OnClickListener()
-				 	{
-						@Override
-						public void onClick(DialogInterface dialog, int which) 
-						{
-							return;
-						}
-				 	})
-					.show();
-
-				return true;
-				*/
-				
-			case R.id.action_reindex:
-				fragmentDic.reindex();
-				return true;
-			case R.id.action_select_dic:
-			 dialog = new AlertDialog.Builder(mContext);
+				dialog = new AlertDialog.Builder(mContext);
 				dialog.setTitle("Select divtionaty");
 				//dialog.setMessage(getResources().getString(R.string.action_move));
 
@@ -432,13 +346,52 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 							fragmentDic.setHint(strName);
 							Dictionary.loadIndex(Utils.getDictionaryName(), false);
 							fragmentTree.reload(Utils.getLanguageNoRus());
+							
+							Utils.setTitle(maSwitch, mContext);
 						}
 					});
 				dialog.show();
-
-
-
+				
+				
+				/*
+				Utils.switchDictionary();
+				TtsUtils.setLanguage(mContext);
+				fragmentDic.setHint(Utils.getDictionaryName());
+				Dictionary.loadIndex(Utils.getDictionaryName(), false);
+				*/
 				return true;
+				
+			case R.id.action_delete:
+				new AlertDialog.Builder(MainActivity.this)
+				 .setIcon(R.drawable.ic_launcher)
+				 
+				 .setTitle(getResources().getString(R.string.query_delete)+ "\""  + fragmentTree.getCurrentText() +"\"?")
+				 .setMessage(getResources().getString(R.string.are_you_shure))
+				 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 fragmentTree.deleteItem();
+					 }
+				 	})
+				 .setNegativeButton("No", new DialogInterface.OnClickListener()
+				 	{
+					 @Override
+					 public void onClick(DialogInterface dialog, int which) 
+					 {
+						 return;
+					 }
+				 	})
+				 .show();
+				
+				return true;
+			
+				
+			case R.id.action_reindex:
+				fragmentDic.reindex();
+				return true;
+			
 			default:
                 return false;
         }

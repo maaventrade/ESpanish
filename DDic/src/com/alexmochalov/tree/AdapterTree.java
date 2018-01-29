@@ -20,18 +20,13 @@ import com.alexmochalov.dic.IndexEntry;
 
 public class AdapterTree extends BaseExpandableListAdapter
 {
-
-
-
-	
-	
 	private LayoutInflater inflater;
 	
 	private Activity mActivity;
 	private Context mContext;
 	
-	private List<Line> mGroups; // Line titles
-	private HashMap<Line, List<Line>> mLines;
+	private List<LineGroup> mGroups; // Line titles
+	private HashMap<LineGroup, List<LineItem>> mLines;
 	
 	public interface OnButtonClickListener {
 		public void onEdit(String text);
@@ -39,8 +34,8 @@ public class AdapterTree extends BaseExpandableListAdapter
 	}
 	public OnButtonClickListener listener;
 
-	AdapterTree(Activity activity, Context context, List<Line> groups,
-			HashMap<Line, List<Line>> Lines) {
+	AdapterTree(Activity activity, Context context, List<LineGroup> groups,
+			HashMap<LineGroup, List<LineItem>> Lines) {
 		
 		mContext = context;
 		mActivity = activity;
@@ -125,18 +120,24 @@ public class AdapterTree extends BaseExpandableListAdapter
 				convertView = inflater.inflate(R.layout.item_tree_header, null);
 		}
 				
-		TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
-		
 		if (LinePosition < 0){
+			TextView tvName = (TextView)convertView.findViewById(R.id.tvName);
+		
+		
 			ImageButton ibFolder = (ImageButton)convertView.findViewById(R.id.ibFolder);
-			Line h = (Line) getGroup(groupPosition);
-			tvName.setText(h.getName1());
+			LineGroup h = (LineGroup) getGroup(groupPosition);
+			tvName.setText(h.getName());
 			ibFolder.setImageResource(R.drawable.folder);
 		}	
 		else {
+			TextView tvName1 = (TextView)convertView.findViewById(R.id.tvName1);
+		
 			convertView.setPadding(40, 0, 0, 0);
-			Line record = (Line)getChild(groupPosition, LinePosition);
-			tvName.setText(record.getName1());
+			LineItem record = (LineItem)getChild(groupPosition, LinePosition);
+			tvName1.setText(record.getName1());
+			TextView tvName2 = (TextView)convertView.findViewById(R.id.tvName2);
+			tvName2.setText(record.getName2());
+			
 			TextView tvTranslation = (TextView)convertView.findViewById(R.id.tvTranslation);
 			tvTranslation.setText(record.getTranslation());
 		}
