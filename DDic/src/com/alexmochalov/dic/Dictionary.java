@@ -192,10 +192,12 @@ public final class Dictionary{
 			if (indexEntry.getText() == null)
 				continue;
 
+			if (indexEntry.getText().charAt(0) <= 64)
+				continue;
+			
 			if (string.charAt(0) > indexEntry.getText().charAt(0))
 				continue;
 			if (string.charAt(0) < indexEntry.getText().charAt(0)){
-				//Log.d("z", string.charAt(0) +" - "+ indexEntry.getText().charAt(0));
 				break;
 			}
 
@@ -431,8 +433,8 @@ public final class Dictionary{
 				ind++;
 			}
 
-			//EntryComparator ec = new EntryComparator();
-			//java.util.Collections.sort(indexEntries, ec);			
+			EntryComparator ec = new EntryComparator();
+			java.util.Collections.sort(indexEntries, ec);			
 
 			for (IndexEntry indexEntry: indexEntries){
 				bos.write(indexEntry.getText().getBytes());

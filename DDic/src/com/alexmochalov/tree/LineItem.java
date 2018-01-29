@@ -1,5 +1,7 @@
 package com.alexmochalov.tree;
 
+import com.alexmochalov.main.Utils;
+
 public class LineItem extends Line{
 
 	private String mNameEng;
@@ -53,11 +55,17 @@ public class LineItem extends Line{
 	
 	
 	String getName1() {
-		return mNameEng;
+		if (Utils.isEnglish())
+			return mNameEng;
+		else 
+			return mNameIt;
 	}
 
 	String getName2() {
-		return mNameIt;
+		if (! Utils.isEnglish())
+			return mNameEng;
+		else 
+			return mNameIt;
 	}
 	
 	

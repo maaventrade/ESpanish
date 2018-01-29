@@ -345,6 +345,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 							TtsUtils.setLanguage(mContext);
 							fragmentDic.setHint(strName);
 							Dictionary.loadIndex(Utils.getDictionaryName(), false);
+
 							fragmentTree.reload(Utils.getLanguageNoRus());
 							
 							Utils.setTitle(maSwitch, mContext);

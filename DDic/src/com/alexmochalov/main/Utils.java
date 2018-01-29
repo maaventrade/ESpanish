@@ -468,6 +468,13 @@ public final class Utils {
 		if (alExpressions.indexOf(s) < 0)
 			alExpressions.add(s);
 	}
+
+	public static boolean isEnglish() {
+		if ( mDictionaryName.indexOf("en") >= 0 )
+			return true;
+		else
+			return false;
+	}
 	
 	
 }

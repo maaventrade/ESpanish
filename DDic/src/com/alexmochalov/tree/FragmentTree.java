@@ -45,10 +45,10 @@ public class FragmentTree extends Fragment
 
 	public void reload(String name)
 	{
-		Tree.clear();
-		Tree.loadXML(mContext, "tree.xml");
+//		Tree.clear();
+//		Tree.loadXML(mContext, "tree.xml");
 		if (adapterTree != null)
-		adapterTree.notifyDataSetChanged();
+			adapterTree.notifyDataSetChanged();
 	}
 
 	public void paste()
