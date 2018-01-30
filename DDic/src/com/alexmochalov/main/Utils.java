@@ -75,8 +75,15 @@ public final class Utils {
 	public static boolean instant_translation;
 
 	public static String info = "";
+	
+	public static boolean refreshTranslatiinRemitted = false;
 
 	private static ArrayList<String> alExpressions = new ArrayList<String>();
+
+	public static void setRefreshTranslatiinRemitted()
+	{
+		refreshTranslatiinRemitted = true;
+	}
 
 	public static void setTitle(MenuItem maSwitch, Activity context)
 	{

@@ -205,21 +205,12 @@ public class FragmentTree extends Fragment
 					selectedGroupIndex = groupPosition;
 					selectedItemIndex = childPosition;
 					
-					if (listener != null){
-						String name;
-						if (Utils.isInvertedDic())
-							name = Tree.getTranslation(groupPosition, childPosition);
-						else
-							name = Tree.getName(groupPosition, childPosition);
-						IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
-						listener.itemSelected(e);
-					}
-						
+					callItemSelected();
 					
-
 					return true;
 				}
 
+				
 			});
 
 
@@ -259,6 +250,20 @@ public class FragmentTree extends Fragment
 		return rootView;
 	}
 
+	public void callItemSelected()
+	{
+
+		if (listener != null){
+			String name;
+			if (Utils.isInvertedDic())
+				name = Tree.getTranslation(selectedGroupIndex, selectedItemIndex);
+			else
+				name = Tree.getName(selectedGroupIndex, selectedItemIndex);
+			IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
+			listener.itemSelected(e);
+		}
+		
+	}
 	
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -313,6 +318,7 @@ public class FragmentTree extends Fragment
 
 		LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		llp1.setMargins(0, 0, 0, 0); 
+		llp1.gravity = Gravity.CENTER_VERTICAL;
 		
 		// NAME 
 		final AutoCompleteTextView name = new AutoCompleteTextView(mContext);
@@ -332,7 +338,7 @@ public class FragmentTree extends Fragment
 		android.widget.FrameLayout.LayoutParams llpDropDown = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		llpDropDown.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
 		ibDropDown.setImageResource(R.drawable.dropdown);
-		ibDropDown.setBackgroundColor(Color.TRANSPARENT);
+		//ibDropDown.setBackgroundColor(Color.TRANSPARENT);
 		ibDropDown.setLayoutParams(llpDropDown);
 		ibDropDown.setOnClickListener(new OnClickListener(){
 			@Override
@@ -348,20 +354,25 @@ public class FragmentTree extends Fragment
 		layout2.setOrientation(LinearLayout.HORIZONTAL);
 		layout.addView(layout2);
 
-		TextView translationCaption = new TextView(mContext);
-		translationCaption.setText("Translation:");
-		translationCaption.setLayoutParams(llp);
 		
-		layout2.addView(translationCaption);
-		
+		// TRANSLATION
+	
 		final EditText translation = new EditText(mContext);
 		translation.setInputType(InputType.TYPE_CLASS_TEXT);
-		llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		translation.setLayoutParams(llp);
+		
+		llp1.setMargins(0, 0, 60, 0); 
+		translation.setLayoutParams(llp1);
+		translation.setHint("Translation");
+		translation.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+		
+		
+		
+		//llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+	
 		layout2.addView(translation);
 		
-		llp.setMargins(0, 0, 0, 20); 
-		layout2.setLayoutParams(llp);
+		//llp.setMargins(0, 0, 0, 20); 
+		//layout2.setLayoutParams(llp);
 
 		builder.setTitle("Edit");
 		name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));

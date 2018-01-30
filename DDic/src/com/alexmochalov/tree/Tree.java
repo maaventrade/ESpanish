@@ -312,7 +312,7 @@ public class Tree {
 		if (selectedItemIndex == -1)
 			return listDataHeader.get(selectedGroupIndex).getName(); 
 		else
-			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getNameEng(); 
+			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getName1(); 
 
 	}
 	
@@ -333,7 +333,7 @@ public class Tree {
 		if (selectedItemIndex == -1)
 			listDataHeader.get(selectedGroupIndex).setName(name); 
 		else
-			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setNameEng(name); 
+			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setName1(name); 
 	}
 
 	public static void copy(Activity mContext, String from, String to) {

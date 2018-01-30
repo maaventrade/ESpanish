@@ -26,7 +26,11 @@ public class LineItem extends Line{
 
 	public void setName1(String name)
 	{
-		mNameEng = name;
+		if (Utils.isEnglish())
+			mNameEng = name;
+		else 
+			mNameIt = name;
+		
 	}
 	
 	String getNameEng() {

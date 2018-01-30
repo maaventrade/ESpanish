@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private int mode = 0;
 	private MenuItem maSwitch;
 	
-
+	private boolean refreshTranslationRemitted;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -69,6 +69,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		Dictionary.setParams(mContext);
 
 		Dictionary.eventCallback = new Dictionary.EventCallback() {
+
+			
 			@Override
 			public void loadingFinishedCallBack(boolean result)
 			{
@@ -76,6 +78,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				{
 					if (getVisibleFragmentTag().equals(TAG_FRAGMENT_DIC))
 						fragmentDic.setAdapter();
+					if (refreshTranslationRemitted){
+						refreshTranslationRemitted = false;
+						fragmentTree.callItemSelected();
+					}
 				}
 				else
 				{
@@ -347,6 +353,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 							Dictionary.loadIndex(Utils.getDictionaryName(), false);
 
 							fragmentTree.reload(Utils.getLanguageNoRus());
+							
+							refreshTranslationRemitted = true;
+							//Utils.setRefreshTranslatiinRemitted();
+							
 							
 							Utils.setTitle(maSwitch, mContext);
 						}
