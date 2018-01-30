@@ -301,8 +301,13 @@ public class FragmentTree extends Fragment
 		
 		FrameLayout layoutName = new FrameLayout(mContext);
 		android.widget.FrameLayout.LayoutParams llpName = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		//LinearLayout layoutName = new LinearLayout(mContext);
+		//layout.setOrientation(LinearLayout.HORIZONTAL);
+		//android.widget.LinearLayout.LayoutParams llpName = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		
 		//layout1.setOrientation(LinearLayout.HORIZONTAL);
 		layoutName.setLayoutParams(llpName);
+		//layoutName.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
 		layout.addView(layoutName);
 
 		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -318,14 +323,16 @@ public class FragmentTree extends Fragment
 
 		LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		llp1.setMargins(0, 0, 0, 0); 
-		llp1.gravity = Gravity.CENTER_VERTICAL;
+		llp1.gravity = Gravity.BOTTOM;
 		
-		// NAME 
+		// NAME
+				
 		final AutoCompleteTextView name = new AutoCompleteTextView(mContext);
 		name.setInputType(InputType.TYPE_CLASS_TEXT);
 		name.setLayoutParams(llp1);
 		name.setHint("Name");
 		name.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+		name.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice, 
 				Utils.getExpressions());
@@ -333,6 +340,8 @@ public class FragmentTree extends Fragment
 		name.setThreshold(1);
 		name.setAdapter(adapter);
 		layoutName.addView(name);
+		
+		
 ////		
 		ImageButton ibDropDown = new ImageButton(mContext);
 		android.widget.FrameLayout.LayoutParams llpDropDown = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -343,39 +352,32 @@ public class FragmentTree extends Fragment
 		ibDropDown.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				name.showDropDown();
+			//	name.showDropDown();
 			}});
 		
-		
 		layoutName.addView(ibDropDown);
+		
 //////////////		
 
 		LinearLayout layout2 = new LinearLayout(mContext);
 		layout2.setOrientation(LinearLayout.HORIZONTAL);
 		layout.addView(layout2);
-
 		
 		// TRANSLATION
-	
 		final EditText translation = new EditText(mContext);
 		translation.setInputType(InputType.TYPE_CLASS_TEXT);
-		
-		llp1.setMargins(0, 0, 60, 0); 
+		llp1.setMargins(0, 0, 0, 60); 
 		translation.setLayoutParams(llp1);
 		translation.setHint("Translation");
+		translation.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
 		translation.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
-		
-		
-		
-		//llp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-	
 		layout2.addView(translation);
 		
 		//llp.setMargins(0, 0, 0, 20); 
 		//layout2.setLayoutParams(llp);
 
 		builder.setTitle("Edit");
-		name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
+		//name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
 		translation.setText(Tree.getTranslation(selectedGroupIndex, selectedItemIndex));
 
 		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){

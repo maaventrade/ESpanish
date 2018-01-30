@@ -60,7 +60,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// hideSystemUI();
 		// Log.d("a",""+Dictionary);
 
-		//getActionBar().hide();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(true);
+		
 		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
 
 		String name = prefs.getString(DICTIONARI_NAME, "en_ru.xdxf");
@@ -199,6 +201,18 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	}
 
+	/*
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case android.R.id.home:
+	        Toast.makeText(getApplicationContext(),"Back button clicked", Toast.LENGTH_SHORT).show(); 
+	        break;
+	    }
+	    return true;
+	}
+	*/	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
