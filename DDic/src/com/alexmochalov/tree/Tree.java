@@ -285,27 +285,26 @@ public class Tree {
 		return listDataChild.get(listDataHeader.get(selectedGroupIndex)).size()-1;
 	}
 
-	public static int insertItem(int selectedGroupIndex, String name) {
-		Line key = listDataHeader.get(selectedGroupIndex);
-		Line newLine;
-		/*
-		if (Utils.isInvertedDic())
-			newLine = new Line("", "", name);
+	public static int insertItem(int selectedGroupIndex, String name, String translation) {
+		LineGroup key = listDataHeader.get(selectedGroupIndex);
+		LineItem newLine;
+
+		if (Utils.isEnglish())
+			newLine = new LineItem(name, "", translation);
 		else
-			newLine = new Line(name);
+			newLine = new LineItem("", name , translation);
 		
 		Boolean find = false;
 		
 		for (int i = 0; i < listDataChild.get(key).size(); i++){
-			if (listDataChild.get(key).get(i).getText().compareTo(name) > 0){
+			if (listDataChild.get(key).get(i).getTranslation().compareTo(translation) > 0){
 				listDataChild.get(key).add(i, newLine);
 				find = true;
 				break;
 		}}
 		if (!find)
 			listDataChild.get(key).add(newLine); 
-		return listDataChild.get(key).indexOf(newLine);*/
-		return 0;
+		return listDataChild.get(key).indexOf(newLine);
 	}
 	
 	public static String getName(int selectedGroupIndex,

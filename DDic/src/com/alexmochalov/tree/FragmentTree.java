@@ -23,6 +23,7 @@ import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
 
 import android.view.SurfaceHolder.*;
+import android.view.inputmethod.InputMethodManager;
 
 import com.alexmochalov.dic.*;
 
@@ -49,10 +50,7 @@ public class FragmentTree extends Fragment
 		// TRANSLATION
 		final EditText etText = new EditText(mContext);
 		etText.setInputType(InputType.TYPE_CLASS_TEXT);
-		//llp1.setMargins(0, 0, 0, 60); 
-		//translation.setLayoutParams(llp1);
 		etText.setHint("text");
-		//translation.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
 		etText.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
 		layout.addView(etText);
 		
@@ -83,6 +81,7 @@ public class FragmentTree extends Fragment
 
 							@Override
 							public void onClick(View view) {
+																
 								// TODO Do something
 								HashMap<LineGroup, List<LineItem>> childs =  Tree.getChilds();
 								ArrayList<LineGroup> groups =  Tree.getGroups();
@@ -106,41 +105,49 @@ public class FragmentTree extends Fragment
 											|| item.getTranslation().startsWith(text)){
 											lvTree.expandGroup(i);
 											select(i, k);
+											select();
+											hideHeyboard();
 											return;
 											}
 									}
 								}
-								for (int i = 0; i <= sg; i++){
+								for (int i = 0; i < groups.size(); i++){
 									LineGroup l = groups.get(i);
-									for (int k = 0; k <= sg; k++){
+									for (int k = 0; k < childs.get(l).size(); k++){
+										//Log.d("", ""+l.getName()+"  "+k);
 										LineItem item = childs.get(l).get(k);
 										if (item.getName1().startsWith(text)
 											|| item.getName2().startsWith(text)
 											|| item.getTranslation().startsWith(text)){
 											lvTree.expandGroup(i);
 											select(i, k);
+											select();
+											hideHeyboard();
 											return;
-										}
+										};
+										
+										if (i == sg && k == si) return;
+
 									}
 								}
 							}
+
 						});
-					 
-					
-					
 					/*
 					
 					
-					
 					*/
-					
-					
 				}
-				
-				
 			});
 			
 		dialog.show();
+	}
+
+	private void hideHeyboard() {
+
+		InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+			
 	}
 	
 	public void reload(String name)
@@ -179,21 +186,12 @@ public class FragmentTree extends Fragment
 
 		int index = lvTree.getFlatListPosition(ExpandableListView
 											   .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
-
-		Toast.makeText(mContext, "" + selectedGroupIndex + "  " + selectedItemIndex + "  " + index, Toast.LENGTH_LONG).show();			   
-
 		lvTree.setItemChecked(index, true);
-
 	}
 
 	public void select()
 	{
-		/*lvTree.expandGroup(selectedGroupIndex);
 
-		 int index = lvTree.getFlatListPosition(ExpandableListView
-		 .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
-		 lvTree.setItemChecked(index, true);
-		 */
 		new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run()
@@ -201,12 +199,10 @@ public class FragmentTree extends Fragment
 					int index = lvTree.getFlatListPosition(ExpandableListView
 														   .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
 					lvTree.setItemChecked(index, true);
-					//lvTree.setSelection(index);
-					//adapterTree.notifyDataSetChanged();
+					lvTree.setSelection(index);
+					callItemSelected();
 				}
 			}, 500);
-
-
 
 	}
 
@@ -386,17 +382,17 @@ public class FragmentTree extends Fragment
 		mModified = true;
 	}
 
-	public void edit(final boolean newGroup)
+	public void edit(final boolean newGroup, final boolean newItem)
 	{
-		if (selectedItemIndex >= 0 && !newGroup)
-		{
-			editItem();
-		}
+		if (selectedItemIndex >= 0 && !newGroup && !newItem)
+			editItem(false);
+		else if (newItem)
+			editItem(true);
 		else 
 			editGroup(newGroup);
 	}
 
-	private void editItem()
+	private void editItem(final boolean newItem)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
@@ -404,22 +400,29 @@ public class FragmentTree extends Fragment
 		layout.setOrientation(LinearLayout.VERTICAL);
 		builder.setView(layout);
 
-		//	LayoutParams lp = (LayoutParams)((ViewGroup)layout).getLayoutParams();
-		//	((MarginLayoutParams) lp).leftMargin = 10;
+		LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		llp1.setMargins(0, 0, 0, 0); 
+		llp1.gravity = Gravity.BOTTOM;
+		
+		// Layout for TARNSLATION
+		LinearLayout layout2 = new LinearLayout(mContext);
+		layout2.setOrientation(LinearLayout.HORIZONTAL);
+		layout.addView(layout2);
+		
+		// TRANSLATION
+		final EditText translation = new EditText(mContext);
+		translation.setInputType(InputType.TYPE_CLASS_TEXT);
+		translation.setLayoutParams(llp1);
+		translation.setHint("Translation");
+		//translation.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
+		translation.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
+		layout2.addView(translation);
 
+		// Layout for NAME and ImageButton ibDropDown
 		FrameLayout layoutName = new FrameLayout(mContext);
 		android.widget.FrameLayout.LayoutParams llpName = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		//LinearLayout layoutName = new LinearLayout(mContext);
-		//layout.setOrientation(LinearLayout.HORIZONTAL);
-		//android.widget.LinearLayout.LayoutParams llpName = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
-		//layout1.setOrientation(LinearLayout.HORIZONTAL);
 		layoutName.setLayoutParams(llpName);
-		//layoutName.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
 		layout.addView(layoutName);
-
-		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		llp.setMargins(10, 0, 0, 0); 
 
 		/*
 		 TextView nameCaption = new TextView(mContext);
@@ -429,15 +432,15 @@ public class FragmentTree extends Fragment
 		 layout1.addView(nameCaption);
 		 */
 
-		LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		llp1.setMargins(0, 0, 0, 0); 
-		llp1.gravity = Gravity.BOTTOM;
-
 		// NAME
 
+		LinearLayout.LayoutParams llp2 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		llp2.gravity = Gravity.BOTTOM;
+		llp2.setMargins(0, 0, 0, 60);
+		
 		final AutoCompleteTextView name = new AutoCompleteTextView(mContext);
 		name.setInputType(InputType.TYPE_CLASS_TEXT);
-		name.setLayoutParams(llp1);
+		name.setLayoutParams(llp2);
 		name.setHint("Name");
 		name.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
 		//name.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
@@ -450,6 +453,14 @@ public class FragmentTree extends Fragment
 		layoutName.addView(name);
 
 
+		if (!newItem){
+			builder.setTitle("Edit");
+			name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
+			translation.setText(Tree.getTranslation(selectedGroupIndex, selectedItemIndex));
+		} else 
+			builder.setTitle("Add");
+		
+		
 ////		
 		ImageButton ibDropDown = new ImageButton(mContext);
 		android.widget.FrameLayout.LayoutParams llpDropDown = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -468,34 +479,20 @@ public class FragmentTree extends Fragment
 
 //////////////		
 
-		LinearLayout layout2 = new LinearLayout(mContext);
-		layout2.setOrientation(LinearLayout.HORIZONTAL);
-		layout.addView(layout2);
-
-		// TRANSLATION
-		final EditText translation = new EditText(mContext);
-		translation.setInputType(InputType.TYPE_CLASS_TEXT);
-		llp1.setMargins(0, 0, 0, 60); 
-		translation.setLayoutParams(llp1);
-		translation.setHint("Translation");
-		//translation.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
-		translation.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
-		layout2.addView(translation);
-
-		//llp.setMargins(0, 0, 0, 20); 
-		//layout2.setLayoutParams(llp);
-
-		builder.setTitle("Edit");
-		//name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
-		translation.setText(Tree.getTranslation(selectedGroupIndex, selectedItemIndex));
-
 		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
 				@Override
 				public void onClick(DialogInterface p1, int p2)
 				{
 					mModified = true;
-					Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
-					Tree.setTranslation(selectedGroupIndex, selectedItemIndex, translation.getText().toString());
+					
+					if (newItem){
+						addChild(name.getText().toString(), translation.getText().toString());
+						select();
+					} else {
+						Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
+						Tree.setTranslation(selectedGroupIndex, selectedItemIndex, translation.getText().toString());
+					}
+					
 					adapterTree.notifyDataSetChanged();
 				}
 			});
@@ -560,10 +557,10 @@ public class FragmentTree extends Fragment
 		}
 	}
 
-	public void addChild(String text)
+	public void addChild(String name, String translation)
 	{
 		mModified = true;
-		selectedItemIndex = Tree.insertItem(selectedGroupIndex, text);
+		selectedItemIndex = Tree.insertItem(selectedGroupIndex, name, translation);
 	}
 
 	public void getFirstVisiblePosition()

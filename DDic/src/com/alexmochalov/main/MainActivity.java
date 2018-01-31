@@ -38,7 +38,6 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 	private int MY_DATA_CHECK_CODE = 0;
 
-	private int mode = 0;
 	private MenuItem maSwitch;
 
 	private boolean refreshTranslationRemitted;
@@ -156,24 +155,26 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				@Override
 				public void onEditSelected(String text)
 				{
-					mode = 1;
+					/*
 					FragmentTransaction ft = getFragmentManager().beginTransaction();
 					fragmentDic.setMode(1);
 					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
 					ft.addToBackStack(null);
 					ft.commit();
 					fragmentDic.setText(text);
+					*/
 				}
 
 				@Override
 				public void onAddSelected(int selectedGroupIndex)
 				{
-					mode = 2;
+					/*
 					FragmentTransaction ft = getFragmentManager().beginTransaction();
 					fragmentDic.setMode(2);
 					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
 					ft.addToBackStack(null);
 					ft.commit();
+					*/
 				}
 
 				@Override
@@ -261,7 +262,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				}
 
 				return true;
-			case R.id.action_choose:
+			/*case R.id.action_choose:
 				String text = fragmentDic.getSelectedText();
 				getFragmentManager().popBackStack();
 
@@ -278,22 +279,12 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 				}
 
-
+				
 				return true;
+				*/
 			case R.id.action_add_item:
-				//fragmentTree.select(2,2);
-
-				fragmentTree.getFirstVisiblePosition();
-
-				mode = 2;
-				ft = getFragmentManager().beginTransaction();
-				fragmentDic.setMode(2);
-				ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-				ft.addToBackStack(null);
-				ft.commit();
-
+				fragmentTree.edit(false, true);
 				return true;
-
 			case R.id.action_dictionary:
 				FragmentDic myFragmentD = (FragmentDic)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_DIC);
 				if (myFragmentD == null)
@@ -311,10 +302,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 				return true;
 
 			case R.id.action_add_group:
-				fragmentTree.edit(true);
+				fragmentTree.edit(true, false);
 				return true;
 			case R.id.action_edit:
-				fragmentTree.edit(false);
+				fragmentTree.edit(false, false);
 				return true;
 			case R.id.action_save:
 				fragmentTree.save();
