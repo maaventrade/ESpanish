@@ -89,7 +89,8 @@ public class Tree {
 
 	public static String getTranslation(int selectedGroupIndex, int selectedItemIndex)
 	{
-		return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getTranslation();
+		if (selectedGroupIndex < 0) return "";
+		else return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getTranslation();
 	}
 
 	public static void clear() {

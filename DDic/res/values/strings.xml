@@ -39,6 +39,9 @@
 		<string name="action_paste">Paste</string>
 		<string name="action_edit1">Edit1</string>
 		
+	<string name="action_find">Find</string>
+	<string name="find">Find text</string>
+		
 	<string name="action_copy">Copy</string>
 			
     <string name="error_saving_file">Error saving file</string>
