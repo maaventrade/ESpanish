@@ -99,7 +99,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	
 	/**
 	 * 
-	 * @param indexEntry - object, contains Text and addess of Translation 
+	 * @param indexEntry - object, contains Text and address of Translation 
 	 * @param saveToStack - 0 don't save, 1 save, 2 clear stack and save  
 	 */
 	public void setTranslation(IndexEntry indexEntry, int saveToStack ) {
@@ -135,6 +135,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	    	Spannable reversedText = revertSpanned(spannedText);
 			
 			tvTranslation.setText(reversedText);
+			tvTranslation.scrollTo(0, 0);
 		
 			String phonetic = entry.getPhonetic();
 			if (phonetic.length() > 0)
@@ -149,6 +150,7 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 			tvWord.setText("");
 
 			tvTranslation.setText("");
+			tvTranslation.scrollTo(0, 0);
 			
 			tvPhonetic.setText("");		
 		}

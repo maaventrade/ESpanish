@@ -2,55 +2,115 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    
     android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/text_size_medium"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_weight="0.25"
+        android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/tvTranslation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/translation"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+
+        <EditText
+            android:id="@+id/etTranslation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+                android:textAppearance="?android:attr/textAppearanceLarge" 
+            >
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/text_size_medium"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_weight="0.25"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text:"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+    
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/text_size_medium"
-        android:layout_weight="0.1" >
+        >
 
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:ems="10" />
+                        <AutoCompleteTextView
+                            android:id="@+id/etText"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/dropdown_bar"
+                            android:inputType="text"
+                            android:paddingBottom="12dp"
+                            android:paddingTop="12dp"
+                            android:textAppearance="?android:attr/textAppearanceLarge" >
+                
+            </AutoCompleteTextView>
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:src="@drawable/dropdown" />
+            <ImageButton
+                android:id="@+id/ibDropDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:background="@android:color/transparent"
+                android:src="@drawable/dropdown" />
+        
+        
     </FrameLayout>
+    </LinearLayout>
+    
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:layout_marginBottom="0dp"
+    android:background="?android:attr/dividerVertical" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"
+        android:layout_weight="0.5"
+        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/btnCopy"
+            android:id="@+id/btnOk"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:text="@string/action_copy" />
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/ok" />
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
+            style="?android:attr/buttonBarButtonStyle"
             android:text="@string/cancel" />
-
-        <ImageButton
-            android:id="@+id/ibSpeak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/speaker" />
 
     </LinearLayout>
 

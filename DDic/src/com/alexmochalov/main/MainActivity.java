@@ -186,11 +186,11 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			};
 
 
-			String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
-			if (tag.equals(TAG_FRAGMENT_DIC))
+			//String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
+			//if (tag.equals(TAG_FRAGMENT_DIC))
 				ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-			else
-				ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
+			//else
+			//	ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
 			ft.commit();
 
 

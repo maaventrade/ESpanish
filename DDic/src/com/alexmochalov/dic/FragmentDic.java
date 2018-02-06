@@ -103,6 +103,8 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		etEntry = (EditText) rootView.findViewById(R.id.etEntry);
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 		
+		mContext.getActionBar().setDisplayHomeAsUpEnabled(false);
+		
 		// Read preferences 
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);

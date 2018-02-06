@@ -21,6 +21,7 @@ import java.util.*;
 
 import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
+import com.alexmochalov.tree.DialogEdit.CallbackOk;
 
 import android.view.SurfaceHolder.*;
 import android.view.inputmethod.InputMethodManager;
@@ -203,12 +204,12 @@ public class FragmentTree extends Fragment
 					callItemSelected();
 				}
 			}, 500);
-
 	}
 
 	public void save()
 	{
 		Tree.save(mContext, "tree" + ".xml");
+		mModified = false;		
 	}
 
 	public interface OnTreeEventListener
@@ -242,6 +243,8 @@ public class FragmentTree extends Fragment
 
 		setHasOptionsMenu(true);
 
+		mContext.getActionBar().setDisplayHomeAsUpEnabled(true);
+		
         rootView = inflater.inflate(R.layout.fragment_tree, container, false);
 
 		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
@@ -375,13 +378,6 @@ public class FragmentTree extends Fragment
 		super.onPause();
 	}
 
-	public void addItem()
-	{
-		DialogEdit dialog = new DialogEdit(mContext, (LineItem)Tree.getLine(selectedGroupIndex, selectedItemIndex), adapterTree, true);
-		dialog.show();
-		mModified = true;
-	}
-
 	public void edit(final boolean newGroup, final boolean newItem)
 	{
 		if (selectedItemIndex >= 0 && !newGroup && !newItem)
@@ -394,6 +390,24 @@ public class FragmentTree extends Fragment
 
 	private void editItem(final boolean newItem)
 	{
+		DialogEdit dialogEdit = new DialogEdit(mContext, newItem, selectedGroupIndex, selectedItemIndex);
+		dialogEdit.callback = new CallbackOk() {
+			@Override
+			public void onOk(String text, String translation) {
+				mModified = true;
+				
+				if (newItem){
+					addChild(text, translation);
+					select();
+				} else {
+					Tree.setName(selectedGroupIndex, selectedItemIndex, text);
+					Tree.setTranslation(selectedGroupIndex, selectedItemIndex, translation);
+				}
+			}
+		};
+		dialogEdit.show();
+		
+		/*
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
 		LinearLayout layout = new LinearLayout(mContext);
@@ -424,14 +438,6 @@ public class FragmentTree extends Fragment
 		layoutName.setLayoutParams(llpName);
 		layout.addView(layoutName);
 
-		/*
-		 TextView nameCaption = new TextView(mContext);
-		 nameCaption.setText("Name:");
-
-		 nameCaption.setLayoutParams(llp);
-		 layout1.addView(nameCaption);
-		 */
-
 		// NAME
 
 		LinearLayout.LayoutParams llp2 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -452,6 +458,9 @@ public class FragmentTree extends Fragment
 		name.setAdapter(adapter);
 		layoutName.addView(name);
 
+		// Gap 
+		TextView empty = new TextView(mContext);
+		layout.addView(empty);
 
 		if (!newItem){
 			builder.setTitle("Edit");
@@ -504,6 +513,7 @@ public class FragmentTree extends Fragment
 				}
 			});
 		builder.show();
+		*/
 	}
 
 	private void editGroup(final boolean newGroup)

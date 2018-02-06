@@ -17,6 +17,7 @@
     <item
         android:id="@+id/action_tree"
         android:orderInCategory="3"
+        android:icon="@drawable/tree"
         android:title="@string/action_tree" 
         android:showAsAction="always"/>
     

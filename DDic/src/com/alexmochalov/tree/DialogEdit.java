@@ -1,61 +1,47 @@
 package com.alexmochalov.tree;
 
+import java.util.List;
+
 import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
+import com.alexmochalov.main.Utils;
 
 public class DialogEdit extends Dialog
 {
-/*
+
 	public CallbackOk callback = null;
 	public interface CallbackOk {
-		void onOk(); 
+		void onOk(String text, String translation); 
 	} 
 	
-	@Override
-	public void onClick(View view)
-	{
-			Button btnOk = (Button)findViewById(R.id.btnOk);
-		
-			
-			if (view == btnOk){
-				mLine.setName(etName.getText().toString());
-				mLine.setTranslation(etTranslation.getText().toString());
-				//mAdapter.notifyDataSetChanged();
-				if (callback != null)
-					callback.onOk();
-					
-			}
-			dismiss();
-	}
-	*/
-
 	private Activity mContext;
 
 	private AdapterTree mAdapter;
 	
-	private EditText etName;
+	private AutoCompleteTextView etText;
 	private EditText etTranslation;
 
 	private LineItem mLine;
 
 	private boolean mModeAdd = false;
-	
-	protected DialogEdit(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
-		super(context, cancelable, cancelListener);
-	}
 
-	protected DialogEdit(Activity context, LineItem line, AdapterTree adapter, boolean modeAdd ) {
+	private int mSelectedGroupIndex;
+
+	private int mSelectedItemIndex;
+	
+	protected DialogEdit(Activity context, boolean modeAdd, int selectedGroupIndex, int selectedItemIndex ) {
 		super(context);
 		mContext = context;
-		mLine = line;
-		mAdapter = adapter;
+		
+		mSelectedGroupIndex = selectedGroupIndex;
+		mSelectedItemIndex = selectedItemIndex;
 		mModeAdd = modeAdd;
 	}
 
@@ -63,28 +49,49 @@ public class DialogEdit extends Dialog
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
-		setContentView(R.layout.edit);
+		setContentView(R.layout.dialog_edit);
 
-		etName = (EditText)findViewById(R.id.etText);
+		etText = (AutoCompleteTextView)findViewById(R.id.etText);
 		etTranslation = (EditText)findViewById(R.id.etTranslation);
 		
 		if (mModeAdd){
 			
 		}
-		etName.setText(mLine.getName1());
-		etTranslation.setText(mLine.getTranslation());
+		
+		etText.setThreshold(1);
+		
+		ArrayAdapter<String> adapter = new KArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice, 
+				Utils.getExpressions());
+
+		etText.setThreshold(1);
+		etText.setAdapter(adapter);
+
+		if (!mModeAdd){
+			setTitle(mContext.getString(R.string.action_edit));
+			etText.setText(Tree.getName(mSelectedGroupIndex, mSelectedItemIndex));
+			etTranslation.setText(Tree.getTranslation(mSelectedGroupIndex, mSelectedItemIndex));
+		} else 
+			setTitle("Add");
+		
+		
+////		
+		ImageButton ibDropDown = (ImageButton)findViewById(R.id.ibDropDown);;
+		ibDropDown.setOnClickListener(new ImageButton.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					etText.showDropDown();
+				}});
+
 		
 		Button btnOk = (Button)findViewById(R.id.btnOk);
 		btnOk.setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View p1)
 				{
-					mLine.setName1(etName.getText().toString());
-					mLine.setTranslation(etTranslation.getText().toString());
-					mAdapter.notifyDataSetChanged();
-					
+					if (callback != null ) 
+						callback.onOk(etText.getText().toString(), etTranslation.getText().toString());
 					dismiss();
 				}
 			});
@@ -97,11 +104,42 @@ public class DialogEdit extends Dialog
 					dismiss();
 				}
 			});
-			
-		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-        //      WindowManager.LayoutParams.MATCH_PARENT);
 	}
 	
 	
+	/**********************/
+	class KArrayAdapter<T> 
+	extends ArrayAdapter<T>
+	{
+	    private Filter filter = new KNoFilter();
+	    public List<T> items;
+
+	    @Override
+	    public Filter getFilter() {
+	        return filter;
+	    }
+
+	    public KArrayAdapter(Context context, int textViewResourceId,
+	            List<T> objects) {
+	        super(context, textViewResourceId, objects);
+	        items = objects;
+	    }
+
+	    private class KNoFilter extends Filter {
+
+	        @Override
+	        protected FilterResults performFiltering(CharSequence arg0) {
+	            FilterResults result = new FilterResults();
+	                result.values = items;
+	                result.count = items.size(); 
+	            return result;
+	        }
+
+	        @Override
+	        protected void publishResults(CharSequence arg0, FilterResults arg1) {
+	            notifyDataSetChanged();
+	        }
+	    }
+	}
 	
 }
