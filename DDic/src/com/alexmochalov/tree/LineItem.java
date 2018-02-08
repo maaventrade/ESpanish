@@ -41,7 +41,7 @@ public class LineItem extends Line{
 		return mNameIt;
 	}
 
-	String getTranslation() {
+	public String getTranslation() {
 		return mTranslation;
 	}
 	
@@ -58,7 +58,7 @@ public class LineItem extends Line{
 	}
 	
 	
-	String getName1() {
+	public String getName1() {
 		if (Utils.isEnglish())
 			return mNameEng;
 		else 

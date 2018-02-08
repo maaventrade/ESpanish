@@ -38,7 +38,8 @@
 	<string name="action_cut">Cut</string>
 		<string name="action_paste">Paste</string>
 		<string name="action_edit1">Edit1</string>
-		
+		<string name="action_test">Test</string>
+				
 	<string name="action_find">Find</string>
 	<string name="find">Find text</string>
 		

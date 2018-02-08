@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_marginLeft="@dimen/text_size_medium"
+	android:layout_marginRight="@dimen/text_size_medium"
+	android:orientation="vertical">
+
+	<TextView
+		android:id="@+id/dialogExampleExample"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/text_size_medium"
+		android:text="Large Text"
+		android:textColor="@color/blue"
+		android:textSize="@dimen/text_size_medium"
+		android:typeface="serif"/>
+
+	<TextView
+		android:id="@+id/dialogExampleRus"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/text_size_medium"
+		android:text="Large Text"
+		android:textColor="@color/blue"
+		android:textSize="@dimen/text_size_medium"
+		android:typeface="serif"/>
+	
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<ImageButton
+			android:id="@+id/dialogExampleImageButtonSpeak"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/speaker"/>
+
+		<Button
+		    android:id="@+id/dialogExampleImageButtonOk"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:text="Ok" />
+
+	</LinearLayout>
+
+</LinearLayout>
+

@@ -3,6 +3,12 @@
     tools:context="com.alexmochalov.enru.MainActivity" >
     
     <item
+        android:id="@+id/action_test"
+        android:orderInCategory="5"
+        android:title="@string/action_test" 
+     android:showAsAction="always"/>
+    
+    <item
         android:id="@+id/action_add_item"
         android:orderInCategory="10"
         android:title="@string/action_add_item" 

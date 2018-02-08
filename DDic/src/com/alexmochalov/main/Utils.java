@@ -80,6 +80,11 @@ public final class Utils {
 
 	private static ArrayList<String> alExpressions = new ArrayList<String>();
 
+	public static String firstLetterToUpperCase(String text) {
+		if (text == null || text.length() == 0) return "";
+		else return text.substring(0,1).toUpperCase() + text.substring(1);
+	}
+	
 	public static void setRefreshTranslatiinRemitted()
 	{
 		refreshTranslatiinRemitted = true;

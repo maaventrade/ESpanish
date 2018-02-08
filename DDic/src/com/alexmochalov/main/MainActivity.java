@@ -14,11 +14,12 @@ import android.widget.*;
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.dic.FragmentDic.*;
+import com.alexmochalov.test.FragmentTest;
 import com.alexmochalov.translation.FragmentTranslation;
 import com.alexmochalov.tree.*;
 
-public class MainActivity extends Activity implements OnClickListener, OnInitListener
-{
+public class MainActivity extends Activity implements OnClickListener,
+		OnInitListener {
 
 	private FragmentDic fragmentDic;
 	private String TAG_FRAGMENT_DIC = "TAG_FRAGMENT_DIC";
@@ -29,8 +30,10 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private FragmentTree fragmentTree;
 	private String TAG_FRAGMENT_TREE = "TAG_FRAGMENT_TREE";
 
-	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
+	private FragmentTest fragmentTest;
+	private String TAG_FRAGMENT_TEST = "TAG_FRAGMENT_TEST";
 
+	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
 
 	private String CURRENTFRAG = "CURRENTFRAG";
 
@@ -43,8 +46,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	private boolean refreshTranslationRemitted;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main);
@@ -54,7 +56,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// Full screen is set for the Window
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-							 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// hideSystemUI();
 		// hideSystemUI();
 		// Log.d("a",""+Dictionary);
@@ -62,7 +64,8 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 
-		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
 
 		String name = prefs.getString(DICTIONARI_NAME, "en_ru.xdxf");
 		Utils.setDictionaryName(name);
@@ -71,66 +74,56 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 
 		Dictionary.eventCallback = new Dictionary.EventCallback() {
 
-
 			@Override
-			public void loadingFinishedCallBack(boolean result)
-			{
-				if (result)
-				{
+			public void loadingFinishedCallBack(boolean result) {
+				if (result) {
 					if (getVisibleFragmentTag().equals(TAG_FRAGMENT_DIC))
 						fragmentDic.setAdapter();
-					if (refreshTranslationRemitted)
-					{
+					if (refreshTranslationRemitted) {
 						refreshTranslationRemitted = false;
 						fragmentTree.callItemSelected();
 					}
-				}
-				else
-				{
+				} else {
 					// If Index file not found show the message
-					//queryReindex();
+					// queryReindex();
 				}
 			}
 
 			@Override
-			public void indexingFinishedCallBack(String dictionary_name)
-			{
+			public void indexingFinishedCallBack(String dictionary_name) {
 				Dictionary.loadIndex(dictionary_name, false);
 			}
 		};
 
-
 		if (Dictionary.getSize() == 0)
 			Dictionary.loadIndex(Utils.getDictionaryName(), true);
 
+		if (savedInstanceState != null) {
 
-		if (savedInstanceState != null)
-		{
-
-			fragmentDic = (FragmentDic) getFragmentManager()
-				.findFragmentByTag(TAG_FRAGMENT_DIC);
+			fragmentDic = (FragmentDic) getFragmentManager().findFragmentByTag(
+					TAG_FRAGMENT_DIC);
 			fragmentDic.setContext(this);
 			fragmentDic.callback = new FragmentDicCallback() {
 				@Override
-				public void itemSelected(IndexEntry indexEntry)
-				{
+				public void itemSelected(IndexEntry indexEntry) {
 					// Set translation for current item of the dictionary list
 					fragmentTranslation.setTranslation(indexEntry, 2);
 				}
 			};
 
-//			fragmentFiles.setParams(this);
+			// fragmentFiles.setParams(this);
 
 			fragmentTranslation = (FragmentTranslation) getFragmentManager()
-				.findFragmentByTag(TAG_FRAGMENT_TRANSL);
-//			fragmentFiles.setParams(this);
+					.findFragmentByTag(TAG_FRAGMENT_TRANSL);
+			// fragmentFiles.setParams(this);
 
 			fragmentTree = (FragmentTree) getFragmentManager()
-				.findFragmentByTag(TAG_FRAGMENT_TREE);
+					.findFragmentByTag(TAG_FRAGMENT_TREE);
 
-		}
-		else
-		{
+			fragmentTest = (FragmentTest) getFragmentManager()
+					.findFragmentByTag(TAG_FRAGMENT_TEST);
+
+		} else {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 
 			fragmentTranslation = new FragmentTranslation(this);
@@ -142,58 +135,52 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 			fragmentDic = new FragmentDic(this);
 			fragmentDic.callback = new FragmentDicCallback() {
 				@Override
-				public void itemSelected(IndexEntry indexEntry)
-				{
+				public void itemSelected(IndexEntry indexEntry) {
 					// Set translation for current item of the dictionary list
 					fragmentTranslation.setTranslation(indexEntry, 2);
 
 				}
 			};
 			fragmentTree = new FragmentTree(mContext);
-			fragmentTree.listener = new FragmentTree.OnTreeEventListener(){
+			fragmentTree.listener = new FragmentTree.OnTreeEventListener() {
 
 				@Override
-				public void onEditSelected(String text)
-				{
+				public void onEditSelected(String text) {
 					/*
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
-					fragmentDic.setMode(1);
-					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-					ft.addToBackStack(null);
-					ft.commit();
-					fragmentDic.setText(text);
-					*/
+					 * FragmentTransaction ft =
+					 * getFragmentManager().beginTransaction();
+					 * fragmentDic.setMode(1); ft.replace(R.id.fcDictionary,
+					 * fragmentDic, TAG_FRAGMENT_DIC); ft.addToBackStack(null);
+					 * ft.commit(); fragmentDic.setText(text);
+					 */
 				}
 
 				@Override
-				public void onAddSelected(int selectedGroupIndex)
-				{
+				public void onAddSelected(int selectedGroupIndex) {
 					/*
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
-					fragmentDic.setMode(2);
-					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-					ft.addToBackStack(null);
-					ft.commit();
-					*/
+					 * FragmentTransaction ft =
+					 * getFragmentManager().beginTransaction();
+					 * fragmentDic.setMode(2); ft.replace(R.id.fcDictionary,
+					 * fragmentDic, TAG_FRAGMENT_DIC); ft.addToBackStack(null);
+					 * ft.commit();
+					 */
 				}
 
 				@Override
-				public void itemSelected(IndexEntry indexEntry)
-				{
+				public void itemSelected(IndexEntry indexEntry) {
 					// Set translation for current item of the tree
 					fragmentTranslation.setTranslation(indexEntry, 2);
 				}
 			};
 
-
-			//String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
-			//if (tag.equals(TAG_FRAGMENT_DIC))
-				ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-			//else
-			//	ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
+			fragmentTest = new FragmentTest(mContext);
+			
+			// String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
+			// if (tag.equals(TAG_FRAGMENT_DIC))
+			ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+			// else
+			// ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
 			ft.commit();
-
-
 
 		}
 
@@ -204,35 +191,26 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	}
 
 	/*
-	 @Override
-	 public boolean onOptionsItemSelected(MenuItem item) {
-	 switch (item.getItemId()) {
-	 case android.R.id.home:
-	 Toast.makeText(getApplicationContext(),"Back button clicked", Toast.LENGTH_SHORT).show(); 
-	 break;
-	 }
-	 return true;
-	 }
-	 */	
+	 * @Override public boolean onOptionsItemSelected(MenuItem item) { switch
+	 * (item.getItemId()) { case android.R.id.home:
+	 * Toast.makeText(getApplicationContext(),"Back button clicked",
+	 * Toast.LENGTH_SHORT).show(); break; } return true; }
+	 */
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
+	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 
-
 		maSwitch = menu.findItem(R.id.action_switch);
 		Utils.setTitle(maSwitch, mContext);
-
 
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		FragmentTransaction ft ;
+	public boolean onOptionsItemSelected(MenuItem item) {
+		FragmentTransaction ft;
 
 		AlertDialog.Builder dialog;
 
@@ -240,116 +218,103 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-        switch (item.getItemId())
-		{
-			case R.id.action_tree:
-				FragmentTree myFragment = (FragmentTree)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_TREE);
-				if (myFragment == null)
-				{
-					ft = getFragmentManager().beginTransaction();
-					Bundle args = new Bundle();
-					// args.putString("name", record.getName());
-					// fragmentDic.setArguments(args);
-					ft.replace(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
-					//ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
-					ft.addToBackStack(null);
-					ft.commit();
-
-				}
-				else
-				{
-					getFragmentManager().popBackStack();
-				}
-
-				return true;
-			/*case R.id.action_choose:
-				String text = fragmentDic.getSelectedText();
+		switch (item.getItemId()) {
+		case R.id.action_tree:
+			FragmentTree myFragment = (FragmentTree) getFragmentManager()
+					.findFragmentByTag(TAG_FRAGMENT_TREE);
+			if (myFragment == null) {
+				ft = getFragmentManager().beginTransaction();
+				Bundle args = new Bundle();
+				ft.replace(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
+				ft.addToBackStack(null);
+				ft.commit();
+			} else {
 				getFragmentManager().popBackStack();
+			}
+			return true;
+			
+		case R.id.action_test:			
+			FragmentTest fragmentTest = (FragmentTest) getFragmentManager()
+					.findFragmentByTag(TAG_FRAGMENT_TEST);
+			
+			if (fragmentTest == null) {
+				ft = getFragmentManager().beginTransaction();
+				Bundle args = new Bundle();
+				ft.replace(R.id.fcDictionary, fragmentTest, TAG_FRAGMENT_TEST);
+				ft.addToBackStack(null);
+				ft.commit();
+			} else {
+				getFragmentManager().popBackStack();
+			}
+			
+			return true;
+		case R.id.action_add_item:
+			fragmentTree.edit(false, true);
+			return true;
+		case R.id.action_dictionary:
+			FragmentDic myFragmentD = (FragmentDic) getFragmentManager()
+					.findFragmentByTag(TAG_FRAGMENT_DIC);
+			if (myFragmentD == null) {
+				ft = getFragmentManager().beginTransaction();
+				ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
+				ft.addToBackStack(null);
+				ft.commit();
+			} else {
+				getFragmentManager().popBackStack();
+			}
 
-				if (text.length() > 0)
-				{
-					if (mode == 1)
-						fragmentTree.setText(text);
-					else if (mode == 2)
-					{
-						fragmentTree.addChild(text);
-						fragmentTree.select();
-						fragmentTree.edit(false);
-					}
+			return true;
 
-				}
+		case R.id.action_add_group:
+			fragmentTree.edit(true, false);
+			return true;
+		case R.id.action_edit:
+			fragmentTree.edit(false, false);
+			return true;
+		case R.id.action_save:
+			fragmentTree.save();
+			return true;
+		case R.id.action_info:
+			Utils.showInfo(mContext);
+			return true;
+		case R.id.action_find:
+			fragmentTree.find();
+			return true;
 
-				
-				return true;
-				*/
-			case R.id.action_add_item:
-				fragmentTree.edit(false, true);
-				return true;
-			case R.id.action_dictionary:
-				FragmentDic myFragmentD = (FragmentDic)getFragmentManager().findFragmentByTag(TAG_FRAGMENT_DIC);
-				if (myFragmentD == null)
-				{
-					ft = getFragmentManager().beginTransaction();
-					ft.replace(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-					ft.addToBackStack(null);
-					ft.commit();
-				}
-				else
-				{
-					getFragmentManager().popBackStack();
-				}
+		case R.id.action_cut:
+			fragmentTree.copyItem();
+			fragmentTree.deleteItem();
+			return true;
 
-				return true;
+		case R.id.action_paste:
+			fragmentTree.paste();
+			fragmentTree.select();
+			return true;
 
-			case R.id.action_add_group:
-				fragmentTree.edit(true, false);
-				return true;
-			case R.id.action_edit:
-				fragmentTree.edit(false, false);
-				return true;
-			case R.id.action_save:
-				fragmentTree.save();
-				return true;
-			case R.id.action_info:
-				Utils.showInfo(mContext);
-				return true;
-			case R.id.action_find:
-				fragmentTree.find();
-				return true;
-				
-			case R.id.action_cut:
-				fragmentTree.copyItem();
-				fragmentTree.deleteItem();
-				return true;
+		case R.id.action_switch:
+			dialog = new AlertDialog.Builder(mContext);
+			dialog.setTitle("Select divtionaty");
+			// dialog.setMessage(getResources().getString(R.string.action_move));
 
-			case R.id.action_paste:
-				fragmentTree.paste();
-				fragmentTree.select();
-				return true;
+			final ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(
+					mContext, android.R.layout.select_dialog_singlechoice);
+			arrayAdapter1.add("en-ru");
+			arrayAdapter1.add("ru-en");
+			arrayAdapter1.add("it-ru");
+			arrayAdapter1.add("ru-it");
 
-			case R.id.action_switch:
-				dialog = new AlertDialog.Builder(mContext);
-				dialog.setTitle("Select divtionaty");
-				//dialog.setMessage(getResources().getString(R.string.action_move));
-
-				final ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice);
-				arrayAdapter1.add("en-ru");
-				arrayAdapter1.add("ru-en");
-				arrayAdapter1.add("it-ru");
-				arrayAdapter1.add("ru-it");
-
-				dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+			dialog.setNegativeButton("cancel",
+					new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int which)
-						{
+						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
 						}
 					});
 
-				dialog.setAdapter(arrayAdapter1, new DialogInterface.OnClickListener() {
+			dialog.setAdapter(arrayAdapter1,
+					new DialogInterface.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int which)
-						{
+						public void onClick(DialogInterface dialog, int which) {
 							String strName = arrayAdapter1.getItem(which);
 							if (strName.equals("en-ru"))
 								Utils.setDictionaryName("en_ru.xdxf");
@@ -361,74 +326,72 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 								Utils.setDictionaryName("ru_en.xdxf");
 							TtsUtils.setLanguage(mContext);
 							fragmentDic.setHint(strName);
-							Dictionary.loadIndex(Utils.getDictionaryName(), false);
+							Dictionary.loadIndex(Utils.getDictionaryName(),
+									false);
 
 							fragmentTree.reload(Utils.getLanguageNoRus());
 
 							refreshTranslationRemitted = true;
-							//Utils.setRefreshTranslatiinRemitted();
-
+							// Utils.setRefreshTranslatiinRemitted();
 
 							Utils.setTitle(maSwitch, mContext);
 						}
 					});
-				dialog.show();
+			dialog.show();
 
+			/*
+			 * Utils.switchDictionary(); TtsUtils.setLanguage(mContext);
+			 * fragmentDic.setHint(Utils.getDictionaryName());
+			 * Dictionary.loadIndex(Utils.getDictionaryName(), false);
+			 */
+			return true;
 
-				/*
-				 Utils.switchDictionary();
-				 TtsUtils.setLanguage(mContext);
-				 fragmentDic.setHint(Utils.getDictionaryName());
-				 Dictionary.loadIndex(Utils.getDictionaryName(), false);
-				 */
-				return true;
-
-			case R.id.action_delete:
-				new AlertDialog.Builder(MainActivity.this)
+		case R.id.action_delete:
+			new AlertDialog.Builder(MainActivity.this)
 					.setIcon(R.drawable.ic_launcher)
 
-					.setTitle(getResources().getString(R.string.query_delete) + "\""  + fragmentTree.getCurrentText() + "\"?")
-					.setMessage(getResources().getString(R.string.are_you_shure))
-					.setPositiveButton("Yes", new DialogInterface.OnClickListener()
-				 	{
-						@Override
-						public void onClick(DialogInterface dialog, int which) 
-						{
-							fragmentTree.deleteItem();
-						}
-				 	})
-					.setNegativeButton("No", new DialogInterface.OnClickListener()
-				 	{
-						@Override
-						public void onClick(DialogInterface dialog, int which) 
-						{
-							return;
-						}
-				 	})
-					.show();
+					.setTitle(
+							getResources().getString(R.string.query_delete)
+									+ "\"" + fragmentTree.getCurrentText()
+									+ "\"?")
+					.setMessage(
+							getResources().getString(R.string.are_you_shure))
+					.setPositiveButton("Yes",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									fragmentTree.deleteItem();
+								}
+							})
+					.setNegativeButton("No",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									return;
+								}
+							}).show();
 
-				return true;
+			return true;
 
+		case R.id.action_reindex:
+			fragmentDic.reindex();
+			return true;
 
-			case R.id.action_reindex:
-				fragmentDic.reindex();
-				return true;
-
-			default:
-                return false;
-        }
+		default:
+			return false;
+		}
 	}
 
-	protected void onRestoreInstanceState(Bundle savedInstanceState)
-	{
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 
 		// etMagnify.setText(savedInstanceState.getString(MTEXT));
 
 	}
 
-	protected void onSaveInstanceState(Bundle outState)
-	{
+	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		outState.putString(CURRENTFRAG, getVisibleFragmentTag());
@@ -439,10 +402,9 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 		// outState.putString(MINDEX, MenuData.getText());
 	}
 
-	private String getVisibleFragmentTag()
-	{
+	private String getVisibleFragmentTag() {
 		Fragment f = getFragmentManager().findFragmentById(R.id.fcDictionary);
-		if (f instanceof FragmentDic) 
+		if (f instanceof FragmentDic)
 			return TAG_FRAGMENT_DIC;
 		else
 			return TAG_FRAGMENT_TREE;
@@ -450,8 +412,7 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	}
 
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		TtsUtils.destroy();
 
 		SharedPreferences prefs;
@@ -467,102 +428,79 @@ public class MainActivity extends Activity implements OnClickListener, OnInitLis
 	}
 
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		super.onResume();
 		fragmentDic.setContext(this);
 	}
 
 	@Override
-	public void onClick(View v)
-	{
+	public void onClick(View v) {
 	}
 
 	@Override
-	public void onInit(int status)
-	{
-		if (status == TextToSpeech.SUCCESS)
-		{
+	public void onInit(int status) {
+		if (status == TextToSpeech.SUCCESS) {
 			TtsUtils.init(this);
-//			TtsUtils.setLanguage(mContext);
+			// TtsUtils.setLanguage(mContext);
 
 		}
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == MY_DATA_CHECK_CODE)
-		{
-			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
-			{
+		if (requestCode == MY_DATA_CHECK_CODE) {
+			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
 				TtsUtils.newTts(this, this);
-			}
-			else
-			{
+			} else {
 				Intent installIntent = new Intent();
 				installIntent
-					.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+						.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
 				startActivity(installIntent);
 			}
-		}
-		else super.onActivityResult(requestCode, resultCode, data);
+		} else
+			super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
-	public void onBackPressed()
-	{
-	  
-			if (fragmentTree != null
-			&& fragmentTree.isModified())
-				exitAfterSaving();
-				
-			else	
-					super.onBackPressed();
-			
+	public void onBackPressed() {
 
+		if (fragmentTree != null && fragmentTree.isModified())
+			exitAfterSaving();
 
-		//this.finishAffinity();
-		// super.onBackPressed();  // optional depending on your needs
+		else
+			super.onBackPressed();
+
+		// this.finishAffinity();
+		// super.onBackPressed(); // optional depending on your needs
 	}
 
-	private void exitAfterSaving()
-	{
-	
-			new AlertDialog.Builder(MainActivity.this)
+	private void exitAfterSaving() {
 
-				.setIcon(R.drawable.ic_launcher)
+		new AlertDialog.Builder(MainActivity.this)
 
-				.setTitle(getResources().getString(R.string.tree_was_changed))
+		.setIcon(R.drawable.ic_launcher)
 
-				.setMessage(getResources().getString(R.string.save_tree_before_exit))
+		.setTitle(getResources().getString(R.string.tree_was_changed))
 
-				.setPositiveButton("Yes", new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog, int which) 
-					{
-						fragmentTree.save();
-						finishAffinity();
-					}
-				})
-				.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog, int which) 
-					{
-						return;
-					}
-				})
-				.setNeutralButton("No", new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog, int which) 
-					{
-						finishAffinity();
-					}
-				})
-				.show();
-	}	
+		.setMessage(getResources().getString(R.string.save_tree_before_exit))
+
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				fragmentTree.save();
+				finishAffinity();
+			}
+		}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				return;
+			}
+		}).setNeutralButton("No", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finishAffinity();
+			}
+		}).show();
+	}
 
 }
