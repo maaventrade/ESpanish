@@ -8,9 +8,12 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+
 import com.alexmochalov.ddic.*;
+import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.*;
 import com.alexmochalov.tree.*;
+
 import java.util.*;
 
 import android.view.View.OnClickListener;
@@ -29,6 +32,7 @@ public class PagerAdapterRemember extends PagerAdapter
 	public interface OnEventListener{
 		public void onButtonChangeClick();
 		public void onButtonStartTestingClick();
+		public void onNextWord(IndexEntry e);
 	}
 
     public PagerAdapterRemember(Activity context, ArrayList<LineItem> objects) {
@@ -46,7 +50,7 @@ public class PagerAdapterRemember extends PagerAdapter
     	final LineItem remEntry = mObjects.get(position);
         
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_test_page, collection, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_remember_page, collection, false);
         collection.addView(layout);
        
         ImageViewSlide text = (ImageViewSlide)layout.findViewById(R.id.slider);
@@ -54,6 +58,21 @@ public class PagerAdapterRemember extends PagerAdapter
         text.setTexts(
 			Utils.firstLetterToUpperCase(remEntry.getName1()), 
 			Utils.firstLetterToUpperCase(remEntry.getTranslation()), isRus);
+        
+       if (listener != null){
+    	   
+    	   String name;
+    	   
+    	   if (Utils.isInvertedDic())
+				name = remEntry.getTranslation();
+			else
+				name = remEntry.getName1();
+    	   
+			IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
+    	   
+    	   listener.onNextWord(e);
+       }
+        
 		
 		text.listener = new ImageViewSlide.OnEventListener(){
 			@Override

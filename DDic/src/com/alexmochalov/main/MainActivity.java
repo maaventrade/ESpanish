@@ -14,7 +14,8 @@ import android.widget.*;
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.dic.FragmentDic.*;
-import com.alexmochalov.test.FragmentTest;
+import com.alexmochalov.test.FragmentRemember;
+import com.alexmochalov.test.FragmentRemember.OnRememberListener;
 import com.alexmochalov.translation.FragmentTranslation;
 import com.alexmochalov.tree.*;
 
@@ -30,8 +31,8 @@ public class MainActivity extends Activity implements OnClickListener,
 	private FragmentTree fragmentTree;
 	private String TAG_FRAGMENT_TREE = "TAG_FRAGMENT_TREE";
 
-	private FragmentTest fragmentTest;
-	private String TAG_FRAGMENT_TEST = "TAG_FRAGMENT_TEST";
+	private FragmentRemember fragmentRemember;
+	private String TAG_FRAGMENT_REM = "TAG_FRAGMENT_REM";
 
 	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
 
@@ -120,8 +121,8 @@ public class MainActivity extends Activity implements OnClickListener,
 			fragmentTree = (FragmentTree) getFragmentManager()
 					.findFragmentByTag(TAG_FRAGMENT_TREE);
 
-			fragmentTest = (FragmentTest) getFragmentManager()
-					.findFragmentByTag(TAG_FRAGMENT_TEST);
+			fragmentRemember = (FragmentRemember) getFragmentManager()
+					.findFragmentByTag(TAG_FRAGMENT_REM);
 
 		} else {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -234,18 +235,43 @@ public class MainActivity extends Activity implements OnClickListener,
 			return true;
 			
 		case R.id.action_test:			
-			fragmentTest = (FragmentTest) getFragmentManager()
-					.findFragmentByTag(TAG_FRAGMENT_TEST);
+			fragmentRemember = (FragmentRemember) getFragmentManager()
+					.findFragmentByTag(TAG_FRAGMENT_REM);
 			
-			if (fragmentTest == null) {
-				fragmentTest = new FragmentTest(mContext);
+			if (fragmentRemember == null) {
+				fragmentRemember = new FragmentRemember(mContext);
 			}
 				ft = getFragmentManager().beginTransaction();
 				Bundle args = new Bundle();
 				args.putInt("selectedGroupIndex", fragmentTree.getSelectedGroupIndex());
-				fragmentTest.setArguments(args);
+				fragmentRemember.setArguments(args);
 				
-				ft.replace(R.id.fcDictionary, fragmentTest, TAG_FRAGMENT_TEST);
+				fragmentRemember.mCallback = new OnRememberListener(){
+
+					@Override
+					public void onTested() {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onFinished(Fragment thisFragment) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onButtonStartTestingClick() {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onNextWord(IndexEntry indexEntry) {
+						fragmentTranslation.setTranslation(indexEntry, 2);
+					}};
+				
+				ft.replace(R.id.fcDictionary, fragmentRemember, TAG_FRAGMENT_REM);
 				ft.addToBackStack(null);
 				ft.commit();
 		

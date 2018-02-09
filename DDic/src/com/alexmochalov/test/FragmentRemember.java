@@ -6,13 +6,28 @@ import android.support.v4.view.*;
 import android.util.*;
 import android.view.*;
 import android.view.View.*;
+
 import com.alexmochalov.ddic.*;
+import com.alexmochalov.dic.IndexEntry;
+import com.alexmochalov.main.Utils;
+import com.alexmochalov.test.FragmentM.OnTestedListener;
 import com.alexmochalov.tree.*;
+
 import java.util.*;
 
-public class FragmentTest extends FragmentM   implements OnClickListener{
+public class FragmentRemember extends Fragment  implements OnClickListener{
 
  	private ViewPager pager;
+ 	
+
+	public OnRememberListener mCallback;
+
+	public interface OnRememberListener {
+		public void onTested();
+		public void onFinished(Fragment thisFragment);
+		public void onButtonStartTestingClick();
+		public void onNextWord(IndexEntry e);
+	}
  	  
 	private PagerAdapterRemember adapter;
 	
@@ -25,7 +40,7 @@ public class FragmentTest extends FragmentM   implements OnClickListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_test, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_remember, container, false);
 		
 		pager = (ViewPager)rootView.findViewById(R.id.pager);
 		
@@ -51,6 +66,12 @@ public class FragmentTest extends FragmentM   implements OnClickListener{
 				if (mCallback != null)
 					mCallback.onButtonStartTestingClick();
 			}
+
+			@Override
+			public void onNextWord(IndexEntry e) {
+				if (mCallback != null)
+					mCallback.onNextWord(e);
+			}
 		};
 		Log.d("rem","created");
         pager.setAdapter(adapter);
@@ -70,13 +91,13 @@ public class FragmentTest extends FragmentM   implements OnClickListener{
 	private Activity mContext;
 
 	
-	public FragmentTest(Activity context)
+	public FragmentRemember(Activity context)
 	{
 		super();
 		mContext = context;
 	}
 
-	public FragmentTest()
+	public FragmentRemember()
 	{
 		super();
 	}
