@@ -165,7 +165,7 @@ public class MainActivity extends Activity implements OnClickListener,
 					 * ft.commit();
 					 */
 				}
-
+  
 				@Override
 				public void itemSelected(IndexEntry indexEntry) {
 					// Set translation for current item of the tree
@@ -173,7 +173,7 @@ public class MainActivity extends Activity implements OnClickListener,
 				}
 			};
 
-			fragmentTest = new FragmentTest(mContext);
+			
 			
 			// String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
 			// if (tag.equals(TAG_FRAGMENT_DIC))
@@ -234,18 +234,21 @@ public class MainActivity extends Activity implements OnClickListener,
 			return true;
 			
 		case R.id.action_test:			
-			FragmentTest fragmentTest = (FragmentTest) getFragmentManager()
+			fragmentTest = (FragmentTest) getFragmentManager()
 					.findFragmentByTag(TAG_FRAGMENT_TEST);
 			
 			if (fragmentTest == null) {
+				fragmentTest = new FragmentTest(mContext);
+			}
 				ft = getFragmentManager().beginTransaction();
 				Bundle args = new Bundle();
+				args.putInt("selectedGroupIndex", fragmentTree.getSelectedGroupIndex());
+				fragmentTest.setArguments(args);
+				
 				ft.replace(R.id.fcDictionary, fragmentTest, TAG_FRAGMENT_TEST);
 				ft.addToBackStack(null);
 				ft.commit();
-			} else {
-				getFragmentManager().popBackStack();
-			}
+		
 			
 			return true;
 		case R.id.action_add_item:

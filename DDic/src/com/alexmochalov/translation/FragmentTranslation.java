@@ -38,6 +38,8 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 	private ImageButton ibList;
 	
 	public FragmentTranslationCallback callback = null;
+
+	
 	public interface FragmentTranslationCallback {
 		void btnForwardClicked(); 
 		void btnSelectDictionary(String name);

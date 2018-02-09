@@ -43,6 +43,11 @@ public class FragmentTree extends Fragment
 
 	private int firstVisible = -1;
 
+	public int getSelectedGroupIndex()
+	{
+		return selectedGroupIndex;
+	}
+
 	public void find()
 	{
 		LinearLayout layout = new LinearLayout(mContext);

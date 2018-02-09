@@ -1,15 +1,14 @@
 package com.alexmochalov.test;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-
-import com.alexmochalov.ddic.R;
+import android.app.*;
+import android.os.*;
+import android.support.v4.view.*;
+import android.util.*;
+import android.view.*;
+import android.view.View.*;
+import com.alexmochalov.ddic.*;
+import com.alexmochalov.tree.*;
+import java.util.*;
 
 public class FragmentTest extends FragmentM   implements OnClickListener{
 
@@ -30,7 +29,14 @@ public class FragmentTest extends FragmentM   implements OnClickListener{
 		
 		pager = (ViewPager)rootView.findViewById(R.id.pager);
 		
-		adapter = new PagerAdapterRemember(getActivity(), null);
+		Bundle args = getArguments();
+		int selectedGroupIndex =  args.getInt("selectedGroupIndex");
+		
+		
+
+		ArrayList<LineItem> list = new ArrayList(Tree.getItems(selectedGroupIndex));
+		
+		adapter = new PagerAdapterRemember(getActivity(), list);
 		
 		adapter.listener = new PagerAdapterRemember.OnEventListener() {
 			@Override

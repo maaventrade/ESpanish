@@ -1,30 +1,24 @@
 package com.alexmochalov.test;
 
+import android.app.*;
 import android.content.*;
 import android.support.v4.view.*;
+import android.util.*;
 import android.view.*;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import java.lang.reflect.Array;
+import android.view.View.*;
+import android.widget.*;
+import android.widget.AdapterView.*;
+import com.alexmochalov.ddic.*;
+import com.alexmochalov.main.*;
+import com.alexmochalov.tree.*;
 import java.util.*;
 
-import android.util.*;
-
-import com.alexmochalov.ddic.R;
-import com.alexmochalov.main.*;
-import com.alexmochalov.tree.LineItem;
-
-import android.widget.AdapterView.*;
-import android.widget.*;
+import android.view.View.OnClickListener;
 
 public class PagerAdapterRemember extends PagerAdapter
  {
 
-    private Context mContext;
+    private Activity mContext;
 	
     private ArrayList<LineItem> mObjects = new ArrayList<LineItem>();
 	
@@ -37,7 +31,7 @@ public class PagerAdapterRemember extends PagerAdapter
 		public void onButtonStartTestingClick();
 	}
 
-    public PagerAdapterRemember(Context context, ArrayList<LineItem> objects) {
+    public PagerAdapterRemember(Activity context, ArrayList<LineItem> objects) {
         mContext = context;
         mObjects = objects;
         

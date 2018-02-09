@@ -42,6 +42,12 @@ public class Tree {
 	private static ArrayList<LineGroup> listDataHeader = new ArrayList<LineGroup>();
 	private static HashMap<LineGroup, List<LineItem>> listDataChild = new HashMap<LineGroup, List<LineItem>>();
 	private static Line copyLine = null;
+
+	public static String getGrouName(int selectedGroupIndex)
+	{
+		// TODO: Implement this method
+		return null;
+	}
 /*
 	public static void clearText()
 	{
@@ -380,6 +386,13 @@ public class Tree {
 		return true;
 	}
 
+	public static List<LineItem> getItems(int selectedGroupIndex){
+		return listDataChild.get(listDataHeader.get(selectedGroupIndex));
+}
+
+	public int get1(){
+		return 1;
+	}
 
 	public static void setTranslation(int selectedGroupIndex,
 			int selectedItemIndex, String translation) {

@@ -3,12 +3,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <com.alexmochalov.fragments.ImageViewSlide
+    <com.alexmochalov.test.ImageViewSlide
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-  </com.alexmochalov.fragments.ImageViewSlide>
+	</com.alexmochalov.test.ImageViewSlide>
 
     <ListView
         android:id="@+id/samples"
