@@ -14,11 +14,11 @@ import com.alexmochalov.test.FragmentM.OnTestedListener;
 import com.alexmochalov.tree.*;
 
 import java.util.*;
+import android.widget.*;
 
 public class FragmentRemember extends Fragment  implements OnClickListener{
 
  	private ViewPager pager;
- 	
 
 	public OnRememberListener mCallback;
 
@@ -46,14 +46,31 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 		
 		Bundle args = getArguments();
 		int selectedGroupIndex =  args.getInt("selectedGroupIndex");
-		
-		
 
-		ArrayList<LineItem> list = new ArrayList(Tree.getItems(selectedGroupIndex));
+		final ArrayList<LineItem> list = new ArrayList(Tree.getItems(selectedGroupIndex));
 		
 		adapter = new PagerAdapterRemember(getActivity(), list);
 		
 		adapter.listener = new PagerAdapterRemember.OnEventListener() {
+
+			@Override
+			public void onButtonTranslate()
+			{
+				int index = pager.getCurrentItem();
+				LineItem l = list.get(index);
+				String name;
+
+				if (Utils.isInvertedDic())
+					name = l.getTranslation();
+				else
+					name = l.getName1();
+
+				IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
+				
+				if (mCallback != null)
+					mCallback.onNextWord(e);
+			}
+
 			@Override
 			public void onButtonChangeClick() {
 				int position = pager.getCurrentItem();

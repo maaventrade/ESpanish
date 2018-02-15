@@ -315,7 +315,10 @@ public class Tree {
 	
 	public static String getName(int selectedGroupIndex,
 								 int selectedItemIndex) {
-		if (selectedItemIndex == -1)
+		//group = -1
+		if (selectedGroupIndex == -1) 
+			return "";
+		else if (selectedItemIndex == -1)
 			return listDataHeader.get(selectedGroupIndex).getName(); 
 		else
 			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getName1(); 

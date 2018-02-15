@@ -1,27 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
 
-    <com.alexmochalov.test.ImageViewSlide
-        android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+	<com.alexmochalov.test.ImageViewSlide
+		android:id="@+id/slider"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
 	</com.alexmochalov.test.ImageViewSlide>
 
-    <ListView
-        android:id="@+id/samples"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5"
-		/>
+	<ListView
+		android:id="@+id/samples"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="0.5"/>
 
-    <Button
-        android:id="@+id/buttonStartTesting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Начать тестирование" />
-  
+	
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal">
+
+
+	<Button
+		android:id="@+id/btnStartTesting"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.5"
+		android:text="Начать тестирование"/>
+
+	<Button
+		android:id="@+id/btnTranslate"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.5"
+		android:text="Перевод"/>
 </LinearLayout>
+</LinearLayout>
+

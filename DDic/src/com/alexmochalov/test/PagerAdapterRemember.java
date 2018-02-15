@@ -33,6 +33,7 @@ public class PagerAdapterRemember extends PagerAdapter
 		public void onButtonChangeClick();
 		public void onButtonStartTestingClick();
 		public void onNextWord(IndexEntry e);
+		public void onButtonTranslate();
 	}
 
     public PagerAdapterRemember(Activity context, ArrayList<LineItem> objects) {
@@ -58,7 +59,7 @@ public class PagerAdapterRemember extends PagerAdapter
         text.setTexts(
 			Utils.firstLetterToUpperCase(remEntry.getName1()), 
 			Utils.firstLetterToUpperCase(remEntry.getTranslation()), isRus);
-        
+        /*
        if (listener != null){
     	   
     	   String name;
@@ -72,7 +73,7 @@ public class PagerAdapterRemember extends PagerAdapter
     	   
     	   listener.onNextWord(e);
        }
-        
+        */
 		
 		text.listener = new ImageViewSlide.OnEventListener(){
 			@Override
@@ -104,7 +105,7 @@ public class PagerAdapterRemember extends PagerAdapter
 
         String translation = "?????";//Dictionary.getTranslation(remEntry.getTranslation());
 		
-		Log.d("rem","tra: "+translation);
+		Log.d("rem","tra: "+remEntry.getName1());
 		
         String stringsArray[] = translation.split("\n");
 		for (String s:stringsArray)
@@ -145,7 +146,7 @@ public class PagerAdapterRemember extends PagerAdapter
 			
         listView.setAdapter(adapter);
         
-        Button btn = (Button)layout.findViewById(R.id.buttonStartTesting); 
+        Button btn = (Button)layout.findViewById(R.id.btnStartTesting); 
         btn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -153,6 +154,15 @@ public class PagerAdapterRemember extends PagerAdapter
 					listener.onButtonStartTestingClick();
 			}});
         
+		btn = (Button)layout.findViewById(R.id.btnTranslate); 
+        btn.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if (listener != null)
+						listener.onButtonTranslate();
+				}});
+        
+			
         return layout;
     }
 

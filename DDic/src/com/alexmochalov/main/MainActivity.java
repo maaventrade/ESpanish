@@ -10,13 +10,12 @@ import android.speech.tts.TextToSpeech.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.dic.FragmentDic.*;
-import com.alexmochalov.test.FragmentRemember;
-import com.alexmochalov.test.FragmentRemember.OnRememberListener;
-import com.alexmochalov.translation.FragmentTranslation;
+import com.alexmochalov.test.*;
+import com.alexmochalov.test.FragmentRemember.*;
+import com.alexmochalov.translation.*;
 import com.alexmochalov.tree.*;
 
 public class MainActivity extends Activity implements OnClickListener,
@@ -34,6 +33,10 @@ public class MainActivity extends Activity implements OnClickListener,
 	private FragmentRemember fragmentRemember;
 	private String TAG_FRAGMENT_REM = "TAG_FRAGMENT_REM";
 
+	private FragmentTest fragmentTest;
+	private String TAG_FRAGMENT_TEST= "TAG_FRAGMENT_TEST";
+
+	
 	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
 
 	private String CURRENTFRAG = "CURRENTFRAG";
@@ -123,6 +126,10 @@ public class MainActivity extends Activity implements OnClickListener,
 
 			fragmentRemember = (FragmentRemember) getFragmentManager()
 					.findFragmentByTag(TAG_FRAGMENT_REM);
+					
+			fragmentTest = (FragmentTest) getFragmentManager()
+				.findFragmentByTag(TAG_FRAGMENT_TEST);
+			
 
 		} else {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -262,8 +269,19 @@ public class MainActivity extends Activity implements OnClickListener,
 
 					@Override
 					public void onButtonStartTestingClick() {
-						// TODO Auto-generated method stub
+						if (fragmentTest == null) {
+							fragmentTest = new FragmentTest(mContext);
+						}
 						
+						FragmentTransaction
+						ft = getFragmentManager().beginTransaction();
+						Bundle args = new Bundle();
+						args.putInt("selectedGroupIndex", fragmentTree.getSelectedGroupIndex());
+						fragmentTest.setArguments(args);
+						
+						ft.replace(R.id.fcDictionary, fragmentTest, TAG_FRAGMENT_TEST);
+						ft.addToBackStack(null);
+						ft.commit();
 					}
 
 					@Override
