@@ -7,7 +7,7 @@
 	android:orientation="vertical">
 
 	<TextView
-		android:id="@+id/TextViewPhrase"
+		android:id="@+id/tvText"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
@@ -15,7 +15,7 @@
 		android:textSize="@dimen/text_size_medium"/>
 
 	<EditText
-		android:id="@+id/editText_phrase_transl"
+		android:id="@+id/etTranslation"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:ems="10"
@@ -29,7 +29,7 @@
 	</EditText>
 
 	<TextView
-		android:id="@+id/TextViewPhraseTranslation"
+		android:id="@+id/tvTranslation"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center_horizontal"
@@ -62,3 +62,4 @@
 
 </LinearLayout>
 
+												

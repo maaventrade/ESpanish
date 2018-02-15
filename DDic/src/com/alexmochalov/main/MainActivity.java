@@ -182,12 +182,9 @@ public class MainActivity extends Activity implements OnClickListener,
 			};
 
 			
-			
-			// String tag = prefs.getString(CURRENTFRAG, "TAG_FRAGMENT_DIC");
-			// if (tag.equals(TAG_FRAGMENT_DIC))
+			fragmentTest = new FragmentTest(mContext);
+
 			ft.add(R.id.fcDictionary, fragmentDic, TAG_FRAGMENT_DIC);
-			// else
-			// ft.add(R.id.fcDictionary, fragmentTree, TAG_FRAGMENT_TREE);
 			ft.commit();
 
 		}
@@ -269,11 +266,9 @@ public class MainActivity extends Activity implements OnClickListener,
 
 					@Override
 					public void onButtonStartTestingClick() {
-						if (fragmentTest == null) {
-							fragmentTest = new FragmentTest(mContext);
-						}
-						
+
 						FragmentTransaction
+						
 						ft = getFragmentManager().beginTransaction();
 						Bundle args = new Bundle();
 						args.putInt("selectedGroupIndex", fragmentTree.getSelectedGroupIndex());
