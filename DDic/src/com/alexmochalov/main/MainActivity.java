@@ -10,6 +10,8 @@ import android.speech.tts.TextToSpeech.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+
+import com.alexmochalov.conj.Conj;
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.dic.FragmentDic.*;
@@ -35,7 +37,6 @@ public class MainActivity extends Activity implements OnClickListener,
 
 	private FragmentTest fragmentTest;
 	private String TAG_FRAGMENT_TEST= "TAG_FRAGMENT_TEST";
-
 	
 	private final static String DICTIONARI_NAME = "DICTIONARI_NAME";
 
@@ -130,7 +131,7 @@ public class MainActivity extends Activity implements OnClickListener,
 			fragmentTest = (FragmentTest) getFragmentManager()
 				.findFragmentByTag(TAG_FRAGMENT_TEST);
 			
-
+			
 		} else {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 
@@ -238,6 +239,9 @@ public class MainActivity extends Activity implements OnClickListener,
 			}
 			return true;
 			
+		case R.id.action_conj:
+			Conj.showTable(mContext, fragmentTree.getSelectedItem());
+			return true;
 		case R.id.action_test:			
 			fragmentRemember = (FragmentRemember) getFragmentManager()
 					.findFragmentByTag(TAG_FRAGMENT_REM);

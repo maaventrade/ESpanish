@@ -22,7 +22,8 @@
 	<color name= "navy_light">#0000FF</color>
 	
 	<color name= "blue1">#6F757B</color>
-	
+    <color name="green1" >#397b76</color>
+		
 	<color name= "gray_light">#EEEEEE</color>
 	
 	<color name= "sky_blue">#0099ff</color>

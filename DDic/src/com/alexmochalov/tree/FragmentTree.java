@@ -106,7 +106,7 @@ public class FragmentTree extends Fragment
 									LineGroup l = groups.get(i);
 									for (int k = si+1; k < childs.get(l).size(); k++){
 										LineItem item = childs.get(l).get(k);
-										if (item.getName1().startsWith(text)
+										if (item.getText().startsWith(text)
 											|| item.getName2().startsWith(text)
 											|| item.getTranslation().startsWith(text)){
 											lvTree.expandGroup(i);
@@ -122,7 +122,7 @@ public class FragmentTree extends Fragment
 									for (int k = 0; k < childs.get(l).size(); k++){
 										//Log.d("", ""+l.getName()+"  "+k);
 										LineItem item = childs.get(l).get(k);
-										if (item.getName1().startsWith(text)
+										if (item.getText().startsWith(text)
 											|| item.getName2().startsWith(text)
 											|| item.getTranslation().startsWith(text)){
 											lvTree.expandGroup(i);
@@ -605,6 +605,10 @@ public class FragmentTree extends Fragment
 			adapterTree.notifyDataSetChanged();
 		else
 			Toast.makeText(mContext, "Group is not empty!", Toast.LENGTH_LONG).show();
+	}
+
+	public LineItem getSelectedItem() {
+		return Tree.getSelectedItem(selectedGroupIndex, selectedItemIndex);
 	}
 
 

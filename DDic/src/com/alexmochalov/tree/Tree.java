@@ -321,7 +321,7 @@ public class Tree {
 		else if (selectedItemIndex == -1)
 			return listDataHeader.get(selectedGroupIndex).getName(); 
 		else
-			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getName1(); 
+			return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getText(); 
 
 	}
 	
@@ -406,5 +406,15 @@ public class Tree {
 			listDataHeader.get(selectedGroupIndex).setName(translation); 
 		else
 			listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).setTranslation(translation); 
+	}
+	public static LineItem getSelectedItem(int selectedGroupIndex,
+			int selectedItemIndex) {
+		
+		if (selectedItemIndex == -1)
+			return null; 
+		else {
+			int i = 1;
+				return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex);
+			}
 	}
 }

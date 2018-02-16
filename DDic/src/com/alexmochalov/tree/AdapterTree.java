@@ -134,7 +134,7 @@ public class AdapterTree extends BaseExpandableListAdapter
 		
 			convertView.setPadding(40, 0, 0, 0);
 			LineItem record = (LineItem)getChild(groupPosition, LinePosition);
-			tvName1.setText(record.getName1());
+			tvName1.setText(record.getText());
 			TextView tvName2 = (TextView)convertView.findViewById(R.id.tvName2);
 			tvName2.setText(record.getName2());
 			

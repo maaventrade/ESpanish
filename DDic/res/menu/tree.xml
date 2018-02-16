@@ -1,6 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.alexmochalov.enru.MainActivity" >
+
+    <item
+        android:id="@+id/action_conj"
+        android:orderInCategory="2"
+        android:icon="@drawable/edit"
+        android:title="@string/action_edit" 
+     android:showAsAction="always"/>
     
     <item
         android:id="@+id/action_test"

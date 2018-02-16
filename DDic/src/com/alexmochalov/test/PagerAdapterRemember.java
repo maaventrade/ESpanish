@@ -57,7 +57,7 @@ public class PagerAdapterRemember extends PagerAdapter
         ImageViewSlide text = (ImageViewSlide)layout.findViewById(R.id.slider);
 		
         text.setTexts(
-			Utils.firstLetterToUpperCase(remEntry.getName1()), 
+			Utils.firstLetterToUpperCase(remEntry.getText()), 
 			Utils.firstLetterToUpperCase(remEntry.getTranslation()), isRus);
         /*
        if (listener != null){
@@ -96,7 +96,7 @@ public class PagerAdapterRemember extends PagerAdapter
 				public void onItemClick(AdapterView<?> parent, View view, int position , long p4)
 				{
 					DialogExample dialog = new DialogExample(mContext,
-							Utils.firstLetterToUpperCase(remEntry.getName1())+" ("+remEntry.getTranslation()+")",
+							Utils.firstLetterToUpperCase(remEntry.getText())+" ("+remEntry.getTranslation()+")",
 															 arrayListExamples.get(position),
 															 arrayListRus.get(position));
 					dialog.show();
@@ -105,7 +105,7 @@ public class PagerAdapterRemember extends PagerAdapter
 
         String translation = "?????";//Dictionary.getTranslation(remEntry.getTranslation());
 		
-		Log.d("rem","tra: "+remEntry.getName1());
+		Log.d("rem","tra: "+remEntry.getText());
 		
         String stringsArray[] = translation.split("\n");
 		for (String s:stringsArray)
@@ -184,7 +184,7 @@ public class PagerAdapterRemember extends PagerAdapter
    
     public String getText(int position) {
 		//Log.d("u",""+mObjects.size()+"  "+position);
-    	return mObjects.get( position % mObjects.size()).getName1();
+    	return mObjects.get( position % mObjects.size()).getText();
         //return mContext.getString(customPagerEnum.getTitleResId());
     }
 

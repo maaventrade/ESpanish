@@ -22,15 +22,15 @@ public class FragmentTest extends Fragment
 
 	private Context mContext;
 	
-	private Button btnTest;
+	private ImageButton ibTest;
+	private boolean buttonNext = false;
 	
 	private TextView tvText;
 	private TextView tvTranslation;
 	
 	private View rootView;
 	
-	private ArrayList<LineItem> list;
-	private int alMarks[];
+	private ArrayList<TestItem> list;
 	
 	private int mIndex = 0;
 
@@ -64,18 +64,22 @@ public class FragmentTest extends Fragment
 		String text = "";
 		String translation = "";
 		
-		LineItem l = list.get(mIndex);
+		TestItem l = list.get(mIndex);
 		String name;
 
-		if (direction == 1)
+		if (direction == 1){
 			name = l.getTranslation();
-		else
-			name = l.getName1();
+			translation = l.getText();
+		}	
+		else {
+			name = l.getText();
+			translation = l.getTranslation();
+		}	
 
 		//IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
 		
 		tvText.setText(Utils.firstLetterToUpperCase(name));
-		//tvTranslation.setText(Utils.firstLetterToUpperCase(translation));
+		tvTranslation.setText(Utils.firstLetterToUpperCase(translation));
 		
 		//////////////////////////////////////////////////////////
 		
@@ -106,7 +110,7 @@ public class FragmentTest extends Fragment
 
 	void init(){
 		/*thisFragment = this;
-		mContext = this.getActivity();
+		mContext =this.getActivity();
 
 		SharedPreferences prefs;
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -125,26 +129,22 @@ public class FragmentTest extends Fragment
 		Bundle args = getArguments();
 		int selectedGroupIndex =  args.getInt("selectedGroupIndex");
         
-		list = new ArrayList<LineItem>(Tree.getItems(selectedGroupIndex));
+		list = new ArrayList<TestItem>();
+		for (LineItem l:Tree.getItems(selectedGroupIndex))
+			list.add(new TestItem(l.getText(), l.getTranslation()));
 		
-		alMarks = new int[list.size()];
-		
-		for (int i = 0; i < alMarks.length; i++)
-		  alMarks[i] = 0;
-		  
        // init();
 		nextIndex();
     	next();
     	
-	    btnTest = (Button)rootView.findViewById(R.id.btnTest);
-	    btnTest.setOnClickListener(new OnClickListener(){
+    	ibTest = (ImageButton)rootView.findViewById(R.id.ibTest);
+    	ibTest.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 
 				// Button Next is pressed
-				if (btnTest.getText().equals(mContext.getResources().getString(R.string.button_next))){
-			    
+				if (buttonNext){
 					if (nextIndex() == -1){
 						//getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
 					} else {
@@ -153,24 +153,25 @@ public class FragmentTest extends Fragment
 						EditText editText = (EditText)rootView.findViewById(R.id.etTranslation);
 						editText.setText("");
 						
-						btnTest.setText(mContext.getResources().getString(R.string.button_test));
+						ibTest.setImageResource(R.drawable.icon_ok);
+						buttonNext = false;
 				
 					}
 				}	
 				else {
 					// Button Проверить is pressed
-					btnTest.setText(mContext.getResources().getString(R.string.button_next));
+					ibTest.setImageResource(R.drawable.icon_next);
+					buttonNext = true;
+					
 					EditText etTranslation = (EditText)rootView.findViewById(R.id.etTranslation);
 
 					//TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
 					
-					boolean result = false;//Rules.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData.getDirection());
-					
-					//result = true;
 					tvTranslation.setVisibility(View.VISIBLE);
 					
-					if (result){
-						//mTranslation.setTextColor(getColor(mContext, R.color.green1));
+					if (list.get(mIndex).test(etTranslation.getText().toString())) 
+					{
+						tvTranslation.setTextColor(getColor(mContext, R.color.green1));
 						
 						//setTested(MenuData.getDirection());
 						
@@ -222,12 +223,12 @@ public class FragmentTest extends Fragment
 		int size = list.size();
 
 		mIndex = (int) (Math.random() * size);
-		while (mIndex < size && alMarks[mIndex] == 3)
+		while (mIndex < size && list.get(mIndex).getCount() == 3)
 			mIndex++;
 
 		if (mIndex == size) {
 			mIndex = 0;
-			while (mIndex < size && alMarks[mIndex] == 3)
+			while (mIndex < size && list.get(mIndex).getCount() == 3)
 				mIndex++;
 		}
 //Log.d("i","mi"+mIndex);

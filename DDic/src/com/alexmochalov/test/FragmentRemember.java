@@ -10,7 +10,6 @@ import android.view.View.*;
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
-import com.alexmochalov.test.FragmentM.OnTestedListener;
 import com.alexmochalov.tree.*;
 
 import java.util.*;
@@ -63,7 +62,7 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 				if (Utils.isInvertedDic())
 					name = l.getTranslation();
 				else
-					name = l.getName1();
+					name = l.getText();
 
 				IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
 				
