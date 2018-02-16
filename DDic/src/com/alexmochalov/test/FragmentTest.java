@@ -22,7 +22,7 @@ public class FragmentTest extends Fragment
 
 	private Context mContext;
 	
-	private Button button_test;
+	private Button btnTest;
 	
 	private TextView tvText;
 	private TextView tvTranslation;
@@ -30,8 +30,9 @@ public class FragmentTest extends Fragment
 	private View rootView;
 	
 	private ArrayList<LineItem> list;
+	private int alMarks[];
 	
-	private int index = 0;
+	private int mIndex = 0;
 
 	public FragmentTest(Activity context)
 	{
@@ -63,7 +64,7 @@ public class FragmentTest extends Fragment
 		String text = "";
 		String translation = "";
 		
-		LineItem l = list.get(index);
+		LineItem l = list.get(mIndex);
 		String name;
 
 		if (direction == 1)
@@ -124,44 +125,49 @@ public class FragmentTest extends Fragment
 		Bundle args = getArguments();
 		int selectedGroupIndex =  args.getInt("selectedGroupIndex");
         
-		list = new ArrayList(Tree.getItems(selectedGroupIndex));
-        
-        init();
-		//MenuData.nextIndex();
+		list = new ArrayList<LineItem>(Tree.getItems(selectedGroupIndex));
+		
+		alMarks = new int[list.size()];
+		
+		for (int i = 0; i < alMarks.length; i++)
+		  alMarks[i] = 0;
+		  
+       // init();
+		nextIndex();
     	next();
     	
-	    button_test = (Button)rootView.findViewById(R.id.button_test);
-	    button_test.setOnClickListener(new OnClickListener(){
+	    btnTest = (Button)rootView.findViewById(R.id.btnTest);
+	    btnTest.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 
 				// Button Next is pressed
-				if (button_test.getText().equals(mContext.getResources().getString(R.string.button_next))){
-			    /*
-					if (MenuData.nextIndex() == -1){
-						getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
+				if (btnTest.getText().equals(mContext.getResources().getString(R.string.button_next))){
+			    
+					if (nextIndex() == -1){
+						//getActivity().getFragmentManager().beginTransaction().remove(thisFragment).commit();
 					} else {
 						next();
 						
-						EditText editText = (EditText)rootView.findViewById(R.id.editText_phrase_transl);
+						EditText editText = (EditText)rootView.findViewById(R.id.etTranslation);
 						editText.setText("");
 						
-						button_test.setText(mContext.getResources().getString(R.string.button_test));
+						btnTest.setText(mContext.getResources().getString(R.string.button_test));
+				
 					}
-					*/
 				}	
 				else {
 					// Button Проверить is pressed
-					button_test.setText(mContext.getResources().getString(R.string.button_next));
-					EditText editText = (EditText)rootView.findViewById(R.id.editText_phrase_transl);
+					btnTest.setText(mContext.getResources().getString(R.string.button_next));
+					EditText etTranslation = (EditText)rootView.findViewById(R.id.etTranslation);
 
-					TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
+					//TextView mTranslation = (TextView)rootView.findViewById(R.id.TextViewPhraseTranslation);
 					
 					boolean result = false;//Rules.testRus(editText.getText().toString(), mTranslation.getText().toString(),MenuData.getDirection());
 					
 					//result = true;
-					mTranslation.setVisibility(View.VISIBLE);
+					tvTranslation.setVisibility(View.VISIBLE);
 					
 					if (result){
 						//mTranslation.setTextColor(getColor(mContext, R.color.green1));
@@ -170,7 +176,8 @@ public class FragmentTest extends Fragment
 						
 					}
 					else 
-						mTranslation.setTextColor(Color.RED);
+						tvTranslation.setTextColor(Color.RED);
+						
 				}	
 				
 			}});
@@ -209,6 +216,28 @@ public class FragmentTest extends Fragment
 			*/
 			return "";
 	}	
+	
+	
+	public int nextIndex() {
+		int size = list.size();
+
+		mIndex = (int) (Math.random() * size);
+		while (mIndex < size && alMarks[mIndex] == 3)
+			mIndex++;
+
+		if (mIndex == size) {
+			mIndex = 0;
+			while (mIndex < size && alMarks[mIndex] == 3)
+				mIndex++;
+		}
+//Log.d("i","mi"+mIndex);
+		if (mIndex <size)
+			return mIndex;
+		else {
+			mIndex = -1;
+			return -1;
+		}
+	}
 	
 }
 
