@@ -38,8 +38,8 @@ public class TestItem {
 
 		public boolean test(String string) {
 			return
-				Utils.isInvertedDic() && string.equals(mText) ||
-				!Utils.isInvertedDic() && string.equals(mTranslation);							
+				!Utils.isInvertedDic() && string.equals(mText) ||
+				Utils.isInvertedDic() && string.equals(mTranslation);							
 		}
 
 	}
