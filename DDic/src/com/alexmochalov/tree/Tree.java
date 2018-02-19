@@ -417,4 +417,8 @@ public class Tree {
 				return listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex);
 			}
 	}
+	public static int getIndex(String text) {
+		// TODO Auto-generated method stub
+		return listDataHeader.indexOf(text);
+	}
 }

@@ -22,6 +22,13 @@
         android:showAsAction="always"/>
     
     <item
+        android:id="@+id/action_test"
+        android:orderInCategory="4"
+        android:icon="@drawable/test1"
+        android:title="@string/action_test" 
+        android:showAsAction="always"/>
+    
+    <item
         android:id="@+id/action_reindex"
         android:orderInCategory="3"
         android:title="@string/action_reindex"/>

@@ -255,7 +255,6 @@ public class FragmentTree extends Fragment
 		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
 		lvTree.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-
 		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
 
 		adapterTree.listener = new AdapterTree.OnButtonClickListener(){

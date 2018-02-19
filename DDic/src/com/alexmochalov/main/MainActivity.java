@@ -216,7 +216,7 @@ public class MainActivity extends Activity implements OnClickListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		FragmentTransaction ft;
+		final FragmentTransaction ft;
 
 		AlertDialog.Builder dialog;
 
@@ -242,57 +242,23 @@ public class MainActivity extends Activity implements OnClickListener,
 		case R.id.action_conj:
 			Conj.showTable(mContext, fragmentTree.getSelectedItem());
 			return true;
-		case R.id.action_test:			
-			fragmentRemember = (FragmentRemember) getFragmentManager()
-					.findFragmentByTag(TAG_FRAGMENT_REM);
-			
-			if (fragmentRemember == null) {
-				fragmentRemember = new FragmentRemember(mContext);
-			}
-				ft = getFragmentManager().beginTransaction();
-				Bundle args = new Bundle();
-				args.putInt("selectedGroupIndex", fragmentTree.getSelectedGroupIndex());
-				fragmentRemember.setArguments(args);
+		case R.id.action_test:	
+			DialogSelectTest dialogSelectTest = new DialogSelectTest(mContext);
+			dialogSelectTest.callback = new DialogSelectTest.CallbackOk() {
 				
-				fragmentRemember.mCallback = new OnRememberListener(){
-
-					@Override
-					public void onTested() {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onFinished(Fragment thisFragment) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onButtonStartTestingClick() {
-
-						FragmentTransaction
-						
-						ft = getFragmentManager().beginTransaction();
-						Bundle args = new Bundle();
-						args.putInt("selectedGroupIndex", fragmentTree.getSelectedGroupIndex());
-						fragmentTest.setArguments(args);
-						
-						ft.replace(R.id.fcDictionary, fragmentTest, TAG_FRAGMENT_TEST);
-						ft.addToBackStack(null);
-						ft.commit();
-					}
-
-					@Override
-					public void onNextWord(IndexEntry indexEntry) {
-						fragmentTranslation.setTranslation(indexEntry, 2);
-					}};
-				
-				ft.replace(R.id.fcDictionary, fragmentRemember, TAG_FRAGMENT_REM);
-				ft.addToBackStack(null);
-				ft.commit();
-		
-			
+				@Override
+				public void onOk(int index) {
+					final FragmentTransaction ft = getFragmentManager().beginTransaction();
+					Bundle args = new Bundle();
+					args.putInt("selectedGroupIndex", index);
+					fragmentTest.setArguments(args);
+					
+					ft.replace(R.id.fcDictionary, fragmentTest, TAG_FRAGMENT_TEST);
+					ft.addToBackStack(null);
+					ft.commit();
+				}
+			}; 
+			dialogSelectTest.show();
 			return true;
 		case R.id.action_add_item:
 			fragmentTree.edit(false, true);
