@@ -9,12 +9,7 @@
         android:title="@string/action_edit" 
      android:showAsAction="always"/>
     
-    <item
-        android:id="@+id/action_test"
-        android:orderInCategory="5"
-        android:title="@string/action_test" 
-     android:showAsAction="always"/>
-    
+  
     <item
         android:id="@+id/action_add_item"
         android:orderInCategory="10"

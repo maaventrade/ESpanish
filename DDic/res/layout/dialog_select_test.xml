@@ -17,7 +17,6 @@
         android:id="@+id/lvTest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/text_size_medium"
         android:layout_weight="0.9"
         android:listSelector="@drawable/selector_list_item" />
         
@@ -43,12 +42,20 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/btnOk"
+            android:id="@+id/btnRemember"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
+            android:text="@string/action_remember" />
+
+        <Button
+            android:id="@+id/btnTest"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/ok" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="@string/action_test" />
 
         <Button
             android:id="@+id/btnCancel"

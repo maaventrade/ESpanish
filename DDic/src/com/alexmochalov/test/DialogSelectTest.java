@@ -23,7 +23,7 @@ public class DialogSelectTest extends Dialog
 
 	public CallbackOk callback = null;
 	public interface CallbackOk {
-		void onOk(int text); 
+		void onOk(int text, String action); 
 	} 
 	
 	private Context mContext;
@@ -65,13 +65,24 @@ public class DialogSelectTest extends Dialog
 
 
 		
-		Button btnOk = (Button)findViewById(R.id.btnOk);
-		btnOk.setOnClickListener(new View.OnClickListener(){
+		Button btnRemember = (Button)findViewById(R.id.btnRemember);
+		btnRemember.setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View p1)
 				{
 					if (callback != null ) 
-						callback.onOk(selected);
+						callback.onOk(selected, "remember");
+					dismiss();
+				}
+			});
+		
+		Button btnTest = (Button)findViewById(R.id.btnTest);
+		btnTest.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					if (callback != null ) 
+						callback.onOk(selected, "test");
 					dismiss();
 				}
 			});

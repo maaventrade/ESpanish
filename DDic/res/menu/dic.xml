@@ -21,9 +21,10 @@
         android:title="@string/action_tree" 
         android:showAsAction="always"/>
     
+	
     <item
         android:id="@+id/action_test"
-        android:orderInCategory="4"
+        android:orderInCategory="5"
         android:icon="@drawable/test1"
         android:title="@string/action_test" 
         android:showAsAction="always"/>

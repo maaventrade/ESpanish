@@ -18,17 +18,22 @@ import android.widget.*;
 public class FragmentRemember extends Fragment  implements OnClickListener{
 
  	private ViewPager pager;
+	private PagerAdapterRemember adapter;
 
-	public OnRememberListener mCallback;
+	private EventListener mCallback;
 
-	public interface OnRememberListener {
+	public interface EventListener {
 		public void onTested();
 		public void onFinished(Fragment thisFragment);
 		public void onButtonStartTestingClick();
 		public void onNextWord(IndexEntry e);
+		
+		public void onTranslate(IndexEntry e);		
 	}
  	  
-	private PagerAdapterRemember adapter;
+	public void setListener(EventListener e){
+		mCallback = e; 
+	}
 	
 	@Override
 	public void onStart() {
@@ -67,7 +72,7 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 				IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
 				
 				if (mCallback != null)
-					mCallback.onNextWord(e);
+					mCallback.onTranslate(e);
 			}
 
 			@Override

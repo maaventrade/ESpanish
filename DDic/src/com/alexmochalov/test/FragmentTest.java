@@ -14,6 +14,7 @@ import android.widget.*;
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.dic.IndexEntry;
 import com.alexmochalov.main.Utils;
+import com.alexmochalov.test.FragmentRemember.EventListener;
 import com.alexmochalov.tree.LineItem;
 import com.alexmochalov.tree.Tree;
 
@@ -33,7 +34,22 @@ public class FragmentTest extends Fragment
 	private ArrayList<TestItem> list;
 	
 	private int mIndex = 0;
+	
+	private int direction;
 
+	private EventListener mCallback;
+	
+	public interface EventListener {
+		public void onTested();
+		public void onFinished(Fragment thisFragment);
+		public void onButtonStartTestingClick();
+		public void onNextWord(IndexEntry e);
+	}
+ 	  
+	public void setListener(EventListener e){
+		mCallback = e; 
+	}
+	
 	public FragmentTest(Activity context)
 	{
 		super();
@@ -54,7 +70,7 @@ public class FragmentTest extends Fragment
 		//MenuData.getTypeOfTheStep(mTextViewText, mTranslation);
 		//////////////////////////////////////////////////////////
 		double random = Math.random();
-		int direction;
+		
 		
 		if (random > 0.5f)
 			direction =  2;
@@ -169,7 +185,7 @@ public class FragmentTest extends Fragment
 					
 					tvTranslation.setVisibility(View.VISIBLE);
 					
-					if (list.get(mIndex).test(etTranslation.getText().toString())) 
+					if (list.get(mIndex).test(etTranslation.getText().toString(), direction)) 
 					{
 						tvTranslation.setTextColor(getColor(mContext, R.color.green1));
 						

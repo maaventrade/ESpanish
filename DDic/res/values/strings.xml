@@ -40,7 +40,7 @@
 		<string name="action_edit1">Edit1</string>
 		<string name="action_test">Test</string>
 					<string name="button_test">Control</string>
-		
+	<string name="action_remember">Remember</string>
 	<string name="action_find">Find</string>
 	<string name="find">Find text</string>
 		

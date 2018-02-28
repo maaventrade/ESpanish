@@ -29,6 +29,8 @@ public class PagerAdapterRemember extends PagerAdapter
 	
 	public OnEventListener listener;
 	
+	private Button btnTranslate;
+	
 	public interface OnEventListener{
 		public void onButtonChangeClick();
 		public void onButtonStartTestingClick();
@@ -55,6 +57,17 @@ public class PagerAdapterRemember extends PagerAdapter
         collection.addView(layout);
        
         ImageViewSlide text = (ImageViewSlide)layout.findViewById(R.id.slider);
+		btnTranslate = (Button)layout.findViewById(R.id.btnTranslate);
+		btnTranslate.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View p1)
+				{
+					if (listener != null)
+						listener.onButtonTranslate();
+				}
+			});
+		
 		
         text.setTexts(
 			Utils.firstLetterToUpperCase(remEntry.getText()), 
@@ -146,21 +159,6 @@ public class PagerAdapterRemember extends PagerAdapter
 			
         listView.setAdapter(adapter);
         
-        Button btn = (Button)layout.findViewById(R.id.btnStartTesting); 
-        btn.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				if (listener != null)
-					listener.onButtonStartTestingClick();
-			}});
-        
-		btn = (Button)layout.findViewById(R.id.btnTranslate); 
-        btn.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					if (listener != null)
-						listener.onButtonTranslate();
-				}});
         
 			
         return layout;

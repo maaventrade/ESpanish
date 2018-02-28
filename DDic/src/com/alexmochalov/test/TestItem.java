@@ -36,10 +36,10 @@ public class TestItem {
 			return mCount;
 		}
 
-		public boolean test(String string) {
+	public boolean test(String string, int direction) {
 			return
-				!Utils.isInvertedDic() && string.equals(mText) ||
-				Utils.isInvertedDic() && string.equals(mTranslation);							
+				direction == 1 && string.equals(mText) ||
+				direction == 2 && string.equals(mTranslation);							
 		}
 
 	}
