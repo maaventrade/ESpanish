@@ -23,7 +23,12 @@
                     android:text="My File.xml"
                     android:textColor="@drawable/item_text_selector1" 
                     android:textAppearance="?android:attr/textAppearanceLarge"/>
-        
 
+                <TextView
+                    android:id="@+id/tvCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

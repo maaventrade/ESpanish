@@ -18,6 +18,11 @@ public class LineGroup extends Line
 	{
 		return mName;
 	}
+
+	public String getItemsCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

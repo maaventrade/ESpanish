@@ -306,6 +306,7 @@ OnInitListener
 					@Override
 					public void onOk(int index, String action)
 					{
+						
 						final FragmentTransaction ft = getFragmentManager().beginTransaction();
 						Bundle args = new Bundle();
 						args.putInt("selectedGroupIndex", index);

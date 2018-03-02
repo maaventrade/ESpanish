@@ -70,6 +70,12 @@ public class DialogSelectTest extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
+					
+					if (selected < 0){
+						Toast.makeText(mContext, "Select string", Toast.LENGTH_LONG).show();
+						return;
+					}
+					
 					if (callback != null ) 
 						callback.onOk(selected, "remember");
 					dismiss();
@@ -81,6 +87,12 @@ public class DialogSelectTest extends Dialog
 				@Override
 				public void onClick(View p1)
 				{
+					
+					if (selected < 0){
+						Toast.makeText(mContext, "Select string", Toast.LENGTH_LONG).show();
+						return;
+					}
+					
 					if (callback != null ) 
 						callback.onOk(selected, "test");
 					dismiss();

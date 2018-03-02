@@ -50,8 +50,13 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 		
 		Bundle args = getArguments();
 		int selectedGroupIndex =  args.getInt("selectedGroupIndex");
-
+		
 		final ArrayList<LineItem> list = new ArrayList(Tree.getItems(selectedGroupIndex));
+		
+		mContext.getActionBar().setTitle(mContext.getResources().getString(R.string.action_remember)
+				+": "
+				+Tree.getGrouName(selectedGroupIndex)
+				+" ("+list.size()+")");
 		
 		adapter = new PagerAdapterRemember(getActivity(), list);
 		

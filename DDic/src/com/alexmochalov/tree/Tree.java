@@ -41,12 +41,11 @@ public class Tree {
 
 	private static ArrayList<LineGroup> listDataHeader = new ArrayList<LineGroup>();
 	private static HashMap<LineGroup, List<LineItem>> listDataChild = new HashMap<LineGroup, List<LineItem>>();
-	private static Line copyLine = null;
+	private static LineItem copyLine = null;
 
 	public static String getGrouName(int selectedGroupIndex)
 	{
-		// TODO: Implement this method
-		return null;
+		return listDataHeader.get(selectedGroupIndex).getName();
 	}
 /*
 	public static void clearText()
@@ -62,35 +61,36 @@ public class Tree {
 */
 	public static int paste(int selectedGroupIndex)
 	{
-		/*Line key = listDataHeader.get(selectedGroupIndex);
-		Line newLine = new Line(copyLine);
+	
+		Line key = listDataHeader.get(selectedGroupIndex);
+		LineItem newLine = new LineItem(copyLine);
 		Boolean find = false;
 		
 		String name = copyLine.getNameEng();
 		
-
 		for (int i = 0; i < listDataChild.get(key).size(); i++){
 			if (listDataChild.get(key).get(i).getText().compareTo(name) > 0){
 				listDataChild.get(key).add(i, newLine);
 				find = true;
 				break;
 			}}
+		
 		if (!find)
-			listDataChild.get(key).add(newLine); 
+			listDataChild.get(key).add(newLine);
+		
 		return listDataChild.get(key).indexOf(newLine);
-		*/
-		return 0;
+		
 	}
 	
 	
 	public static void copyItem(int selectedGroupIndex, int selectedItemIndex)
 	{
-		/*if (selectedGroupIndex >= 0 && selectedItemIndex >= 0){
+		if (selectedGroupIndex >= 0 && selectedItemIndex >= 0){
 			
-			copyLine = new Line( listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getText(),
-								listDataChild.get(listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex).getTranslation());
+			copyLine = new LineItem(
+					listDataChild.get(
+							listDataHeader.get(selectedGroupIndex)).get(selectedItemIndex));
 		}		
-		*/
 	}
 
 	public static String getTranslation(int selectedGroupIndex, int selectedItemIndex)
@@ -420,5 +420,14 @@ public class Tree {
 	public static int getIndex(String text) {
 		// TODO Auto-generated method stub
 		return listDataHeader.indexOf(text);
+	}
+	public static int getChildsCount() {
+		int count = 0;
+
+		for (LineGroup i : listDataHeader){
+			count = count + listDataChild.get(i).size();
+		}
+		
+		return count;
 	}
 }

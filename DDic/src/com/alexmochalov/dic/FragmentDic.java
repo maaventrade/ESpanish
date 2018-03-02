@@ -104,6 +104,7 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 		
 		mContext.getActionBar().setDisplayHomeAsUpEnabled(false);
+		mContext.getActionBar().setDisplayShowHomeEnabled(true);
 		
 		// Read preferences 
 		SharedPreferences prefs;

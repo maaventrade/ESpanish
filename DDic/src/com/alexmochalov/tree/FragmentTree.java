@@ -14,13 +14,19 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.alexmochalov.conj.Conj;
 import com.alexmochalov.ddic.R;
 
 import java.io.File;
 import java.util.*;
 
+import com.alexmochalov.dic.Dictionary;
+import com.alexmochalov.dic.FragmentDic;
 import com.alexmochalov.dic.IndexEntry;
+import com.alexmochalov.main.MainActivity;
+import com.alexmochalov.main.TtsUtils;
 import com.alexmochalov.main.Utils;
+import com.alexmochalov.test.DialogSelectTest;
 import com.alexmochalov.tree.DialogEdit.CallbackOk;
 
 import android.view.SurfaceHolder.*;
@@ -42,6 +48,99 @@ public class FragmentTree extends Fragment
 	private int selectedItemIndex = -1;
 
 	private int firstVisible = -1;
+
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+
+		setHasOptionsMenu(true);
+
+		mContext.getActionBar().setDisplayHomeAsUpEnabled(true);
+		mContext.getActionBar().setDisplayShowHomeEnabled(false);
+		
+		setTitle();
+		
+        rootView = inflater.inflate(R.layout.fragment_tree, container, false);
+
+		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
+		lvTree.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
+
+		adapterTree.listener = new AdapterTree.OnButtonClickListener(){
+
+			@Override
+			public void onEdit(String text)
+			{
+				//Toast.makeText(mContext, ""+selectedItemIndex, Toast.LENGTH_LONG).show();
+				//if (listener != null && text.length() > 0)
+				//listener.onGoSelected(text);
+
+			}
+
+			@Override
+			public void onAdd(String text)
+			{
+
+			}
+		};
+
+		lvTree.setAdapter(adapterTree);
+
+		lvTree.setOnGroupClickListener(new OnGroupClickListener() {
+				@Override
+				public boolean onGroupClick(ExpandableListView parent, View v,
+											int groupPosition, long id)
+				{
+
+					int index = parent.getFlatListPosition(ExpandableListView
+														   .getPackedPositionForGroup(groupPosition));
+					parent.setItemChecked(index, true);
+
+					selectedGroupIndex = groupPosition;
+					selectedItemIndex = -1;
+
+					return false;
+				}
+			});
+
+		lvTree.setOnChildClickListener(new OnChildClickListener() {
+
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v,
+											int groupPosition, int childPosition, long id)
+				{
+
+					int index = parent.getFlatListPosition(ExpandableListView
+														   .getPackedPositionForChild(groupPosition, childPosition));
+					parent.setItemChecked(index, true);
+
+					selectedGroupIndex = groupPosition;
+					selectedItemIndex = childPosition;
+
+					callItemSelected();
+
+					return true;
+				}
+
+
+			});
+
+
+		if (firstVisible >= 0)
+		{
+			lvTree.setSelection(firstVisible);
+		}
+
+		return rootView;
+	}
+	 
+	private void setTitle() {
+		mContext.getActionBar().setTitle(mContext.getResources().getString(R.string.action_tree)
+				+ " ("
+				+ Tree.getChildsCount()
+				+")");
+	}
 
 	public int getSelectedGroupIndex()
 	{
@@ -169,7 +268,7 @@ public class FragmentTree extends Fragment
 		mModified = true;
 		selectedItemIndex = Tree.paste(selectedGroupIndex);
 		adapterTree.notifyDataSetChanged();
-
+		setTitle();
 	}
 
 	public void copyItem()
@@ -242,117 +341,6 @@ public class FragmentTree extends Fragment
 		super();
 	}
 
-	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-
-		setHasOptionsMenu(true);
-
-		mContext.getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-        rootView = inflater.inflate(R.layout.fragment_tree, container, false);
-
-		lvTree = (ExpandableListView)rootView.findViewById(R.id.ListViewTree);
-		lvTree.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-		adapterTree = new AdapterTree(mContext, mContext, Tree.getGroups(), Tree.getChilds());
-
-		adapterTree.listener = new AdapterTree.OnButtonClickListener(){
-
-			@Override
-			public void onEdit(String text)
-			{
-				//Toast.makeText(mContext, ""+selectedItemIndex, Toast.LENGTH_LONG).show();
-				//if (listener != null && text.length() > 0)
-				//listener.onGoSelected(text);
-
-			}
-
-			@Override
-			public void onAdd(String text)
-			{
-
-			}
-		};
-
-		lvTree.setAdapter(adapterTree);
-
-		lvTree.setOnGroupClickListener(new OnGroupClickListener() {
-				@Override
-				public boolean onGroupClick(ExpandableListView parent, View v,
-											int groupPosition, long id)
-				{
-
-					int index = parent.getFlatListPosition(ExpandableListView
-														   .getPackedPositionForGroup(groupPosition));
-					parent.setItemChecked(index, true);
-
-					selectedGroupIndex = groupPosition;
-					selectedItemIndex = -1;
-
-					return false;
-				}
-			});
-
-		lvTree.setOnChildClickListener(new OnChildClickListener() {
-
-				@Override
-				public boolean onChildClick(ExpandableListView parent, View v,
-											int groupPosition, int childPosition, long id)
-				{
-
-					int index = parent.getFlatListPosition(ExpandableListView
-														   .getPackedPositionForChild(groupPosition, childPosition));
-					parent.setItemChecked(index, true);
-
-					selectedGroupIndex = groupPosition;
-					selectedItemIndex = childPosition;
-
-					callItemSelected();
-
-					return true;
-				}
-
-
-			});
-
-
-		/*
-		 lvTree.setOnItemClickListener( new ListView.OnItemClickListener(){
-		 @Override
-		 public void onItemClick(AdapterView<?> adapter, View p2, int index, long p4)
-		 {
-		 //String selectedString1 = (String) adapter.getItemAtPosition(index);
-		 if (selectedStringIndex == index){
-		 FragmentTransaction ft = mContext.getFragmentManager().beginTransaction();
-
-		 FragmentPlayer fragmentPlayer = new FragmentPlayer(mContext);
-
-		 Bundle args = new Bundle();
-		 args.putString("name", files.get(selectedStringIndex));
-		 fragmentPlayer.setArguments(args);
-
-		 ft.replace(R.id.frgmCont, fragmentPlayer, FragmentPlayer.TAG_FRAGMENT_PLAYER);
-		 ft.addToBackStack(null);
-
-		 ft.commit();
-		 }
-		 else selectedStringIndex = index;
-		 }}
-		 );	
-		 */
-
-		if (firstVisible >= 0)
-		{
-			//int index = lvTree.getFlatListPosition(ExpandableListView
-			//										.getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
-
-			lvTree.setSelection(firstVisible);
-		}
-
-
-		return rootView;
-	}
 
 	public void callItemSelected()
 	{
@@ -376,6 +364,25 @@ public class FragmentTree extends Fragment
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		final FragmentTransaction ft;
+
+		AlertDialog.Builder dialog;
+
+		int id = item.getItemId();
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				getActivity().onBackPressed();
+				return true;
+			default:
+				return false;
+		}
+	}
+	
+	
 	@Override
 	public void onPause()
 	{
@@ -575,6 +582,7 @@ public class FragmentTree extends Fragment
 	{
 		mModified = true;
 		selectedItemIndex = Tree.insertItem(selectedGroupIndex, name, translation);
+		setTitle();
 	}
 
 	public void getFirstVisiblePosition()
@@ -600,8 +608,10 @@ public class FragmentTree extends Fragment
 	public void deleteItem()
 	{
 		mModified = true;
-		if (Tree.delete(selectedGroupIndex, selectedItemIndex))
+		if (Tree.delete(selectedGroupIndex, selectedItemIndex)){
 			adapterTree.notifyDataSetChanged();
+			setTitle();
+		}	
 		else
 			Toast.makeText(mContext, "Group is not empty!", Toast.LENGTH_LONG).show();
 	}
