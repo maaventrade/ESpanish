@@ -69,18 +69,21 @@ public class FragmentTest extends Fragment
 
 		//MenuData.getTypeOfTheStep(mTextViewText, mTranslation);
 		//////////////////////////////////////////////////////////
-		double random = Math.random();
 		
-		
-		if (random > 0.5f)
-			direction =  2;
-		else
-			direction =  1;		
 		
 		String text = "";
 		String translation = "";
 		
 		TestItem l = list.get(mIndex);
+		if (l.getCount() == 0){
+			double random = Math.random();
+
+			if (random > 0.5f)
+				direction =  2;
+			else
+				direction =  1;		
+		} else direction = 3 - l.getCount();
+		
 		String name;
 
 		if (direction == 1){
@@ -148,6 +151,10 @@ public class FragmentTest extends Fragment
 		list = new ArrayList<TestItem>();
 		for (LineItem l:Tree.getItems(selectedGroupIndex))
 			list.add(new TestItem(l.getText(), l.getTranslation()));
+			
+		
+			
+		setTitle();
 		
        // init();
 		nextIndex();
@@ -189,7 +196,10 @@ public class FragmentTest extends Fragment
 					{
 						tvTranslation.setTextColor(getColor(mContext, R.color.green1));
 						
-						//setTested(MenuData.getDirection());
+						//setTested();
+						
+						setTitle();
+						
 						
 					}
 					else 
@@ -197,10 +207,33 @@ public class FragmentTest extends Fragment
 						
 				}	
 				
-			}});
+			}
+
+			});
         
         return rootView;
     }
+
+	private void setTitle()
+	{
+		getActivity().
+		getActionBar().setTitle(mContext.getResources().getString(R.string.action_test)
+										 +": "
+										 + getTested()
+										 +"/"+list.size()+"");
+
+		
+	}
+
+	private int getTested()
+	{
+		int tested = 0;
+		
+		for (TestItem t: list)
+			if (t.getCount() >= 3)
+				tested ++;
+		return tested;
+	}
 	
 	public static final int getColor(Context context, int id) {
 	    final int version = Build.VERSION.SDK_INT;
@@ -234,6 +267,10 @@ public class FragmentTest extends Fragment
 			return "";
 	}	
 	
+	//private void setTested()
+	//{
+		//list.get(mIndex).
+	//}
 	
 	public int nextIndex() {
 		int size = list.size();
@@ -251,6 +288,44 @@ public class FragmentTest extends Fragment
 		if (mIndex <size)
 			return mIndex;
 		else {
+			
+			new AlertDialog.Builder(getActivity())
+				.setIcon(R.drawable.ic_launcher)
+				.setTitle(
+				getResources().getString(R.string.testCompleted))
+				.setMessage(
+				getResources().getString(R.string.askRepeat))
+				.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog,
+										int which)
+					{
+						for (TestItem t: list)
+							t.setCount(0);
+						
+						clearCounts();
+						setTitle();
+						nextIndex() ;
+						
+					}
+
+					private void clearCounts()
+					{
+						// TODO: Implement this method
+					}
+				})
+				.setNegativeButton("No",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog,
+										int which)
+					{
+						return;
+					}
+				}).show();
+			
+			
 			mIndex = -1;
 			return -1;
 		}

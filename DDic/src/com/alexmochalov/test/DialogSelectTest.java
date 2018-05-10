@@ -28,6 +28,7 @@ public class DialogSelectTest extends Dialog
 	
 	private Context mContext;
 	private int selected;
+	private ArrayList<LineGroup> list;
 
 	public DialogSelectTest(Context context) {
 		super(context);
@@ -42,12 +43,16 @@ public class DialogSelectTest extends Dialog
 
 		setTitle(mContext.getResources().getString(R.string.dialog_select_text));
 		
-		final ArrayList<LineGroup> list = Tree.getGroups();
+		list = Tree.getGroups();
 		
 		final ArrayAdapterSelectTest arrayAdapterTest = new ArrayAdapterSelectTest(
 			mContext, list);
 		
 		final ListView lvTest = (ListView) findViewById(R.id.lvTest);
+		
+		View view = View.inflate(getContext(), R.layout.list_header, null);
+		
+		lvTest.addHeaderView(view);
 		
 		lvTest.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -76,6 +81,8 @@ public class DialogSelectTest extends Dialog
 						return;
 					}
 					
+					Utils.setLastName( list.get( selected ).getName());
+					
 					if (callback != null ) 
 						callback.onOk(selected, "remember");
 					dismiss();
@@ -92,6 +99,8 @@ public class DialogSelectTest extends Dialog
 						Toast.makeText(mContext, "Select string", Toast.LENGTH_LONG).show();
 						return;
 					}
+					
+					Utils.setLastName( list.get( selected ).getName());
 					
 					if (callback != null ) 
 						callback.onOk(selected, "test");

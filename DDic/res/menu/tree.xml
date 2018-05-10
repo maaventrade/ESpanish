@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_conj"
         android:orderInCategory="2"
-        android:icon="@drawable/edit"
+        android:icon="@drawable/conj"
         android:title="@string/action_edit" 
      android:showAsAction="always"/>
     

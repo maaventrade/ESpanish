@@ -63,4 +63,8 @@
 	
 	<string name="button_next">Next</string>
 	
+	<string name="testCompleted">Test completed</string>
+	<string name="askRepeat">Repeat?</string>
+	
+	
 </resources>

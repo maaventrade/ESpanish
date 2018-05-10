@@ -80,6 +80,9 @@ public final class Utils {
 
 	private static ArrayList<String> alExpressions = new ArrayList<String>();
 
+	private static String mLastName = "";
+	
+	
 	public static String firstLetterToUpperCase(String text) {
 		if (text == null || text.length() == 0) return "";
 		else return text.substring(0,1).toUpperCase() + text.substring(1);
@@ -426,6 +429,14 @@ public final class Utils {
 		mInformation = mInformation + info + "\n";
 	}
 
+	public static void setLastName(String lastName){
+		mLastName = lastName;
+	}
+
+	public static String getLastName(){
+		return mLastName;
+	}
+	
 	
 	static class ViewDialog {
 

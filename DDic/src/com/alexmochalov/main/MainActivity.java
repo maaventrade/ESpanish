@@ -230,7 +230,7 @@ OnInitListener
 				@Override
 				public void onNextWord(IndexEntry e)
 				{
-					// TODO: Implement this method
+					fragmentTranslation.clear();
 				}
 
 				@Override
@@ -306,6 +306,8 @@ OnInitListener
 					@Override
 					public void onOk(int index, String action)
 					{
+						
+						fragmentTranslation.clear();
 						
 						final FragmentTransaction ft = getFragmentManager().beginTransaction();
 						Bundle args = new Bundle();
@@ -428,6 +430,10 @@ OnInitListener
 				 */
 				return true;
 
+			case android.R.id.home:
+				onBackPressed();
+
+				return true;
 			case R.id.action_delete:
 				new AlertDialog.Builder(MainActivity.this)
 					.setIcon(R.drawable.ic_launcher)

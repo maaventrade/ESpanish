@@ -15,6 +15,7 @@ import android.widget.AdapterView.*;
 
 import com.alexmochalov.ddic.*;
 import com.alexmochalov.main.*;
+import com.alexmochalov.tree.Tree;
 
 import java.util.*;
 
@@ -104,7 +105,9 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		lvDictionary = (ListView) rootView.findViewById(R.id.lvDictionary);
 		
 		mContext.getActionBar().setDisplayHomeAsUpEnabled(false);
-		mContext.getActionBar().setDisplayShowHomeEnabled(true);
+		mContext.getActionBar().setDisplayShowHomeEnabled(false);
+				
+		setTitle();
 		
 		// Read preferences 
 		SharedPreferences prefs;
@@ -296,5 +299,11 @@ public class FragmentDic extends Fragment   implements OnClickListener{
 		mtext = text;
 	}
 
+	private void setTitle() {
+		mContext.getActionBar().setTitle(mContext.getResources().getString(R.string.action_dictionary)
+				+ " ("
+				+ Dictionary.getSize()
+				+")");
+	}
 	
 }

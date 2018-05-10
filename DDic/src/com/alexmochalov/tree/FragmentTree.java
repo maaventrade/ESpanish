@@ -301,6 +301,10 @@ public class FragmentTree extends Fragment
 				@Override
 				public void run()
 				{
+					
+					if (selectedGroupIndex < 0 || selectedItemIndex < 0)
+						return;
+					
 					int index = lvTree.getFlatListPosition(ExpandableListView
 														   .getPackedPositionForChild(selectedGroupIndex, selectedItemIndex));
 					lvTree.setItemChecked(index, true);
@@ -367,11 +371,6 @@ public class FragmentTree extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		final FragmentTransaction ft;
-
-		AlertDialog.Builder dialog;
-
-		int id = item.getItemId();
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
@@ -418,113 +417,6 @@ public class FragmentTree extends Fragment
 		};
 		dialogEdit.show();
 		
-		/*
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-		LinearLayout layout = new LinearLayout(mContext);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		builder.setView(layout);
-
-		LinearLayout.LayoutParams llp1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		llp1.setMargins(0, 0, 0, 0); 
-		llp1.gravity = Gravity.BOTTOM;
-		
-		// Layout for TARNSLATION
-		LinearLayout layout2 = new LinearLayout(mContext);
-		layout2.setOrientation(LinearLayout.HORIZONTAL);
-		layout.addView(layout2);
-		
-		// TRANSLATION
-		final EditText translation = new EditText(mContext);
-		translation.setInputType(InputType.TYPE_CLASS_TEXT);
-		translation.setLayoutParams(llp1);
-		translation.setHint("Translation");
-		//translation.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
-		translation.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
-		layout2.addView(translation);
-
-		// Layout for NAME and ImageButton ibDropDown
-		FrameLayout layoutName = new FrameLayout(mContext);
-		android.widget.FrameLayout.LayoutParams llpName = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		layoutName.setLayoutParams(llpName);
-		layout.addView(layoutName);
-
-		// NAME
-
-		LinearLayout.LayoutParams llp2 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		llp2.gravity = Gravity.BOTTOM;
-		llp2.setMargins(0, 0, 0, 60);
-		
-		final AutoCompleteTextView name = new AutoCompleteTextView(mContext);
-		name.setInputType(InputType.TYPE_CLASS_TEXT);
-		name.setLayoutParams(llp2);
-		name.setHint("Name");
-		name.setTextAppearance(mContext, android.R.style.TextAppearance_Large);
-		//name.setBackgroundColor(mContext.getResources().getColor(R.color.blue));
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.select_dialog_singlechoice, 
-																Utils.getExpressions());
-
-		name.setThreshold(1);
-		name.setAdapter(adapter);
-		layoutName.addView(name);
-
-		// Gap 
-		TextView empty = new TextView(mContext);
-		layout.addView(empty);
-
-		if (!newItem){
-			builder.setTitle("Edit");
-			name.setText(Tree.getName(selectedGroupIndex, selectedItemIndex));
-			translation.setText(Tree.getTranslation(selectedGroupIndex, selectedItemIndex));
-		} else 
-			builder.setTitle("Add");
-		
-		
-////		
-		ImageButton ibDropDown = new ImageButton(mContext);
-		android.widget.FrameLayout.LayoutParams llpDropDown = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		llpDropDown.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
-		ibDropDown.setImageResource(R.drawable.dropdown);
-		ibDropDown.setBackgroundColor(Color.TRANSPARENT);
-		ibDropDown.setLayoutParams(llpDropDown);
-		ibDropDown.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v)
-				{
-					name.showDropDown();
-				}});
-
-		layoutName.addView(ibDropDown);
-
-//////////////		
-
-		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface p1, int p2)
-				{
-					mModified = true;
-					
-					if (newItem){
-						addChild(name.getText().toString(), translation.getText().toString());
-						select();
-					} else {
-						Tree.setName(selectedGroupIndex, selectedItemIndex, name.getText().toString());
-						Tree.setTranslation(selectedGroupIndex, selectedItemIndex, translation.getText().toString());
-					}
-					
-					adapterTree.notifyDataSetChanged();
-				}
-			});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int p2)
-				{
-					dialog.cancel();
-				}
-			});
-		builder.show();
-		*/
 	}
 
 	private void editGroup(final boolean newGroup)

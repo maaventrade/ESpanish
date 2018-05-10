@@ -20,6 +20,11 @@ public class TestItem {
 			mTranslation = selectedItem.getTranslation();
 		}
 
+		public void setCount(int p0)
+		{
+			mCount = 0;
+		}
+
 		public String getTranslation() {
 			return mTranslation;
 		}
@@ -28,18 +33,27 @@ public class TestItem {
 			return mText;
 		}
 		
-		public void incCount() {
-			mCount++;
-		}
+		//public void incCount() {
+			//mCount++;
+		//}
 		
 		public int getCount() {
 			return mCount;
 		}
 
 	public boolean test(String string, int direction) {
-			return
-				direction == 1 && string.equals(mText) ||
-				direction == 2 && string.equals(mTranslation);							
+		
+		if (direction == 1 && string.equals(mText)){
+			mCount = mCount | 1;
+			return true;
+		} else if (direction == 2 && string.equals(mTranslation)){
+			mCount = mCount | 2;
+			return true;
+		}
+		return false;
+			//return
+			//	direction == 1 && string.equals(mText) ||
+				//direction == 2 && string.equals(mTranslation);							
 		}
 
 	}

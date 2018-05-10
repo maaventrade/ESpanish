@@ -13,6 +13,7 @@ import com.alexmochalov.main.Utils;
 import com.alexmochalov.tree.*;
 
 import java.util.*;
+
 import android.widget.*;
 
 public class FragmentRemember extends Fragment  implements OnClickListener{
@@ -20,12 +21,15 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
  	private ViewPager pager;
 	private PagerAdapterRemember adapter;
 
+	private ArrayList<LineItem> list;
+	
 	private EventListener mCallback;
 
 	public interface EventListener {
 		public void onTested();
 		public void onFinished(Fragment thisFragment);
 		public void onButtonStartTestingClick();
+		
 		public void onNextWord(IndexEntry e);
 		
 		public void onTranslate(IndexEntry e);		
@@ -51,7 +55,10 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 		Bundle args = getArguments();
 		int selectedGroupIndex =  args.getInt("selectedGroupIndex");
 		
-		final ArrayList<LineItem> list = new ArrayList(Tree.getItems(selectedGroupIndex));
+		list = new ArrayList(Tree.getItems(selectedGroupIndex));
+		
+		mContext.getActionBar().setDisplayHomeAsUpEnabled(true);
+		mContext.getActionBar().setDisplayShowHomeEnabled(false);
 		
 		mContext.getActionBar().setTitle(mContext.getResources().getString(R.string.action_remember)
 				+": "
@@ -65,7 +72,10 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 			@Override
 			public void onButtonTranslate()
 			{
-				int index = pager.getCurrentItem();
+				int index = pager.getCurrentItem() % list.size();
+				
+				Log.d("i", "index "+index);
+				
 				LineItem l = list.get(index);
 				String name;
 
@@ -94,9 +104,10 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 			}
 
 			@Override
-			public void onNextWord(IndexEntry e) {
+			public void onNextWord() {
 				if (mCallback != null)
-					mCallback.onNextWord(e);
+					mCallback.onNextWord(null);
+				
 			}
 		};
 		Log.d("rem","created");
@@ -140,7 +151,7 @@ public class FragmentRemember extends Fragment  implements OnClickListener{
 		super.onResume();
 	}
 	
-	
+
 	@Override
 	public void onClick(View v) {
 		/*

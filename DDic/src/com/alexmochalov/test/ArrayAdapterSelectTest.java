@@ -1,18 +1,13 @@
 package com.alexmochalov.test;
 
 import android.content.*;
-import android.text.Html;
-import android.util.*;
+import android.text.*;
 import android.view.*;
 import android.widget.*;
-
+import com.alexmochalov.ddic.*;
+import com.alexmochalov.main.*;
+import com.alexmochalov.tree.*;
 import java.util.*;
-
-import com.alexmochalov.ddic.R;
-import com.alexmochalov.ddic.R.id;
-import com.alexmochalov.ddic.R.layout;
-import com.alexmochalov.test.TestItem;
-import com.alexmochalov.tree.LineGroup;
 
 /**
  */   
@@ -21,13 +16,15 @@ public class ArrayAdapterSelectTest  extends BaseAdapter
 	private LayoutInflater inflater;
 	private List<LineGroup> objects = null;
 
-    private Context context;
+    private Context mContext;
     private int resource;
+	
+	
     
 	public ArrayAdapterSelectTest(Context context, ArrayList<LineGroup> values){
 
 		this.objects = values;
-		this.context = context;
+		mContext = context;
 		
 		inflater = (LayoutInflater)context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,7 +41,7 @@ public class ArrayAdapterSelectTest  extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) { 
-			LayoutInflater inflater = (LayoutInflater) context.
+			LayoutInflater inflater = (LayoutInflater) mContext.
 				getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 			convertView = inflater.inflate(R.layout.item_select_test, null);
 		}
@@ -53,7 +50,20 @@ public class ArrayAdapterSelectTest  extends BaseAdapter
 
 		TextView text = (TextView)convertView.findViewById(R.id.tvName);
 		text.setText(Html.fromHtml(entry.getName()));
-
+		
+		TextView text1 = (TextView)convertView.findViewById(R.id.tvCompleted);
+		text1.setText(""+ entry.getCompleted() );
+		
+		
+		if (entry.getName().equals( Utils.getLastName())){
+			text.setTextColor( mContext.getResources().getColor(R.color.yellow));
+			text1.setTextColor( mContext.getResources().getColor(R.color.yellow));
+		} else {
+			text.setTextColor( mContext.getResources().getColor(R.color.navy));
+			text1.setTextColor( mContext.getResources().getColor(R.color.navy));
+		}
+		
+	
 		return convertView;
 	}
 

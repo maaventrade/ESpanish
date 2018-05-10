@@ -318,5 +318,13 @@ public class FragmentTranslation extends Fragment   implements OnClickListener{
 		DialogExpr dialog = new DialogExpr(mContext, Utils.getExpressions(), false);
 		dialog.show();
 	}
+
+	public void clear() {
+		
+		tvWord.setText("");
+		tvPhonetic.setText("");;
+		tvTranslation.setText("");;
+		
+	}
 	
 }

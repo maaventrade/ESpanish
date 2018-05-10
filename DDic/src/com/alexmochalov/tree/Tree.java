@@ -105,6 +105,8 @@ public class Tree {
 	}
 
 	public static ArrayList<LineGroup> getGroups() {
+		
+
 		return listDataHeader;
 	}
 
@@ -115,11 +117,11 @@ public class Tree {
 	public static void addGroup(int index, String name) {
 		if (index < 0)
 			index = 0;
-/*
-		Line h = new Line(name);
+
+		LineGroup h = new LineGroup(name);
 		listDataHeader.add(index,  h);
-		listDataChild.put(h, new ArrayList<Line>());
-*/
+		listDataChild.put(h, new ArrayList<LineItem>());
+
 	}
 
 	public static File save(Context mContext, String fileName) {

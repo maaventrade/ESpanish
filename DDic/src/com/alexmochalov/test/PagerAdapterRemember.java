@@ -34,7 +34,8 @@ public class PagerAdapterRemember extends PagerAdapter
 	public interface OnEventListener{
 		public void onButtonChangeClick();
 		public void onButtonStartTestingClick();
-		public void onNextWord(IndexEntry e);
+		
+		public void onNextWord(); // IndexEntry e
 		public void onButtonTranslate();
 	}
 
@@ -72,21 +73,12 @@ public class PagerAdapterRemember extends PagerAdapter
         text.setTexts(
 			Utils.firstLetterToUpperCase(remEntry.getText()), 
 			Utils.firstLetterToUpperCase(remEntry.getTranslation()), isRus);
-        /*
+        
        if (listener != null){
     	   
-    	   String name;
-    	   
-    	   if (Utils.isInvertedDic())
-				name = remEntry.getTranslation();
-			else
-				name = remEntry.getName1();
-    	   
-			IndexEntry e = com.alexmochalov.dic.Dictionary.find(name);
-    	   
-    	   listener.onNextWord(e);
+    	   listener.onNextWord();
        }
-        */
+        
 		
 		text.listener = new ImageViewSlide.OnEventListener(){
 			@Override
