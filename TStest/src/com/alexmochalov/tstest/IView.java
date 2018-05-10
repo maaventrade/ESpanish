@@ -50,7 +50,7 @@ public class IView extends ImageView {
 	
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-  
+     
     	Paint paint = new Paint();
     	paint.setColor(Color.BLACK);
         
