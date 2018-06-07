@@ -51,9 +51,9 @@ public class MenuData {
 		return ;
 	}
 
-	public static MarkedString addMarkedString(String neg, Pronoun p, String verb)
+	public static MarkedString addMarkedString(String neg1, String neg2, String negRus, Pronoun p, String verb)
 	{
-		MarkedString markedString = new MarkedString(neg, p, verb);
+		MarkedString markedString = new MarkedString(neg1, neg2, negRus, p, verb);
 		
 		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
 		menuGroupLast.
@@ -61,9 +61,9 @@ public class MenuData {
 		return markedString;
 	}
 
-	public static MarkedString addMarkedString(String text, String subj, String neg, String verb)
+	public static MarkedString addMarkedString(String text, String subj, String neg1, String verb, String neg2, String negrus)
 	{
-		MarkedString markedString = new MarkedString(text,subj, neg, verb);
+		MarkedString markedString = new MarkedString(text,subj, neg1, verb, neg2, negrus);
 		MenuGroup menuGroupLast = menuGroup.get(menuGroup.size() - 1);
 		menuGroupLast.
 			menuChild.get(menuGroupLast.menuChild.size()-1).markedStrings.add(markedString);
@@ -219,6 +219,9 @@ public class MenuData {
 	}
 
 	public static String getText() {
+
+		Log.d("m","mGroupPosition "+mGroupPosition+" "+mChildPosition+" "+mChildPosition+" mIndex "+mIndex);
+		
 		if (mIndex == -1) return "";
 		else mText = getMarkedStrings(mGroupPosition, mChildPosition).get(mIndex).mText; 
 		
@@ -370,7 +373,7 @@ public class MenuData {
 		mTextViewText.setText(Utils.firstLetterToUpperCase(MenuData.mText));
 		
 		//Entry entry = Dictionary.translate(MenuData.mText);
-		String translation = Dictionary.getTranslationOnly(MenuData.mText);
+		String translation = Dictionary.getTranslation(MenuData.mText);
 		mTranslation.setText(translation);
 		
 		

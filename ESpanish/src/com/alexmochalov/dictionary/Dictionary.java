@@ -9,24 +9,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.alexmochalov.alang.R;
-import com.alexmochalov.main.Utils;
 import com.alexmochalov.main.*;
+import com.alexmochalov.rules.Entry;
+import com.alexmochalov.rules.Rules;
 
 public class Dictionary {
 	private static ArrayList<IndexEntry> indexEntriesMain = new ArrayList<IndexEntry>();
-	private static ArrayList<IndexEntry> indexEntriesExt = new ArrayList<IndexEntry>();
+	//private static ArrayList<IndexEntry> indexEntriesExt = new ArrayList<IndexEntry>();
 
 	private static boolean dictionaryDialogOpen = false;
 	private static String mLastWord = "";
@@ -36,7 +39,7 @@ public class Dictionary {
 	private static MyTaskIndexing myTaskIndexing;
 	private static Context mContext; 
 	
-	private static String mDictionaryName = "it_ru";
+	private static String mDictionaryName = ""; // file.xdxf
 
 	public static void setText(String text)
 	{
@@ -71,6 +74,7 @@ public class Dictionary {
 	{
 		return mDictionaryName;
 	}
+	
 	
 	public interface EventCallback { 
 		void loadingFinishedCallBack(); 
@@ -310,18 +314,18 @@ public class Dictionary {
 			
 		}
 
-		
+		mDictionaryName = fileName;
 		
 	}
 
-	public static void loadIndex(Context context, String fileNameIndex) {
+	public static void loadIndex(Context context, String path) {
 		BufferedReader reader;
 		
 		ArrayList<IndexEntry> indexEntries = getEntries(); 
 		
 		try {
 			reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(Utils.APP_FOLDER+"/"+fileNameIndex)));
+					new FileInputStream(Utils.APP_FOLDER+"/"+mDictionaryName.replace(".xdxf",".index"))));
 
 			String line = reader.readLine();
 			while (line != null){
@@ -342,22 +346,29 @@ public class Dictionary {
 		}
 		Log.d("dic", "loading index ok "+indexEntries.size());
 		
+		mDictionaryName = path;
+		
 		if (eventCallback != null)
 			eventCallback.loadingFinishedCallBack();
 		
 	}
 
 	public static ArrayList<IndexEntry> getEntries() {
+		
+		return indexEntriesMain;
+		
+		/*
 		if (mDictionaryName.equals("it_ru"))
 			return indexEntriesMain;
 		else
 			return indexEntriesExt;
+			*/
 	}
 
 	public static String getTranslation(IndexEntry indexEntry) {
 		BufferedInputStream bis;
 		try {
-			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+mDictionaryName+".xdxf"));
+			bis = new BufferedInputStream(new FileInputStream(Utils.APP_FOLDER+"/"+mDictionaryName));
 			//bis.skip(1000);
 			//byte[] buffer = new byte[500];
 			
@@ -382,6 +393,14 @@ public class Dictionary {
 	}
 
 	public static String getTranslation(String text) {
+		
+		Entry e = Rules.getTranslation(text);
+		
+		if (e != null)
+			return e.getTranslation();
+		else return "-"; 
+					
+		/*
 		if (mDictionaryName.equals("it_ru")){
 			for (IndexEntry i: indexEntriesMain)
 				if(i.getText().equals(text))
@@ -394,6 +413,7 @@ public class Dictionary {
 		}
 		
 		return "";
+		*/
 	}
 
 	private static String extractDtrn(String src, boolean first){
@@ -427,14 +447,15 @@ public class Dictionary {
 	}
 	
 	public static String getTranslationOnly(String text) {
-		if (mDictionaryName.equals("it_ru")){
+	//	if (mDictionaryName.equals("it_ru")){
 			for (IndexEntry i:indexEntriesMain)
 				if(i.getText().equals(text)){
 					
 					String translation = i.getTranslation();
 					return extractDtrn(translation, true);
 					
-				}	
+				}
+			/*
 		} else {
 			for (IndexEntry i:indexEntriesExt)
 				if(i.getText().equals(text)){
@@ -444,30 +465,49 @@ public class Dictionary {
 					
 				}	
 		}
-		
+		*/
 		return "";
 	}
-
+  
 	public static void setDialogOpen(boolean b) {
 		dictionaryDialogOpen = b;
 	}
 
-	public static void load(Context context) {
-		int resId;
-		if (mDictionaryName.equals("en_ru"))
-			resId = R.raw.it_ru;
-		else
-			resId = R.raw.ru_it;
-			
+	public static void load(String path, Context context) {
 		
-		if (!Dictionary.fileExists(mDictionaryName+".xdxf")
-				|| !Dictionary.fileExists(mDictionaryName+".index")
-				//|| dictionaryName.equals("ru_it")
-			){
-			Dictionary.unzip(context. getApplicationContext(), mDictionaryName+".xdxf", resId);
-			Dictionary.createIndexAsinc(context, mDictionaryName+".xdxf");
+		if (path.equals(""))
+			return;
+		
+		if (!fileExists(Utils.APP_FOLDER+"/"+path.replace(".xdxf",  ".index")))
+		{
+			Dictionary.createIndexAsinc(context, path);
 		} else
-			Dictionary.loadIndex(context, mDictionaryName+".index");
+			Dictionary.loadIndex(context, path);
+			
+	}  
+
+	public static boolean copy(String fileName, Context applicationContext){
+		try {
+
+		InputStream in = new FileInputStream(fileName);
+		int i = fileName.lastIndexOf("/");
+		if (i > 0)
+			fileName = fileName.substring(i + 1);
+		
+	        OutputStream out = new FileOutputStream(Utils.APP_FOLDER+"/"+fileName);
+	            // Transfer bytes from in to out
+	            byte[] buf = new byte[1024];
+	            int len;
+	            while ((len = in.read(buf)) > 0) {
+	                out.write(buf, 0, len);
+	            }     
+	    in.close();
+	    out.close();
+	    
+		} catch (IOException t) {
+			return false;
+		}
+		return true;
 	}	
 	
 	

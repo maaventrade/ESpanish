@@ -127,6 +127,25 @@ public class Rules
 		}
 		return null;
 	}
+
+	public static Entry getTranslation(String searchString) {
+		if (searchString.trim().length() == 0)
+			return null;
+		
+		for (Entry e : entries) {
+			if (e.mText.
+					equals(searchString)) {
+				return e;
+			}
+		}
+		for (Entry e : entries) {
+			if (e.mText.
+					contains(searchString)) {
+				return e;
+			}
+		}
+		return null;
+	}
 	
 	public static void addPronoun(String text) {
 		Pronoun e = new Pronoun();
@@ -182,7 +201,7 @@ public class Rules
 		} else {
 			translation = translation.replaceAll("[^а-яА-Я]", "").toLowerCase();
 			
-			String text1 = text.toLowerCase();
+			String text1 = text.toLowerCase().replaceAll("(муж)","").replaceAll("(жен)","");
 			
 			if (translation.length() == 0) return false;
 			else if ( translation.equals(text1.replaceAll("[^а-яА-Я]", ""))) return true;
@@ -205,6 +224,8 @@ public class Rules
 				xpp = context.getResources().getXml(R.xml.dictionary_it);
 			else if (Utils.getLanguage().equals("spa"))
 				xpp = context.getResources().getXml(R.xml.dictionary_spa);
+			else if (Utils.getLanguage().equals("fra"))
+				xpp = context.getResources().getXml(R.xml.dictionary_fra);
 			
 			while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 				switch (xpp.getEventType()) { // начало документа

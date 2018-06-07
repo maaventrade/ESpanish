@@ -1,10 +1,12 @@
 package com.alexmochalov.main;
 
 import java.io.File;
+import java.io.IOException;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -26,6 +28,7 @@ import android.view.View;
 
 import com.alexmochalov.alang.R;
 import com.alexmochalov.dialogs.DialogHelp;
+import com.alexmochalov.dialogs.SelectFileDialog;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.dictionary.DictionaryDialog;
 import com.alexmochalov.fragments.FragmentConj;
@@ -53,6 +56,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	private final static String HELPTEXTSCALE = "HELPTEXTSCALE";
 	private final static String MTEXT = "TEXT";
 	private final static String RANDOMIZATION_ORDER = "RANDOMIZATION_ORDER";	
+	private final static String LANGUAGE = "LANGUAGE";	
+	private final static String DICT_PATH = "DICT_PATH";	
+	
+	
 	
 	private final static String DIC = "DIC";
 	private final static String DIC_LASTWORD = "DIC_LASTWORD";
@@ -64,6 +71,10 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	private int MY_DATA_CHECK_CODE = 0;
 	private boolean  langSupported;
 
+	private String mPath = "";
+	private String mFileName = "";
+	private final String fileExt[] = { "xdxf" };
+	
 	String mType;
 	
 	//private int randomize;
@@ -73,23 +84,25 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		mContext = this;
-		Log.d("aaa", "onCreate");
+
 		actionBar = getActionBar();
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		//getActionBar().setHomeButtonEnabled(true);
-		if (Utils.getLanguage().equals("ita"))
-			actionBar.setIcon(R.drawable.ic_launcher1);
 
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+		Utils.setLanguage(prefs.getString(LANGUAGE, "ita"), actionBar);
+		
 		Rules.load(this);
 		MenuData.load(this, false);
 
 		if (savedInstanceState != null){
 			Utils.setRandomize( savedInstanceState.getBoolean(RANDOMIZE));
 			Utils.setScale( savedInstanceState.getInt(HELPTEXTSCALE));
+			
 			Dictionary.setDictionaryName(savedInstanceState.getString(DIC));
+			
 			Dictionary.setLastWord(savedInstanceState.getString(DIC_LASTWORD));
 			Dictionary.setText(savedInstanceState.getString(DIC_TEXT));
 			
@@ -107,9 +120,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
 		
-		Dictionary.load(this);
-		
-
+		Dictionary.load(prefs.getString(DICT_PATH, ""), this);
 		
 	}
 
@@ -136,6 +147,7 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		outState.putInt( HELPTEXTSCALE, Utils.getScale());
 		
 		outState.putString( DIC, Dictionary.getDictionaryName());
+		
 		outState.putString(DIC_LASTWORD, Dictionary.getLastWord());
 		outState.putString(DIC_TEXT, Dictionary.getText());
 		//Log.d("aaa", "PUT "+Utils.getScale());
@@ -247,6 +259,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		MenuData.saveParameters(editor);
 
 		editor.putInt(HELPTEXTSCALE, Utils.getScale());
+		editor.putString(LANGUAGE, Utils.getLanguage());
+		editor.putString(DICT_PATH, Dictionary.getDictionaryName());
 		
 		editor.commit();
 		
@@ -293,7 +307,16 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	        
 			return true;
 		}	
+		case R.id.action_select_language: 
+			
+			Dialog dialog = createDialogSelectLanguage();
+			dialog.show();
+			
+			return true;
 		case R.id.item_dictionary: {
+			if (Dictionary.getEntries().size() == 0)
+				dialogSelectDictionary();				
+			else
 			new DictionaryDialog().show(getFragmentManager(), "tag"); 
 			
 			
@@ -328,6 +351,86 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 		default:	return super.onOptionsItemSelected(item);
 		}
 		
+	}
+
+	public void dialogSelectDictionary() {
+		SelectFileDialog selectFileDialog = new SelectFileDialog(mContext,
+				mPath, mFileName, fileExt, "Select subtitle file", false,
+				false, "");
+		selectFileDialog.callback = new SelectFileDialog.MyCallback() {
+
+			@Override
+			public void callbackACTION_SELECTED(String fileName) {
+
+				if ( Dictionary.copy(fileName, getApplicationContext())){
+
+					Dictionary.load( Utils.getFileName(fileName), mContext);
+					
+				}
+				
+				mFileName = fileName;
+
+				if (fileName.lastIndexOf("/") >= 0)
+					mPath = fileName.substring(0, fileName.lastIndexOf("/"));
+
+			}
+		};
+
+		selectFileDialog.show();
+	}
+	
+	
+	String language = "";
+	private Dialog createDialogSelectLanguage() {
+		// Initialize the Alert Dialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		//Source of the data in the DIalog
+		CharSequence[] array = {"Spanish", "Italian", "Franch"};
+		
+
+		// Set the dialog title
+		builder.setTitle("Select Language")
+		// Specify the list array, the items to be selected by default (null for none),
+		// and the listener through which to receive callbacks when items are selected
+		.setSingleChoiceItems(array, 1, new DialogInterface.OnClickListener() {
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if (which == 0)
+				language = "spa";
+			else if (which == 1)
+				language = "ita";
+			else if (which == 2)
+				language = "fra";
+
+		}
+		})
+
+		// Set the action buttons
+		.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int id) {
+			
+			Utils.setLanguage(language, actionBar);
+			
+			//if (Utils.getLanguage().equals("ita"))
+			//	actionBar.setIcon(R.drawable.ic_launcher1);
+
+			Rules.load(getApplicationContext());
+			MenuData.load(getApplicationContext(), true);
+			fragmentMenu.refresh();
+			TtsUtils.init(getApplicationContext());
+
+		}
+		})
+		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int id) {
+
+		}
+		});
+
+		return builder.create();
 	}
 
 	@Override

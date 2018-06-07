@@ -58,13 +58,13 @@
 		
 		<level1 title = "Вопросы" type = "Комбинации"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-			<entry text = "Qué" sub = "2" neg = "false" verbs = "tomar, cantar, comer, beber"></entry>
-			<entry text = "Quién" sub = "3" neg = "false" verbs = "comer, beber, trabajar, estudiar"></entry>
-			<entry text = "Dónde" sub = "2" neg = "false" verbs = "trabajar, estudiar, vivir, descansar"></entry>
-			<entry text = "Cuándo" sub = "2" neg = "false" verbs = "trabajar, estudiar, ayudar, preguntar"></entry>
-			<entry text = "Por qué" sub = "2" neg = "true" verbs = "descansar, trabajar, estudiar, ayudar, preguntar"></entry>
-			<entry text = "Cómo" sub = "2" neg = "false" verbs = "llamar"></entry>
-			<entry text = "Cuánto" sub = "2" neg = "false" verbs = "descansar, trabajar, estudiar"></entry>
+			<entry text = "Qué" sub = "2" verbs = "tomar, cantar, comer, beber"></entry>
+			<entry text = "Quién" sub = "3" verbs = "comer, beber, trabajar, estudiar"></entry>
+			<entry text = "Dónde" sub = "2" verbs = "trabajar, estudiar, vivir, descansar"></entry>
+			<entry text = "Cuándo" sub = "2" verbs = "trabajar, estudiar, ayudar, preguntar"></entry>
+			<entry text = "Por qué" sub = "2" neg1 = "no" negrus = "не" verbs = "descansar, trabajar, estudiar, ayudar, preguntar"></entry>
+			<entry text = "Cómo" sub = "2" verbs = "llamar"></entry>
+			<entry text = "Cuánto" sub = "2" verbs = "descansar, trabajar, estudiar"></entry>
 		</level1>
 		</level0>
 </data>

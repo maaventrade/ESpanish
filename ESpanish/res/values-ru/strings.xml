@@ -9,8 +9,8 @@
 	<string name="button_next">Next</string>
 	<string name="button_prev">Prev</string>
 	<string name="button_speak">Speak</string>
-	<string name="button_test">Показать ответ</string>
-	<string name="randomize">Перемешивать</string>
+	<string name="button_test">Ok</string>
+	<string name="randomize">Смешать</string>
 			
 	<string name="error_lang_not_supported">error_lang_not_supported</string>
 	<string name="error_lang_not_found">error_lang_not_found</string>

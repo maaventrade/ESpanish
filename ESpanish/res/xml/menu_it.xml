@@ -21,7 +21,7 @@
 		</level1>
 		<level1 title = "Отрицание NON" type = "Комбинации1"  helpindex = "3"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-			<entry neg = "true" verbs = "parlare, mangiare, giocare, guardare, lavorare, amare, ascoltare, imparare, abitare"></entry>
+			<entry neg1 = "non"  negrus = "не" verbs = "parlare, mangiare, giocare, guardare, lavorare, amare, ascoltare, imparare, abitare"></entry>
 		</level1>
 			
 	</level0>
@@ -29,7 +29,7 @@
     <level0 title = "Урок 1+">
 		<level1 title = "Комбинации с неправильными глаголами" type = "Комбинации1"  helpindex = "3"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-			<entry  neg = "false" verbs = "avere,essere,fare"></entry>
+			<entry verbs = "avere,essere,fare"></entry>
 		</level1>
 			
 	</level0>
@@ -85,10 +85,10 @@
 		</level1>
 		<level1 title = "Вопросы" type = "Комбинации" helpindex = "5"  tense = "present"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-		<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
+		<entry text = "Che cosa" verbs = "parlare, mangiare, guardare, amare"></entry>
 		<entry text = "Chi" subj = "false" verbs = "parlare, mangiare, giocare, lavorare, ascoltare"></entry>
 		<entry text = "Dove" verbs = "lavorare,imparare,abitare"></entry>
-		<entry text = "Come" neg = "false"  verbs = "parlare, mangiare, giocare, lavorare, imparare"></entry>
+		<entry text = "Come" verbs = "parlare, mangiare, giocare, lavorare, imparare"></entry>
 		<entry text = "Quanto" verbs = "mangiare,lavorare,imparare"></entry>
 		<entry text = "Quando" verbs = "mangiare, giocare, lavorare, amare, ascoltare,imparare"></entry>
 		<entry text = "Perche" verbs = "parlare, guardare, giocare, lavorare, ascoltare,imparare"></entry>
@@ -96,10 +96,10 @@
 		
 		<level1 title = "Вопросы. Прошедшее время" type = "Комбинации" helpindex = "5"  tense = "past"
 			note = "Переводим выражения с испанского языка на русский и с русского на испанский.">
-			<entry text = "Che cosa" neg = "false" verbs = "parlare, mangiare, guardare, amare"></entry>
+			<entry text = "Che cosa" verbs = "parlare, mangiare, guardare, amare"></entry>
 			<entry text = "Chi" subj = "false" verbs = "parlare, mangiare, giocare, lavorare, ascoltare"></entry>
 			<entry text = "Dove" verbs = "lavorare,imparare,abitare"></entry>
-			<entry text = "Come" neg = "false"  verbs = "parlare, mangiare, giocare, lavorare, imparare"></entry>
+			<entry text = "Come" verbs = "parlare, mangiare, giocare, lavorare, imparare"></entry>
 			<entry text = "Quanto" verbs = "mangiare,lavorare,imparare"></entry>
 			<entry text = "Quando" verbs = "mangiare, giocare, lavorare, amare, ascoltare,imparare"></entry>
 			<entry text = "Perche" verbs = "parlare, guardare, giocare, lavorare, ascoltare,imparare"></entry>

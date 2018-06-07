@@ -57,7 +57,7 @@ public class FragmentMenu extends Fragment {
 					int groupPosition, int childPosition, long id) {
 				
 				if (mCallback != null)
-mCallback.onMenuItemSelected(groupPosition, childPosition,MenuData.getType(groupPosition, childPosition));
+					mCallback.onMenuItemSelected(groupPosition, childPosition,MenuData.getType(groupPosition, childPosition));
 				
 				return false;
 			}

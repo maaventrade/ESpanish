@@ -13,10 +13,10 @@
         android:showAsAction="never"
         android:title="@string/action_reindex"/>
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_select_language"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_select_language"/>
     
     <item android:id="@+id/item_speak" 
         android:title="Speak" 
@@ -33,6 +33,7 @@
     <item android:id="@+id/item_dictionary" 
         android:title="Dictionary" 
         android:visible="true" 
+        android:icon="@drawable/book"
         android:showAsAction="always"/>
        
 </menu>

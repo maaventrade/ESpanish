@@ -47,6 +47,7 @@ public class TtsUtils
 		mContext = context;
 		langSupported = false;
 		loadLangueges();
+		
 		Locale locale[] = Locale.getAvailableLocales();
 		for (int i=0; i< locale.length; i++){
 			//Log.d("", ""+locale[i].getISO3Language());

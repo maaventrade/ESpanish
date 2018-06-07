@@ -23,7 +23,9 @@ public class FilesIO
     
 		class RecordF {
 			String text = "";
-			String neg = "";
+			String neg2 = "";
+			String neg1 = "";
+			String negrus = "";
 			String verbs = "";
 			String subj = "";    
 			String tense="";
@@ -32,7 +34,9 @@ public class FilesIO
 			String flag ="";   
 			public void clear() {
 				text = "";
-				neg = "";
+				neg2 = "";
+				neg1 = "";
+				negrus = "";
 				verbs = "";
 				subj = "";
 				tense="";
@@ -45,17 +49,27 @@ public class FilesIO
 		
 		try {
 			XmlPullParser xpp = null;
-			File file = new File(Utils.APP_FOLDER + "/menu_it.xml");
+			File file = new File(Utils.APP_FOLDER + "/menu_"
+					+Utils.getLanguage()
+					+".xml");
 			if (!file.exists() || reRead){
 				// Load menu from resource 
 				if (Utils.getLanguage().equals("ita")) 
 					xpp = mContext.getResources().getXml(R.xml.menu_it);
 				else if (Utils.getLanguage().equals("spa"))
 					xpp = mContext.getResources().getXml(R.xml.menu_spa);
+				else if (Utils.getLanguage().equals("fra"))
+					xpp = mContext.getResources().getXml(R.xml.menu_fra);
 			} else {
 				// Load menu from file
-				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-																					 Utils.APP_FOLDER + "/menu_it.xml")));
+				//BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
+				//																	 Utils.APP_FOLDER + "/menu_it.xml")));
+				BufferedReader  
+						reader = new BufferedReader(new InputStreamReader(new FileInputStream(
+						 Utils.APP_FOLDER + "/menu_"
+						+ Utils.getLanguage()
+						+ ".xml")));
+				
 				XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); 
 				factory.setNamespaceAware(true);         
 				xpp = factory.newPullParser();
@@ -155,8 +169,14 @@ String ttt = "";
 									rec.flag = xpp.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("subj")) {
 									rec.subj = xpp.getAttributeValue(i);
-								} else if (xpp.getAttributeName(i).equals("neg")) {
-									rec.neg = xpp
+								} else if (xpp.getAttributeName(i).equals("neg1")) {
+									rec.neg1 = xpp
+										.getAttributeValue(i);
+								} else if (xpp.getAttributeName(i).equals("neg2")) {
+									rec.neg2 = xpp
+										.getAttributeValue(i);
+								} else if (xpp.getAttributeName(i).equals("negrus")) {
+									rec.negrus = xpp
 										.getAttributeValue(i);
 								} else if (xpp.getAttributeName(i).equals("verbs")) {
 									rec.verbs = xpp
@@ -181,11 +201,11 @@ String ttt = "";
 
 								 for (String verb : verbs){
 									 if (mode.equals("Комбинации"))
-										 MenuData.addMarkedString(rec.text, rec.subj, rec.neg, verb.trim());
+										 MenuData.addMarkedString(rec.text, rec.subj, rec.neg1, verb.trim(), rec.neg2, rec.negrus);
 									 else	
 										 for (Pronoun p: Rules.getPronouns())
 											 if (!p.getTranslation().equals("Вы(вежл.)"))
-												 MenuData.addMarkedString(rec.neg, p, verb.trim());
+												 MenuData.addMarkedString(rec.neg1, rec.neg2, rec.negrus, p, verb.trim());
 								 }
 							}	 
 						} else if (xpp.getName().equals("entry")) {
@@ -208,10 +228,13 @@ String ttt = "";
 
 		} catch (XmlPullParserException e) {
 			Toast.makeText(mContext,e.toString(), Toast.LENGTH_LONG).show();
+			Log.d("", "loadMenu 1 "+e.toString());
 		} catch (IOException e) {
 			Toast.makeText(mContext,e.toString(), Toast.LENGTH_LONG).show();
+			Log.d("", "loadMenu 2 "+e.toString());
 		} catch (Exception e) {
 			Toast.makeText(mContext,e.toString(), Toast.LENGTH_LONG).show();
+			Log.d("", "loadMenu 3 "+e.toString());
 		}
 		/*
 		for (int i = 0; i < MenuData.getGroupsSize(); i++){
@@ -272,7 +295,9 @@ String ttt = "";
 	
 	//if (1==1) return;
 	
-	File file = new File(Utils.APP_FOLDER+"/menu_it.xml");
+	File file = new File(Utils.APP_FOLDER+"/menu_"
+			+ Utils.getLanguage()
+			+ ".xml");
 		try
 		{
 			FileOutputStream fos = new FileOutputStream(file, false);
@@ -325,7 +350,7 @@ String ttt = "";
 						if (!s.getText().equals(""))
 							os.write( " text = \""+ s.getText()+"\"");
 						if (!s.getNeg().equals(""))
-							os.write( " neg = \""+ s.getNeg()+"\"");
+							os.write( s.getNeg());
 						//if (!s.getVerbs().equals(""))
 							//os.write( " verbs = \""+ s.getVerbs()+"\"");
 						if (!s.getRusText().equals(""))

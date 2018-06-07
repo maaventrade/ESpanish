@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 public class MarkedString {
 	
-	String mNeg = "";
+	String mNeg1 = "";
+	String mNeg2 = "";
+	String mNegRus = "";
+	
 	String mVerb = "";
 	
 	String mText = "";
@@ -35,8 +38,11 @@ public class MarkedString {
 		mFlag = 0;
 	}
 	
-	public MarkedString(String text, String subj, String neg, String verb) {
-		mNeg = neg;
+	public MarkedString(String text, String subj, String neg1, String verb, String neg2, String negRus) {
+		mNeg1 = neg1;
+		mNeg2 = neg2;
+		mNegRus = negRus;
+		
 		mVerb = verb;
 		
 		Entry e;
@@ -48,9 +54,6 @@ public class MarkedString {
 		Pronoun pronoun;
 		String pronounStr = "";
 		String pronounStrRus = "";
-		
-		String negStr = "";
-		String negStrRus = "";
 		
 		String verbStr = "";
 		String verbStrRus = "";
@@ -67,20 +70,26 @@ public class MarkedString {
 		
 		int index = Rules.getPronouns().indexOf(pronoun);
 		
-	//Log.d("uu","neg "+neg);
-		if (neg.equals("true"))
-			negStr = Utils.getNeg();
-		else if (neg.equals("false"))
-			negStr = "";
-		else if (neg.equals(""))
-			if (Math.random() > 0.5)
-				negStr = Utils.getNeg();
-		e = Rules.translate(negStr);
-		if ( e != null)
-			negStrRus = e.getTranslation()+" ";
-		if (negStr.length() > 0)
-			negStr = negStr + " ";
-
+		if (!neg1.equals(""))
+			if (Utils.getLanguage().equals("fra")){
+				if (Utils.isVowel(verb.substring(0, 1)))
+					neg1 = " "+neg1.substring(0, neg1.length() - 1)+"'";
+					else
+						neg1 = " "+neg1+" ";
+			}
+			else
+				neg1 = " "+neg1+" ";
+		
+		if (!neg2.equals(""))
+			neg2 = " "+neg2+" ";
+		
+		if (!negRus.equals(""))
+			negRus = " "+negRus+" ";
+		
+		//else if (neg.equals(""))
+		//	if (Math.random() > 0.5)
+		//		negStr = Utils.getNeg();
+		
 		String timeStr = MenuData.getTenseLast();
 		
 		//Log.d("","timeStr "+timeStr);
@@ -106,51 +115,52 @@ public class MarkedString {
 		
 		mText = text+" "+
 				pronounStr+
-				negStr+
+				neg1+
 				verbStr+
+				neg2+
 				"?";
 		
 		mRusText = Utils.firstLetterToUpperCase(Rules.translate(text).getTranslation())+" "+
 				pronounStrRus+
-				negStrRus+
+				negRus+
 				verbStrRus+
 				"?";
 		
 		mFlag = 0;
 	}
 
-	public MarkedString(String neg, Pronoun pronoun, String verb) {
-		mNeg = neg;
+	public MarkedString(String neg1, String neg2, String negRus, Pronoun pronoun, String verb) {
+		
+		mNeg1 = neg1;
+		mNeg2 = neg2;
+		mNegRus = negRus;
+		
 		mVerb = verb;
-		
-		String negStr = " ";
-		String negStrRus = " ";
 
-		//Log.d("d","neg = "+neg);
-		
-		if (neg.equals("true")){
-			negStr = Utils.getNeg();
-			
-		}else if (neg.equals("false"))
-			negStr = " "; /// ????
-		else if (neg.equals(""))
-			if (Math.random() > 0.5)
-				negStr = Utils.getNeg();
-		if (negStr.trim().length() > 0){
-			negStr = " " + negStr + " ";
-			negStrRus = " не ";
-		}
-	
 		Entry e = Rules.translate(verb);
 		e = Rules.translate(verb);		
 		
-		//negStrRus = Rules.getTranslation(negStr);
+		if (!neg1.equals(""))
+			if (Utils.getLanguage().equals("fra")){
+				if (Utils.isVowel(verb.substring(0, 1)))
+					neg1 = " "+neg1.substring(0, neg1.length() - 1)+"'";
+					else
+						neg1 = " "+neg1+" ";
+			}
+			else
+				neg1 = " "+neg1+" ";
+		
+		if (!neg2.equals(""))
+			neg2 = " "+neg2+" ";
+		
+		if (!negRus.equals(""))
+			negRus = " "+negRus+" ";
 		
 		this.mRusText = Utils.firstLetterToUpperCase(pronoun.getTranslation()) + 
-				negStrRus + 
+				negRus + 
 				Rules.fit(e,  Rules.getPronouns().indexOf(pronoun) , "present").trim();
 		
-		this.mText = pronoun.getText() + negStr + pronoun.conj(verb, false);
+		this.mText = (pronoun.getText() + neg1 + pronoun.conj(verb, false) + neg2).toUpperCase();
 	
 		mFlag = 0;
 	}
@@ -206,7 +216,20 @@ public class MarkedString {
 	}
 	
 	public String getNeg() {
-		return mNeg; 
+		
+		String S = "";
+		
+		if (mNeg1.trim().length() != 0)
+			S = S + " neg1 = \""+ mNeg1 +"\" ";
+		
+		if (mNeg2.trim().length() != 0)
+			S = S + " neg2 =  \""+ mNeg2 +"\" ";
+		
+		if (mNegRus.trim().length() != 0)
+			S = S + " negrus = \""+ mNegRus
+			+"\" ";
+		
+		return S; 
 	}
 	
 	//public String getVerb() {

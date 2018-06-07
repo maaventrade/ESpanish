@@ -69,7 +69,27 @@ public class FragmentConj extends FragmentM {
 			setOrder(onCreateView);
 
 		setPronouns(MenuData.getText());
+		
+		if (Utils.getLanguage().equals("fra"))
+			if (Utils.isVowel(mTextViewText.getText().subSequence(0, 1)))
+				setPronounsToVowel();
 
+	}
+
+	// je aimer -> j'aimer
+	private void setPronounsToVowel() {
+
+		for (PronounEdited p : objects) {
+
+			TextView t = (TextView)p.mLayout.findViewById(R.id.text);
+			String s = t.getText().toString();
+			
+			if ( s.equals("JE"))
+				((TextView) p.mLayout.findViewById(R.id.text))
+				.setText("J'");
+			
+		}
+		
 	}
 
 	/**
@@ -135,8 +155,9 @@ public class FragmentConj extends FragmentM {
 	private void setPronouns(String text) {
 
 		for (PronounEdited p : objects) {
-			((TextView) p.mLayout.findViewById(R.id.text)).setText(Utils
-					.firstLetterToUpperCase(p.mPronoun.getText()));
+			
+			((TextView) p.mLayout.findViewById(R.id.text)).setText((p.mPronoun.getText().toUpperCase()));
+			
 			((TextView) p.mLayout.findViewById(R.id.translation))
 					.setText(p.mPronoun.getTranslation());
 		}

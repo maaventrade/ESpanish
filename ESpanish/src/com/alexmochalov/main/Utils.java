@@ -1,11 +1,14 @@
 package com.alexmochalov.main;
 
+import android.app.ActionBar;
 import android.content.*;
 import android.os.*;
 import android.util.*;
 import android.webkit.WebView;
 
 import java.io.*;
+
+import com.alexmochalov.alang.R;
 
 public class Utils {
 
@@ -15,7 +18,6 @@ public class Utils {
 	static String REC_FOLDER = APP_FOLDER+"/rec";
 	
 	private static String language = "ita";
-	private static String neg = "non";
 	
 	private static boolean randomize = false;
 	private static int scale = 110;
@@ -33,10 +35,6 @@ public class Utils {
 		return language;
 	}
 	
-	public static String getNeg(){
-		return neg;
-	}
-
 	public static void incScale() {
 		scale = scale + 10;
 	}
@@ -163,5 +161,29 @@ public class Utils {
 		webView.loadData(translation, "text/html; charset=utf-8", "UTF-8");
 	}
 
-	
+	public static void setLanguage(String l, ActionBar actionBar) {
+		language = l;
+		
+		if (language.equals("ita"))
+			actionBar.setIcon(R.drawable.ic_launcher_ita);
+		else if (language.equals("spa"))
+			actionBar.setIcon(R.drawable.ic_launcher_spa);
+		else if (language.equals("fra"))
+			actionBar.setIcon(R.drawable.ic_launcher_fra);
+
+	}
+
+	public static boolean isVowel(CharSequence c){
+	    String vowels = "aeiouéAEIOUÉ";
+	    return vowels.contains(c);
+	}
+
+	public static String getFileName(String fileName) {
+
+		if (fileName.lastIndexOf("/") >= 0)
+			return fileName.substring( fileName.lastIndexOf("/")+1 );
+		else
+			return fileName;
+		
+	}	
 }

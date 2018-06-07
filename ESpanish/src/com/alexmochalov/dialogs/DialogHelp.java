@@ -213,7 +213,9 @@ public class DialogHelp extends Dialog implements
 	}
 
 	private void reset() {
-		final String baseUrl = "file:///android_res/raw/help" + mIndex
+		final String baseUrl = "file:///android_res/raw/help"
+				+ "_" + Utils.getLanguage() + "_"
+				+ mIndex
 				+ ".html";
 
 		prevArrayList.add(baseUrl);

@@ -125,7 +125,7 @@ android.view.View.OnClickListener
 				{
 					String str = s.toString().toLowerCase();
 					Dictionary.setText(s.toString());
-					
+	/*				
 					if (str.length() > 0)
 						if (str.substring(0, 1).matches("[а-яА-Я]"))
 							if (Dictionary.getDictionaryName().equals("it_ru")) 
@@ -135,7 +135,7 @@ android.view.View.OnClickListener
 							if (Dictionary.getDictionaryName().equals("ru_it")) 
 								selectDictionary("it_ru");	
 							else;
-
+*/
 					for (IndexEntry i : mEntries)
 						if (i.getText().toLowerCase().startsWith(str))
 						{
@@ -397,8 +397,8 @@ android.view.View.OnClickListener
 					getDialog().setTitle(mContext.getString(R.string.dic_name_ita));
 			}
 		}; 
-		Dictionary.setDictionaryName(name);
-		Dictionary.load(mContext);
+		//Dictionary.setDictionaryName(name);
+		//Dictionary.load(mContext);
 	}
 
 	private void showSelectDictionary(View v)
@@ -421,8 +421,8 @@ android.view.View.OnClickListener
 							selectDictionary("it_ru");	
 							return true;
 						case R.id.action_ru_it:
-							selectDictionary("ru_it");	
-							Dictionary.load(mContext);
+							//selectDictionary("ru_it");	
+							//Dictionary.load(mContext);
 
 							return true;
 						default:
