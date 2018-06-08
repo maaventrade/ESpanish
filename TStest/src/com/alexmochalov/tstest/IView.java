@@ -1,5 +1,6 @@
 package com.alexmochalov.tstest;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -9,6 +10,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -55,6 +59,24 @@ public class IView extends View {
 
 	
 	private Paint mPaint = new Paint();
+	private float xx;
+	private float yy;
+	
+	
+	class PointB{
+		
+		public PointB(float pX, float pY, int pW) {
+			x = pX;
+			y = pY;
+			width = pW;
+		}
+		
+		float x;
+		float y;
+		int width;
+	}
+	
+	private ArrayList<PointB> path = new ArrayList<PointB>(); 
 	
 	public IView(Context context, AttributeSet attrs, int defStyleAttr
 			) {
@@ -138,69 +160,46 @@ public class IView extends View {
 			}
 	}
 
+    
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
      
 		int N = event.getHistorySize();
 		
-		for (int i=0; i<N; i++) {
-			drawPoint((int)((event.getHistoricalX(i)-offsetX)/kZooming), (int)((event.getHistoricalY(i)-offsetY)/kZooming),
-					  event.getHistoricalPressure(i),
-					  event.getHistoricalSize(i));
-		}
-		
-		drawPoint((int)((event.getX()-offsetX)/kZooming), (int)((event.getY()-offsetY)/kZooming), event.getPressure(),
-				  event.getSize());
-		connectPoints();
-    	
-  
-/*    	
-        
-//    	canvas.drawCircle(0, 0, event.getSize() * 500, paint);
-    	canvas.drawCircle(event.getX(), event.getY(), event.getSize() * 1000, paint);
-    	
-    	//this.invalidate();
-    	
-    	
-    	mTv.setText(
-				""+(event.getSize()* 500)+
-				"  "+event.getX()+
-				"  "+event.getY()+"   "+event.getHistorySize()
-				);
-*/
-    	return true;
-    	/*
-        float x = event.getX() - Var.brushWidth;
-        float y = event.getY() - Var.brushWidth;
-
         switch (event.getAction()) {
-        	case MotionEvent.ACTION_DOWN:
-        		brush.addColor(pixel);
-        		return true;
-        	case MotionEvent.ACTION_MOVE:
-        		brush.addColor(pixel);
-        		return true;
-            default:
-            	return true;
-        }    */	
+    	case MotionEvent.ACTION_UP:
+    	    
+    		path.clear();
+    		
+    		return true;
+    	case MotionEvent.ACTION_DOWN:
+
+			//path.add(new PointB(event.getX(), event.getY(), (int)(event.getSize()*5000)));
+            drawPoint( event.getX(), event.getY(), event.getPressure(),
+  				  event.getSize());
+    		
+    		return true;
+    	case MotionEvent.ACTION_MOVE:
+
+            drawPoint( event.getX(), event.getY(), event.getPressure(),
+  				  event.getSize());
+
+    		//path.add(new PointB(event.getX(), event.getY(), (int) (event.getSize()*5000)));
+
+			/*
+    		if (N > 0)
+    			for (int i=0; i<N; i++) 
+    				path.add(new PointF(event.getHistoricalX(i), event.getHistoricalY(i)));
+    			
+    		*/
+    		
+    		//return true;
+        default:
+        	return true;
+        }    
+        
     }
 
-	private void connectPoints() {
-		int n = items.size();
-		
-		for (int i = 0; i < n-1 ; i++){
-			Item item0 = items.get(i);
-			Item item1 = items.get(i+1);
-			if (Math.abs(item0.x - item1.x) > item0.radius*2 || Math.abs(item0.y - item1.y) > item0.radius*2){
-				items.add(i, new Item(item0, item1));
-				i++;
-				n++;
-			}
-				
-		}
-	}
-
-    
 	private void drawPoint(float x, float y, float pressure, float size) {
 		int mCurX;
 		int mCurY;
@@ -217,7 +216,8 @@ public class IView extends View {
 		mCurPressure = pressure;
 		mCurSize = size;
 		
-		mCurWidth = 1 ; //(int)(mCurSize*(brush.getSize()));
+//		mCurWidth = 1 ; //(int)(mCurSize*(brush.getSize()));
+		mCurWidth = (int)(mCurSize*3000);
 		if (mCurWidth < 1) mCurWidth = 1;
 		
 		int n = mCurWidth*2;
@@ -250,6 +250,10 @@ public class IView extends View {
 	public void paint()
 	{
 	
+		mPaint.setColor(Color.BLACK); 
+		mPaint.setAlpha(255);
+		
+		/*
 		for (Item item : items){
 			for (int i = -item.radius; i <= item.radius ; i++)
 				for (int j = -item.radius; j <= item.radius ; j++){
@@ -257,20 +261,32 @@ public class IView extends View {
 					int y1 = item.y+j;
 					if (x1 >= 0 && y1 >=0 && x1 < width && y1 < height && !modified[x1][y1]){
 						
-						int brushColor = 0; //brush.getColor(i+item.radius, j+item.radius, item.radius);
+						//int brushColor = brush.getColor(i+item.radius, j+item.radius, item.radius);
+						int brushColor = 0;
 						
-						if (brushColor != -1 && (i)*(i)+(j)*(j) < item.radius2){
+						float radius = (i)*(i)+(j)*(j);
+						
+						if (brushColor != -1 && radius < item.radius2){
 							set(x1, y1, item.pixel, item.alpha);
 							
-							mPaint.setColor(Color.BLACK); //item.rgb
-							mPaint.setAlpha(item.alpha);
+							if (radius >= item.radius2-1000)
+								mPaint.setColor(Color.BLACK);
+							else if (radius >= item.radius2-1100)
+								mPaint.setColor(Color.rgb(50, 50, 50));
+							else if (radius >= item.radius2-1300)
+								mPaint.setColor(Color.rgb(100, 100, 100));
+							else 
+								mPaint.setColor(Color.rgb(200, 200, 200));
+							
+//							mPaint.setColor(item.rgb);
+//							mPaint.setAlpha(item.alpha);
 							mCanvas.drawPoint(x1, y1, mPaint);
+							
 						}
-						
 					}
 				}
 		}
-		
+		*/
 		items.clear();
 		invalidate();
 	}
@@ -288,7 +304,9 @@ public class IView extends View {
 		
 		if (isInEditMode()) return;
 		
-		canvas.drawBitmap(mBitmapBg, mRectBG, mRect, null);
+		//canvas.drawBitmap(mBitmapBg, mRectBG, mRect, null);
+		canvas.drawColor(Color.WHITE);
+		
 		if (mBitmap != null) {
 			canvas.drawBitmap(mBitmap, mRectBitmap, mRect, null);
 		}
@@ -312,6 +330,12 @@ public class IView extends View {
 		*/
 
 		invalidate();
+	}
+
+	public void clear() {
+		mBitmap.eraseColor(Color.TRANSPARENT);
+		invalidate();
+		
 	}
 
 

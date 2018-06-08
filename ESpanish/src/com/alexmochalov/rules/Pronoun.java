@@ -41,10 +41,13 @@ public class Pronoun
 				if (verb.equals(sep2[0]))
 					return sep2[1];
 			} else 
-			if (verb.equals("estar")){
-				if (verb.equals(sep2[0]))
-					return sep2[1];
+				if (verb.equals("estar")){
+					if (verb.equals(sep2[0]))
+						return sep2[1];
 			} else 
+				if (verb.equals(sep2[0].trim()))
+						return sep2[1];
+			else 
 			{
 				int ending_length = sep2[0].length();
 				if (verb.substring(verb.length() - ending_length).equals(sep2[0]))

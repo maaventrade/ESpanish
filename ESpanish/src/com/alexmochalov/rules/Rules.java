@@ -18,7 +18,7 @@ import com.alexmochalov.rules.Rules.*;
 
 public class Rules
 {
-
+// Ç  ç î Î
 	public static boolean isLast(Pronoun p)
 	{
 		//return false;
@@ -67,16 +67,16 @@ public class Rules
 		if (searchString.trim().length() == 0)
 			return "";
 		
-		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
+		searchString = searchString.replaceAll("[^a-zA-ZàòùèéÉ]", "").toLowerCase();
 
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-ZàòùèéÉ]", "").toLowerCase()
 					.equals(searchString)) {
 				return e.translation;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-ZàòùèéÉ]", "").toLowerCase()
 					.contains(searchString)) {
 				return e.translation;
 			}
@@ -89,16 +89,16 @@ public class Rules
 		if (searchString.trim().length() == 0)
 			return null;
 		
-		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase();
+		searchString = searchString.replaceAll("[^a-zA-ZàòùèéÉ]", "").toLowerCase();
 		//Log.d("my", "searchString "+searchString);
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-ZàòùèéÉ]", "").toLowerCase()
 					.equals(searchString)) {
 				return e;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").toLowerCase()
+			if (e.mText.replaceAll("[^a-zA-ZàòùèéÉ]", "").toLowerCase()
 					.contains(searchString)) {
 				return e;
 			}
@@ -111,16 +111,16 @@ public class Rules
 			return null;
 		
 		//Log.d("atr",searchString);
-		searchString = searchString.replaceAll("[^a-zA-Zàòùè]", "");
+		searchString = searchString.replaceAll("[^a-zA-ZàòùèéÉ]", "");
 
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").
+			if (e.mText.replaceAll("[^a-zA-ZàòùèéÉ]", "").
 					equals(searchString)) {
 				return e;
 			}
 		}
 		for (Entry e : entries) {
-			if (e.mText.replaceAll("[^a-zA-Zàòùè]", "").
+			if (e.mText.replaceAll("[^a-zA-ZàòùèéÉ]", "").
 					contains(searchString)) {
 				return e;
 			}
@@ -183,6 +183,7 @@ public class Rules
 					.replaceAll("ò", "o")
 					.replaceAll("ù", "u").
 					replaceAll("è", "e").
+					replaceAll("é", "e").
 					replaceAll("ì", "i").
 					replaceAll("[^a-zA-Z]", "");
 			
@@ -190,6 +191,7 @@ public class Rules
 					.replaceAll("à", "a").replaceAll("ò", "o")
 					.replaceAll("ù", "u").replaceAll("è", "e").
 					replaceAll("à", "a").
+					replaceAll("é", "e").
 					replaceAll("ì", "i").
 									  replaceAll("[^a-zA-Z]", "");
 

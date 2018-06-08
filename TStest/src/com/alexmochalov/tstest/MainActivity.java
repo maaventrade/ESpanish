@@ -83,7 +83,6 @@ public class MainActivity extends Activity {
         @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REPAINT_MSG: {
-						
                 		viewCanvas.paint();						
 						mHandler.sendMessageDelayed(
                             mHandler.obtainMessage(REPAINT_MSG), REPAINT_DELAY);
@@ -102,6 +101,7 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+    		viewCanvas.clear();						
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

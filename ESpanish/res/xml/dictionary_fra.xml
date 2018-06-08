@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<dictionary>
+	   	<entry text = "parler" ending = "er" transl = "говорить" root = "говор" fit_type = "8"></entry>
+	   	<entry text = "manger" ending = "er" transl = "есть" root = "е" fit_type = "5"></entry>
+	   	<entry text = "chanter" ending = "er" transl = "петь" root = "по" fit_type = "3"></entry>
+	   	<entry text = "penser" ending = "er" transl = "думать" root = "дума" fit_type = "2"></entry>
+	   	<entry text = "danser" ending = "er" transl = "танцевать" root = "танцу" fit_type = "2"></entry>	   	
+	   	<entry text = "aimer" ending = "er" transl = "любить" root = "люб" fit_type = "7"></entry>
+	   	<entry text = "chercher" ending = "er" transl = "искать" root = "ищ" fit_type = "9"></entry>
+	   	<entry text = "trouver" ending = "er" transl = "находить" root = "нахо" fit_type = "10"></entry>
+	   	<entry text = "écouter" ending = "er" transl = "слушать" root = "слуша" fit_type = "2"></entry>
+
+	   	<entry text = "AVOIR" ending = "" transl = "иметь" root = "име" fit_type = "2"></entry>
+	   		   		   	
+	   	<entry text = "BONJOUR" transl = "ДОБРЫЙ ДЕНЬ"></entry>
+	   	<entry text = "BONSOIR" transl = "ДОБРЫЙ ВЕЧЕР"></entry>
+	   	<entry text = "BONNE NUIT" transl = "ДОБРОЙ НОЧИ"></entry>
+	   	<entry text = "COMMENT ÇA VA?" transl = "КАК ДЕЛА?"></entry>
+	   	<entry text = "ÇA VA" transl = "ИДЕТ"></entry>
+	   	<entry text = "BIEN" transl = "ХОРОШО"></entry>
+	   	<entry text = "TRÉS BIEN" transl = "ОЧЕНЬ ХОРОШО"></entry>
+	   	<entry text = "MERCI" transl = "СПАСИБО"></entry>
+	   	<entry text = "S'IL VOUS PLAÎT" transl = "ЕСЛИ ВАМ УГОДНО"></entry>
+	   	<entry text = "S'IL TE PLAÎT" transl = "ЕСЛИ ТЕБЕ УГОДНО"></entry>
+	   	<entry text = "AU REVUAR" transl = "ДО СВИДАНИЯ"></entry>
+	   	<entry text = "SALUT" transl = "ПРИВЕТ"></entry>
+	   		   		   		   		   		   		   		   		   		   		   		   	
+	</dictionary>
+	   		   	
+	<pronoun>
+	   	<entry text = "je" transl = "я" verb_ending = "er:e, AVOIR:AI" verb_ending_past = "are:ato">
+	    </entry>
+	   	<entry text = "tu" transl = "ты" verb_ending = "er:es, AVOIR:AS" verb_ending_past = "are:ato">
+	    </entry>
+	   	<entry text = "il" transl = "он" verb_ending = "er:e, AVOIR:A" verb_ending_past = "are:ato">
+	    </entry>
+	   	<entry text = "elle" transl = "она" verb_ending = "er:e, AVOIR:A" verb_ending_past = "are:ato">
+	    </entry>
+	   	<entry text = "nous" transl = "мы" verb_ending = "er:ons, AVOIR:AVONS" verb_ending_past = "are:ato">
+	    </entry>
+	   	<entry text = "vous" transl = "вы" verb_ending = "er:ez, AVOIR:AVEZ" verb_ending_past = "are:ato">
+	    </entry>
+	   	<entry text = "ils" transl = "они(муж)" verb_ending = "er:ent, AVOIR:ONT" verb_ending_past = "are:ato,avere:ho">
+	   	</entry>
+	   	<entry text = "elles" transl = "они(жeн)" verb_ending = "er:ent, AVOIR:ONT" verb_ending_past = "are:ato,avere:ho">
+	   	</entry>
+	</pronoun>
+	    
+	<fits>
+	   	<entry type = "1" obj = "у:ёшь:ёт:ёт:ём:ёте:ут:ут" obj_past = "ал:ал:ал:ала:али:али:али:али"></entry>
+	   	<entry type = "2" obj = "ю:ешь:ет:ет:ем:ете:ют:ют" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
+	   	<entry type = "3" obj = "ю:ёшь:ёт:ёт:ём:ёте:ют:ют" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
+	   	<entry type = "4" obj = "усь:ишся:ится:ится:имся:итесь:атся:атся" obj_past = "ился:ился:ился:илась:ились:ились:ились:ились"></entry>
+	   	<entry type = "5" obj = "м:шь:ст:ст:дим:дите:дят:дят" obj_past = "л:л:л:ла:ли:ли:ли:ли"></entry>
+	   	<entry type = "6" obj = "ю:ишь:ит:ит:им:ите:ят:ят" obj_past = "ел:ел:ел:ела:ели:ели:ели:ели"></entry>
+	   	<entry type = "7" obj = "лю:ишь:ит:ит:им:ите:ят:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
+		<entry type = "8" obj = "ю:ишь:ит:ит:им:ите:ят:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
+		<entry type = "9" obj = "у:ешь:ет:ет:ем:ете:ут:ут" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
+		<entry type = "10" obj = "жу:дишь:дит:дит:димм:дите:дят:дят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
+	</fits>				
+
+</data>
