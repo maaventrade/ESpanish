@@ -11,6 +11,9 @@
 	   	<entry text = "trouver" ending = "er" transl = "находить" root = "нахо" fit_type = "10"></entry>
 	   	<entry text = "écouter" ending = "er" transl = "слушать" root = "слуша" fit_type = "2"></entry>
 
+	   	<entry text = "regarder" ending = "er" transl = "смотреть" root = "смотр" fit_type = "8"></entry>
+	   	<entry text = "visiter" ending = "er" transl = "посещать" root = "посеща" fit_type = "2"></entry>
+	   	
 	   	<entry text = "AVOIR" ending = "" transl = "иметь" root = "име" fit_type = "2"></entry>
 	   		   		   	
 	   	<entry text = "BONJOUR" transl = "ДОБРЫЙ ДЕНЬ"></entry>
@@ -25,6 +28,12 @@
 	   	<entry text = "S'IL TE PLAÎT" transl = "ЕСЛИ ТЕБЕ УГОДНО"></entry>
 	   	<entry text = "AU REVUAR" transl = "ДО СВИДАНИЯ"></entry>
 	   	<entry text = "SALUT" transl = "ПРИВЕТ"></entry>
+	   	
+	   	<entry text = "déjà" transl = "УЖЕ"></entry>
+	   	<entry text = "déjà vu" transl = "УЖЕ ВИДЕЛ"></entry>
+	   	<entry text = "OUI" transl = "ДА"></entry>
+	   	<entry text = "NON" transl = "НЕТ"></entry>
+	   		   		   		   	
 	   		   		   		   		   		   		   		   		   		   		   		   	
 	</dictionary>
 	   		   	
@@ -57,7 +66,7 @@
 	   	<entry type = "7" obj = "лю:ишь:ит:ит:им:ите:ят:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
 		<entry type = "8" obj = "ю:ишь:ит:ит:им:ите:ят:ят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
 		<entry type = "9" obj = "у:ешь:ет:ет:ем:ете:ут:ут" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
-		<entry type = "10" obj = "жу:дишь:дит:дит:димм:дите:дят:дят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
+		<entry type = "10" obj = "жу:дишь:дит:дит:дим:дите:дят:дят" obj_past = "ил:ил:ил:ила:или:или:или:или"></entry>
 	</fits>				
 
 </data>

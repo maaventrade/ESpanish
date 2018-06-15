@@ -70,26 +70,6 @@ public class FragmentConj extends FragmentM {
 
 		setPronouns(MenuData.getText());
 		
-		if (Utils.getLanguage().equals("fra"))
-			if (Utils.isVowel(mTextViewText.getText().subSequence(0, 1)))
-				setPronounsToVowel();
-
-	}
-
-	// je aimer -> j'aimer
-	private void setPronounsToVowel() {
-
-		for (PronounEdited p : objects) {
-
-			TextView t = (TextView)p.mLayout.findViewById(R.id.text);
-			String s = t.getText().toString();
-			
-			if ( s.equals("JE"))
-				((TextView) p.mLayout.findViewById(R.id.text))
-				.setText("J'");
-			
-		}
-		
 	}
 
 	/**
@@ -152,15 +132,19 @@ public class FragmentConj extends FragmentM {
 		}
 	}
 
+	
 	private void setPronouns(String text) {
 
 		for (PronounEdited p : objects) {
 			
-			((TextView) p.mLayout.findViewById(R.id.text)).setText((p.mPronoun.getText().toUpperCase()));
+			((TextView) p.mLayout.findViewById(R.id.text)).setText(
+					Utils.setPronounsToVowel(p.mPronoun.getText().toUpperCase(),
+							text));
 			
 			((TextView) p.mLayout.findViewById(R.id.translation))
 					.setText(p.mPronoun.getTranslation());
 		}
+		
 	}
 
 	/**
@@ -407,10 +391,12 @@ public class FragmentConj extends FragmentM {
 		String s = MenuData.getText();
 
 		for (PronounEdited p : objects)
-			s = s + ":" + p.mPronoun.getText() + " "
+			s = s + ":" 
+					+ Utils.setPronounsToVowel(p.mPronoun.getText().toUpperCase(), MenuData.getText()) 
+					+ " "
 					+ p.mPronoun.conj(MenuData.getText(), false);
 
-		return s;
+		return s.replace("' ", "'");
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.alexmochalov.rules;
 
 import android.util.*;
+import java.lang.annotation.*;
 
 public class Pronoun
  {
@@ -10,7 +11,24 @@ public class Pronoun
 	String verb_ending;
 	String verb_ending_past;
 
+	public Pronoun(){
+		
+	}
+	
+	public Pronoun(Pronoun p1){
+		mText = p1.getText();
+		translation = p1.getTranslation();
+		verb_ending = p1.verb_ending;
+		verb_ending_past = p1.verb_ending_past;
+	}
 
+	public void copy(Pronoun p1){
+		mText = p1.getText();
+		translation = p1.getTranslation();
+		verb_ending = p1.verb_ending;
+		verb_ending_past = p1.verb_ending_past;
+	}
+	
 	public String conj(String verb, boolean isPast) {
 		if (verb.length() == 0)
 			return "";

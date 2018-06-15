@@ -32,6 +32,7 @@ import com.alexmochalov.dialogs.SelectFileDialog;
 import com.alexmochalov.dictionary.Dictionary;
 import com.alexmochalov.dictionary.DictionaryDialog;
 import com.alexmochalov.fragments.FragmentConj;
+import com.alexmochalov.fragments.FragmentConjAudio;
 import com.alexmochalov.fragments.FragmentM;
 import com.alexmochalov.fragments.FragmentPhrase;
 import com.alexmochalov.fragments.FragmentRemember;
@@ -209,6 +210,8 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 			fragment = new FragmentPhrase();
 		} else if (type.equals("Спряжения")){
 			fragment = new FragmentConj();
+		} else if (type.equals("СпряженияАудио")){
+			fragment = new FragmentConjAudio();
 		} else if (type.equals("Говорим")){
 			fragment = new FragmentSpeak();
 		} else if (type.equals("Запоминание")){
@@ -472,5 +475,14 @@ OnMenuItemSelectedListener, FragmentM.OnTestedListener
 	public void onButtonStartTestingClick() {
 		selectItem("Выражения");
 	}
-	
+
+	@Override
+	  protected void onDestroy() {
+	   
+		super.onDestroy();
+	    //releasePlayer();
+	    Media.releaseRecorder();
+	    Media.releasePlayer();
+	    
+	  }	
 }

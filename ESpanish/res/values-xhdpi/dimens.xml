@@ -6,4 +6,6 @@
 	<dimen name="text_size_large">20dp</dimen>
 	<dimen name="text_size_medium">18dp</dimen>
 	<dimen name="text_size_small">15dp</dimen>
+	<dimen name="text_size_smallest">10dp</dimen>
+		
 </resources>

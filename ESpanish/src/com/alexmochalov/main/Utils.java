@@ -59,6 +59,17 @@ public class Utils {
 		return randomize;
 	}
 	
+	// je aimer -> j'aimer
+	public static String setPronounsToVowel(String pronoun, String text) {
+
+		if ( pronoun.equals("JE") && Utils.isVowel(text.substring(0 ,1)))
+				return "J'";
+			
+		return pronoun;
+		
+	}
+
+
 	
 /*
 	public static boolean readBoolean(String name, boolean def) {

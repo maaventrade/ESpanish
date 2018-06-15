@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data version = "1">
     <level0 title = "Урок 1">
-    	<level1 title = "Правильные Глаголы" type = "Спряжения" helpindex = "1"
+    	<level1 title = "Правильные Глаголы" type = "СпряженияАудио" helpindex = "1"
 			note = "Спрягаем глаголы по формам лица и числа.">
     	   <entry text = "parler"></entry>
     	   <entry text = "manger"></entry>
@@ -18,9 +18,14 @@
 			<entry neg1 = "ne" neg2 = "pas"  negrus = "не" verbs = "parler, manger, chanter, penser, danser, chercher, trouver, aimer, écouter"></entry>
 		</level1>    
 		
-		<level1 title = "Неправильные глаголы &lt;font color=0xffff00&gt;AVOIR&lt;/font&gt;" type = "Спряжения" helpindex = "2"
+	</level0>
+
+    <level0 title = "Урок 2">
+		
+		<level1 title = "Неправильные глаголы &lt;font color=0xffff00&gt;AVOIR&lt;/font&gt;" type = "Спряжения" helpindex = "4"
 			note = "Спрягаем глаголы по формам лица и числа.">
 			<entry text = "AVOIR"></entry>
 		</level1>
-			
-</level0></data>
+	</level0>
+    
+</data>

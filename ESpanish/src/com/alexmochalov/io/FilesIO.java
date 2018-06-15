@@ -123,8 +123,12 @@ String ttt = "";
 										mode = "Выражения";
 										menuGroupItem.setChildType(mode);
 									} else if (xpp.getAttributeValue(i).equals(
-												   "Спряжения")) {
+											   "Спряжения")) {
 										mode = "Спряжения";
+										menuGroupItem.setChildType(mode);
+									} else if (xpp.getAttributeValue(i).equals(
+											   "СпряженияАудио")) {
+										mode = "СпряженияАудио";
 										menuGroupItem.setChildType(mode);
 									} else if (xpp.getAttributeValue(i).equals(
 												   "Комбинации")) {

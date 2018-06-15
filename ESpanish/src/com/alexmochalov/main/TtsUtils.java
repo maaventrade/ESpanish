@@ -1,11 +1,14 @@
 package com.alexmochalov.main;
 
 import android.annotation.*;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.*;
 import android.os.*;
 import android.speech.tts.*;
 import android.util.*;
 import android.widget.*;
+
 import java.util.*;
 
 public class TtsUtils
@@ -14,6 +17,7 @@ public class TtsUtils
 	private Locale locale;
 	private static boolean  langSupported;
 	private static Context mContext;
+	private static AlertDialog  alertDialog ;
 
 	public static void speak(String text)
 	{
@@ -59,11 +63,29 @@ public class TtsUtils
 				} else {
 					langSupported = true;
 					tts.setLanguage(locale[i]);
+					
+					tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+			            @Override
+			            public void onDone(String utteranceId) {
+			            	
+			            	if (alertDialog != null)
+			            		alertDialog.dismiss();			            	
+			            }
+
+			            @Override
+			            public void onError(String utteranceId) {
+			            }
+
+			            @Override
+			            public void onStart(String utteranceId) {
+			            }
+			        });		
+
 				}	
 				return; 
 			}}
-		Toast.makeText(context,"язык не найден"+" ("+Utils.getLanguage()+") ", Toast.LENGTH_LONG).show();
 		
+		Toast.makeText(context,"язык не найден"+" ("+Utils.getLanguage()+") ", Toast.LENGTH_LONG).show();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -93,4 +115,16 @@ public class TtsUtils
 		 spinner.setAdapter(adapter);
 		 */
     }
+
+	public static void speak(String s, AlertDialog  pAlertDialog) {
+
+		alertDialog = pAlertDialog;
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			ttsGreater21(s);
+		} else {
+			ttsUnder20(s);
+		}
+		
+	}
 }

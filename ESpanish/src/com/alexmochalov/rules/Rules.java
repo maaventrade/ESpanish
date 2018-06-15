@@ -168,6 +168,16 @@ public class Rules
 	public static ArrayList<Pronoun> getPronouns() {
 		return pronouns;
 	}
+	
+	public static ArrayList<Pronoun> clonePronouns() {
+		
+		ArrayList<Pronoun> prs = new ArrayList<Pronoun>();
+		for (Pronoun p : pronouns )
+			prs.add(new Pronoun(p));
+		
+		return prs;
+	}
+	
 
 	public static Pronoun getRandomPronoun() {
 		return pronouns.get( (int) (Math.random()*pronouns.size())  );
@@ -364,6 +374,16 @@ public class Rules
 		}
 		 
 		return e.root + ending;
+	}
+
+	public static int indexOf(Pronoun prn) {
+		
+		for (int i = 0; i < pronouns.size(); i++)
+			if (prn.getText().equals(pronouns.get(i).getText()))
+				return i;
+		
+		return -1;
+		
 	}
 	
 
