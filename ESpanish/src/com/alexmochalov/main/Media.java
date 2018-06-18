@@ -20,7 +20,7 @@ public class Media {
 
 	public interface OnMediaEventListener {
 		public void plaingCompleted();
-		public void recordingFinished();
+		public void recordingFinished(boolean isRecording);
 	}
 
 	public static OnMediaEventListener listener;
@@ -55,8 +55,8 @@ public class Media {
 				    public void onFinish() {
 				    	
 				    	if (listener != null){
-				    		listener.plaingCompleted();
-				    		listener.recordingFinished();
+Log.d("a","is rec "+isRecording);
+				    		listener.recordingFinished(isRecording);
 				    	}
 				    }
 
@@ -64,7 +64,7 @@ public class Media {
 			}
 						
 			isRecording = true;
-			
+	Log.d("a","is rec 1 "+isRecording);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,6 +95,7 @@ public class Media {
 		}
 		    
 		isRecording = false;
+		Log.d("a","is rec 2 "+isRecording);
 	}
 
 	public static void stopPlaing() {

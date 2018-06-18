@@ -157,9 +157,10 @@ public class ListAdapterConjAudio extends BaseAdapter {
     	Media.listener = new OnMediaEventListener(){
 
 			@Override
-			public void recordingFinished()
+			public void recordingFinished(boolean isRecording)
 			{
-				if (objects.indexOf(selected)+1 < objects.size()){
+				if (isRecording &&
+					objects.indexOf(selected)+1 < objects.size()){
 					record(objects.get(
 							objects.indexOf(selected)+1),
 						ibRecord);
