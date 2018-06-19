@@ -1,5 +1,6 @@
 package com.alexmochalov.fragments;
 
+import android.app.AlertDialog;
 import android.graphics.*;
 import android.os.*;
 import android.util.*;
@@ -24,7 +25,9 @@ public class FragmentConjAudio extends FragmentM {
 	private Button button_test;
 	private String tense = "";
 	private String non = "";
+
 	private ListAdapterConjAudio adapter;
+	private ListView listView;
 
 	private ViewGroup mLinearLayout;
 
@@ -71,14 +74,13 @@ public class FragmentConjAudio extends FragmentM {
 		if (Utils.getRandomize())
 			setOrder();
 
-		//setPronouns(MenuData.getText());
-	
+		//setPronouns(MenuData.getText());	
 		
 		adapter = new ListAdapterConjAudio(mContext, 
 					objects, 
 					mTextViewText.getText().toString());
 
-		ListView listView = (ListView)rootView.findViewById(R.id.listView);
+		listView = (ListView)rootView.findViewById(R.id.listView);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		listView.setAdapter(adapter);
@@ -213,7 +215,6 @@ public class FragmentConjAudio extends FragmentM {
 			public void onClick(View v) {
 				
 				adapter.record(objects.get(0), ibRecord);
-		
 
 			}
 		});		
@@ -284,14 +285,28 @@ public class FragmentConjAudio extends FragmentM {
 
 	public String getTextToTTS() {
 		String s = MenuData.getText();
-/*
-		for (PronounEdited p : objects)
-			s = s + ":" 
-					+ setPronounsToVowel(p.mPronoun.getText().toUpperCase(), MenuData.getText()) 
-					+ " "
-					+ p.mPronoun.conj(MenuData.getText(), false);
-*/
+		String s1;
+
+		for (Pronoun p : objects){
+			
+			s1 = Utils.setPronounsToVowel(p.getText().toUpperCase(), MenuData.getText()) 
+			+ " "
+			+ p.conj(MenuData.getText(), false).toUpperCase();
+			
+			AlertDialog.Builder builder;
+		    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		        builder = new AlertDialog.Builder(mContext, android.R.style.Theme_Material_Dialog_Alert);
+		    } else {
+		        builder = new AlertDialog.Builder(mContext);
+		    }
+		    
+		    s1 = s1.replace("' ", "'");
+			
+			s = s + ":" + s1;
+		}	
+
 		return s.replace("' ", "'");
 	}
+	
 
 }

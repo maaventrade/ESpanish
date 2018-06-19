@@ -10,8 +10,8 @@
     	   <entry text = "danser"></entry>
     	   <entry text = "chercher"></entry>
     	   <entry text = "trouver"></entry>
-    	   <entry text = "aimer"></entry>
     	   <entry text = "écouter"></entry>
+    	   	   <entry text = "aimer"></entry>
 		</level1>
 		<level1 title = "Отрицание NE ... PAS" type = "Комбинации1"  helpindex = "2"
 			note = "Переводим выражения с французского языка на русский и с русского на французский.">

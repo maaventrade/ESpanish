@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 
 import com.alexmochalov.alang.*;
+import com.alexmochalov.dialogs.DialogRecord;
 import com.alexmochalov.main.Media;
 import com.alexmochalov.main.Media.OnMediaEventListener;
 import com.alexmochalov.main.TtsUtils;
@@ -31,8 +32,13 @@ public class ListAdapterConjAudio extends BaseAdapter {
 	private ArrayList<Pronoun> objects;
 	private Pronoun selected = null;
 	private String verb;
-	 
+	
+	private boolean recordAll = false;
+	
+	private String textRus;
 
+	private DialogRecord dialog;
+	
 	public ListAdapterConjAudio(Context context, ArrayList<Pronoun> pObjects, String pVerb) {
 		mContext = context;
 		objects = pObjects;
@@ -46,28 +52,52 @@ public class ListAdapterConjAudio extends BaseAdapter {
 
 	public boolean record(Pronoun p, final ImageButton ibRecord)
 	{
+
+		recordAll = true;
 		setSelected(objects.indexOf(p));
 		
 		Media.stopRecording();
     	Media.stopPlaing();
 		
-		startRecording(p, ibRecord, true);
+		startRecording(p);
 		
 		return true;
 	}
 
-	private void startRecording(Pronoun p, ImageButton ibRecord, boolean useTimer)
+	private void startRecording(Pronoun p)
 	{
-
+		
 		if (Media.isRecording()){
 			Media.stopRecording();
-			ibRecord.setImageDrawable(
-				ContextCompat.getDrawable(mContext, R.drawable.record));
 		}
-		else	
-		if (Media.startRecording(p.getText()+"_"+verb, useTimer))
-			ibRecord.setImageDrawable(
-				ContextCompat.getDrawable(mContext, R.drawable.stop));
+		else {
+			String verbRus = Rules.fit(Rules.translate(verb),  
+					Rules.indexOf(p) , "present").trim();
+		
+			textRus =  p.getTranslation().toUpperCase()
+				+" "
+				+verbRus.toUpperCase();
+		
+			if (dialog == null){
+				dialog = new DialogRecord(mContext, textRus, 5000);
+				dialog.listener = new DialogRecord.OnDialogEventListener(){
+
+					@Override
+					public void stopRecording() {
+						recordAll = false;
+						Media.stopRecording();
+						
+						if (dialog != null)
+							dialog = null;
+
+					}};
+					
+				dialog.show();
+			} else	
+				dialog.setText(textRus);
+
+			Media.startRecording(mContext, p.getText()+"_"+verb, dialog);
+		}
 
 	}
 	
@@ -96,32 +126,42 @@ public class ListAdapterConjAudio extends BaseAdapter {
 
 		View view = convertView;
 	    if (view == null) {
-	      view = lInflater.inflate(R.layout.fragment_conj_item_audio, parent, false);
+	    	//if (useTimer)
+	  	    //  view = lInflater.inflate(R.layout.fragment_conj_item_audio1, parent, false);
+	    	//else
+		      view = lInflater.inflate(R.layout.fragment_conj_item_audio, parent, false);
 	    }
 	 
 	    Pronoun p = (Pronoun)getItem(position);
 		Entry e = Rules.translate(verb);
-		String textRus = Rules.fit(e,  Rules.indexOf(p) , "present").trim();
-
-	    ((TextView) view.findViewById(R.id.translation)).setText(p.getTranslation().toUpperCase()
-		+" "
-		+textRus.toUpperCase());
+		String verbRus = Rules.fit(e,  Rules.indexOf(p) , "present").trim();
+		textRus =  p.getTranslation().toUpperCase()
+				+" "
+				+verbRus.toUpperCase();
+		
+	    ((TextView) view.findViewById(R.id.translation)).setText(textRus);
 	    
 	    LinearLayout layoutButtons = (LinearLayout)view.findViewById(R.id.layoutButtons); 
 	    
 	    if (p == selected){
 	    	
-	    	layoutButtons.setVisibility(View.VISIBLE);
-	    	setButtons(view, p);
+	    	if (recordAll){
+	    		int yy = 1;
+	    	}
+	    	else {
+		    	layoutButtons.setVisibility(View.VISIBLE);
+	    		setButtons(view, p, textRus);
+	    	}
 	    	
 	    }
-	    else
+	    else {
 	    	layoutButtons.setVisibility(View.INVISIBLE);
+	    }	
 	 
 	    return view;
 	    }
 
-	private void setButtons(View view, final Pronoun p) {
+	private void setButtons(View view, final Pronoun p, final String textRus) {
 		
     	ImageButton ibSpeak = (ImageButton) view.findViewById(R.id.ibSpeak);
     	ibSpeak.setOnClickListener(new OnClickListener() {
@@ -139,6 +179,8 @@ public class ListAdapterConjAudio extends BaseAdapter {
 			    } else {
 			        builder = new AlertDialog.Builder(mContext);
 			    }
+			    
+			    s = s.replace("' ", "'");
 			    
 			    TtsUtils.speak(s,
 			    
@@ -158,13 +200,28 @@ public class ListAdapterConjAudio extends BaseAdapter {
 
 			@Override
 			public void recordingFinished(boolean isRecording)
-			{
-				if (isRecording &&
-					objects.indexOf(selected)+1 < objects.size()){
-					record(objects.get(
-							objects.indexOf(selected)+1),
-						ibRecord);
+			{ // recordAll &&
+				
+				if (recordAll){
+					if (objects.indexOf(selected)+1 < objects.size())
+							record(objects.get(
+									objects.indexOf(selected)+1),
+								ibRecord);
+					else {
+						recordAll = false;
+						if (dialog != null){
+							dialog.dismiss();
+							dialog = null;
+						}
+					}
+				} else {
+					if (dialog != null){
+						dialog.dismiss();
+						dialog = null;
+					}
 				}
+					
+				
 			}
 
 
@@ -183,7 +240,7 @@ public class ListAdapterConjAudio extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				
-				startRecording(p, ibRecord, false);
+				startRecording(p);
 				
 			}
 
@@ -202,13 +259,9 @@ public class ListAdapterConjAudio extends BaseAdapter {
 				
 				if (Media.isPlaing()){
 					Media.stopPlaing();
-					ibPlay.setImageDrawable(
-							ContextCompat.getDrawable(mContext, R.drawable.play));
 				}
 				else	
-					if (Media.startPlaying(p.getText()+"_"+verb))
-						ibPlay.setImageDrawable(
-								ContextCompat.getDrawable(mContext, R.drawable.stop));
+					Media.startPlaying(p.getText()+"_"+verb);
 				
 			}
 		});

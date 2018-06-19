@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="@dimen/text_size_small"
+    android:layout_marginLeft="@dimen/text_size_medium"
+    android:layout_marginRight="@dimen/text_size_medium"
+    android:orientation="vertical" >
+
+	<TextView
+	    android:id="@+id/text"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="@dimen/text_size_medium"
+	    android:text="Large Text"
+	    android:textColor="@color/blue"
+	    android:textSize="@dimen/text_size_medium"
+	    android:typeface="serif" />
+
+	<ProgressBar
+	    android:id="@+id/progressBar"
+	    style="?android:attr/progressBarStyleHorizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" />
+
+	<Button
+	    android:id="@+id/btnStop"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Button" />
+	
+</LinearLayout>
+

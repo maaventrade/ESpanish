@@ -2,13 +2,20 @@ package com.alexmochalov.main;
 
 import java.io.File;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import java.util.*;
+
+import com.alexmochalov.dialogs.DialogRecord;
 
 public class Media {
 
@@ -17,7 +24,9 @@ public class Media {
 	
 	private static boolean isRecording = false;
 	private static boolean isPlaing = false;
-
+	
+	private static CountDownTimer timer;
+	
 	public interface OnMediaEventListener {
 		public void plaingCompleted();
 		public void recordingFinished(boolean isRecording);
@@ -25,7 +34,7 @@ public class Media {
 
 	public static OnMediaEventListener listener;
 
-	public static boolean startRecording(String verb, boolean useTimer) {
+	public static boolean startRecording(Context mContext, String verb, final DialogRecord dialog) {
 
 		try {
 			
@@ -46,23 +55,26 @@ public class Media {
 			mediaRecorder.prepare();
 			mediaRecorder.start();
 			
-			if (useTimer){
-				new CountDownTimer(5000, 5000) {
+			timer =	new CountDownTimer(5000, 100) {
 
 				    public void onTick(long millisUntilFinished) {
+				    	
+				    	dialog.setProgress(5000 - (int)millisUntilFinished);
+				    	
 				    }
 
 				    public void onFinish() {
 				    	
 				    	if (listener != null){
-Log.d("a","is rec "+isRecording);
+
 				    		listener.recordingFinished(isRecording);
+				    		
 				    	}
 				    }
 
-				}.start();			
-			}
-						
+				}.start();
+				
+	
 			isRecording = true;
 	Log.d("a","is rec 1 "+isRecording);
 			return true;
@@ -87,15 +99,19 @@ Log.d("a","is rec "+isRecording);
 	}
 
 	public static void stopRecording() {
-		if (mediaRecorder  != null && isRecording)
+
+		if (mediaRecorder != null && isRecording)
 			try {
 				mediaRecorder.stop();
-				} catch(RuntimeException e) {
+			} catch (RuntimeException e) {
 			} finally {
+			}
+
+		if (timer != null) {
+			timer.cancel();
 		}
-		    
+
 		isRecording = false;
-		Log.d("a","is rec 2 "+isRecording);
 	}
 
 	public static void stopPlaing() {

@@ -41,29 +41,14 @@
 	    android:gravity="right"
 	    android:orientation="horizontal" >
 
-	    <ImageButton
-	        android:id="@+id/ibSpeak"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="0.3"
-	        android:scaleType="fitCenter"
-	        android:src="@drawable/speaker" />
+		<ProgressBar
+		    android:id="@+id/progressBar1"
+		    style="?android:attr/progressBarStyleHorizontal"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:max="100"
+		    android:progress="30" />
 
-	    <ImageButton
-	        android:id="@+id/ibPlay"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="0.3"
-	        android:scaleType="fitCenter"
-	        android:src="@drawable/play" />
-
-	    <ImageButton
-	        android:id="@+id/ibRecord"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="0.3"
-	        android:scaleType="fitCenter"
-	        android:src="@drawable/record" />
 	</LinearLayout>
 	
 </LinearLayout>
