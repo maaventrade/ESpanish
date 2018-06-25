@@ -80,7 +80,7 @@ public final class R {
         public static final int voidf=0x7f02001c;
     }
     public static final class id {
-        public static final int EditTextTranslation=0x7f0c0027;
+        public static final int EditTextTranslation=0x7f0c0028;
         public static final int FileList=0x7f0c0015;
         public static final int LinearLayoutNew=0x7f0c0016;
         public static final int TextView01=0x7f0c0036;
@@ -101,7 +101,7 @@ public final class R {
         public static final int button_play=0x7f0c0038;
         public static final int button_rec=0x7f0c0037;
         public static final int button_test=0x7f0c0024;
-        public static final int checkBoxRandom=0x7f0c0025;
+        public static final int checkBoxRandom=0x7f0c0027;
         public static final int dialogExampleExample=0x7f0c0002;
         public static final int dialogExampleImageButtonOk=0x7f0c0005;
         public static final int dialogExampleImageButtonSpeak=0x7f0c0004;
@@ -125,17 +125,17 @@ public final class R {
         public static final int fragmentSpeakItemtextViewText=0x7f0c0039;
         public static final int fragment_container=0x7f0c0000;
         public static final int fragmentconjitemlastImageButtonOk=0x7f0c002d;
-        public static final int ibPlay=0x7f0c002b;
-        public static final int ibRecord=0x7f0c0026;
-        public static final int ibSpeak=0x7f0c002a;
+        public static final int ibPlay=0x7f0c0026;
+        public static final int ibRecord=0x7f0c0025;
+        public static final int ibSpeak=0x7f0c002b;
         public static final int icon=0x7f0c003a;
         public static final int imageView1=0x7f0c003e;
         public static final int item_dictionary=0x7f0c0047;
         public static final int item_help=0x7f0c0046;
         public static final int item_speak=0x7f0c0045;
-        public static final int layoutButtons=0x7f0c0029;
+        public static final int layoutButtons=0x7f0c002a;
         public static final int listView=0x7f0c001d;
-        public static final int nnnnnn=0x7f0c0028;
+        public static final int nnnnnn=0x7f0c0029;
         public static final int pager=0x7f0c0032;
         public static final int progressBar=0x7f0c000e;
         public static final int progressBar1=0x7f0c002c;

@@ -85,13 +85,33 @@
 			android:text="TextView"
 			android:textSize="@dimen/text_size_medium"/>
 
-		<Button
-			android:id="@+id/button_test"
+		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center_horizontal|center"
-			android:text="@string/button_test"
-			android:textSize="@dimen/text_size_medium"/>
+			android:layout_gravity="bottom|center" >
+
+			<Button
+			    android:id="@+id/button_test"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/button_test"
+			    android:textSize="@dimen/text_size_medium" />
+
+			<ImageButton
+			    android:id="@+id/ibRecord"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:scaleType="fitCenter"
+			    android:src="@drawable/record" />
+
+			<ImageButton
+			    android:id="@+id/ibPlay"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:scaleType="fitCenter"
+			    android:src="@drawable/play" />
+
+		</LinearLayout>
 
 		<CheckBox
 		    android:id="@+id/checkBoxRandom"

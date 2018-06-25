@@ -47,4 +47,8 @@ public class PronounEdited {
 			editText2.setText(text);
 		}
 
+		public Pronoun getPronoun() {			
+			return mPronoun;			
+		}
+
 	};

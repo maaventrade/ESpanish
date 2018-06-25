@@ -334,6 +334,8 @@ public class FragmentConj extends FragmentM {
 
 		// Fill this Dialog
 		next(true);
+		
+	    Media.setButtons(rootView, mContext, Utils.toPronoun(objects), "sdfsdfsd");
 
 		return rootView;
 	}

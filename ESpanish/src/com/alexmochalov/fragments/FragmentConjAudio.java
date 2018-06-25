@@ -197,6 +197,8 @@ public class FragmentConjAudio extends FragmentM {
 			@Override
 			public void onClick(View v) {
 
+				setTested(3);
+				
 					if (MenuData.nextIndex() == -1) {
 						getActivity().getFragmentManager().beginTransaction()
 								.remove(thisFragment).commit();
@@ -232,55 +234,6 @@ public class FragmentConjAudio extends FragmentM {
 		next(true);
 
 		return rootView;
-	}
-
-	protected boolean test(PronounEdited p, boolean showAnswer) {
-		boolean result = true;
-/*
-		EditText editText = (EditText) p.mLayout
-				.findViewById(100 + objects.indexOf(p)); //R.id.EditTextTranslation
-		
-		String text = editText.getText().toString();
-
-		String verb = MenuData.getText();
-
-		String textSample = "";
-		if (non.equals("Отрицание"))
-			textSample = "non ";
-
-		int index = Rules.getPronouns().indexOf(p.mPronoun);
-
-		if (tense.equals("Прошедшее время"))
-			textSample = textSample + Rules.conj(index, "avere", false)
-					+ " " + Rules.conj(index, verb, true);
-		else
-			textSample = p.mPronoun.conj(verb, false);
-
-		if (showAnswer)
-			editText.setText(textSample);
-
-		if (text.toLowerCase()
-			.replaceAll("à", "a")
-			.replaceAll("ò", "o")
-			.replaceAll("ù", "u")
-			.replaceAll("è", "e")
-			.replaceAll("é", "e")
-			.replaceAll("ì", "i")
-			.equals(textSample.toLowerCase()
-		.replaceAll("à", "a")
-			.replaceAll("ò", "o")
-			.replaceAll("ù", "u")
-			.replaceAll("è", "e")
-			.replaceAll("é", "e")
-			.replaceAll("ì", "i"))) {
-			editText.setTextColor(mContext.getResources().getColor(
-					R.color.green2));
-		} else {
-			editText.setTextColor(Color.RED);
-			result = false;
-		}
-*/
-		return result;
 	}
 
 	public String getTextToTTS() {

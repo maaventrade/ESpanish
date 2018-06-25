@@ -17,16 +17,23 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alexmochalov.alang.R;
+import com.alexmochalov.dialogs.DialogRecord;
+import com.alexmochalov.main.Media;
+import com.alexmochalov.main.Utils;
+import com.alexmochalov.main.Media.OnMediaEventListener;
 import com.alexmochalov.menu.MenuData;
+import com.alexmochalov.rules.Pronoun;
 import com.alexmochalov.rules.Rules;
 import com.alexmochalov.rules.Rules;
 
 public class FragmentPhrase extends FragmentM {
-	Button button_test;
+
+	private Button button_test;
 	
     /**
      * Prepare next step of the task
@@ -121,9 +128,13 @@ public class FragmentPhrase extends FragmentM {
 				
 			}});
         
+
+	    Media.setButtons(rootView, mContext, null, "asSas");
+	    
         return rootView;
     }
 	
+
 	public static final int getColor(Context context, int id) {
 	    final int version = Build.VERSION.SDK_INT;
 	    if (version >= 23) {

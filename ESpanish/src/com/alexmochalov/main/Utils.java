@@ -7,8 +7,11 @@ import android.util.*;
 import android.webkit.WebView;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import com.alexmochalov.alang.R;
+import com.alexmochalov.fragments.PronounEdited;
+import com.alexmochalov.rules.Pronoun;
 
 public class Utils {
 
@@ -17,10 +20,11 @@ public class Utils {
 	public final static String APP_FOLDER = EXTERNAL_STORAGE_DIRECTORY+"/xolosoft/"+PROGRAMM_FOLDER;
 	static String REC_FOLDER = APP_FOLDER+"/rec";
 	
-	private static String language = "ita";
+	private static String language = "fra";
 	
 	private static boolean randomize = false;
 	private static int scale = 110;
+	public static int recDuration = 5000;
 	
 	public static String getRecFolder(){
 		return REC_FOLDER;
@@ -196,5 +200,14 @@ public class Utils {
 		else
 			return fileName;
 		
+	}
+	public static ArrayList<Pronoun> toPronoun(ArrayList<PronounEdited> objects) {
+		
+		ArrayList<Pronoun> result = new ArrayList<Pronoun>();
+		
+		for (PronounEdited p: objects)
+			result.add(p.getPronoun());
+		
+		return result;
 	}	
 }
